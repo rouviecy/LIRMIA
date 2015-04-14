@@ -12,6 +12,10 @@ set(JAVA_LIBMAWT_PATH /etc/java-config-2/current-system-vm/jre/lib/amd64/xawt)
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces/vision/CMakeLists.txt)
 
+#add_definitions(-DENABLE_SERIAL)
+add_definitions(-DENABLE_CAM1)
+#add_definitions(-DENABLE_CAM2)
+
 find_package(OpenCV REQUIRED)
 set(OTHER_LIBS
 	${OpenCV_LIBS}

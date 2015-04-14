@@ -18,7 +18,7 @@ void Depth::IO(){
 
 void Depth::Job(){
 	Critical_receive();
-	#ifdef DEV_SERIAL
+	#ifdef ENBALE_SERIAL
 		unsigned char request_depth1[1]	= {0x42};
 		unsigned char request_depth2[1]	= {0x52};
 		unsigned char request_end[1]	= {0x00};

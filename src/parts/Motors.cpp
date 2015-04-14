@@ -21,7 +21,7 @@ void Motors::Job(){
 }
 
 void Motors::Generate_order(int num_motor, int power, bool positive){
-	#ifdef DEV_SERIAL
+	#ifdef ENABLE_SERIAL
 		unsigned char order[8];
 		switch(num_motor){
 			case 1: order[1]= 0xB0;	break;

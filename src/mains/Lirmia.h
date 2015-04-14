@@ -27,6 +27,8 @@
 #include "../parts/State.h"
 #include "../parts/State_machine.h"
 
+#define DEV_SERIAL	"/dev/ttyACM0"
+
 class Lirmia : public Maestro{
 
 public:
@@ -35,8 +37,6 @@ public:
 	void Shutdown();
 
 private:
-
-	#define DEV_SERIAL "/dev/ttyACM0"
 
 	Serial serial;
 

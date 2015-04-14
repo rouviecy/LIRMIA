@@ -8,14 +8,14 @@ Blobs::Blobs(){
 	morpho_kern = cv::Mat::ones(cv::Size(3,3), CV_8U);
 	seuil_taille_blobs = 42;
 	STRUCT_HSV_BOUND *hsv = (STRUCT_HSV_BOUND*) malloc(sizeof(STRUCT_HSV_BOUND));
-	hsv->H_min =		0;
-	hsv->H_max =		180;
-	hsv->S_min =		0;
+	hsv->H_min =		80;
+	hsv->H_max =		130;
+	hsv->S_min =		100;
 	hsv->S_max =		255;
-	hsv->V_min =		10;
+	hsv->V_min =		100;
 	hsv->V_max =		255;
-	hsv->nb_dilate =	0;
-	hsv->nb_erode =		0;
+	hsv->nb_dilate =	5;
+	hsv->nb_erode =		5;
 	Definir_limites_separation(hsv);
 	free(hsv);
 }
@@ -54,11 +54,11 @@ void Blobs::Definir_limites_separation(STRUCT_HSV_BOUND *hsv){
 
 // Séparer les blobs
 void Blobs::Trouver_blobs(){
+	mu_.clear(); mc_.clear(); rect_.clear();
+	mu.clear(); mc.clear(); rect.clear(); taille.clear();
 	img_blobs = cv::Mat::zeros(img_sep.size(), CV_8UC3);
 	cv::findContours(img_sep, liste_blobs, hierarchie_blobs, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
 	if(hierarchie_blobs.size() <= 0){return;}
-	mu_.clear(); mc_.clear(); rect_.clear();
-	mu.clear(); mc.clear(); rect.clear(); taille.clear();
 	for(size_t i = 0; i < liste_blobs.size(); i++){
 		mu_.push_back(cv::moments(liste_blobs[i], false));
 		mc_.push_back(cv::Point2f(mu_[i].m10/mu_[i].m00, mu_[i].m01/mu_[i].m00));

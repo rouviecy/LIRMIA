@@ -12,10 +12,6 @@ Gui::Gui(){
 	hsv = (STRUCT_HSV_BOUND*) malloc(sizeof(STRUCT_HSV_BOUND));
 	hsv2 = (STRUCT_HSV_BOUND*) malloc(sizeof(STRUCT_HSV_BOUND));
 	wrap = (STRUCT_WRAP_BOUND*) malloc(sizeof(STRUCT_WRAP_BOUND));
-	dpy = XOpenDisplay(0);
-	root_window = XRootWindow(dpy, 0);
-	XSelectInput(dpy, root_window, KeyReleaseMask);
-	buttonCount = XGetPointerMapping(dpy, buttonMap, 3);
 }
 
 Gui::~Gui(){
@@ -112,21 +108,6 @@ void Gui::Pad(const std::string titre_fenetre, const float dx, const float dy, c
 	line(img_show, pod_centre, pod_fin, rouge);
 	Afficher_image(titre_fenetre, img_show);
 }
-
-// Prendre le contrôle de la souris
-void Gui::Controler_souris(std::vector <cv::Point2i> mc, int width, int height){
-	if(mc.size() <= 0){return;}
-	int XMouse = (int) ((float) mc[0].x / width * 1600);
-	int YMouse = (int) ((float) mc[0].y / height * 900);
-	if(XMouse > 0 && XMouse < 1600 && YMouse > 0 && YMouse < 900){
-		XWarpPointer(dpy, None, root_window, 0, 0, 0, 0, XMouse, YMouse);
-		XFlush(dpy);
-	}
-}
-
-// Cliquer si le vecteur d'entrée n'est pas vide
-void Gui::Cliquer(std::vector <cv::Point2i> mc){XTestFakeButtonEvent(dpy, buttonMap[0], mc.size() > 0, 0);}
-
 
 // Afficher une image et des vecteurs
 void Gui::Ajouter_vecteurs(const std::string titre_fenetre, cv::Mat image, vector<cv::Point2i> pts_prev, vector<cv::Point2i> pts_next){
