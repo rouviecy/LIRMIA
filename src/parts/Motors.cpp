@@ -21,22 +21,24 @@ void Motors::Job(){
 }
 
 void Motors::Generate_order(int num_motor, int power, bool positive){
-	unsigned char order[8];
-	switch(num_motor){
-		case 1: order[1]= 0xB0;	break;
-		case 2: order[1]= 0xB2;	break;
-		case 3: order[1]= 0xB4;	break;
-		case 4: order[1]= 0xB6;	break;
-		default:		return;
-	}
-	order[0] = 0x55;
-	order[2] = 0x00;
-	order[3] = 0x04;	
-	order[4] = positive ? 1 : 2;
-	order[5] = 0x00;
-	order[6] = power;
-	order[7] = 2;
-//	serial->Serial_write(order, 8);
+	#ifdef DEV_SERIAL
+		unsigned char order[8];
+		switch(num_motor){
+			case 1: order[1]= 0xB0;	break;
+			case 2: order[1]= 0xB2;	break;
+			case 3: order[1]= 0xB4;	break;
+			case 4: order[1]= 0xB6;	break;
+			default:		return;
+		}
+		order[0] = 0x55;
+		order[2] = 0x00;
+		order[3] = 0x04;	
+		order[4] = positive ? 1 : 2;
+		order[5] = 0x00;
+		order[6] = power;
+		order[7] = 2;
+		serial->Serial_write(order, 8);
+	#endif
 }
 
 void Motors::Set_serial(Serial* serial){this->serial = serial;}
