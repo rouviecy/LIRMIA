@@ -10,6 +10,7 @@ set(ENABLE_SDL OFF)
 set(JAVA_LIBMAWT_PATH /etc/java-config-2/current-system-vm/jre/lib/amd64/xawt)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)
+include(${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces/vision/CMakeLists.txt)
 
 find_package(OpenCV REQUIRED)
 set(OTHER_LIBS
@@ -38,4 +39,4 @@ add_library(BETTERAVE_USER
 )
 
 add_executable(lirmia src/mains/Lirmia.cpp)
-target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE)
+target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
