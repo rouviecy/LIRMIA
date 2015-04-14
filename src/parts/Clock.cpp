@@ -3,12 +3,14 @@
 using namespace std;
 
 Clock::Clock() : ComThread(){
-	start = chrono::high_resolution_clock::now();
+
 }
 
 Clock::~Clock(){}
 
-void Clock::On_start(){}
+void Clock::On_start(){
+	start = chrono::high_resolution_clock::now();
+}
 
 void Clock::IO(){
 	Link_output("t", &t);
