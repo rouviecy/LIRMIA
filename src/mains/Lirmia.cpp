@@ -20,6 +20,7 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&state_machine,	"Finite state machine",	40000);		// 40 s
 
 //	Init_serial();
+	depth.Calibrate();
 	Link_all();
 //	mapping.Link_img(cameras.Get_img1(), cameras.Get_img2());
 	Draw("coms");
