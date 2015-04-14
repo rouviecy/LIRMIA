@@ -19,6 +19,7 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&state,		"State",		20000);		// 20 ms
 	Add_thread(&state_machine,	"Finite state machine",	40000);		// 40 s
 
+//	Init_serial();
 	Link_all();
 //	mapping.Link_img(cameras.Get_img1(), cameras.Get_img2());
 	Draw("coms");
@@ -28,6 +29,20 @@ Lirmia::Lirmia() : Maestro(){
 
 void Lirmia::Shutdown(){
 	Join_all();
+	serial.Serial_close();
+}
+
+void Lirmia::Init_serial(){
+	unsigned char init_I2C_and_serial[5];
+	serial.Serial_init(DEV_SERIAL, B115200);
+	init_I2C_and_serial[0] = 0x5A;	// initial command
+	init_I2C_and_serial[1] = 0x02;	// ISS mode
+	init_I2C_and_serial[2] = 0x61;	// I2C 100kHz and serial
+	init_I2C_and_serial[3] = 0x00;	// nothing
+	init_I2C_and_serial[4] = 0x19;	// baud
+	serial.Serial_write(init_I2C_and_serial, 5);
+	motors.Set_serial(&serial);
+	imu.Set_serial(&serial);
 }
 
 int main(){

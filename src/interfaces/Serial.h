@@ -23,10 +23,10 @@ public:
 
 	Serial();
 
-	void Serial_init(const char* path);
+	void Serial_init(const char* path, int baudrate);
 	void Serial_close();
 
-	void Serial_write(std::string msg);
+	void Serial_write(unsigned char* msg, int len);
 	std::string Serial_read();
 	
 private:

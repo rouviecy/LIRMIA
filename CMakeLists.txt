@@ -6,7 +6,7 @@ find_package(PkgConfig)
 set(ENABLE_GRAPHVIZ ON)
 set(ENABLE_PYTHON OFF)
 set(ENABLE_JAVA OFF)
-set(ENABLE_SDL ON)
+set(ENABLE_SDL OFF)
 set(JAVA_LIBMAWT_PATH /etc/java-config-2/current-system-vm/jre/lib/amd64/xawt)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)

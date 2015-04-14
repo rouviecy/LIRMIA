@@ -12,6 +12,7 @@
 #define LIRMIA
 
 #include "../core/Maestro.h"
+#include "../interfaces/Serial.h"
 #include "../parts/Acoustic_modem.h"
 #include "../parts/Autonomy.h"
 #include "../parts/Clock.h"
@@ -34,6 +35,12 @@ public:
 	void Shutdown();
 
 private:
+
+	#define DEV_SERIAL "/dev/ttyACM0"
+
+	Serial serial;
+
+	void Init_serial();
 
 	Acoustic_modem	acoustic_modem;
 	Autonomy	autonomy;
