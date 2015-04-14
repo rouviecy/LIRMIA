@@ -36,3 +36,6 @@ string Serial::Serial_read(){
 	int res = read(device, buf, 5); // TODO : \0 end
 	return string(buf);
 }
+
+void Serial::Lock(){mu.lock();}
+void Serial::Unlock(){mu.unlock();}

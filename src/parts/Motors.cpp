@@ -37,7 +37,9 @@ void Motors::Generate_order(int num_motor, int power, bool positive){
 		order[5] = 0x00;
 		order[6] = power;
 		order[7] = 2;
+		serial->Lock();
 		serial->Serial_write(order, 8);
+		serial->Unlock();
 	#endif
 }
 

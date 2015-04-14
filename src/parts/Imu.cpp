@@ -27,8 +27,10 @@ void Imu::Job(){
 		imu_request[5] = 0x00; // N
 		imu_request[6] = 0x01; //
 		imu_request[7] = 0x52; // dates
+		serial->Lock();
 		serial->Serial_write(imu_request, 8);
 		string answer = serial->Serial_read();
+		serial->Unlock();
 		if(answer[4] == 115 && answer[5] == 110 && answer[6] == 112){
 			short yaw1		= (answer[11] << 8) | answer[12];
 			short pitch1		= (answer[13] << 8) | answer[14];

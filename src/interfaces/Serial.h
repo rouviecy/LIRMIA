@@ -1,6 +1,6 @@
 /*
  * @(#)		Serial.h
- * @version	1.0
+ * @version	3.0
  * @autor	C. Rouvière
  */
 
@@ -11,6 +11,7 @@
 #ifndef SERIAL
 #define SERIAL
 
+#include <mutex>
 #include <string>
 #include <cstring>
 #include <fcntl.h>
@@ -28,10 +29,14 @@ public:
 
 	void Serial_write(unsigned char* msg, int len);
 	std::string Serial_read();
+
+	void Lock();
+	void Unlock();
 	
 private:
 
 	int device;
+	std::mutex mu;
 	struct termios tio_new, tio_old;
 
 };
