@@ -31,15 +31,16 @@ private:
 
 	bool my_guard;
 
-	float data_in;
+	float z;
+	float remote;
+	float cam_detect1;
+	float cam_detect2;
+	float fsm_state;
 
 	void On_start();
 	void Job();
 	void IO();
 
-	static void Action_1to2(void* obj);
-	static void Action_2to3(void* obj);
-	static void Action_3to1(void* obj);
 
 };
 

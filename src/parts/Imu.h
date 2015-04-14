@@ -1,6 +1,6 @@
 /*
- * @(#)		Sensor.h
- * @version	2.0
+ * @(#)		Imu.h
+ * @version	1.0
  * @autor	C. Rouvière
  */
 
@@ -8,25 +8,26 @@
  * A sensor providing data
  */
 
-#ifndef SENSOR
-#define SENSOR
+#ifndef IMU
+#define IMU
 
 #include "../core/ComThread.h"
 
-class Sensor : public ComThread{
+class Imu : public ComThread{
 
 public:
 
-	Sensor();
-	~Sensor();
+	Imu();
+	~Imu();
 
 private:
 
 	void On_start();
 	void Job();
 	void IO();
-	
-	float data_out;
+
+	float imu_thx,  imu_thy,  imu_thz;
+	float imu_vthx, imu_vthy, imu_vthz;
 
 };
 

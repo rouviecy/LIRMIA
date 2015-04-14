@@ -4,6 +4,7 @@ using namespace std;
 
 State_machine::State_machine() : ComThread(){
 
+	fsm_state = 0.;
 	my_guard = true;
 
 	fsm.Add_state("remote");
@@ -44,10 +45,14 @@ State_machine::~State_machine(){}
 void State_machine::On_start(){}
 
 void State_machine::IO(){
-	Link_input("my_data", &data_in);
+	Link_input("z", &z);
+	Link_input("remote", &remote);
+	Link_input("cam_detect1", &cam_detect1);
+	Link_input("cam_detect2", &cam_detect2);
+	Link_output("fsm_state", &fsm_state);
 }
 
 void State_machine::Job(){
 	Critical_receive();
-	cout << "Received data : " << data_in << endl;
+	Critical_send();
 }
