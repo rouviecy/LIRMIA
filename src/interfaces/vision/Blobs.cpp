@@ -9,9 +9,9 @@ Blobs::Blobs(){
 	STRUCT_HSV_BOUND *hsv = (STRUCT_HSV_BOUND*) malloc(sizeof(STRUCT_HSV_BOUND));
 	hsv->H_min =		80;
 	hsv->H_max =		130;
-	hsv->S_min =		50;
+	hsv->S_min =		100;
 	hsv->S_max =		255;
-	hsv->V_min =		50;
+	hsv->V_min =		100;
 	hsv->V_max =		255;
 	hsv->nb_dilate =	5;
 	hsv->nb_erode =		5;
