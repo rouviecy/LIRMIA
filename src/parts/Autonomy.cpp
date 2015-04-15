@@ -35,7 +35,16 @@ void Autonomy::IO(){
 void Autonomy::Job(){
 	Critical_receive();
 	if(cam_detect1 > 0){
-		cout << (cam_detect1_horizontal > 0 ? "left" : "right") << " | " << (cam_detect1_vertical > 0 ? "down" : "up") << endl;
+		motor1 = +cam_detect1_horizontal / 10;
+		motor2 = -cam_detect1_horizontal / 10;
+		motor3 = +cam_detect1_vertical / 10;
+		motor4 = +cam_detect1_vertical / 10;
+	}
+	else{
+		motor1 = 0.;
+		motor2 = 0.;
+		motor3 = 0.;
+		motor4 = 0.;
 	}
 	Critical_send();
 }

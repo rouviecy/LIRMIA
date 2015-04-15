@@ -54,7 +54,7 @@ void Lirmia::Init_serial(){
 
 int main(){
 	Lirmia robot;
-	usleep(5000000);
+	usleep(50000000);
 	robot.Shutdown();
 	return 0;
 }

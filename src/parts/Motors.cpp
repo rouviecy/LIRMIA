@@ -18,9 +18,19 @@ void Motors::IO(){
 
 void Motors::Job(){
 	Critical_receive();
+	int order1 = min(abs((int) (255. * motor1)), 255);
+	int order2 = min(abs((int) (255. * motor2)), 255);
+	int order3 = min(abs((int) (255. * motor3)), 255);
+	int order4 = min(abs((int) (255. * motor4)), 255);
+	Generate_order(1, order1, motor1 > 0);
+	Generate_order(2, order2, motor2 > 0);
+	Generate_order(3, order3, motor3 > 0);
+	Generate_order(4, order4, motor4 > 0);
+	cout << endl;
 }
 
 void Motors::Generate_order(int num_motor, int power, bool positive){
+	cout << "Motor" << num_motor << " : " << (positive ? "+" : "-") << power << endl;
 	#if defined ENABLE_SERIAL && defined ENABLE_MOTORS
 		unsigned char order[8];
 		switch(num_motor){

@@ -11,6 +11,7 @@
 #ifndef MOTORS
 #define MOTORS
 
+#include <iostream>
 #include "../core/ComThread.h"
 #include "../interfaces/Serial.h"
 
