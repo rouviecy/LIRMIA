@@ -1,0 +1,251 @@
+digraph links {
+	concentrate=true;
+	subgraph cluster_1 {
+		label = "Acoustic modem - 1Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		2 [label = "thx"];
+		3 [label = "thy"];
+		4 [label = "thz"];
+		5 [label = "x"];
+		6 [label = "y"];
+		7 [label = "z"];
+	}
+	subgraph cluster_8 {
+		label = "Autonomy - 20Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		9 [label = "cam_detect1_horizontal"];
+		10 [label = "cam_detect1_vertical"];
+		11 [label = "cam_detect2_horizontal"];
+		12 [label = "cam_detect2_vertical"];
+		13 [label = "fsm_state"];
+		14 [label = "obst_vx"];
+		15 [label = "obst_vy"];
+		16 [label = "obst_x"];
+		17 [label = "obst_y"];
+		18 [label = "t"];
+		19 [label = "thx"];
+		20 [label = "thy"];
+		21 [label = "thz"];
+		22 [label = "vthx"];
+		23 [label = "vthy"];
+		24 [label = "vthz"];
+		25 [label = "vx"];
+		26 [label = "vy"];
+		27 [label = "vz"];
+		28 [label = "x"];
+		29 [label = "y"];
+		30 [label = "z"];
+		31 [label = "motor1"];
+		32 [label = "motor2"];
+		33 [label = "motor3"];
+		34 [label = "motor4"];
+	}
+	subgraph cluster_35 {
+		label = "Cameras - 10Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		36 [label = "cam_detect1"];
+		37 [label = "cam_detect1_horizontal"];
+		38 [label = "cam_detect1_vertical"];
+		39 [label = "cam_detect2"];
+		40 [label = "cam_detect2_horizontal"];
+		41 [label = "cam_detect2_vertical"];
+	}
+	subgraph cluster_42 {
+		label = "Clock - 1000Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		43 [label = "t"];
+	}
+	subgraph cluster_44 {
+		label = "Depth - 100Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		45 [label = "t"];
+		46 [label = "depth"];
+	}
+	subgraph cluster_47 {
+		label = "Echo sonder - 10Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		48 [label = "obst_vx"];
+		49 [label = "obst_vy"];
+		50 [label = "obst_x"];
+		51 [label = "obst_y"];
+	}
+	subgraph cluster_52 {
+		label = "Inertial Measurement Unit - 100Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		53 [label = "imu_thx"];
+		54 [label = "imu_thy"];
+		55 [label = "imu_thz"];
+		56 [label = "imu_vthx"];
+		57 [label = "imu_vthy"];
+		58 [label = "imu_vthz"];
+	}
+	subgraph cluster_59 {
+		label = "Logger - 1Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		60 [label = "fsm_state"];
+		61 [label = "t"];
+		62 [label = "thx"];
+		63 [label = "thy"];
+		64 [label = "thz"];
+		65 [label = "vthx"];
+		66 [label = "vthy"];
+		67 [label = "vthz"];
+		68 [label = "vx"];
+		69 [label = "vy"];
+		70 [label = "vz"];
+		71 [label = "x"];
+		72 [label = "y"];
+		73 [label = "z"];
+	}
+	subgraph cluster_74 {
+		label = "Mapping - 1Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		75 [label = "obst_x"];
+		76 [label = "obst_y"];
+		77 [label = "thx"];
+		78 [label = "thy"];
+		79 [label = "thz"];
+		80 [label = "x"];
+		81 [label = "y"];
+		82 [label = "z"];
+	}
+	subgraph cluster_83 {
+		label = "Motors - 10Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		84 [label = "motor1"];
+		85 [label = "motor2"];
+		86 [label = "motor3"];
+		87 [label = "motor4"];
+	}
+	subgraph cluster_88 {
+		label = "Remote control - 10Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		89 [label = "remote"];
+	}
+	subgraph cluster_90 {
+		label = "State - 50Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		91 [label = "depth"];
+		92 [label = "imu_thx"];
+		93 [label = "imu_thy"];
+		94 [label = "imu_thz"];
+		95 [label = "imu_vthx"];
+		96 [label = "imu_vthy"];
+		97 [label = "imu_vthz"];
+		98 [label = "t"];
+		99 [label = "thx"];
+		100 [label = "thy"];
+		101 [label = "thz"];
+		102 [label = "vthx"];
+		103 [label = "vthy"];
+		104 [label = "vthz"];
+		105 [label = "vx"];
+		106 [label = "vy"];
+		107 [label = "vz"];
+		108 [label = "x"];
+		109 [label = "y"];
+		110 [label = "z"];
+	}
+	subgraph cluster_111 {
+		label = "Finite state machine - 25Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		112 [label = "cam_detect1"];
+		113 [label = "cam_detect2"];
+		114 [label = "remote"];
+		115 [label = "z"];
+		116 [label = "fsm_state"];
+	}
+	36->112 [minlen=5];
+	37->9 [minlen=5];
+	38->10 [minlen=5];
+	39->113 [minlen=5];
+	40->11 [minlen=5];
+	41->12 [minlen=5];
+	46->91 [minlen=5];
+	116->13 [minlen=5];
+	116->60 [minlen=5];
+	53->92 [minlen=5];
+	54->93 [minlen=5];
+	55->94 [minlen=5];
+	56->95 [minlen=5];
+	57->96 [minlen=5];
+	58->97 [minlen=5];
+	31->84 [minlen=5];
+	32->85 [minlen=5];
+	33->86 [minlen=5];
+	34->87 [minlen=5];
+	48->14 [minlen=5];
+	49->15 [minlen=5];
+	50->16 [minlen=5];
+	50->75 [minlen=5];
+	51->17 [minlen=5];
+	51->76 [minlen=5];
+	89->114 [minlen=5];
+	43->18 [minlen=5];
+	43->45 [minlen=5];
+	43->61 [minlen=5];
+	43->98 [minlen=5];
+	99->2 [minlen=5];
+	99->19 [minlen=5];
+	99->62 [minlen=5];
+	99->77 [minlen=5];
+	100->3 [minlen=5];
+	100->20 [minlen=5];
+	100->63 [minlen=5];
+	100->78 [minlen=5];
+	101->4 [minlen=5];
+	101->21 [minlen=5];
+	101->64 [minlen=5];
+	101->79 [minlen=5];
+	102->22 [minlen=5];
+	102->65 [minlen=5];
+	103->23 [minlen=5];
+	103->66 [minlen=5];
+	104->24 [minlen=5];
+	104->67 [minlen=5];
+	105->25 [minlen=5];
+	105->68 [minlen=5];
+	106->26 [minlen=5];
+	106->69 [minlen=5];
+	107->27 [minlen=5];
+	107->70 [minlen=5];
+	108->5 [minlen=5];
+	108->28 [minlen=5];
+	108->71 [minlen=5];
+	108->80 [minlen=5];
+	109->6 [minlen=5];
+	109->29 [minlen=5];
+	109->72 [minlen=5];
+	109->81 [minlen=5];
+	110->7 [minlen=5];
+	110->30 [minlen=5];
+	110->73 [minlen=5];
+	110->82 [minlen=5];
+	110->115 [minlen=5];
+}
