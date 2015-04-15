@@ -17,7 +17,7 @@ void Imu::IO(){
 }
 
 void Imu::Job(){
-	#ifdef ENABLE_SERIAL
+	#if defined ENABLE_SERIAL && defined ENABLE_IMU
 		unsigned char imu_request[8];
 		imu_request[0] = 0x62; // serial
 		imu_request[1] = 0x73; // s

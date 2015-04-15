@@ -13,6 +13,9 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces/vision/CMakeLists.txt)
 
 #add_definitions(-DENABLE_SERIAL)
+#add_definitions(-DENABLE_DEPTH)
+#add_definitions(-DENABLE_IMU)
+#add_definitions(-DENABLE_MOTORS)
 add_definitions(-DENABLE_CAM1)
 #add_definitions(-DENABLE_CAM2)
 

@@ -24,7 +24,7 @@ Lirmia::Lirmia() : Maestro(){
 		depth.Calibrate();
 	#endif
 	Link_all();
-//	mapping.Link_img(cameras.Get_img1(), cameras.Get_img2());
+	mapping.Link_img(cameras.Get_img1(), cameras.Get_img2());
 	Draw("coms");
 	Launch_all();
 
