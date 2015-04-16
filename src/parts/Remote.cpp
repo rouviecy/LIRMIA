@@ -8,7 +8,6 @@ Remote::Remote() : ComThread(){
 	#ifdef ENABLE_TCP
 		alive = true;
 		if(!tcp_server.Configure(4242)){return;}
-		cout << "Server connected" << endl;
 		while(tcp_server.Get_nb_clients() == 0){
 			usleep(1000000);
 		}
@@ -32,7 +31,6 @@ void Remote::Job(){
 			if(msg_in[0] == 'b' && msg_in[1] == 'y' && msg_in[2] == 'e'){
 				alive = false;
 				tcp_server.Close();
-				cout << "closed" << endl;
 			}
 		}
 	#endif

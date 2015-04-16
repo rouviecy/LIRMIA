@@ -18,6 +18,7 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include "TCP_client.h"
 
 #ifndef TCP_SERVER
 #define TCP_SERVER

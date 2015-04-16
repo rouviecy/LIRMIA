@@ -86,10 +86,12 @@ void TCP_server::Close(){
 	for(int i = 0; i < clients.size(); i++){
 		close(clients[i]);
 	}
-	
+	cout << "Connecting killer client ..." << endl;
+	TCP_client killer_client;
+	killer_client.Configure("localhost", server_port);
+	usleep(1000000);
 	close(sock);
 	thr.join();
-	cout << "truc2" << endl;
 	usleep(1000000);
 	clients.clear();
 }
