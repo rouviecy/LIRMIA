@@ -10,12 +10,16 @@ Imu::Imu() : ComThread(){
 Imu::~Imu(){}
 
 void Imu::On_start(){
-	#if defined ENABLE_I2C && defined ENABLE_IMU
-		std::map <int, char> keys;
-		keys[4] = 115;
-		keys[5] = 110;
-		keys[6] = 112;
-		i2c->Subscribe(keys, &(Imu::Generate_YPR), (void*) this);
+	#ifdef ENABLE_IMU
+		#if defined ENABLE_I2C && ENABLE_SERIAL
+			std::map <int, char> keys;
+			keys[4] = 115;
+			keys[5] = 110;
+			keys[6] = 112;
+			i2c->Subscribe(keys, &(Imu::Generate_YPR), (void*) this);
+		#else
+			cout << "You are trying to use IMU without I2C and serial enabled ; IMU will be disabled" << endl;
+		#endif
 	#endif
 }
 

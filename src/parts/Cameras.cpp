@@ -34,11 +34,11 @@ void Cameras::Job(){
 		blobs.Set_img(img1);
 		blobs.Separer();
 		blobs.Trouver_blobs();
-		vector <float> blob_img = Find_biggest_blob(blobs.Get_mc(), blobs.Get_size(), blobs.Get_img_blobs().size());
-		if(blob_img.size() > 0){
+		vector <float> blob_img1 = Find_biggest_blob(blobs.Get_mc(), blobs.Get_size(), blobs.Get_img_blobs().size());
+		if(blob_img1.size() > 0){
 			cam_detect1 = +1.;
-			cam_detect1_horizontal = blob_img[0];
-			cam_detect1_vertical = blob_img[1];
+			cam_detect1_horizontal = blob_img1[0];
+			cam_detect1_vertical = blob_img1[1];
 		}
 		else{
 			cam_detect1 = -1.;
@@ -50,11 +50,11 @@ void Cameras::Job(){
 		blobs.Set_img(img2);
 		blobs.Separer();
 		blobs.Trouver_blobs();
-		vector <float> blob_img = Find_biggest_blob(blobs.Get_mc(), blobs.Get_size(), blobs.Get_img_blobs().size());
-		if(blob_img.size() > 0){
+		vector <float> blob_img2 = Find_biggest_blob(blobs.Get_mc(), blobs.Get_size(), blobs.Get_img_blobs().size());
+		if(blob_img2.size() > 0){
 			cam_detect2 = +1.;
-			cam_detect2_horizontal = blob_img[0];
-			cam_detect2_vertical = blob_img[1];
+			cam_detect2_horizontal = blob_img2[0];
+			cam_detect2_vertical = blob_img2[1];
 		}
 		else{
 			cam_detect2 = -1.;

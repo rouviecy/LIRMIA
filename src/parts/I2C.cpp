@@ -19,22 +19,26 @@ void I2C::Subscribe(map <int, char> keys, void (*callback) (void*, char*), void*
 }
 
 void I2C::Job(){
-	#if defined ENABLE_SERIAL && defined ENABLE_I2C
-		char* msg = serial->Serial_read();
-		for(size_t i = 0; i < subscriptions.size(); i++){
-			bool selected = true;
-			for(map <int, char> ::iterator it = subscriptions[i].keys.begin(); it != subscriptions[i].keys.end(); ++it){
-				if(msg[it->first] != it->second){
-					selected = false;
-					break;
+	#ifdef ENABLE_I2C
+		#ifdef ENABLE_SERIAL
+			char* msg = serial->Serial_read();
+			for(size_t i = 0; i < subscriptions.size(); i++){
+				bool selected = true;
+				for(map <int, char> ::iterator it = subscriptions[i].keys.begin(); it != subscriptions[i].keys.end(); ++it){
+					if(msg[it->first] != it->second){
+						selected = false;
+						break;
+					}
+				}
+				if(selected){
+					serial->Lock();
+					subscriptions[i].callback(subscriptions[i].obj, msg);
+					serial->Unlock();
 				}
 			}
-			if(selected){
-				serial->Lock();
-				subscriptions[i].callback(subscriptions[i].obj, msg);
-				serial->Unlock();
-			}
-		}
+		#else
+			cout << "[Warning] You are trying to use I2C with serial disabled ; so I2C will be disabled" << endl;
+		#endif
 	#endif
 }
 

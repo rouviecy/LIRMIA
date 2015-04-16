@@ -31,25 +31,29 @@ void Motors::Job(){
 
 void Motors::Generate_order(int num_motor, int power, bool positive){
 //	cout << "Motor" << num_motor << " : " << (positive ? "+" : "-") << power << endl;
-	#if defined ENABLE_I2C && defined ENABLE_MOTORS
-		unsigned char order[8];
-		switch(num_motor){
-			case 1: order[1]= 0xB0;	break;
-			case 2: order[1]= 0xB2;	break;
-			case 3: order[1]= 0xB4;	break;
-			case 4: order[1]= 0xB6;	break;
-			default:		return;
-		}
-		order[0] = 0x55;
-		order[2] = 0x00;
-		order[3] = 0x04;	
-		order[4] = positive ? 1 : 2;
-		order[5] = 0x00;
-		order[6] = power;
-		order[7] = 2;
-		serial->Lock();
-		i2c->I2C_write(order, 8);
-		serial->Unlock();
+	#ifdef ENABLE_MOTORS
+		#if defined ENABLE_I2C && ENABLE_SERIAL
+			unsigned char order[8];
+			switch(num_motor){
+				case 1: order[1]= 0xB0;	break;
+				case 2: order[1]= 0xB2;	break;
+				case 3: order[1]= 0xB4;	break;
+				case 4: order[1]= 0xB6;	break;
+				default:		return;
+			}
+			order[0] = 0x55;
+			order[2] = 0x00;
+			order[3] = 0x04;	
+			order[4] = positive ? 1 : 2;
+			order[5] = 0x00;
+			order[6] = power;
+			order[7] = 2;
+			i2c->Lock();
+			i2c->I2C_write(order, 8);
+			i2c->Unlock();
+		#else
+			cout << "You are trying to use motors without I2C and serial enabled ; motors will be disabled" << endl;
+		#endif
 	#endif
 }
 
