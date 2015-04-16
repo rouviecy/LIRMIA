@@ -29,7 +29,7 @@ public:
 	TCP_server();
 	~TCP_server();
 
-	void Configure(int server_port);
+	bool Configure(int server_port);
 	int Get_nb_clients();
 	char* Receive(int client_index);
 	void Send(std::string msg_out);

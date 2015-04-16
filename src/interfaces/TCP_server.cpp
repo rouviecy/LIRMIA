@@ -10,11 +10,11 @@ TCP_server::~TCP_server(){
 	if(connected){Close();};
 }
 
-void TCP_server::Configure(int server_port){
+bool TCP_server::Configure(int server_port){
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	if(sock < 0){
 		cout << "[Error] Failed to open TCP server socket on port " + to_string(server_port) << endl;
-		return;
+		return false;
 	}
 	this->server_port = server_port;
 	struct sockaddr_in sin = { 0 };
@@ -23,10 +23,11 @@ void TCP_server::Configure(int server_port){
 	sin.sin_port = htons(server_port);
 	if(bind(sock, (sockaddr*) &sin, sizeof sin) < 0){
 		cout << "[Error] Failed to bind TCP server socket on port " + to_string(server_port) << endl;
-		return;
+		return false;
 	}
 	cout << "TCP server connected on " + to_string(server_port) << endl;
 	thr = thread(&TCP_server::Accept_new_clients, this);
+	return true;
 }
 
 void TCP_server::Accept_new_clients(){
@@ -85,8 +86,10 @@ void TCP_server::Close(){
 	for(int i = 0; i < clients.size(); i++){
 		close(clients[i]);
 	}
+	
 	close(sock);
 	thr.join();
+	cout << "truc2" << endl;
 	usleep(1000000);
 	clients.clear();
 }

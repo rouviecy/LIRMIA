@@ -12,6 +12,7 @@
 #define REMOTE
 
 #include "../core/ComThread.h"
+#include "../interfaces/TCP_server.h"
 
 class Remote : public ComThread{
 
@@ -22,11 +23,15 @@ public:
 
 private:
 
+	TCP_server tcp_server;
+
 	void On_start();
 	void Job();
 	void IO();
 	
 	float remote;
+
+	bool alive;
 
 };
 

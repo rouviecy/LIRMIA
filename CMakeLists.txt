@@ -12,10 +12,11 @@ set(JAVA_LIBMAWT_PATH /etc/java-config-2/current-system-vm/jre/lib/amd64/xawt)
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces/vision/CMakeLists.txt)
 
-#add_definitions(-DENABLE_SERIAL)
+add_definitions(-DENABLE_SERIAL)
 #add_definitions(-DENABLE_DEPTH)
-#add_definitions(-DENABLE_IMU)
+add_definitions(-DENABLE_IMU)
 #add_definitions(-DENABLE_MOTORS)
+#add_definitions(-DENABLE_TCP)
 add_definitions(-DENABLE_CAM1)
 #add_definitions(-DENABLE_CAM2)
 
@@ -36,6 +37,7 @@ add_library(BETTERAVE_USER
 	src/parts/Cameras.h		src/parts/Cameras.cpp
 	src/parts/Depth.h		src/parts/Depth.cpp
 	src/parts/Echosonder.h		src/parts/Echosonder.cpp
+	src/parts/I2C.h			src/parts/I2C.cpp
 	src/parts/Imu.h			src/parts/Imu.cpp
 	src/parts/Logger.h		src/parts/Logger.cpp
 	src/parts/Mapping.h		src/parts/Mapping.cpp
@@ -47,3 +49,6 @@ add_library(BETTERAVE_USER
 
 add_executable(lirmia src/mains/Lirmia.cpp)
 target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
+
+add_executable(remote src/remote_controller.cpp)
+target_link_libraries(remote ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
