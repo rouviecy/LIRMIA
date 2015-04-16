@@ -19,6 +19,7 @@
 #include "../parts/Cameras.h"
 #include "../parts/Depth.h"
 #include "../parts/Echosonder.h"
+#include "../parts/I2C.h"
 #include "../parts/Imu.h"
 #include "../parts/Logger.h"
 #include "../parts/Mapping.h"
@@ -48,6 +49,7 @@ private:
 	Clock		internal_clock;
 	Depth		depth;
 	Echosonder	echosonder;
+	I2C		i2c;
 	Imu		imu;
 	Logger		logger;
 	Mapping		mapping;

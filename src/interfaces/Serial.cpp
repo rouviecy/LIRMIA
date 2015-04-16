@@ -32,8 +32,8 @@ void Serial::Serial_write(unsigned char* msg, int len){
 }
 
 string Serial::Serial_read(){
-	char buf[1024];
-	int res = read(device, buf, 5); // TODO : \0 end
+	char buf[BUFFER_LEN];
+	int res = read(device, buf, BUFFER_LEN);
 	return string(buf);
 }
 

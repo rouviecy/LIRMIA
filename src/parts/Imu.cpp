@@ -9,7 +9,13 @@ Imu::Imu() : ComThread(){
 
 Imu::~Imu(){}
 
-void Imu::On_start(){}
+void Imu::On_start(){
+	std::map <int, char> keys;
+	keys[4] = 115;
+	keys[5] = 110;
+	keys[6] = 112;
+	i2c->Subscribe(keys, &(Imu::Generate_YPR), (void*) this);
+}
 
 void Imu::IO(){
 	Link_output("imu_thx", &imu_thx);   Link_output("imu_thy", &imu_thy);   Link_output("imu_thz", &imu_thz);
@@ -27,39 +33,38 @@ void Imu::Job(){
 		imu_request[5] = 0x00; // N
 		imu_request[6] = 0x01; //
 		imu_request[7] = 0x52; // dates
-		serial->Lock();
-		serial->Serial_write(imu_request, 8);
-		string answer = serial->Serial_read();
-		serial->Unlock();
-		if(answer[4] == 115 && answer[5] == 110 && answer[6] == 112){
-			short yaw1		= (answer[11] << 8) | answer[12];
-			short pitch1		= (answer[13] << 8) | answer[14];
-			short roll1		= (answer[15] << 8) | answer[16];
-
-			short yawrate1		= (answer[17] << 8) | answer[18];
-			short pitchrate1	= (answer[19] << 8) | answer[20];
-			short rollrate1		= (answer[21] << 8) | answer[22];
-			short accz1		= (answer[23] << 8) | answer[24];
-		
-			double YAW = yaw1 * FAC_ANG_IMU;
-			double PITCH = pitch1 * FAC_ANG_IMU;    
-			double ROLL = roll1 * FAC_ANG_IMU;
-
-			double YAWRATE = yawrate1 * FAC_RAT_IMU;
-			float pitchrate = pitchrate1 * FAC_RAT_IMU;    
-			float rollrate = rollrate1 * FAC_RAT_IMU;
-			float accz = accz1 * FAC_ACC_IMU;
-
-			// thx = ???
-			// thy = ???
-			// thz = ???
-			// vthx = ???
-			// vthy = ???
-			// vthz = ???
-
-			Critical_send();
-		}
+		i2c->I2C_write(imu_request, 8);
 	#endif
 }
 
-void Imu::Set_serial(Serial* serial){this->serial = serial;}
+void Imu::Generate_YPR(void* obj, string answer){
+	Imu* imu = (Imu*) obj;
+
+	short yaw1		= (answer[11] << 8) | answer[12];
+	short pitch1		= (answer[13] << 8) | answer[14];
+	short roll1		= (answer[15] << 8) | answer[16];
+
+	short yawrate1		= (answer[17] << 8) | answer[18];
+	short pitchrate1	= (answer[19] << 8) | answer[20];
+	short rollrate1		= (answer[21] << 8) | answer[22];
+	short accz1		= (answer[23] << 8) | answer[24];
+		
+	double YAW = yaw1 * FAC_ANG_IMU;
+	double PITCH = pitch1 * FAC_ANG_IMU;    
+	double ROLL = roll1 * FAC_ANG_IMU;
+
+	double YAWRATE = yawrate1 * FAC_RAT_IMU;
+	float pitchrate = pitchrate1 * FAC_RAT_IMU;    
+	float rollrate = rollrate1 * FAC_RAT_IMU;
+	float accz = accz1 * FAC_ACC_IMU;
+cout << YAW << " | " << PITCH << " | " << ROLL << endl;
+	// thx = ???
+	// thy = ???
+	// thz = ???
+	// vthx = ???
+	// vthy = ???
+	// vthz = ???
+	imu->Critical_send();	
+}
+
+void Imu::Set_i2c(I2C* i2c){this->i2c = i2c;}

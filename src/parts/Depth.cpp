@@ -19,7 +19,8 @@ void Depth::IO(){
 void Depth::Job(){
 	Critical_receive();
 	#if defined ENABLE_SERIAL && defined ENABLE_DEPTH
-		unsigned char request_depth1[1]	= {0x42};
+// TODO : add check keys and subscribe to i2c
+/*		unsigned char request_depth1[1]	= {0x42};
 		unsigned char request_depth2[1]	= {0x52};
 		unsigned char request_end[1]	= {0x00};
 		serial->Lock();
@@ -55,7 +56,7 @@ void Depth::Job(){
 		if(t < 1.){z_init = (P * 100.) / 9810.;}
 		depth = (P * 100.) / 9810. - z_init;
 		Critical_send();
-	#endif
+*/	#endif
 }
 
 void Depth::Calibrate(){
@@ -65,28 +66,28 @@ void Depth::Calibrate(){
 	resquest_calibration[1] = 0xEE;
 	resquest_calibration[2] = 0x01;
 	resquest_calibration[3] = 0x1E;
-	serial->Lock();
-	serial->Serial_write(resquest_calibration, 4);
+	i2c->Lock();
+	i2c->I2C_write(resquest_calibration, 4);
 	usleep(5000000);
 
 	for(int i = 0; i < 6; i++){
 		resquest_calibration[1] = 0xEE;
 		resquest_calibration[2] = 0x01;
 		resquest_calibration[3] = 0xA2 + (i * 2);
-		serial->Serial_write(resquest_calibration, 4);
+		i2c->I2C_write(resquest_calibration, 4);
 		usleep(5000000);
 
 		resquest_calibration[1] = 0xEF;
 		resquest_calibration[2] = 0x02;
-		serial->Serial_write(resquest_calibration, 3);
+		i2c->I2C_write(resquest_calibration, 3);
 		usleep(5000000);
 
-		string answer_calibration = serial->Serial_read();
+		string answer_calibration = i2c->I2C_read();
 		if(i == 0)	{calib_params[i] = (int) ((answer_calibration[4] << 8) | answer_calibration[5]);}
 		else		{calib_params[i] = (int) ((answer_calibration[1] << 8) | answer_calibration[2]);}
 	}
-	serial->Unlock();
+	i2c->Unlock();
 
 }
 
-void Depth::Set_serial(Serial* serial){this->serial = serial;}
+void Depth::Set_i2c(I2C* i2c){this->i2c = i2c;}

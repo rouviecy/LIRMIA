@@ -11,6 +11,7 @@
 #ifndef COMTHREAD
 #define COMTHREAD
 
+#include <iostream>
 #include <unistd.h>
 #include <thread>
 #include "Share.h"

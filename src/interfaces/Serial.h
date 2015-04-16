@@ -35,6 +35,8 @@ public:
 	
 private:
 
+	#define BUFFER_LEN 1024
+
 	int device;
 	std::mutex mu;
 	struct termios tio_new, tio_old;

@@ -11,7 +11,6 @@
 #ifndef AUTONOMY
 #define AUTONOMY
 
-#include <iostream>
 #include "../core/ComThread.h"
 #include "State_machine.h"
 

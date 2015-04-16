@@ -12,7 +12,6 @@
 #define STATE_MACHINE
 
 #include <cmath>
-#include <iostream>
 #include "../core/ComThread.h"
 #include "../interfaces/FSM.h"
 #include "../interfaces/FSMDraw.h"
