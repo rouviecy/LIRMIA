@@ -37,9 +37,9 @@ void Imu::Job(){
 	#endif
 }
 
-void Imu::Generate_YPR(void* obj, string answer){
+void Imu::Generate_YPR(void* obj, char* answer){
 	Imu* imu = (Imu*) obj;
-
+cout << string(answer).length() << endl;
 	short yaw1		= (answer[11] << 8) | answer[12];
 	short pitch1		= (answer[13] << 8) | answer[14];
 	short roll1		= (answer[15] << 8) | answer[16];
@@ -49,11 +49,11 @@ void Imu::Generate_YPR(void* obj, string answer){
 	short rollrate1		= (answer[21] << 8) | answer[22];
 	short accz1		= (answer[23] << 8) | answer[24];
 		
-	double YAW = yaw1 * FAC_ANG_IMU;
-	double PITCH = pitch1 * FAC_ANG_IMU;    
-	double ROLL = roll1 * FAC_ANG_IMU;
+	float YAW = (float) yaw1 * FAC_ANG_IMU;
+	float PITCH = (float) pitch1 * FAC_ANG_IMU;    
+	float ROLL = (float) roll1 * FAC_ANG_IMU;
 
-	double YAWRATE = yawrate1 * FAC_RAT_IMU;
+	float YAWRATE = yawrate1 * FAC_RAT_IMU;
 	float pitchrate = pitchrate1 * FAC_RAT_IMU;    
 	float rollrate = rollrate1 * FAC_RAT_IMU;
 	float accz = accz1 * FAC_ACC_IMU;

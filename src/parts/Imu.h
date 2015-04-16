@@ -38,7 +38,7 @@ private:
 	float imu_thx,  imu_thy,  imu_thz;
 	float imu_vthx, imu_vthy, imu_vthz;
 
-	static void Generate_YPR(void* obj, std::string answer);
+	static void Generate_YPR(void* obj, char* answer);
 
 };
 

@@ -2,7 +2,9 @@
 
 using namespace std;
 
-Serial::Serial(){}
+Serial::Serial(){
+	bzero(buf, SERIAL_BUFFER_LEN);
+}
 
 void Serial::Serial_init(const char* path, int baudrate){
 	device = open(path, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
@@ -31,10 +33,10 @@ void Serial::Serial_write(unsigned char* msg, int len){
 	int res = write(device, msg, len);
 }
 
-string Serial::Serial_read(){
-	char buf[BUFFER_LEN];
-	int res = read(device, buf, BUFFER_LEN);
-	return string(buf);
+char* Serial::Serial_read(){
+	bzero(buf, SERIAL_BUFFER_LEN);
+	int res = read(device, buf, SERIAL_BUFFER_LEN);
+	return buf;
 }
 
 void Serial::Lock(){mu.lock();}

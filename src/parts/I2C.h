@@ -28,10 +28,10 @@ public:
 	void Job();
 
 	void Set_serial(Serial* serial);
-	void Subscribe(std::map <int, char> keys, void (*callback) (void*, std::string), void* obj);
+	void Subscribe(std::map <int, char> keys, void (*callback) (void*, char*), void* obj);
 
 	void I2C_write(unsigned char* msg, int len);
-	std::string I2C_read();
+	char* I2C_read();
 
 	void Lock();
 	void Unlock();
@@ -40,7 +40,7 @@ private:
 
 	typedef struct{
 		std::map <int, char> keys;
-		void (*callback) (void*, std::string);
+		void (*callback) (void*, char*);
 		void* obj;
 	}subscription;
 
