@@ -22,7 +22,7 @@ class Serial{
 
 public:
 
-	#define SERIAL_BUFFER_LEN 1024
+	#define SERIAL_BUFFER_LEN 128
 
 	Serial();
 

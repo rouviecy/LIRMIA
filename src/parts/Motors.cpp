@@ -31,7 +31,7 @@ void Motors::Job(){
 
 void Motors::Generate_order(int num_motor, int power, bool positive){
 //	cout << "Motor" << num_motor << " : " << (positive ? "+" : "-") << power << endl;
-	#if defined ENABLE_SERIAL && defined ENABLE_MOTORS
+	#if defined ENABLE_I2C && defined ENABLE_MOTORS
 		unsigned char order[8];
 		switch(num_motor){
 			case 1: order[1]= 0xB0;	break;

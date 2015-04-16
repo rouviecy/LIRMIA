@@ -10,11 +10,13 @@ Imu::Imu() : ComThread(){
 Imu::~Imu(){}
 
 void Imu::On_start(){
-	std::map <int, char> keys;
-	keys[4] = 115;
-	keys[5] = 110;
-	keys[6] = 112;
-	i2c->Subscribe(keys, &(Imu::Generate_YPR), (void*) this);
+	#if defined ENABLE_I2C && defined ENABLE_IMU
+		std::map <int, char> keys;
+		keys[4] = 115;
+		keys[5] = 110;
+		keys[6] = 112;
+		i2c->Subscribe(keys, &(Imu::Generate_YPR), (void*) this);
+	#endif
 }
 
 void Imu::IO(){

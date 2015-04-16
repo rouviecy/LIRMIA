@@ -19,21 +19,23 @@ void I2C::Subscribe(map <int, char> keys, void (*callback) (void*, char*), void*
 }
 
 void I2C::Job(){
-	char* msg = serial->Serial_read();
-	for(size_t i = 0; i < subscriptions.size(); i++){
-		bool selected = true;
-		for(map <int, char> ::iterator it = subscriptions[i].keys.begin(); it != subscriptions[i].keys.end(); ++it){
-			if(msg[it->first] != it->second){
-				selected = false;
-				break;
+	#if defined ENABLE_SERIAL && defined ENABLE_I2C
+		char* msg = serial->Serial_read();
+		for(size_t i = 0; i < subscriptions.size(); i++){
+			bool selected = true;
+			for(map <int, char> ::iterator it = subscriptions[i].keys.begin(); it != subscriptions[i].keys.end(); ++it){
+				if(msg[it->first] != it->second){
+					selected = false;
+					break;
+				}
+			}
+			if(selected){
+				serial->Lock();
+				subscriptions[i].callback(subscriptions[i].obj, msg);
+				serial->Unlock();
 			}
 		}
-		if(selected){
-			serial->Lock();
-			subscriptions[i].callback(subscriptions[i].obj, msg);
-			serial->Unlock();
-		}
-	}
+	#endif
 }
 
 void I2C::I2C_write(unsigned char* msg, int len){serial->Serial_write(msg, len);}
