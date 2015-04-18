@@ -12,7 +12,7 @@
 #define IMU
 
 #include "../core/ComThread.h"
-#include "I2C.h"
+#include "../interfaces/Serial.h"
 
 class Imu : public ComThread{
 
@@ -21,7 +21,7 @@ public:
 	Imu();
 	~Imu();
 
-	void Set_i2c(I2C* i2c);
+	void Set_serial(Serial* serial);
 
 private:
 
@@ -29,7 +29,7 @@ private:
 	#define FAC_RAT_IMU 0.0137329	// Factor de escala de YAW RATE
 	#define FAC_ACC_IMU 0.15387	// Factor de escala de ACELERACIÓN
 
-	I2C* i2c;
+	Serial* serial;
 
 	void On_start();
 	void Job();
@@ -39,6 +39,7 @@ private:
 	float imu_vthx, imu_vthy, imu_vthz;
 
 	static void Generate_YPR(void* obj, char* answer);
+std::vector <int> msg;
 
 };
 

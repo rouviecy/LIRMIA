@@ -26,7 +26,7 @@ public:
 
 	Serial();
 
-	void Serial_init(const char* path, int baudrate);
+	void Serial_init(const char* path, int baudrate, bool canonical_mode);
 	void Serial_close();
 
 	void Serial_write(unsigned char* msg, int len);

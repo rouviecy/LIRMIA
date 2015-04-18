@@ -10,17 +10,34 @@ Imu::Imu() : ComThread(){
 Imu::~Imu(){}
 
 void Imu::On_start(){
-	#ifdef ENABLE_IMU
-		#if defined ENABLE_I2C && ENABLE_SERIAL
-			std::map <int, char> keys;
-			keys[4] = 115;
-			keys[5] = 110;
-			keys[6] = 112;
-			i2c->Subscribe(keys, &(Imu::Generate_YPR), (void*) this);
-		#else
-			cout << "You are trying to use IMU without I2C and serial enabled ; IMU will be disabled" << endl;
-		#endif
-	#endif
+	unsigned char imu_request[8];
+	imu_request[0] = 0x62; // serial
+	imu_request[1] = 0x73; // 'S'
+	imu_request[2] = 0x6E; // 'N'
+	imu_request[3] = 0x70; // 'P'
+	imu_request[4] = 0x00; // packet type
+	imu_request[5] = 0xB1; // factory settings
+	imu_request[6] = 0x02; // checksum high byte
+	imu_request[7] = 0x02; // checksum low byte
+	serial->Serial_write(imu_request, 8);
+	imu_request[0] = 0x62; // serial
+	imu_request[1] = 0x73; // 'S'
+	imu_request[2] = 0x6E; // 'N'
+	imu_request[3] = 0x70; // 'P'
+	imu_request[4] = 0x00; // packet type
+	imu_request[5] = 0xAB; // write config to flash
+	imu_request[6] = 0x01; // checksum high byte
+	imu_request[7] = 0xFC; // checksum low byte
+	serial->Serial_write(imu_request, 8);
+	imu_request[0] = 0x62; // serial
+	imu_request[1] = 0x73; // 'S'
+	imu_request[2] = 0x6E; // 'N'
+	imu_request[3] = 0x70; // 'P'
+	imu_request[4] = 0x00; // packet type
+	imu_request[5] = 0xB1; // factory settings
+	imu_request[6] = 0x02; // checksum high byte
+	imu_request[7] = 0x02; // checksum low byte
+	serial->Serial_write(imu_request, 8);
 }
 
 void Imu::IO(){
@@ -30,16 +47,47 @@ void Imu::IO(){
 
 void Imu::Job(){
 	#if defined ENABLE_SERIAL && defined ENABLE_IMU
-		unsigned char imu_request[8];
-		imu_request[0] = 0x62; // serial
-		imu_request[1] = 0x73; // s
-		imu_request[2] = 0x6E; // n
-		imu_request[3] = 0x70; // p
-		imu_request[4] = 0x01; // PT
-		imu_request[5] = 0x00; // N
-		imu_request[6] = 0x01; //
-		imu_request[7] = 0x52; // dates
-		i2c->I2C_write(imu_request, 8);
+		while(true){
+			usleep(1000);
+			char* answer = serial->Serial_read();
+			for(int i = 0; i < SERIAL_BUFFER_LEN; i++){
+				if(msg.size() == 0){
+					if(answer[i] == 115)	{msg.push_back(answer[i]);}
+					continue;
+				}
+				if(msg.size() == 1){
+					if(answer[i] == 110)	{msg.push_back(answer[i]);}
+					else			{msg.clear();}
+					continue;
+				}
+				if(msg.size() == 2){
+					if(answer[i] == 112)	{msg.push_back(answer[i]);}
+					else			{msg.clear();}
+					continue;
+				}
+				msg.push_back(answer[i]);
+				if(msg.size() == 15){
+					for(size_t j = 0; j < 15; j++){
+						cout << msg[j] << " | ";
+					}
+					cout << endl;
+
+					short yaw1		= (msg[8] << 8) | msg[9];
+					short pitch1		= (msg[10] << 8) | msg[11];
+					short roll1		= (msg[12] << 8) | msg[13];
+
+					float YAW = (float) yaw1 * FAC_ANG_IMU;
+					float PITCH = (float) pitch1 * FAC_ANG_IMU;    
+					float ROLL = (float) roll1 * FAC_ANG_IMU;
+
+					cout << (int) YAW << "\t" << (int) PITCH << "\t" << (int) ROLL << endl;
+
+					msg.clear();
+				}
+			}
+
+		}
+
 	#endif
 }
 
@@ -54,7 +102,7 @@ cout << string(answer).length() << endl;
 	short pitchrate1	= (answer[19] << 8) | answer[20];
 	short rollrate1		= (answer[21] << 8) | answer[22];
 	short accz1		= (answer[23] << 8) | answer[24];
-		
+
 	float YAW = (float) yaw1 * FAC_ANG_IMU;
 	float PITCH = (float) pitch1 * FAC_ANG_IMU;    
 	float ROLL = (float) roll1 * FAC_ANG_IMU;
@@ -73,4 +121,4 @@ cout << YAW << " | " << PITCH << " | " << ROLL << endl;
 	imu->Critical_send();	
 }
 
-void Imu::Set_i2c(I2C* i2c){this->i2c = i2c;}
+void Imu::Set_serial(Serial* serial){this->serial = serial;}
