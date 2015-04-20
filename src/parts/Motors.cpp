@@ -26,11 +26,11 @@ void Motors::Job(){
 	Generate_order(2, order2, motor2 > 0);
 	Generate_order(3, order3, motor3 > 0);
 	Generate_order(4, order4, motor4 > 0);
-//	cout << endl;
+	cout << endl;
 }
 
 void Motors::Generate_order(int num_motor, int power, bool positive){
-//	cout << "Motor" << num_motor << " : " << (positive ? "+" : "-") << power << endl;
+	cout << "Motor" << num_motor << " : " << (positive ? "+" : "-") << power << endl;
 	#ifdef ENABLE_MOTORS
 		#if defined ENABLE_I2C && ENABLE_SERIAL
 			unsigned char order[8];

@@ -15,7 +15,7 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&imu,		"Inertial Measurement Unit",	-1);		// manual loop
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&mapping,		"Mapping",			1000000);	// 1 s
-	Add_thread(&motors,		"Motors",			100000);	// 100 ms
+	Add_thread(&motors,		"Motors",			1000000);	// 1000 ms
 	Add_thread(&remote,		"Remote control",		-1);		// manual loop
 	Add_thread(&state,		"State",			20000);		// 20 ms
 	Add_thread(&state_machine,	"Finite state machine",		40000);		// 40 s
@@ -27,7 +27,7 @@ Lirmia::Lirmia() : Maestro(){
 		#endif
 	#endif
 	Link_all();
-	mapping.Link_img(cameras.Get_img1(), cameras.Get_img2());
+//	mapping.Link_img(cameras.Get_img1(), cameras.Get_img2());
 	Draw("coms");
 	usleep(1000000);
 	Launch_all();
@@ -49,7 +49,7 @@ void Lirmia::Init_serial(){
 			unsigned char init_I2C_and_serial[5];
 			init_I2C_and_serial[0] = 0x5A;	// initial command
 			init_I2C_and_serial[1] = 0x02;	// change
-			init_I2C_and_serial[2] = 0x01;	// serial ONLY (TODO change)
+			init_I2C_and_serial[2] = 0x61;	// serial ONLY (TODO change)
 			init_I2C_and_serial[3] = 0x00;	// baudrate 115200
 			init_I2C_and_serial[4] = 0x19;	// baudrate 115200
 			serial.Serial_write(init_I2C_and_serial, 5);

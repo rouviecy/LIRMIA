@@ -15,10 +15,10 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces/vision/CMakeLists.txt)
 add_definitions(-DENABLE_SERIAL)
 add_definitions(-DENABLE_I2C)		# needs serial
 #add_definitions(-DENABLE_DEPTH)	# needs serial and I2C
-add_definitions(-DENABLE_IMU)		# needs serial and I2C
-#add_definitions(-DENABLE_MOTORS)	# needs serial and I2C
+#add_definitions(-DENABLE_IMU)		# needs serial and I2C
+add_definitions(-DENABLE_MOTORS)	# needs serial and I2C
 #add_definitions(-DENABLE_TCP)
-#add_definitions(-DENABLE_CAM1)
+add_definitions(-DENABLE_CAM1)
 #add_definitions(-DENABLE_CAM2)
 
 find_package(OpenCV REQUIRED)

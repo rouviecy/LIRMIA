@@ -10,34 +10,29 @@ Imu::Imu() : ComThread(){
 Imu::~Imu(){}
 
 void Imu::On_start(){
-	unsigned char imu_request[8];
-	imu_request[0] = 0x62; // serial
-	imu_request[1] = 0x73; // 'S'
-	imu_request[2] = 0x6E; // 'N'
-	imu_request[3] = 0x70; // 'P'
-	imu_request[4] = 0x00; // packet type
-	imu_request[5] = 0xB1; // factory settings
-	imu_request[6] = 0x02; // checksum high byte
-	imu_request[7] = 0x02; // checksum low byte
-	serial->Serial_write(imu_request, 8);
-	imu_request[0] = 0x62; // serial
-	imu_request[1] = 0x73; // 'S'
-	imu_request[2] = 0x6E; // 'N'
-	imu_request[3] = 0x70; // 'P'
-	imu_request[4] = 0x00; // packet type
-	imu_request[5] = 0xAB; // write config to flash
-	imu_request[6] = 0x01; // checksum high byte
-	imu_request[7] = 0xFC; // checksum low byte
-	serial->Serial_write(imu_request, 8);
-	imu_request[0] = 0x62; // serial
-	imu_request[1] = 0x73; // 'S'
-	imu_request[2] = 0x6E; // 'N'
-	imu_request[3] = 0x70; // 'P'
-	imu_request[4] = 0x00; // packet type
-	imu_request[5] = 0xB1; // factory settings
-	imu_request[6] = 0x02; // checksum high byte
-	imu_request[7] = 0x02; // checksum low byte
-	serial->Serial_write(imu_request, 8);
+	#if defined ENABLE_SERIAL && defined ENABLE_IMU
+		unsigned char imu_request[8];
+		imu_request[0]=0x62;// serial
+		imu_request[1]=0x73;// 's'
+		imu_request[2]=0x6E;// 'n'
+		imu_request[3]=0x70;// 'p'
+		imu_request[4]=0x48;// packet type : 1 batch
+		imu_request[5]=0xB1;// reset factory settings
+		imu_request[6]=0x02;// checksum high
+		imu_request[7]=0xA7;// checksum low
+		serial->Serial_write(imu_request, 8);
+		usleep(1000000);
+		imu_request[0]=0x62;// serial
+		imu_request[1]=0x73;// 's'
+		imu_request[2]=0x6E;// 'n'
+		imu_request[3]=0x70;// 'p'
+		imu_request[4]=0x48;// packet type : 1 batch
+		imu_request[5]=0xAC;// gyro calibration (do not move during 3s !)
+		imu_request[6]=0x02;// checksum high
+		imu_request[7]=0xAC;// checksum low
+		serial->Serial_write(imu_request, 8);
+		usleep(10000000);
+	#endif
 }
 
 void Imu::IO(){
@@ -48,6 +43,17 @@ void Imu::IO(){
 void Imu::Job(){
 	#if defined ENABLE_SERIAL && defined ENABLE_IMU
 		while(true){
+			usleep(100000);
+			unsigned char imu_request[8];
+imu_request[0]=0x62;//instrucción para serial.
+	imu_request[1]=0x73;//s
+	imu_request[2]=0x6E;//n
+	imu_request[3]=0x70;//p
+	imu_request[4]=0x01;//PT
+	imu_request[5]=0x00;//N
+	imu_request[6]=0x01;//
+	imu_request[7]=0x52;// para comprobar datos
+			serial->Serial_write(imu_request, 8);
 			usleep(1000);
 			char* answer = serial->Serial_read();
 			for(int i = 0; i < SERIAL_BUFFER_LEN; i++){
@@ -65,27 +71,35 @@ void Imu::Job(){
 					else			{msg.clear();}
 					continue;
 				}
+				if(msg.size() == 4){
+					if(	answer[i] == 94 ||
+						answer[i] == 98){msg.push_back(answer[i]);}
+					else			{msg.clear();}
+					continue;
+				}
 				msg.push_back(answer[i]);
 				if(msg.size() == 15){
-					for(size_t j = 0; j < 15; j++){
-						cout << msg[j] << " | ";
+for(int i = 0; i < 15; i++){
+cout << (int) msg[i] << " | ";
+}
+cout << endl;
+					if(msg[4] == 94){
+						short pitch1	= (msg[5] << 8) | msg[6];
+						short roll1	= (msg[7] << 8) | msg[8];
+						float candidate_pitch	= static_cast <float> (pitch1) * FAC_ANG_IMU;
+						float candidate_roll	= static_cast <float> (roll1) * FAC_ANG_IMU;
+						if(fabs(candidate_pitch) > 2.){PITCH = candidate_pitch;}
+						if(fabs(candidate_roll) > 2.){ROLL = candidate_roll;}
 					}
-					cout << endl;
-
-					short yaw1		= (msg[8] << 8) | msg[9];
-					short pitch1		= (msg[10] << 8) | msg[11];
-					short roll1		= (msg[12] << 8) | msg[13];
-
-					float YAW = (float) yaw1 * FAC_ANG_IMU;
-					float PITCH = (float) pitch1 * FAC_ANG_IMU;    
-					float ROLL = (float) roll1 * FAC_ANG_IMU;
-
-					cout << (int) YAW << "\t" << (int) PITCH << "\t" << (int) ROLL << endl;
-
+					else if(msg[4] == 98){
+						short yaw1	= (msg[5] << 8) | msg[6];
+						float candidate_yaw	= static_cast <float> (yaw1) * FAC_ANG_IMU;
+						if(fabs(candidate_yaw) > 4.){YAW = candidate_yaw;}
+					}
+					cout << YAW << "\t" << PITCH << "\t" << ROLL << endl;
 					msg.clear();
 				}
 			}
-
 		}
 
 	#endif

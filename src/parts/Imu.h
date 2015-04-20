@@ -11,6 +11,7 @@
 #ifndef IMU
 #define IMU
 
+#include <cmath>
 #include "../core/ComThread.h"
 #include "../interfaces/Serial.h"
 
@@ -37,6 +38,8 @@ private:
 
 	float imu_thx,  imu_thy,  imu_thz;
 	float imu_vthx, imu_vthy, imu_vthz;
+
+	float YAW, PITCH, ROLL;
 
 	static void Generate_YPR(void* obj, char* answer);
 std::vector <int> msg;

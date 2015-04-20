@@ -35,10 +35,10 @@ void Autonomy::Job(){
 	Critical_receive();
 	state_t current_state = State_machine::Decode_state(fsm_state);
 	if(current_state == FOLLOW){
-		motor1 = +cam_detect1_horizontal / 10;
-		motor2 = -cam_detect1_horizontal / 10;
-		motor3 = +cam_detect1_vertical / 10;
-		motor4 = +cam_detect1_vertical / 10;
+		motor1 = +cam_detect1_horizontal;
+		motor2 = -cam_detect1_horizontal;
+		motor3 = +cam_detect1_vertical;
+		motor4 = +cam_detect1_vertical;
 	}
 	else{
 		motor1 = 0.;
