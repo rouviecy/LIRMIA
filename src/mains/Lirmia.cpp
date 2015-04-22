@@ -49,9 +49,10 @@ void Lirmia::Init_serial(){
 			unsigned char init_I2C_and_serial[5];
 			init_I2C_and_serial[0] = 0x5A;	// initial command
 			init_I2C_and_serial[1] = 0x02;	// change
-			init_I2C_and_serial[2] = 0x61;	// serial ONLY (TODO change)
+			init_I2C_and_serial[2] = 0x61;	// serial and I2C 100 kHz
 			init_I2C_and_serial[3] = 0x00;	// baudrate 115200
 			init_I2C_and_serial[4] = 0x19;	// baudrate 115200
+			//init_I2C_and_serial[4] = 0x33;	// baudrate 57600
 			serial.Serial_write(init_I2C_and_serial, 5);
 			i2c.Set_serial(&serial);
 			depth.Set_i2c(&i2c);

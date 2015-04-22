@@ -34,7 +34,13 @@ void Autonomy::IO(){
 void Autonomy::Job(){
 	Critical_receive();
 	state_t current_state = State_machine::Decode_state(fsm_state);
-	if(current_state == FOLLOW){
+	if(current_state == FOLLOW_CAM1){
+		motor1 = +cam_detect1_horizontal; // TODO : régler sens
+		motor2 = -cam_detect1_horizontal;
+		motor3 = +cam_detect1_vertical;
+		motor4 = +cam_detect1_vertical;
+	}
+	else if(current_state == FOLLOW_CAM2){ // TODO : régler sens
 		motor1 = +cam_detect1_horizontal;
 		motor2 = -cam_detect1_horizontal;
 		motor3 = +cam_detect1_vertical;
