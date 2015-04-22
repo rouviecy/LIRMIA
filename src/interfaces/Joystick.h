@@ -62,13 +62,12 @@ private:
 		SDL_Event event;
 		SDL_Joystick *joystick;
 		std::map <SDL_Keycode, subscribe*> keyboard_subscribes;
+		void Check_keyboard_subscribe(SDL_Keycode key, bool downing);
 	#endif
 
 	int num_device;
 	int nb_buttons, nb_axes, nb_hats;
 	int *buttons, *axes, *hats;
-
-	void Check_keyboard_subscribe(SDL_Keycode key, bool downing);
 
 };
 
