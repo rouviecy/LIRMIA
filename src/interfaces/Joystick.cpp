@@ -76,9 +76,13 @@ void Joystick::Disconnect_joystick(){
 }
 
 void Joystick::Disconnect_keyboard(){
-	for(std::map <SDL_Keycode, subscribe*> ::iterator it = keyboard_subscribes.begin(); it != keyboard_subscribes.end(); ++it){
-		delete it->second;
-	}
+	#ifdef ENABLE_SDL
+		for(std::map <SDL_Keycode, subscribe*> ::iterator it = keyboard_subscribes.begin(); it != keyboard_subscribes.end(); ++it){
+			delete it->second;
+		}
+	#else
+		cout << "[Warning] You are trying to use keyboard control without SDL enabled." << endl;
+	#endif
 }
 
 void Joystick::Update_event(){
@@ -114,6 +118,7 @@ void Joystick::Print_infos(){
 	#endif
 }
 
+#ifdef ENABLE_SDL
 void Joystick::Check_keyboard_subscribe(SDL_Keycode key, bool downing){
 	if(keyboard_subscribes.count(key) > 0){
 		if(downing && !(keyboard_subscribes[key]->is_down)){
@@ -126,6 +131,7 @@ void Joystick::Check_keyboard_subscribe(SDL_Keycode key, bool downing){
 		}
 	}
 }
+#endif
 
 int Joystick::Get_nb_buttons(){return nb_buttons;}
 int Joystick::Get_nb_axes(){return nb_axes;}

@@ -54,26 +54,30 @@ static void listen_key_q(void* obj, bool down){
 }
 
 int main(){
-	Joystick joystick;
-	TCP_client tcp_client;
-	struct_callback obj_callback;
-	joystick.Connect_keyboard(SDLK_UP,		&listen_key_up,		&obj_callback);
-	joystick.Connect_keyboard(SDLK_DOWN,		&listen_key_down,	&obj_callback);
-	joystick.Connect_keyboard(SDLK_LEFT,		&listen_key_left,	&obj_callback);
-	joystick.Connect_keyboard(SDLK_RIGHT,		&listen_key_right,	&obj_callback);
-	joystick.Connect_keyboard(SDLK_KP_PLUS,		&listen_key_plus,	&obj_callback);
-	joystick.Connect_keyboard(SDLK_KP_MINUS,	&listen_key_minus,	&obj_callback);
-	joystick.Connect_keyboard(SDLK_a,		&listen_key_a,		&obj_callback);
-	joystick.Connect_keyboard(SDLK_q,		&listen_key_q,		&obj_callback);
-	tcp_client.Configure("127.0.0.1", 4242);
-	obj_callback.tcp_client = &tcp_client;
-	obj_callback.go_on = true;
-	obj_callback.remote_mode = true;
-	while(obj_callback.go_on){
-		usleep(10000);
-		joystick.Update_event();
-	}
-	tcp_client.Send("bye");
-	usleep(1000000);
-	tcp_client.Close();
+	#ifdef ENABLE_SDL
+		Joystick joystick;
+		TCP_client tcp_client;
+		struct_callback obj_callback;
+		joystick.Connect_keyboard(SDLK_UP,		&listen_key_up,		&obj_callback);
+		joystick.Connect_keyboard(SDLK_DOWN,		&listen_key_down,	&obj_callback);
+		joystick.Connect_keyboard(SDLK_LEFT,		&listen_key_left,	&obj_callback);
+		joystick.Connect_keyboard(SDLK_RIGHT,		&listen_key_right,	&obj_callback);
+		joystick.Connect_keyboard(SDLK_KP_PLUS,		&listen_key_plus,	&obj_callback);
+		joystick.Connect_keyboard(SDLK_KP_MINUS,	&listen_key_minus,	&obj_callback);
+		joystick.Connect_keyboard(SDLK_a,		&listen_key_a,		&obj_callback);
+		joystick.Connect_keyboard(SDLK_q,		&listen_key_q,		&obj_callback);
+		tcp_client.Configure("127.0.0.1", 4242);
+		obj_callback.tcp_client = &tcp_client;
+		obj_callback.go_on = true;
+		obj_callback.remote_mode = true;
+		while(obj_callback.go_on){
+			usleep(10000);
+			joystick.Update_event();
+		}
+		tcp_client.Send("bye");
+		usleep(1000000);
+		tcp_client.Close();
+	#else
+		cout << "[Error] You need to activate SDL to use remote" << endl;
+	#endif
 }
