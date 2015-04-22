@@ -53,7 +53,7 @@ static void listen_key_q(void* obj, bool down){
 	obj_callback->tcp_client->Send("bye");
 }
 
-int main(){
+int main(int argc, char* argv[]){
 	#ifdef ENABLE_SDL
 		Joystick joystick;
 		TCP_client tcp_client;
@@ -66,7 +66,7 @@ int main(){
 		joystick.Connect_keyboard(SDLK_KP_MINUS,	&listen_key_minus,	&obj_callback);
 		joystick.Connect_keyboard(SDLK_a,		&listen_key_a,		&obj_callback);
 		joystick.Connect_keyboard(SDLK_q,		&listen_key_q,		&obj_callback);
-		tcp_client.Configure("127.0.0.1", 4242);
+		tcp_client.Configure(argv[1], 4242);
 		obj_callback.tcp_client = &tcp_client;
 		obj_callback.go_on = true;
 		obj_callback.remote_mode = true;
