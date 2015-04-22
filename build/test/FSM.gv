@@ -2,15 +2,18 @@ digraph links {
 	edge [fontsize = 10];
 	down;
 	explore;
-	follow;
+	follow_cam1;
+	follow_cam2;
 	remote;
 	stay;
 	up;
-	explore[shape=doublecircle];
+	remote[shape=doublecircle];
 	down->explore [label = "begin_explore\nguard\nact_down_to_explore"] [minlen=4]
-	explore->follow [label = "found_something\nguard\nact_explore_to_follow"] [minlen=4]
+	explore->follow_cam1 [label = "found_something_cam1\nguard\nact_explore_to_follow_cam1"] [minlen=4]
+	explore->follow_cam2 [label = "found_something_cam2\nguard\nact_explore_to_follow_cam2"] [minlen=4]
 	explore->up [label = "go_up\nguard\nact_explore_to_up"] [minlen=4]
-	follow->explore [label = "stop_follow\nguard\nact_follow_to_explore"] [minlen=4]
+	follow_cam1->explore [label = "stop_follow\nguard\nact_follow_to_explore"] [minlen=4]
+	follow_cam2->explore [label = "stop_follow\nguard\nact_follow_to_explore"] [minlen=4]
 	remote->stay [label = "go_to_autonomous\nguard\nact_remote_to_stay"] [minlen=4]
 	stay->down [label = "go_down\nguard\nact_stay_to_down"] [minlen=4]
 	stay->remote [label = "go_to_remote\nguard\nact_stay_to_remote"] [minlen=4]

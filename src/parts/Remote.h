@@ -21,6 +21,8 @@ public:
 	Remote();
 	~Remote();
 
+	void Job_and_wait_quit();
+
 private:
 
 	TCP_server tcp_server;
@@ -30,6 +32,9 @@ private:
 	void IO();
 	
 	float remote;
+	float remote_forward;
+	float remote_turn;
+	float remote_deeper;
 
 	bool alive;
 

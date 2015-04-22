@@ -28,6 +28,9 @@ private:
 	void IO();
 
 	float fsm_state;
+	float remote_forward;
+	float remote_turn;
+	float remote_deeper;
 	float t;
 	float x,    y,    z;
 	float vx,   vy,   vz;

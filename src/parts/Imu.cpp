@@ -11,7 +11,12 @@ Imu::~Imu(){}
 
 void Imu::On_start(){
 	#if defined ENABLE_SERIAL && defined ENABLE_IMU
-		unsigned char imu_request[8];
+	unsigned char request[3];
+	request[0] = '1';
+	request[1] = 'o';
+	request[2] = 't';
+	serial->Serial_write(request, 1);
+/*		unsigned char imu_request[8];
 		imu_request[0]=0x62;// serial
 		imu_request[1]=0x73;// 's'
 		imu_request[2]=0x6E;// 'n'
@@ -19,7 +24,7 @@ void Imu::On_start(){
 		imu_request[4]=0x48;// packet type : 1 batch
 		imu_request[5]=0xB1;// reset factory settings
 		imu_request[6]=0x02;// checksum high
-		imu_request[7]=0xA7;// checksum low
+		imu_request[7]=0x4A;// checksum low
 		serial->Serial_write(imu_request, 8);
 		usleep(1000000);
 		imu_request[0]=0x62;// serial
@@ -29,9 +34,11 @@ void Imu::On_start(){
 		imu_request[4]=0x48;// packet type : 1 batch
 		imu_request[5]=0xAC;// gyro calibration (do not move during 3s !)
 		imu_request[6]=0x02;// checksum high
-		imu_request[7]=0xAC;// checksum low
+		imu_request[7]=0x45;// checksum low
 		serial->Serial_write(imu_request, 8);
 		usleep(10000000);
+*/
+		
 	#endif
 }
 
@@ -44,8 +51,14 @@ void Imu::Job(){
 	#if defined ENABLE_SERIAL && defined ENABLE_IMU
 		while(true){
 			usleep(100000);
-			unsigned char imu_request[8];
-imu_request[0]=0x62;//instrucción para serial.
+char* answer = serial->Serial_read();
+for(int i = 0; i < 128; i++){
+cout << (int) answer[i] << " | ";
+}
+cout << endl;
+			
+/*			unsigned char imu_request[8];
+	imu_request[0]=0x62;//instrucción para serial.
 	imu_request[1]=0x73;//s
 	imu_request[2]=0x6E;//n
 	imu_request[3]=0x70;//p
@@ -53,6 +66,16 @@ imu_request[0]=0x62;//instrucción para serial.
 	imu_request[5]=0x00;//N
 	imu_request[6]=0x01;//
 	imu_request[7]=0x52;// para comprobar datos
+	
+
+		imu_request[0]=0x62;// serial
+		imu_request[1]=0x73;// 's'
+		imu_request[2]=0x6E;// 'n'
+		imu_request[3]=0x70;// 'p'
+		imu_request[4]=0x48;// packet type : 1 batch
+		imu_request[5]=0x64;// request quaternion AB
+		imu_request[6]=0x01;// checksum high
+		imu_request[7]=0xFD;// checksum low
 			serial->Serial_write(imu_request, 8);
 			usleep(1000);
 			char* answer = serial->Serial_read();
@@ -72,8 +95,8 @@ imu_request[0]=0x62;//instrucción para serial.
 					continue;
 				}
 				if(msg.size() == 4){
-					if(	answer[i] == 94 ||
-						answer[i] == 98){msg.push_back(answer[i]);}
+cout << (int) answer[4] << endl;
+					if(true){msg.push_back(answer[i]);}
 					else			{msg.clear();}
 					continue;
 				}
@@ -84,23 +107,52 @@ cout << (int) msg[i] << " | ";
 }
 cout << endl;
 					if(msg[4] == 94){
+						quaternion_coded[2] = (msg[5] << 8) | msg[6];
+						quaternion_coded[3] = (msg[7] << 8) | msg[8];
+						quaternion_candidate[2] = static_cast <float> (quaternion_coded[2]) * FAC_QUATERNION_IMU;
+						quaternion_candidate[3] = static_cast <float> (quaternion_coded[3]) * FAC_QUATERNION_IMU;
+						if(fabs(quaternion_candidate[2]) > 0.01){q[2] = quaternion_candidate[2];}
+						if(fabs(quaternion_candidate[3]) > 0.01){q[3] = quaternion_candidate[3];}
 						short pitch1	= (msg[5] << 8) | msg[6];
 						short roll1	= (msg[7] << 8) | msg[8];
 						float candidate_pitch	= static_cast <float> (pitch1) * FAC_ANG_IMU;
 						float candidate_roll	= static_cast <float> (roll1) * FAC_ANG_IMU;
 						if(fabs(candidate_pitch) > 2.){PITCH = candidate_pitch;}
 						if(fabs(candidate_roll) > 2.){ROLL = candidate_roll;}
+
 					}
 					else if(msg[4] == 98){
+						quaternion_coded[0] = (msg[5] << 8) | msg[6];
+						quaternion_coded[1] = (msg[7] << 8) | msg[8];
+						quaternion_candidate[0] = static_cast <float> (quaternion_coded[0]) * FAC_QUATERNION_IMU;
+						quaternion_candidate[1] = static_cast <float> (quaternion_coded[1]) * FAC_QUATERNION_IMU;
+						if(fabs(quaternion_candidate[0]) > 0.01){q[0] = quaternion_candidate[0];}
+						if(fabs(quaternion_candidate[1]) > 0.01){q[1] = quaternion_candidate[1];}
+
 						short yaw1	= (msg[5] << 8) | msg[6];
 						float candidate_yaw	= static_cast <float> (yaw1) * FAC_ANG_IMU;
 						if(fabs(candidate_yaw) > 4.){YAW = candidate_yaw;}
+
 					}
+					cout << q[0] << "\t" << q[1] << "\t" << q[2] << "\t" << q[3] << endl;
+float q01 = q[0] * q[1];
+float q02 = q[0] * q[2];
+float q03 = q[0] * q[3];
+float q11 = q[1] * q[1];
+float q12 = q[1] * q[2];
+float q13 = q[1] * q[3];
+float q22 = q[2] * q[2];
+float q23 = q[2] * q[3];
+float q33 = q[3] * q[3];
+
+ROLL = atan2(2 * (q01 + q23), 1 - 2 * (q11 + q22)) * 57.29578;
+PITCH = asin(2 * (q02 - q13)) * 57.29578;
+YAW = atan2(2 * (q03 + q12), 1 - 2 * (q22 + q33)) * 57.29578;
 					cout << YAW << "\t" << PITCH << "\t" << ROLL << endl;
 					msg.clear();
 				}
 			}
-		}
+*/		}
 
 	#endif
 }

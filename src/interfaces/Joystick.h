@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <iostream>
+#include <map>
 
 #ifndef JOYSTICK
 #define JOYSTICK
@@ -33,7 +34,9 @@ public:
 	Joystick();
 	~Joystick();
 	bool Connect_joystick(int num_device);
+	bool Connect_keyboard(int key, void (*callback) (void*, bool), void* obj);
 	void Disconnect_joystick();
+	void Disconnect_keyboard();
 
 	void Update_event();
 	void Print_infos();
@@ -47,13 +50,25 @@ public:
 
 private:
 
+	typedef struct{
+		void (*callback) (void*, bool);
+		void* obj;
+		bool is_down;
+	}subscribe;
+
 	#ifdef ENABLE_SDL
+		SDL_Window *window;
+		SDL_Renderer* renderer;
 		SDL_Event event;
 		SDL_Joystick *joystick;
 	#endif
+
 	int num_device;
 	int nb_buttons, nb_axes, nb_hats;
 	int *buttons, *axes, *hats;
+	std::map <SDL_Keycode, subscribe*> keyboard_subscribes;
+
+	void Check_keyboard_subscribe(SDL_Keycode key, bool downing);
 
 };
 

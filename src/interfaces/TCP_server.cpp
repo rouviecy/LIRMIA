@@ -16,6 +16,8 @@ bool TCP_server::Configure(int server_port){
 		cout << "[Error] Failed to open TCP server socket on port " + to_string(server_port) << endl;
 		return false;
 	}
+	int setoption = 1;
+	setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char*) &setoption, sizeof(setoption));
 	this->server_port = server_port;
 	struct sockaddr_in sin = { 0 };
 	sin.sin_family = AF_INET;
@@ -89,6 +91,8 @@ void TCP_server::Close(){
 	cout << "Connecting killer client ..." << endl;
 	TCP_client killer_client;
 	killer_client.Configure("localhost", server_port);
+	usleep(1000000);
+	killer_client.Close();
 	usleep(1000000);
 	close(sock);
 	thr.join();

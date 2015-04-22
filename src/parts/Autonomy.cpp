@@ -15,6 +15,9 @@ void Autonomy::On_start(){}
 
 void Autonomy::IO(){
 	Link_input("fsm_state", &fsm_state);
+	Link_input("remote_forward", &remote_forward);
+	Link_input("remote_turn", &remote_turn);
+	Link_input("remote_deeper", &remote_deeper);
 	Link_input("t", &t);
 	Link_input("x", &x);        Link_input("y", &y);        Link_input("z", &z);
 	Link_input("vx", &vx);      Link_input("vy", &vy);      Link_input("vz", &vz);
@@ -45,6 +48,12 @@ void Autonomy::Job(){
 		motor2 = -cam_detect1_horizontal;
 		motor3 = +cam_detect1_vertical;
 		motor4 = +cam_detect1_vertical;
+	}
+	else if(current_state == REMOTE){ // TODO : régler sens
+		motor1 = remote_forward / 2 + remote_turn / 2;
+		motor2 = remote_forward / 2 - remote_turn / 2;
+		motor3 = remote_deeper / 2;
+		motor4 = remote_deeper / 2;
 	}
 	else{
 		motor1 = 0.;

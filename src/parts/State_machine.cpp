@@ -4,7 +4,7 @@ using namespace std;
 
 State_machine::State_machine() : ComThread(){
 
-	fsm_state = 0.;
+	fsm_state = 6.;
 	my_guard = true;
 
 	fsm.Add_state("remote");
@@ -49,7 +49,7 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_transition(	"up",		"stay",		"reach_surface",	"guard",	"act_up_to_stay",		(void*) this);
 	fsm.Add_transition(	"stay",		"remote",	"go_to_remote",		"guard",	"act_stay_to_remote",		(void*) this);
 
-	fsm.Launch("explore");
+	fsm.Launch("remote");
 	current_state = EXPLORE;
 	drawer.Draw_FSM("FSM", &fsm);
 
@@ -69,14 +69,17 @@ void State_machine::IO(){
 
 void State_machine::Job(){
 	Critical_receive();
-	if(cam_detect1 > 0){
-		fsm.Call_event("found_something_cam1");
+	if(Decode_state(fsm_state) == REMOTE && remote < 0){fsm.Call_event("go_to_autonomous");}
+	if(Decode_state(fsm_state) == EXPLORE){
+		if(remote > 0){fsm.Call_event("go_up");}
+		else{
+			if(cam_detect1 > 0){fsm.Call_event("found_something_cam1");}
+			if(cam_detect2 > 0){fsm.Call_event("found_something_cam2");}
+		}
 	}
-	if(cam_detect2 > 0){
-		fsm.Call_event("found_something_cam2");
-	}
-	if(cam_detect1 < 0 && cam_detect2 < 0){
-		fsm.Call_event("stop_follow");
+	if(Decode_state(fsm_state) == FOLLOW_CAM1
+	|| Decode_state(fsm_state) == FOLLOW_CAM2){
+		if(remote > 0 || cam_detect1 < 0 && cam_detect2 < 0){fsm.Call_event("stop_follow");}
 	}
 	Critical_send();
 }
@@ -94,9 +97,11 @@ state_t State_machine::Decode_state(float float_state){
 
 void State_machine::Act_remote_to_stay(void* obj){
 	((State_machine*) obj)->fsm_state = 0.;
+	((State_machine*) obj)->fsm.Call_event("go_down");
 }
 void State_machine::Act_stay_to_down(void* obj){
 	((State_machine*) obj)->fsm_state = 1.;
+	((State_machine*) obj)->fsm.Call_event("begin_explore");
 }
 void State_machine::Act_down_to_explore(void* obj){
 	((State_machine*) obj)->fsm_state = 2.;
@@ -112,9 +117,11 @@ void State_machine::Act_follow_to_explore(void* obj){
 }
 void State_machine::Act_explore_to_up(void* obj){
 	((State_machine*) obj)->fsm_state = 5.;
+	((State_machine*) obj)->fsm.Call_event("reach_surface");
 }
 void State_machine::Act_up_to_stay(void* obj){
 	((State_machine*) obj)->fsm_state = 0.;
+	((State_machine*) obj)->fsm.Call_event("go_to_remote");
 }
 void State_machine::Act_stay_to_remote(void* obj){
 	((State_machine*) obj)->fsm_state = 6.;
