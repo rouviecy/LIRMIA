@@ -15,7 +15,7 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&imu,		"Inertial Measurement Unit",	-1);		// manual loop
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&mapping,		"Mapping",			1000000);	// 1 s
-	Add_thread(&motors,		"Motors",			1000000);	// 1000 ms
+	Add_thread(&motors,		"Motors",			10000);		// 10 ms
 	Add_thread(&remote,		"Remote control",		-1);		// manual loop
 	Add_thread(&state,		"State",			20000);		// 20 ms
 	Add_thread(&state_machine,	"Finite state machine",		40000);		// 40 s

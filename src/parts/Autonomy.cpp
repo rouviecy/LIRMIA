@@ -50,10 +50,10 @@ void Autonomy::Job(){
 		motor4 = +cam_detect1_vertical;
 	}
 	else if(current_state == REMOTE){ // TODO : régler sens
-		motor1 = remote_forward / 2 + remote_turn / 2;
-		motor2 = remote_forward / 2 - remote_turn / 2;
-		motor3 = remote_deeper / 2;
-		motor4 = remote_deeper / 2;
+		motor1 = remote_forward / 2 - remote_turn / 2;
+		motor2 = remote_forward / 2 + remote_turn / 2;
+		motor3 = - remote_deeper / 2;
+		motor4 = - remote_deeper / 2;
 	}
 	else{
 		motor1 = 0.;

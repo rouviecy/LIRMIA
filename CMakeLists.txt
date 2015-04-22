@@ -3,23 +3,23 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(ENABLE_GRAPHVIZ ON)
+set(ENABLE_GRAPHVIZ OFF)
 set(ENABLE_PYTHON OFF)
 set(ENABLE_JAVA OFF)
-set(ENABLE_SDL ON)
+set(ENABLE_SDL OFF)
 set(JAVA_LIBMAWT_PATH /etc/java-config-2/current-system-vm/jre/lib/amd64/xawt)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces/vision/CMakeLists.txt)
 
-#add_definitions(-DENABLE_SERIAL)
-#add_definitions(-DENABLE_I2C)		# needs serial
+add_definitions(-DENABLE_SERIAL)
+add_definitions(-DENABLE_I2C)		# needs serial
 #add_definitions(-DENABLE_DEPTH)	# needs serial and I2C
 #add_definitions(-DENABLE_IMU)		# needs serial and I2C
 add_definitions(-DENABLE_MOTORS)	# needs serial and I2C
 add_definitions(-DENABLE_TCP)
 add_definitions(-DENABLE_CAM1)
-#add_definitions(-DENABLE_CAM2)
+add_definitions(-DENABLE_CAM2)
 
 find_package(OpenCV REQUIRED)
 set(OTHER_LIBS
