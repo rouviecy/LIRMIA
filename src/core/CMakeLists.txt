@@ -7,16 +7,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 
 if(${ENABLE_GRAPHVIZ})
 	pkg_check_modules(GVC REQUIRED libgvc)
-	pkg_check_modules(CGRAPH REQUIRED libcgraph)
-	if(GVC_FOUND AND CGRAPH_FOUND)
+	if(GVC_FOUND)
 		add_definitions(-DENABLE_GRAPHVIZ)
-		add_definitions(-DHAVE_STRING_H) # patch for broken <=graphviz-2.30 headers
+		add_definitions(-DHAVE_STRING_H) # patch for broken >=graphviz-2.30 headers
 		include_directories(${GVC_INCLUDE_DIRS})
-		include_directories(${CGRAPH_INCLUDE_DIRS})
 		link_directories(${GVC_LIBRARY_DIRS})
-		link_directories(${CGRAPH_LIBRARY_DIRS})
-		set(LIBS ${LIBS} ${GVC_LIBRARIES} ${CGRAPH_LIBRARIES})
-	endif(GVC_FOUND AND CGRAPH_FOUND)
+		set(LIBS ${LIBS} ${GVC_LIBRARIES})
+	endif(GVC_FOUND)
 endif(${ENABLE_GRAPHVIZ})
 
 if(${ENABLE_SDL})
