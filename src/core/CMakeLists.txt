@@ -9,6 +9,7 @@ if(${ENABLE_GRAPHVIZ})
 	pkg_check_modules(GVC REQUIRED libgvc)
 	if(GVC_FOUND)
 		add_definitions(-DENABLE_GRAPHVIZ)
+		add_definitions(-DHAVE_STRING_H) # patch for broken <=graphviz-2.30 headers
 		include_directories(${GVC_INCLUDE_DIRS})
 		link_directories(${GVC_LIBRARY_DIRS})
 		set(LIBS ${LIBS} ${GVC_LIBRARIES})
