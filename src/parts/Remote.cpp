@@ -33,7 +33,6 @@ void Remote::Job_and_wait_quit(){
 	#ifdef ENABLE_TCP
 		while(alive){
 			char* msg_in = tcp_server.Receive(0);
-			cout << msg_in << endl;
 			if(msg_in[0] == 'b' && msg_in[1] == 'y' && msg_in[2] == 'e'){
 				alive = false;
 				tcp_server.Close();
