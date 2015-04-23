@@ -30,7 +30,7 @@ private:
 	void On_start();
 	void Job();
 	void IO();
-	
+
 	float remote;
 	float remote_forward;
 	float remote_turn;

@@ -26,7 +26,7 @@ bool TCP_client::Configure(const char* server_ip, int server_port){
 	sin.sin_addr = *(in_addr*) hostinfo->h_addr;
 	sin.sin_port = htons(server_port);
 	if(connect(sock,(sockaddr*) &sin, sizeof(sockaddr)) < 0){
-		cout << "[Error] Failed to conect TCP client socket on " + string(server_ip) + ":" + to_string(server_port) << endl;
+		cout << "[Error] Failed to connect TCP client socket on " + string(server_ip) + ":" + to_string(server_port) << endl;
 		return false;
 	}
 	cout << "TCP client connected on " + string(server_ip) + ":" + to_string(server_port) << endl;
@@ -53,6 +53,14 @@ void TCP_client::Send(string msg_out){
 	msg[msg_out.size()] = '\0';
 	send(sock, msg, TCP_BUFFER_LEN, 0);
 	delete[] msg;
+}
+
+void TCP_client::Direct_send(unsigned char* msg, int msg_size){
+	send(sock, msg, msg_size, 0);
+}
+
+int TCP_client::Direct_receive(unsigned char* msg, int msg_size){
+	return recv(sock, msg, msg_size, 0);
 }
 
 void TCP_client::Close(){

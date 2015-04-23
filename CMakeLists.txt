@@ -18,6 +18,7 @@ if(${IS_ROBOT})
 	add_definitions(-DENABLE_TCP)
 	add_definitions(-DENABLE_CAM1)
 	add_definitions(-DENABLE_CAM2)
+	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 else(${IS_ROBOT})
 	set(ENABLE_GRAPHVIZ ON)
 	set(ENABLE_PYTHON OFF)
@@ -29,8 +30,9 @@ else(${IS_ROBOT})
 	#add_definitions(-DENABLE_IMU)		# needs serial and I2C
 	#add_definitions(-DENABLE_MOTORS)	# needs serial and I2C
 	add_definitions(-DENABLE_TCP)
-	#add_definitions(-DENABLE_CAM1)
+	add_definitions(-DENABLE_CAM1)
 	#add_definitions(-DENABLE_CAM2)
+	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 endif(${IS_ROBOT})
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)
@@ -69,3 +71,6 @@ target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE
 
 add_executable(remote src/remote_controller.cpp)
 target_link_libraries(remote ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
+
+add_executable(camera src/remote_cam.cpp)
+target_link_libraries(camera ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)

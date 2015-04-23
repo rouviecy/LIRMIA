@@ -9,14 +9,39 @@ Cameras::Cameras() : ComThread(){
 	cam_detect2_horizontal = 0.; cam_detect2_vertical = 0.;
 	#ifdef ENABLE_CAM1
 		capture1 = cv::VideoCapture(0);
+		#ifdef ENABLE_TCPCAM
+			if(!tcp_server_cam1.Configure(4243)){return;}
+			cout << "Waiting client for camera 1..." << endl;
+			while(tcp_server_cam1.Get_nb_clients() == 0){
+				usleep(1000000);
+			}
+			cout << "Client connected for camera 1" << endl;
+		#endif
 	#endif
 	#ifdef ENABLE_CAM2
 		capture2 = cv::VideoCapture(1);
+		#ifdef ENABLE_TCPCAM
+			if(!tcp_server_cam2.Configure(4244)){return;}
+			cout << "Waiting client for camera 2..." << endl;
+			while(tcp_server_cam2.Get_nb_clients() == 0){
+				usleep(1000000);
+			}
+			cout << "Client connected for camera 2" << endl;
+		#endif
 	#endif
+	
+	
 }
 
 Cameras::~Cameras(){
-
+	#ifdef ENABLE_TCPCAM
+		#ifdef ENABLE_CAM1
+			tcp_server_cam1.Close();
+		#endif
+		#ifdef ENABLE_CAM2
+			tcp_server_cam2.Close();
+		#endif
+	#endif
 }
 
 void Cameras::On_start(){}
@@ -43,6 +68,9 @@ void Cameras::Job(){
 		else{
 			cam_detect1 = -1.;
 		}
+		#ifdef ENABLE_TCPCAM
+			Send_tcp_img(img1, &tcp_server_cam1);
+		#endif
 	#endif
 
 	#ifdef ENABLE_CAM2
@@ -59,6 +87,9 @@ void Cameras::Job(){
 		else{
 			cam_detect2 = -1.;
 		}
+		#ifdef ENABLE_TCPCAM
+			Send_tcp_img(img2, &tcp_server_cam2);
+		#endif
 	#endif
 
 	Critical_send();
@@ -79,6 +110,14 @@ vector <float> Cameras::Find_biggest_blob(vector <cv::Point2i> blobs_center, vec
 		result.push_back((float) (2 * blobs_center[index_biggest].y) / img_size.height - 1.);
 	}
 	return result;
+}
+
+void Cameras::Send_tcp_img(cv::Mat img, TCP_server* tcp){
+	cv::Mat img_mini;
+	cv::resize(img, img_mini, cv::Size(320, 240));
+	img_mini = img_mini.reshape(0,1);
+	int size_img = img_mini.total() * img_mini.elemSize();
+	tcp->Direct_send(img_mini.data, size_img);
 }
 
 cv::Mat Cameras::Get_img1(){return img1;}

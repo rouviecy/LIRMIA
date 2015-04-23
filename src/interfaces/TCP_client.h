@@ -31,6 +31,8 @@ public:
 	bool Configure(const char* server_ip, int server_port);
 	char* Receive();
 	void Send(std::string msg_out);
+	void Direct_send(unsigned char* msg, int msg_size);
+	int Direct_receive(unsigned char* msg, int msg_size);
 	void Close();
 
 private:

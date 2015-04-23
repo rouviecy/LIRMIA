@@ -79,6 +79,16 @@ void TCP_server::Send(string msg_out){
 	delete[] msg;
 }
 
+void TCP_server::Direct_send(unsigned char* msg, int msg_size){
+	for(int i = 0; i < clients.size(); i++){
+		send(clients[i], msg, msg_size, 0);
+	}
+}
+
+int TCP_server::Direct_receive(int client_index, unsigned char* msg, int msg_size){
+	return recv(clients[client_index], msg, msg_size, 0);
+}
+
 void TCP_server::Close(){
 	if(!connected){
 		cout << "[Warning] Trying to close TCP server which is not connected !" << endl;
