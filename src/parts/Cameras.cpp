@@ -114,10 +114,18 @@ vector <float> Cameras::Find_biggest_blob(vector <cv::Point2i> blobs_center, vec
 
 void Cameras::Send_tcp_img(cv::Mat img, TCP_server* tcp){
 	cv::Mat img_mini;
+	std::vector <unsigned char> msg;
 	cv::resize(img, img_mini, cv::Size(320, 240));
-	img_mini = img_mini.reshape(0,1);
-	int size_img = img_mini.total() * img_mini.elemSize();
-	tcp->Direct_send(img_mini.data, size_img);
+	std::vector<int> encode_params;
+	encode_params.push_back(CV_IMWRITE_JPEG_QUALITY);
+	encode_params.push_back(90);
+	cv::imencode(".jpg", img_mini, msg, encode_params);
+	tcp->Send(to_string(msg.size()));
+	unsigned char msg_char[msg.size()];
+	for(int i = 0; i < msg.size(); i++){
+		msg_char[i] = msg[i];
+	}
+	tcp->Direct_send(msg_char, msg.size());
 }
 
 cv::Mat Cameras::Get_img1(){return img1;}
