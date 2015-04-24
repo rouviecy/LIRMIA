@@ -10,37 +10,20 @@ Cameras::Cameras() : ComThread(){
 	#ifdef ENABLE_CAM1
 		capture1 = cv::VideoCapture(0);
 		#ifdef ENABLE_TCPCAM
-			if(!tcp_server_cam1.Configure(4243)){return;}
-			cout << "Waiting client for camera 1..." << endl;
-			while(tcp_server_cam1.Get_nb_clients() == 0){
-				usleep(1000000);
-			}
-			cout << "Client connected for camera 1" << endl;
+			camera_server.Add_flux(CAMERA_PORT_1);
 		#endif
 	#endif
 	#ifdef ENABLE_CAM2
 		capture2 = cv::VideoCapture(1);
 		#ifdef ENABLE_TCPCAM
-			if(!tcp_server_cam2.Configure(4244)){return;}
-			cout << "Waiting client for camera 2..." << endl;
-			while(tcp_server_cam2.Get_nb_clients() == 0){
-				usleep(1000000);
-			}
-			cout << "Client connected for camera 2" << endl;
+			camera_server.Add_flux(CAMERA_PORT_2);
 		#endif
-	#endif
-	
-	
+	#endif	
 }
 
 Cameras::~Cameras(){
 	#ifdef ENABLE_TCPCAM
-		#ifdef ENABLE_CAM1
-			tcp_server_cam1.Close();
-		#endif
-		#ifdef ENABLE_CAM2
-			tcp_server_cam2.Close();
-		#endif
+		camera_server.Clear_all_flux();
 	#endif
 }
 
@@ -69,10 +52,10 @@ void Cameras::Job(){
 			cam_detect1 = -1.;
 		}
 		float main_line_cam1[2];
-		reco.Set_img(img1);
-		img1 = reco.Trouver_ligne_principale(main_line_cam1);
+//		reco.Set_img(img1);
+//		img1 = reco.Trouver_ligne_principale(main_line_cam1);
 		#ifdef ENABLE_TCPCAM
-			Send_tcp_img(img1, &tcp_server_cam1);
+			camera_server.Send_tcp_img(img1, CAMERA_PORT_1);
 		#endif
 	#endif
 
@@ -91,10 +74,10 @@ void Cameras::Job(){
 			cam_detect2 = -1.;
 		}
 		float main_line_cam2[2];
-		reco.Set_img(img2);
-		img2 = reco.Trouver_ligne_principale(main_line_cam2);
+//		reco.Set_img(img2);
+//		img2 = reco.Trouver_ligne_principale(main_line_cam2);
 		#ifdef ENABLE_TCPCAM
-			Send_tcp_img(img2, &tcp_server_cam2);
+			camera_server.Send_tcp_img(img2, CAMERA_PORT_2);
 		#endif
 	#endif
 
@@ -116,22 +99,6 @@ vector <float> Cameras::Find_biggest_blob(vector <cv::Point2i> blobs_center, vec
 		result.push_back((float) (2 * blobs_center[index_biggest].y) / img_size.height - 1.);
 	}
 	return result;
-}
-
-void Cameras::Send_tcp_img(cv::Mat img, TCP_server* tcp){
-	cv::Mat img_mini;
-	std::vector <unsigned char> msg;
-	cv::resize(img, img_mini, cv::Size(320, 240));
-	std::vector<int> encode_params;
-	encode_params.push_back(CV_IMWRITE_JPEG_QUALITY);
-	encode_params.push_back(90);
-	cv::imencode(".jpg", img_mini, msg, encode_params);
-	tcp->Send(to_string(msg.size()));
-	unsigned char msg_char[msg.size()];
-	for(int i = 0; i < msg.size(); i++){
-		msg_char[i] = msg[i];
-	}
-	tcp->Direct_send(msg_char, msg.size());
 }
 
 cv::Mat Cameras::Get_img1(){return img1;}

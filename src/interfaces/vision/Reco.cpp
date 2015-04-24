@@ -336,8 +336,8 @@ cv::Mat Reco::Trouver_ligne_principale(float* angle_et_ecart){
 		centre += cv::Point2i((angle_moyen > 0 ? -distance_moyenne : +distance_moyenne) / cos(angle_moyen), 0);
 	}
 	cv::line(image, centre + pt_excentre, centre - pt_excentre, blanc, 5);
-	*angle_et_ecart = angle_moyen;
-	*(angle_et_ecart + sizeof(float)) = distance_moyenne;
+//	*angle_et_ecart = angle_moyen;
+//	*(angle_et_ecart + sizeof(float)) = distance_moyenne;
 	return image;
 }
 

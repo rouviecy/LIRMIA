@@ -44,6 +44,7 @@ set(OTHER_LIBS
 )
 
 add_library(BETTERAVE_USER
+	src/interfaces/Camera_server.h	src/interfaces/Camera_server.cpp
 	src/interfaces/FSM.h		src/interfaces/FSM.cpp
 	src/interfaces/FSMDraw.h	src/interfaces/FSMDraw.cpp
 	src/interfaces/Joystick.h	src/interfaces/Joystick.cpp

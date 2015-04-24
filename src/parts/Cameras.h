@@ -14,7 +14,7 @@
 #include "../interfaces/vision/Blobs.h"
 #include "../interfaces/vision/Gui.h"
 #include "../interfaces/vision/Reco.h"
-#include "../interfaces/TCP_server.h"
+#include "../interfaces/Camera_server.h"
 #include "../core/ComThread.h"
 #include <opencv2/opencv.hpp>
 
@@ -30,12 +30,15 @@ public:
 
 private:
 
+	#define CAMERA_PORT_1 4243
+	#define CAMERA_PORT_2 4244
+
 	cv::VideoCapture capture1, capture2;
 
 	Blobs blobs;
+	Camera_server camera_server;
 	Gui gui;
 	Reco reco;
-	TCP_server tcp_server_cam1, tcp_server_cam2;
 
 	void On_start();
 	void Job();
@@ -50,7 +53,6 @@ private:
 	cv::Mat img1, img2;
 
 	std::vector <float> Find_biggest_blob(std::vector <cv::Point2i> blobs_center, std::vector <double> blobs_size, cv::Size img_size);
-	void Send_tcp_img(cv::Mat img, TCP_server* tcp);
 
 };
 
