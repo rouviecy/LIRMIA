@@ -68,6 +68,9 @@ void Cameras::Job(){
 		else{
 			cam_detect1 = -1.;
 		}
+		float main_line_cam1[2];
+		reco.Set_img(img1);
+		img1 = reco.Trouver_ligne_principale(main_line_cam1);
 		#ifdef ENABLE_TCPCAM
 			Send_tcp_img(img1, &tcp_server_cam1);
 		#endif
@@ -87,6 +90,9 @@ void Cameras::Job(){
 		else{
 			cam_detect2 = -1.;
 		}
+		float main_line_cam2[2];
+		reco.Set_img(img2);
+		img2 = reco.Trouver_ligne_principale(main_line_cam2);
 		#ifdef ENABLE_TCPCAM
 			Send_tcp_img(img2, &tcp_server_cam2);
 		#endif

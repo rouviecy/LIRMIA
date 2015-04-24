@@ -299,6 +299,48 @@ vector <int> Reco::Liste_edges_int(cv::Subdiv2D s, int max_x, int max_y, cv::Mat
 	return resultat_vector;
 }
 
+cv::Mat Reco::Trouver_ligne_principale(float* angle_et_ecart){
+	// Extraire les contours
+	cv::Mat image_contours;
+	image.copyTo(image_quadrillage);
+	cv::cvtColor(image, image, CV_RGB2GRAY, 1);
+	cv::equalizeHist(image, image);
+	cv::Canny(image, image_contours, 300, 800);
+	cv::imshow("Canny", image_contours);
+
+	// Trouver les lignes
+	vector <cv::Vec4i> lignes;
+	cv::HoughLinesP(image_contours, lignes, 1, CV_PI/90, 100, 100, 500);
+	if(lignes.size() == 0){return image;}
+
+	// Calculer les angles et distances par rapport à la verticale
+	vector <float> angles, distances;
+	float angle_moyen = 0.;
+	float distance_moyenne = 0.;
+	cv::Point2i centre(image.size().width / 2, image.size().height / 2);
+	for(size_t i = 0; i < lignes.size(); i++){
+		float dx = (float) (lignes[i][2] - lignes[i][0]);
+		float dy = (float) (lignes[i][3] - lignes[i][1]);
+		float angle = atan2(dy, dx);
+		angle = (angle > 0 ? +M_PI_2 : -M_PI_2) - angle;
+		angles.push_back(angle);
+		if(fabs(angle) < M_PI_4){
+			float distance = (dy * ((float) centre.x - lignes[i][0]) - dx * ((float) centre.y - lignes[i][1])) / sqrt((dx * dx + dy * dy));
+			distances.push_back(distance);
+		}
+	}
+	angle_moyen = accumulate(angles.begin(), angles.end(), 0.0) / angles.size();
+	cv::Point2i pt_excentre((int) (1000. * sin(angle_moyen)), (int) (1000. * cos(angle_moyen)));
+	if(distances.size() > 0){
+		distance_moyenne = accumulate(distances.begin(), distances.end(), 0.0) / distances.size();
+		centre += cv::Point2i((angle_moyen > 0 ? -distance_moyenne : +distance_moyenne) / cos(angle_moyen), 0);
+	}
+	cv::line(image, centre + pt_excentre, centre - pt_excentre, blanc, 5);
+	*angle_et_ecart = angle_moyen;
+	*(angle_et_ecart + sizeof(float)) = distance_moyenne;
+	return image;
+}
+
 // Getters et Setters
 cv::Mat Reco::Get_img_quadrillage() const{return this->image_quadrillage;}
 vector < vector <cv::Point2i> > Reco::Get_quadrillage() const{return this->liste_quadrillage;}

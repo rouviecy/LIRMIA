@@ -13,6 +13,7 @@
 
 #include "../interfaces/vision/Blobs.h"
 #include "../interfaces/vision/Gui.h"
+#include "../interfaces/vision/Reco.h"
 #include "../interfaces/TCP_server.h"
 #include "../core/ComThread.h"
 #include <opencv2/opencv.hpp>
@@ -33,6 +34,7 @@ private:
 
 	Blobs blobs;
 	Gui gui;
+	Reco reco;
 	TCP_server tcp_server_cam1, tcp_server_cam2;
 
 	void On_start();
