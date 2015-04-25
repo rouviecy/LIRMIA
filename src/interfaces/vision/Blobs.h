@@ -18,6 +18,7 @@
 #ifndef BLOBS
 #define BLOBS
 
+#include <mutex>
 #include <opencv2/opencv.hpp>
 #include "struct_HSV_bound.h"
 
@@ -41,6 +42,8 @@ public:
 	void Relier();						// Relier les blobs
 
 private:
+
+	std::mutex mut;
 
 	double seuil_taille_blobs;	// taille minimum des blobs
 	cv::Mat morpho_kern;		// pour érodation et dilatation

@@ -17,6 +17,7 @@ add_library(VISION_LIBS
 	src/interfaces/vision/Tracking.h		src/interfaces/vision/Tracking.cpp
 	src/interfaces/vision/Transfo.h			src/interfaces/vision/Transfo.cpp
 	src/interfaces/vision/Utils.h			src/interfaces/vision/Utils.cpp
+	src/interfaces/vision/hsv_params.h
 	src/interfaces/vision/struct_HSV_bound.h
 	src/interfaces/vision/struct_wrap_bound.h
 	src/interfaces/vision/struct_nom.h

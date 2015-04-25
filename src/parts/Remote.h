@@ -13,6 +13,8 @@
 
 #include "../core/ComThread.h"
 #include "../interfaces/TCP_server.h"
+#include "../interfaces/vision/Blobs.h"
+#include "../interfaces/vision/struct_HSV_bound.h"
 
 class Remote : public ComThread{
 
@@ -22,10 +24,13 @@ public:
 	~Remote();
 
 	void Job_and_wait_quit();
+	void Set_blobs_obj(Blobs* blobs);
 
 private:
 
 	TCP_server tcp_server;
+	STRUCT_HSV_BOUND hsv;
+	Blobs* blobs;
 
 	void On_start();
 	void Job();

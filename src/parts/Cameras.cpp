@@ -11,12 +11,14 @@ Cameras::Cameras() : ComThread(){
 		capture1 = cv::VideoCapture(0);
 		#ifdef ENABLE_TCPCAM
 			camera_server.Add_flux(CAMERA_PORT_1);
+			camera_server.Add_flux(CAMERA_PORT_3);
 		#endif
 	#endif
 	#ifdef ENABLE_CAM2
 		capture2 = cv::VideoCapture(1);
 		#ifdef ENABLE_TCPCAM
 			camera_server.Add_flux(CAMERA_PORT_2);
+			camera_server.Add_flux(CAMERA_PORT_4);
 		#endif
 	#endif	
 }
@@ -56,6 +58,7 @@ void Cameras::Job(){
 //		img1 = reco.Trouver_ligne_principale(main_line_cam1);
 		#ifdef ENABLE_TCPCAM
 			camera_server.Send_tcp_img(img1, CAMERA_PORT_1);
+			camera_server.Send_tcp_img(blobs.Get_img_blobs(), CAMERA_PORT_3);
 		#endif
 	#endif
 
@@ -78,6 +81,7 @@ void Cameras::Job(){
 //		img2 = reco.Trouver_ligne_principale(main_line_cam2);
 		#ifdef ENABLE_TCPCAM
 			camera_server.Send_tcp_img(img2, CAMERA_PORT_2);
+			camera_server.Send_tcp_img(blobs.Get_img_blobs(), CAMERA_PORT_4);
 		#endif
 	#endif
 
@@ -103,3 +107,5 @@ vector <float> Cameras::Find_biggest_blob(vector <cv::Point2i> blobs_center, vec
 
 cv::Mat Cameras::Get_img1(){return img1;}
 cv::Mat Cameras::Get_img2(){return img2;}
+
+Blobs* (Cameras::Get_blobs_obj)(){return &blobs;}

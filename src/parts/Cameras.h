@@ -12,7 +12,6 @@
 #define CAMERAS
 
 #include "../interfaces/vision/Blobs.h"
-#include "../interfaces/vision/Gui.h"
 #include "../interfaces/vision/Reco.h"
 #include "../interfaces/Camera_server.h"
 #include "../core/ComThread.h"
@@ -28,16 +27,19 @@ public:
 	cv::Mat Get_img1();
 	cv::Mat Get_img2();
 
+	Blobs* Get_blobs_obj();
+
 private:
 
 	#define CAMERA_PORT_1 4243
 	#define CAMERA_PORT_2 4244
+	#define CAMERA_PORT_3 4245
+	#define CAMERA_PORT_4 4246
 
 	cv::VideoCapture capture1, capture2;
 
 	Blobs blobs;
 	Camera_server camera_server;
-	Gui gui;
 	Reco reco;
 
 	void On_start();
