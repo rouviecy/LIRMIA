@@ -137,14 +137,16 @@ void send_first_HSV_params(hsv_params* hsv){
 }
 
 void init_joystick_listeners(Joystick* joystick, struct_callback* obj_callback){
-	joystick->Connect_keyboard(SDLK_UP,		&listen_key_up,		obj_callback);
-	joystick->Connect_keyboard(SDLK_DOWN,		&listen_key_down,	obj_callback);
-	joystick->Connect_keyboard(SDLK_LEFT,		&listen_key_left,	obj_callback);
-	joystick->Connect_keyboard(SDLK_RIGHT,		&listen_key_right,	obj_callback);
-	joystick->Connect_keyboard(SDLK_KP_PLUS,	&listen_key_plus,	obj_callback);
-	joystick->Connect_keyboard(SDLK_KP_MINUS,	&listen_key_minus,	obj_callback);
-	joystick->Connect_keyboard(SDLK_a,		&listen_key_a,		obj_callback);
-	joystick->Connect_keyboard(SDLK_q,		&listen_key_q,		obj_callback);
+	#ifdef ENABLE_SDL
+		joystick->Connect_keyboard(SDLK_UP,		&listen_key_up,		obj_callback);
+		joystick->Connect_keyboard(SDLK_DOWN,		&listen_key_down,	obj_callback);
+		joystick->Connect_keyboard(SDLK_LEFT,		&listen_key_left,	obj_callback);
+		joystick->Connect_keyboard(SDLK_RIGHT,		&listen_key_right,	obj_callback);
+		joystick->Connect_keyboard(SDLK_KP_PLUS,	&listen_key_plus,	obj_callback);
+		joystick->Connect_keyboard(SDLK_KP_MINUS,	&listen_key_minus,	obj_callback);
+		joystick->Connect_keyboard(SDLK_a,		&listen_key_a,		obj_callback);
+		joystick->Connect_keyboard(SDLK_q,		&listen_key_q,		obj_callback);
+	#endif
 }
 
 int main(int argc, char* argv[]){
