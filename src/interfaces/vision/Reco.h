@@ -33,7 +33,7 @@ public:
 	void Orienter_quadrillage();
 	std::vector <bool> Test_circle();
 	std::vector <cv::Point2i> Test_inclusion(const int dist_max);
-	cv::Mat Trouver_ligne_principale(float* angle_et_ecart);
+	cv::Mat Trouver_ligne_principale(float* angle, float* ecart);
 
 private:
 

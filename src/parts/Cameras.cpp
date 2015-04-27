@@ -53,9 +53,9 @@ void Cameras::Job(){
 		else{
 			cam_detect1 = -1.;
 		}
-		float main_line_cam1[2];
+		float pipeline_angle, pipeline_distance;
 		reco.Set_img(blobs.Get_img_blobs());
-		cv::Mat img_pipeline = reco.Trouver_ligne_principale(main_line_cam1);
+		cv::Mat img_pipeline = reco.Trouver_ligne_principale(&pipeline_angle, &pipeline_distance);
 		#ifdef ENABLE_TCPCAM
 			camera_server.Send_tcp_img(img1, CAMERA_PORT_1);
 			camera_server.Send_tcp_img(img_pipeline, CAMERA_PORT_3);

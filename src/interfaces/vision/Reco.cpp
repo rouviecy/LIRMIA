@@ -299,7 +299,7 @@ vector <int> Reco::Liste_edges_int(cv::Subdiv2D s, int max_x, int max_y, cv::Mat
 	return resultat_vector;
 }
 
-cv::Mat Reco::Trouver_ligne_principale(float* angle_et_ecart){
+cv::Mat Reco::Trouver_ligne_principale(float* angle, float* ecart){
 	// Extraire les contours
 	cv::Mat image_contours;
 	image.copyTo(image_quadrillage);
@@ -326,6 +326,8 @@ cv::Mat Reco::Trouver_ligne_principale(float* angle_et_ecart){
 		angles.push_back(angle);
 		if(fabs(angle) < M_PI_4){
 			float distance = (dy * ((float) centre.x - lignes[i][0]) - dx * ((float) centre.y - lignes[i][1])) / sqrt((dx * dx + dy * dy));
+			if(angle > 0){distance = -distance;}
+			if(fabs(angle) < 0.0001){distance = -distance;}
 			distances.push_back(distance);
 		}
 	}
@@ -333,11 +335,11 @@ cv::Mat Reco::Trouver_ligne_principale(float* angle_et_ecart){
 	cv::Point2i pt_excentre((int) (1000. * sin(angle_moyen)), (int) (1000. * cos(angle_moyen)));
 	if(distances.size() > 0){
 		distance_moyenne = accumulate(distances.begin(), distances.end(), 0.0) / distances.size();
-		centre += cv::Point2i((angle_moyen > 0 ? -distance_moyenne : +distance_moyenne) / cos(angle_moyen), 0);
+		centre += cv::Point2i(distance_moyenne / cos(angle_moyen), 0);
 	}
 	cv::line(image, centre + pt_excentre, centre - pt_excentre, blanc, 5);
-//	*angle_et_ecart = angle_moyen;
-//	*(angle_et_ecart + sizeof(float)) = distance_moyenne;
+	*angle = angle_moyen;
+	*ecart = distance_moyenne;
 	return image;
 }
 
