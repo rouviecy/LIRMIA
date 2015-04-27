@@ -74,8 +74,8 @@ void Blobs::Trouver_blobs(){
 		rect.push_back(rect_[i]);
 		taille.push_back(aire);
 		drawContours(img_blobs, liste_blobs, i, bleu, CV_FILLED, 8, hierarchie_blobs);
-		cv::circle(img_blobs, mc_[i], 4, rouge, -1, 8, 0);
-		cv::rectangle(img_blobs, rect_[i], rouge);
+//		cv::circle(img_blobs, mc_[i], 4, rouge, -1, 8, 0);
+//		cv::rectangle(img_blobs, rect_[i], rouge);
 	}
 }
 

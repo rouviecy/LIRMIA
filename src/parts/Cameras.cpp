@@ -54,11 +54,11 @@ void Cameras::Job(){
 			cam_detect1 = -1.;
 		}
 		float main_line_cam1[2];
-//		reco.Set_img(img1);
-//		img1 = reco.Trouver_ligne_principale(main_line_cam1);
+		reco.Set_img(blobs.Get_img_blobs());
+		cv::Mat img_pipeline = reco.Trouver_ligne_principale(main_line_cam1);
 		#ifdef ENABLE_TCPCAM
 			camera_server.Send_tcp_img(img1, CAMERA_PORT_1);
-			camera_server.Send_tcp_img(blobs.Get_img_blobs(), CAMERA_PORT_3);
+			camera_server.Send_tcp_img(img_pipeline, CAMERA_PORT_3);
 		#endif
 	#endif
 
