@@ -16,7 +16,7 @@
 #include "../interfaces/FSM.h"
 #include "../interfaces/FSMDraw.h"
 
-enum state_t {REMOTE, STAY, DOWN, EXPLORE, FOLLOW_CAM1, FOLLOW_CAM2, UP, UNKNOWN};
+enum state_t {REMOTE, STAY, DOWN, EXPLORE, FOLLOW_OBJ_CAM1, FOLLOW_OBJ_CAM2, FOLLOW_PIPE_CAM1, FOLLOW_PIPE_CAM2, UP, UNKNOWN};
 
 class State_machine : public ComThread{
 
@@ -36,8 +36,8 @@ private:
 
 	float z;
 	float remote;
-	float cam_detect1;
-	float cam_detect2;
+	float cam_detect_obj1, cam_detect_pipe1;
+	float cam_detect_obj2, cam_detect_pipe2;
 	float fsm_state;
 
 	void On_start();
@@ -49,8 +49,12 @@ private:
 	static void Act_remote_to_stay(void* obj);
 	static void Act_stay_to_down(void* obj);
 	static void Act_down_to_explore(void* obj);
-	static void Act_explore_to_follow_cam1(void* obj);
-	static void Act_explore_to_follow_cam2(void* obj);
+	static void Act_explore_to_follow_obj_cam1(void* obj);
+	static void Act_explore_to_follow_obj_cam2(void* obj);
+	static void Act_explore_to_follow_pipe_cam1(void* obj);
+	static void Act_explore_to_follow_pipe_cam2(void* obj);
+	static void Act_follow_obj_to_pipe_cam1(void* obj);
+	static void Act_follow_obj_to_pipe_cam2(void* obj);
 	static void Act_follow_to_explore(void* obj);
 	static void Act_explore_to_up(void* obj);
 	static void Act_up_to_stay(void* obj);

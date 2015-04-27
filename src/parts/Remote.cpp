@@ -3,7 +3,7 @@
 using namespace std;
 
 Remote::Remote() : ComThread(){
-	remote = 0.;
+	remote = +1.;
 	alive = false;
 	#ifdef ENABLE_TCP
 		if(!tcp_server.Configure(4242)){return;}

@@ -25,8 +25,10 @@ void Autonomy::IO(){
 	Link_input("vthx", &vthx);  Link_input("vthy", &vthy);  Link_input("vthz", &vthz);
 	Link_input("obst_x", &x);   Link_input("obst_y", &y);
 	Link_input("obst_vx", &vx); Link_input("obst_vy", &vy);
-	Link_input("cam_detect1_horizontal", &cam_detect1_horizontal); Link_input("cam_detect1_vertical", &cam_detect1_vertical);
-	Link_input("cam_detect2_horizontal", &cam_detect2_horizontal); Link_input("cam_detect2_vertical", &cam_detect2_vertical);
+	Link_input("cam_detect1_horizontal", &cam_detect1_horizontal);	Link_input("cam_detect1_vertical", &cam_detect1_vertical);
+	Link_input("cam_detect2_horizontal", &cam_detect2_horizontal);	Link_input("cam_detect2_vertical", &cam_detect2_vertical);
+	Link_input("pipeline_angle_cam1", &pipeline_angle_cam1);	Link_input("pipeline_distance_cam1", &pipeline_distance_cam1);
+	Link_input("pipeline_angle_cam2", &pipeline_angle_cam2);	Link_input("pipeline_distance_cam2", &pipeline_distance_cam2);
 
 	Link_output("motor1", &motor1);
 	Link_output("motor2", &motor2);
@@ -37,17 +39,23 @@ void Autonomy::IO(){
 void Autonomy::Job(){
 	Critical_receive();
 	state_t current_state = State_machine::Decode_state(fsm_state);
-	if(current_state == FOLLOW_CAM1){
+	if(current_state == FOLLOW_OBJ_CAM1){
 		motor1 = +cam_detect1_horizontal; // TODO : régler sens
 		motor2 = -cam_detect1_horizontal;
 		motor3 = +cam_detect1_vertical;
 		motor4 = +cam_detect1_vertical;
 	}
-	else if(current_state == FOLLOW_CAM2){ // TODO : régler sens
+	else if(current_state == FOLLOW_OBJ_CAM2){ // TODO : régler sens
 		motor1 = +cam_detect1_horizontal;
 		motor2 = -cam_detect1_horizontal;
 		motor3 = +cam_detect1_vertical;
 		motor4 = +cam_detect1_vertical;
+	}
+	else if(current_state == FOLLOW_PIPE_CAM1){
+		// TODO
+	}
+	else if(current_state == FOLLOW_PIPE_CAM2){
+		// TODO
 	}
 	else if(current_state == REMOTE){ // TODO : régler sens
 		motor1 = remote_forward / 2 - remote_turn / 2;

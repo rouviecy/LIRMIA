@@ -299,7 +299,7 @@ vector <int> Reco::Liste_edges_int(cv::Subdiv2D s, int max_x, int max_y, cv::Mat
 	return resultat_vector;
 }
 
-cv::Mat Reco::Trouver_ligne_principale(float* angle, float* ecart){
+cv::Mat Reco::Trouver_ligne_principale(bool* detected, float* angle, float* ecart){
 	// Extraire les contours
 	cv::Mat image_contours;
 	image.copyTo(image_quadrillage);
@@ -310,8 +310,13 @@ cv::Mat Reco::Trouver_ligne_principale(float* angle, float* ecart){
 
 	// Trouver les lignes
 	vector <cv::Vec4i> lignes;
-	cv::HoughLinesP(image_contours, lignes, 1, CV_PI/90, 100, 100, 500);
-	if(lignes.size() == 0){return image;}
+	cv::HoughLinesP(image_contours, lignes, 1, CV_PI/90, 25, 100, 500);
+	if(lignes.size() < 2){
+		*detected = false;
+		*angle = 0.;
+		*ecart = 0.;
+		return image;
+	}
 
 	// Calculer les angles et distances par rapport à la verticale
 	vector <float> angles, distances;
@@ -338,6 +343,7 @@ cv::Mat Reco::Trouver_ligne_principale(float* angle, float* ecart){
 		centre += cv::Point2i(distance_moyenne / cos(angle_moyen), 0);
 	}
 	cv::line(image, centre + pt_excentre, centre - pt_excentre, blanc, 5);
+	*detected = true;
 	*angle = angle_moyen;
 	*ecart = distance_moyenne;
 	return image;

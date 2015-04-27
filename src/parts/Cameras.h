@@ -46,11 +46,13 @@ private:
 	void Job();
 	void IO();
 
-	float cam_detect1;
-	float cam_detect2;
+	float cam_detect_obj1, cam_detect_pipe1;
+	float cam_detect_obj2, cam_detect_pipe2;
 
 	float cam_detect1_horizontal, cam_detect1_vertical;
 	float cam_detect2_horizontal, cam_detect2_vertical;
+	float pipeline_angle_cam1, pipeline_distance_cam1;
+	float pipeline_angle_cam2, pipeline_distance_cam2;
 
 	cv::Mat img1, img2;
 

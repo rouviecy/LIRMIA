@@ -40,6 +40,8 @@ private:
 	float obst_vx, obst_vy;
 	float cam_detect1_horizontal, cam_detect1_vertical;
 	float cam_detect2_horizontal, cam_detect2_vertical;
+	float pipeline_angle_cam1, pipeline_distance_cam1;
+	float pipeline_angle_cam2, pipeline_distance_cam2;
 	float motor1, motor2, motor3, motor4;
 
 };
