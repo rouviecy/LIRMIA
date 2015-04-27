@@ -147,15 +147,6 @@ int main(int argc, char* argv[]){
 		cv::createTrackbar("nb_dilate",	hsv_window,	&(hsv.nb_dilate),	20,	callback_nb_dilate,	&hsv);
 		cv::createTrackbar("nb_erode",	hsv_window,	&(hsv.nb_erode),	20,	callback_nb_erode,	&hsv);
 		cv::createTrackbar("seuil",	hsv_window,	&(hsv.seuil),		1000,	callback_seuil,		&hsv);
-		callback_H_min(hsv.H_min, &hsv);
-		callback_H_max(hsv.H_max, &hsv);
-		callback_S_min(hsv.S_min, &hsv);
-		callback_S_max(hsv.S_max, &hsv);
-		callback_V_min(hsv.V_min, &hsv);
-		callback_V_max(hsv.V_max, &hsv);
-		callback_nb_dilate(hsv.nb_dilate, &hsv);
-		callback_nb_erode(hsv.nb_erode, &hsv);
-		callback_seuil(hsv.seuil, &hsv);
 		joystick.Connect_keyboard(SDLK_UP,		&listen_key_up,		&obj_callback);
 		joystick.Connect_keyboard(SDLK_DOWN,		&listen_key_down,	&obj_callback);
 		joystick.Connect_keyboard(SDLK_LEFT,		&listen_key_left,	&obj_callback);
@@ -168,6 +159,15 @@ int main(int argc, char* argv[]){
 		obj_callback.tcp_client = &tcp_client;
 		obj_callback.go_on = true;
 		obj_callback.remote_mode = true;
+		callback_H_min(hsv.H_min, &hsv);
+		callback_H_max(hsv.H_max, &hsv);
+		callback_S_min(hsv.S_min, &hsv);
+		callback_S_max(hsv.S_max, &hsv);
+		callback_V_min(hsv.V_min, &hsv);
+		callback_V_max(hsv.V_max, &hsv);
+		callback_nb_dilate(hsv.nb_dilate, &hsv);
+		callback_nb_erode(hsv.nb_erode, &hsv);
+		callback_seuil(hsv.seuil, &hsv);
 		while(obj_callback.go_on){
 			cv::waitKey(10);
 			joystick.Update_event();
