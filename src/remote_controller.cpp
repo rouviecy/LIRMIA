@@ -2,6 +2,9 @@
 #include "interfaces/Joystick.h"
 #include "interfaces/vision/hsv_params.h"
 #include <opencv2/opencv.hpp>
+#include <iostream>
+#include <fstream>
+#include <vector>
 
 using namespace std;
 
@@ -67,9 +70,28 @@ static void callback_seuil	(int value, void* object){send_HSV_param(object, "hsv
 hsv_params create_HSV_params(){
 	struct_callback obj_callback;
 	hsv_params hsv;
-	hsv.H_min = 80;		hsv.S_min = 100;	hsv.V_min = 100;
-	hsv.H_max = 130;	hsv.S_max = 255;	hsv.V_max = 255;
-	hsv.nb_dilate = 5;	hsv.nb_erode = 5;	hsv.seuil = 100;
+	ifstream in_file("./test/hsv_params.txt");
+	if(in_file.is_open()){
+		char line_char[256];
+		in_file.getline(line_char, 256);
+		in_file.getline(line_char, 256);
+		string line_str = string(line_char);
+		size_t next;
+		vector <string> tokens;
+		for(size_t current = 0; tokens.size() < 9; current = next + 1){
+			next = line_str.find_first_of(",", current);
+			tokens.push_back(line_str.substr(current, next - current));
+		}
+		hsv.H_min = stoi(tokens[0]);	hsv.S_min = stoi(tokens[2]);	hsv.V_min = stoi(tokens[4]);
+		hsv.H_max = stoi(tokens[1]);	hsv.S_max = stoi(tokens[3]);	hsv.V_max = stoi(tokens[5]);
+		hsv.nb_dilate = stoi(tokens[6]);hsv.nb_erode = stoi(tokens[7]);	hsv.seuil = stoi(tokens[8]);
+		in_file.close();
+	}
+	else{
+		hsv.H_min = 80;		hsv.S_min = 100;	hsv.V_min = 100;
+		hsv.H_max = 130;	hsv.S_max = 255;	hsv.V_max = 255;
+		hsv.nb_dilate = 5;	hsv.nb_erode = 5;	hsv.seuil = 100;
+	}
 	strcpy(hsv.name_H_min, "H_min"); strcpy(hsv.name_H_max, "H_max");
 	strcpy(hsv.name_S_min, "S_min"); strcpy(hsv.name_S_max, "S_max");
 	strcpy(hsv.name_V_min, "V_min"); strcpy(hsv.name_V_max, "V_max");
@@ -78,6 +100,15 @@ hsv_params create_HSV_params(){
 	strcpy(hsv.name_seuil, "seuil");
 	strcpy(hsv.winname, "HSV parameters");
 	return hsv;
+}
+
+void write_HSV_params(hsv_params* hsv){
+	ofstream out_file("./test/hsv_params.txt");
+	string out_text = "H_min, H_max, S_min, S_max, V_min, V_max, nb_dilate, nb_erode, seuil,\n";
+	int tab[] = {hsv->H_min, hsv->H_max, hsv->S_min, hsv->S_max, hsv->V_min, hsv->V_max, hsv->nb_dilate, hsv->nb_erode, hsv->seuil};
+	for(int i = 0; i < 9; i++){out_text += to_string(tab[i]) + (i < 8 ? "," : ",\n");}
+	out_file << out_text;
+	out_file.close();
 }
 
 void create_HSV_trackbars(hsv_params* hsv){
@@ -137,6 +168,7 @@ int main(int argc, char* argv[]){
 		tcp_client.Send("bye");
 		usleep(1000000);
 		tcp_client.Close();
+		write_HSV_params(&hsv);
 	#else
 		cout << "[Error] You need to activate SDL and TCP to use remote controller" << endl;
 	#endif
