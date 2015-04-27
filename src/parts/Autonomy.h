@@ -38,6 +38,7 @@ private:
 	float vthx, vthy, vthz;
 	float obst_x,  obst_y;
 	float obst_vx, obst_vy;
+	float cam_size_obj1, cam_size_obj2;
 	float cam_detect1_horizontal, cam_detect1_vertical;
 	float cam_detect2_horizontal, cam_detect2_vertical;
 	float pipeline_angle_cam1, pipeline_distance_cam1;

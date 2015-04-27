@@ -35,6 +35,7 @@ Cameras::~Cameras(){
 void Cameras::On_start(){}
 
 void Cameras::IO(){
+	Link_output("cam_size_obj1", &cam_size_obj1);			Link_output("cam_size_obj2", &cam_size_obj2);
 	Link_output("cam_detect_obj1", &cam_detect_obj1);		Link_output("cam_detect_pipe1", &cam_detect_pipe1);
 	Link_output("cam_detect_obj2", &cam_detect_obj2);		Link_output("cam_detect_pipe2", &cam_detect_pipe2);
 	Link_output("cam_detect1_horizontal", &cam_detect1_horizontal);	Link_output("cam_detect1_vertical", &cam_detect1_vertical);
@@ -54,6 +55,7 @@ void Cameras::Job(){
 			cam_detect_obj1 = +1.;
 			cam_detect1_horizontal = blob_img1[0];
 			cam_detect1_vertical = blob_img1[1];
+			cam_size_obj1 = blob_img1[2];
 		}
 		else{
 			cam_detect_obj1 = -1.;
@@ -78,6 +80,7 @@ void Cameras::Job(){
 			cam_detect_obj2 = +1.;
 			cam_detect2_horizontal = blob_img2[0];
 			cam_detect2_vertical = blob_img2[1];
+			cam_size_obj2 = blob_img2[2];
 		}
 		else{
 			cam_detect_obj2 = -1.;
@@ -108,6 +111,7 @@ vector <float> Cameras::Find_biggest_blob(vector <cv::Point2i> blobs_center, vec
 	if(max_size > 100){
 		result.push_back((float) (2 * blobs_center[index_biggest].x) / img_size.width - 1.);
 		result.push_back((float) (2 * blobs_center[index_biggest].y) / img_size.height - 1.);
+		result.push_back((float) (max_size / (img_size.width * img_size.height)));
 	}
 	return result;
 }
