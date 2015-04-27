@@ -11,35 +11,17 @@ typedef struct{
 	bool remote_mode;
 } struct_callback;
 
-static void listen_key_up(void* obj, bool down){
+static void send_move_order(void* obj, string msg){
 	struct_callback* obj_callback = (struct_callback*) obj;
-	obj_callback->tcp_client->Send("ra" + to_string(down));
+	obj_callback->tcp_client->Send(msg);
 }
 
-static void listen_key_down(void* obj, bool down){
-	struct_callback* obj_callback = (struct_callback*) obj;
-	obj_callback->tcp_client->Send("rb" + to_string(down));
-}
-
-static void listen_key_left(void* obj, bool down){
-	struct_callback* obj_callback = (struct_callback*) obj;
-	obj_callback->tcp_client->Send("rl" + to_string(down));
-}
-
-static void listen_key_right(void* obj, bool down){
-	struct_callback* obj_callback = (struct_callback*) obj;
-	obj_callback->tcp_client->Send("rr" + to_string(down));
-}
-
-static void listen_key_plus(void* obj, bool down){
-	struct_callback* obj_callback = (struct_callback*) obj;
-	obj_callback->tcp_client->Send("ru" + to_string(down));
-}
-
-static void listen_key_minus(void* obj, bool down){
-	struct_callback* obj_callback = (struct_callback*) obj;
-	obj_callback->tcp_client->Send("rd" + to_string(down));
-}
+static void listen_key_up	(void* obj, bool down){send_move_order(obj, "ra" + to_string(down));}
+static void listen_key_down	(void* obj, bool down){send_move_order(obj, "rb" + to_string(down));}
+static void listen_key_left	(void* obj, bool down){send_move_order(obj, "rl" + to_string(down));}
+static void listen_key_right	(void* obj, bool down){send_move_order(obj, "rr" + to_string(down));}
+static void listen_key_plus	(void* obj, bool down){send_move_order(obj, "ru" + to_string(down));}
+static void listen_key_minus	(void* obj, bool down){send_move_order(obj, "rd" + to_string(down));}
 
 static void listen_key_a(void* obj, bool down){
 	if(down){
@@ -66,59 +48,21 @@ static void verify_HSV_params(hsv_params* hsv){
 	cv::imshow((char*) hsv->winname, img_color);
 }
 
-static void callback_H_min(int value, void* object){
+static void send_HSV_param(void* object, string header, int* param){
 	hsv_params* hsv = (hsv_params*) object;
 	verify_HSV_params(hsv);
-	hsv->tcp->Send("hsv_h0_" + to_string(hsv->H_min));
+	hsv->tcp->Send(header + to_string(*param));
 }
 
-static void callback_H_max(int value, void* object){
-	hsv_params* hsv = (hsv_params*) object;
-	verify_HSV_params(hsv);
-	hsv->tcp->Send("hsv_h1_" + to_string(hsv->H_max));
-}
-
-static void callback_S_min(int value, void* object){
-	hsv_params* hsv = (hsv_params*) object;
-	verify_HSV_params(hsv);
-	hsv->tcp->Send("hsv_s0_" + to_string(hsv->S_min));
-}
-
-static void callback_S_max(int value, void* object){
-	hsv_params* hsv = (hsv_params*) object;
-	verify_HSV_params(hsv);
-	hsv->tcp->Send("hsv_s1_" + to_string(hsv->S_max));
-}
-
-static void callback_V_min(int value, void* object){
-	hsv_params* hsv = (hsv_params*) object;
-	verify_HSV_params(hsv);
-	hsv->tcp->Send("hsv_v0_" + to_string(hsv->V_min));
-}
-
-static void callback_V_max(int value, void* object){
-	hsv_params* hsv = (hsv_params*) object;
-	verify_HSV_params(hsv);
-	hsv->tcp->Send("hsv_v1_" + to_string(hsv->V_max));
-}
-
-static void callback_nb_dilate(int value, void* object){
-	hsv_params* hsv = (hsv_params*) object;
-	verify_HSV_params(hsv);
-	hsv->tcp->Send("hsv_m0_" + to_string(hsv->nb_dilate));
-}
-
-static void callback_nb_erode(int value, void* object){
-	hsv_params* hsv = (hsv_params*) object;
-	verify_HSV_params(hsv);
-	hsv->tcp->Send("hsv_m1_" + to_string(hsv->nb_erode));
-}
-
-static void callback_seuil(int value, void* object){
-	hsv_params* hsv = (hsv_params*) object;
-	verify_HSV_params(hsv);
-	hsv->tcp->Send("hsv_t0_" + to_string(hsv->seuil));
-}
+static void callback_H_min	(int value, void* object){send_HSV_param(object, "hsv_h0_", &(((hsv_params*) object)->H_min));}
+static void callback_H_max	(int value, void* object){send_HSV_param(object, "hsv_h1_", &(((hsv_params*) object)->H_max));}
+static void callback_S_min	(int value, void* object){send_HSV_param(object, "hsv_s0_", &(((hsv_params*) object)->S_min));}
+static void callback_S_max	(int value, void* object){send_HSV_param(object, "hsv_s1_", &(((hsv_params*) object)->S_max));}
+static void callback_V_min	(int value, void* object){send_HSV_param(object, "hsv_v0_", &(((hsv_params*) object)->V_min));}
+static void callback_V_max	(int value, void* object){send_HSV_param(object, "hsv_v1_", &(((hsv_params*) object)->V_max));}
+static void callback_nb_dilate	(int value, void* object){send_HSV_param(object, "hsv_m0_", &(((hsv_params*) object)->nb_dilate));}
+static void callback_nb_erode	(int value, void* object){send_HSV_param(object, "hsv_m1_", &(((hsv_params*) object)->nb_erode));}
+static void callback_seuil	(int value, void* object){send_HSV_param(object, "hsv_t0_", &(((hsv_params*) object)->seuil));}
 
 hsv_params create_HSV_params(){
 	struct_callback obj_callback;
