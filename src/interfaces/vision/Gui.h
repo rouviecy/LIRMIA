@@ -15,7 +15,7 @@
 #include <opencv2/opencv.hpp>
 #include <stdlib.h>
 #include <string.h>
-#include "struct_HSV_bound.h"
+#include "hsv_params.h"
 #include "struct_wrap_bound.h"
 
 class Gui{
@@ -27,8 +27,8 @@ public:
 	void Creer_trackbar_HSV_sep(const char* titre_fenetre);				// initialisation de la fenêtre des trackbars de séparation HSV
 	void Creer_trackbar_HSV_sep2(const char* titre_fenetre);			// initialisation de la fenêtre des trackbars de séparation HSV
 	void Creer_trackbar_transfo(const char* titre_fenetre);				// initialisation de la fenêtre des trackbars de transformation
-	STRUCT_HSV_BOUND *Get_HSV_bound() const;					// pointeur vers la structure contenant les paramètres de séparation
-	STRUCT_HSV_BOUND *Get_HSV_bound2() const;					// pointeur vers la structure contenant les paramètres de séparation 2
+	hsv_params *Get_HSV_bound() const;					// pointeur vers la structure contenant les paramètres de séparation
+	hsv_params *Get_HSV_bound2() const;					// pointeur vers la structure contenant les paramètres de séparation 2
 	STRUCT_WRAP_BOUND *Get_wrap_bound() const;					// pointeur vers la structure contenant les paramètres de transformation		// cliquer si le vecteur n'est pas vide
 	void Afficher_image(const std::string titre_fenetre, cv::Mat image);
 	void Pad(const std::string titre_fenetre, const float dx, const float dy, const float dx_max, const float dy_max);
@@ -42,8 +42,8 @@ private:
 
 	#define TAILLE_POD 200
 
-	STRUCT_HSV_BOUND *hsv;
-	STRUCT_HSV_BOUND *hsv2;
+	hsv_params *hsv;
+	hsv_params *hsv2;
 	STRUCT_WRAP_BOUND *wrap;
 
 	cv::Scalar rouge;

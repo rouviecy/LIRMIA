@@ -6,7 +6,7 @@ using namespace std;
 Blobs::Blobs(){
 	rouge = cv::Scalar(0, 0, 255); bleu = cv::Scalar(255, 0, 0);
 	morpho_kern = cv::Mat::ones(cv::Size(3,3), CV_8U);
-	STRUCT_HSV_BOUND *hsv = (STRUCT_HSV_BOUND*) malloc(sizeof(STRUCT_HSV_BOUND));
+	hsv_params *hsv = (hsv_params*) malloc(sizeof(hsv_params));
 	hsv->H_min =		80;
 	hsv->H_max =		130;
 	hsv->S_min =		100;
@@ -47,7 +47,7 @@ void Blobs::Separer(){
 }
 
 // Mise à jour des paramètres de segmentation HSV
-void Blobs::Definir_limites_separation(STRUCT_HSV_BOUND *hsv){
+void Blobs::Definir_limites_separation(hsv_params *hsv){
 	mut.lock();
 	sep_min = cv::Scalar(hsv->H_min, hsv->S_min, hsv->V_min);
 	sep_max = cv::Scalar(hsv->H_max, hsv->S_max, hsv->V_max);

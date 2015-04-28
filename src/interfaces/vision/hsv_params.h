@@ -11,8 +11,6 @@
 #ifndef HSV_PARAMS
 #define HSV_PARAMS
 
-#include <stdlib.h>
-#include <string.h>
 #include "../TCP_client.h"
 
 typedef struct{

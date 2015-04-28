@@ -20,7 +20,7 @@
 
 #include <mutex>
 #include <opencv2/opencv.hpp>
-#include "struct_HSV_bound.h"
+#include "hsv_params.h"
 
 class Blobs{
 
@@ -36,7 +36,7 @@ public:
 	std::vector <double> Get_size() const;		// Guetter sur les tailles des blobs
 
 	void Set_img(cv::Mat image);				// Setter d'image à traiter
-	void Definir_limites_separation(STRUCT_HSV_BOUND *hsv);	// Récupération des paramètres de segmentation HSV
+	void Definir_limites_separation(hsv_params *hsv);	// Récupération des paramètres de segmentation HSV
 	void Separer();						// Séparer selon les paramètres
 	void Trouver_blobs();					// Convertir les données en liste de blobs
 	void Relier();						// Relier les blobs
