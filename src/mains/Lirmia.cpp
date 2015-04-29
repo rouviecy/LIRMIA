@@ -12,7 +12,7 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&depth,		"Depth",			10000);		// 10 s
 	Add_thread(&echosonder,		"Echo sonder",			100000);	// 100 ms
 	Add_thread(&i2c,		"I2C",				10000);		// 10 ms
-	Add_thread(&imu,		"Inertial Measurement Unit",	100000);	// 100 ms
+	Add_thread(&imu,		"Inertial Measurement Unit",	10000);	// 	10 ms
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&mapping,		"Mapping",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
@@ -47,6 +47,7 @@ void Lirmia::Init_serial(){
 		imu.Set_serial(&serial_arduino);
 	#endif
 	#ifdef ENABLE_SERIAL_ISS
+		serial_iss.Serial_init(DEV_SERIAL_ISS, B115200, true);
 		#ifdef ENABLE_I2C
 			unsigned char init_I2C_and_serial[5];
 			init_I2C_and_serial[0] = 0x5A;	// initial command

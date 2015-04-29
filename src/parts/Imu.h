@@ -12,6 +12,8 @@
 #define IMU
 
 #include <cmath>
+#include <vector>
+#include <algorithm>
 #include "../core/ComThread.h"
 #include "../interfaces/Serial.h"
 
@@ -28,11 +30,8 @@ private:
 
 	Serial* serial;
 
-	char header[5];
-	bool is_header;
-	bool valid_msg;
-	int index_header;
-	std::string msg;
+	std::vector <char> msg;
+	int header_size;
 
 	void On_start();
 	void Job();

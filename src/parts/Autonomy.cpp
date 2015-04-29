@@ -101,7 +101,6 @@ void Autonomy::Job(){
 		motor2 = remote_forward / 2 + remote_turn / 2;
 		motor3 = -remote_deeper;
 		motor4 = -remote_deeper;
-cout << "3 : " << motor3 << " | 4 : " << motor4 << endl;
 	}
 	else{
 		motor1 = 0.;
