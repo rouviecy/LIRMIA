@@ -10,11 +10,12 @@ if(${IS_ROBOT})
 	set(ENABLE_PYTHON OFF)
 	set(ENABLE_JAVA OFF)
 	set(ENABLE_SDL OFF)
-	add_definitions(-DENABLE_SERIAL)
-	add_definitions(-DENABLE_I2C)		# needs serial
-	#add_definitions(-DENABLE_DEPTH)	# needs serial and I2C
-	add_definitions(-DENABLE_IMU)		# needs serial and I2C
-	add_definitions(-DENABLE_MOTORS)	# needs serial and I2C
+	add_definitions(-DENABLE_SERIAL_ARDUINO)
+	add_definitions(-DENABLE_SERIAL_ISS)
+	add_definitions(-DENABLE_I2C)		# needs serial ISS
+	#add_definitions(-DENABLE_DEPTH)	# needs serial ISS and I2C
+	add_definitions(-DENABLE_IMU)		# needs serial Arduino
+	add_definitions(-DENABLE_MOTORS)	# needs serial ISS and I2C
 	add_definitions(-DENABLE_TCP)
 	add_definitions(-DENABLE_CAM1)
 	add_definitions(-DENABLE_CAM2)
@@ -24,11 +25,12 @@ else(${IS_ROBOT})
 	set(ENABLE_PYTHON OFF)
 	set(ENABLE_JAVA OFF)
 	set(ENABLE_SDL ON)
-	#add_definitions(-DENABLE_SERIAL)
-	#add_definitions(-DENABLE_I2C)		# needs serial
-	#add_definitions(-DENABLE_DEPTH)	# needs serial and I2C
-	#add_definitions(-DENABLE_IMU)		# needs serial and I2C
-	#add_definitions(-DENABLE_MOTORS)	# needs serial and I2C
+	add_definitions(-DENABLE_SERIAL_ARDUINO)
+	#add_definitions(-DENABLE_SERIAL_ISS)
+	#add_definitions(-DENABLE_I2C)		# needs serial ISS
+	#add_definitions(-DENABLE_DEPTH)	# needs serial ISS and I2C
+	add_definitions(-DENABLE_IMU)		# needs serial Arduino
+	#add_definitions(-DENABLE_MOTORS)	# needs serial ISS and I2C
 	add_definitions(-DENABLE_TCP)
 	add_definitions(-DENABLE_CAM1)
 	#add_definitions(-DENABLE_CAM2)

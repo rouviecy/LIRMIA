@@ -20,11 +20,9 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&state,		"State",			20000);		// 20 ms
 	Add_thread(&state_machine,	"Finite state machine",		40000);		// 40 s
 
-	#ifdef ENABLE_SERIAL
-		Init_serial();
-		#ifdef ENABLE_DEPTH
-			depth.Calibrate();
-		#endif
+	Init_serial();
+	#ifdef ENABLE_DEPTH
+		depth.Calibrate();
 	#endif
 	Link_all();
 	remote.Set_blobs_obj(cameras.Get_blobs_obj());
@@ -44,19 +42,20 @@ void Lirmia::Shutdown(){
 }
 
 void Lirmia::Init_serial(){
-	#ifdef ENABLE_SERIAL
-		serial.Serial_init(DEV_SERIAL, B57600, true);
-		imu.Set_serial(&serial);
+	#ifdef ENABLE_SERIAL_ARDUINO
+		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B57600, true);
+		imu.Set_serial(&serial_arduino);
+	#endif
+	#ifdef ENABLE_SERIAL_ISS
 		#ifdef ENABLE_I2C
 			unsigned char init_I2C_and_serial[5];
 			init_I2C_and_serial[0] = 0x5A;	// initial command
 			init_I2C_and_serial[1] = 0x02;	// change
 			init_I2C_and_serial[2] = 0x61;	// serial and I2C 100 kHz
 			init_I2C_and_serial[3] = 0x00;	// baudrate
-			//init_I2C_and_serial[4] = 0x19;	// baudrate 115200
-			init_I2C_and_serial[4] = 0x33;	// baudrate 57600
-			serial.Serial_write(init_I2C_and_serial, 5);
-			i2c.Set_serial(&serial);
+			init_I2C_and_serial[4] = 0x19;	// baudrate 115200
+			serial_iss.Serial_write(init_I2C_and_serial, 5);
+			i2c.Set_serial(&serial_iss);
 			depth.Set_i2c(&i2c);
 			motors.Set_i2c(&i2c);
 		#endif

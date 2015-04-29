@@ -28,7 +28,8 @@
 #include "../parts/State.h"
 #include "../parts/State_machine.h"
 
-#define DEV_SERIAL "/dev/ttyACM0"
+#define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_5533330393435131F151-if00"
+#define DEV_SERIAL_ISS		"/dev/ttyUSB0"
 
 class Lirmia : public Maestro{
 
@@ -39,7 +40,7 @@ public:
 
 private:
 
-	Serial serial;
+	Serial serial_arduino, serial_iss;
 
 	void Init_serial();
 
