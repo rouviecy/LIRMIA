@@ -28,10 +28,7 @@ void State::Job(){
 	thx = imu_thx;
 	thy = imu_thy;
 	thz = imu_thz;
-	if(t < 0){
-		last_t = t;
-	}
-	else if(t - last_t > 0.01){
+	if(t - last_t > 0.01){
 		vthx = (imu_thx - last_imu_thx) / (t - last_t);
 		vthy = (imu_thy - last_imu_thy) / (t - last_t);
 		vthz = (imu_thz - last_imu_thz) / (t - last_t);
