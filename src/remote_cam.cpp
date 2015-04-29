@@ -40,9 +40,9 @@ int main(int argc, char* argv[]){
 			usleep(2000000);
 		#endif
 		#ifdef ENABLE_CAM2
-			thr[0] = thread(open_cam, argv[1], 4244, &img_cam2, &key2);
+			thr[2] = thread(open_cam, argv[1], 4244, &img_cam2, &key2);
 			usleep(2000000);
-			thr[1] = thread(open_cam, argv[1], 4246, &img_blobs2, &key2);
+			thr[3] = thread(open_cam, argv[1], 4246, &img_blobs2, &key2);
 			usleep(2000000);
 		#endif
 		while(key != 'q'){

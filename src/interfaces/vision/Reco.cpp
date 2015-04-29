@@ -306,11 +306,10 @@ cv::Mat Reco::Trouver_ligne_principale(bool* detected, float* angle, float* ecar
 	cv::cvtColor(image, image, CV_RGB2GRAY, 1);
 	cv::equalizeHist(image, image);
 	cv::Canny(image, image_contours, 300, 800);
-	cv::imshow("Canny", image_contours);
 
 	// Trouver les lignes
 	vector <cv::Vec4i> lignes;
-	cv::HoughLinesP(image_contours, lignes, 1, CV_PI/90, 25, 100, 500);
+	cv::HoughLinesP(image_contours, lignes, 1, CV_PI/90, 50, 200, 500);
 	if(lignes.size() < 2){
 		*detected = false;
 		*angle = 0.;
