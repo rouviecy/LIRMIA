@@ -344,7 +344,7 @@ cv::Mat Reco::Trouver_ligne_principale(bool* detected, float* angle, float* ecar
 	cv::line(image, centre + pt_excentre, centre - pt_excentre, blanc, 5);
 	*detected = true;
 	*angle = angle_moyen;
-	*ecart = distance_moyenne;
+	*ecart = 2 * distance_moyenne / image.size().width;
 	return image;
 }
 
