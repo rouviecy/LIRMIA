@@ -45,6 +45,8 @@ private:
 	float pipeline_angle_cam2, pipeline_distance_cam2;
 	float motor1, motor2, motor3, motor4;
 
+	float keep_thx;
+
 };
 
 #endif

@@ -97,10 +97,29 @@ void Autonomy::Job(){
 		}
 	}
 	else if(current_state == REMOTE){
+		keep_thx = thx;
 		motor1 = remote_forward / 2 - remote_turn / 2;
 		motor2 = remote_forward / 2 + remote_turn / 2;
 		motor3 = -remote_deeper / 2;
 		motor4 = -remote_deeper / 2;
+	}
+	else if(current_state == EXPLORE){
+		keep_thx = thx;
+		motor1 = 0.;
+		motor2 = 0.;
+		motor3 = 0.;
+		motor4 = 0.;
+	}
+	else if(current_state == UP || current_state == DOWN){ // TODO : check
+		float diff_thx = keep_thx - thx;
+		if(diff_thx < -360){diff_thx += 360;}
+		if(diff_thx > +360){diff_thx -= 360;}
+		if(diff_thx < -180){diff_thx += 360;}
+		if(diff_thx > +180){diff_thx -= 360;}
+		motor1 = - diff_thx / 500;
+		motor2 = + diff_thx / 500;
+		motor3 = + thx / 500 - remote_deeper / 2;
+		motor4 = - thx / 500 - remote_deeper / 2;
 	}
 	else{
 		motor1 = 0.;
