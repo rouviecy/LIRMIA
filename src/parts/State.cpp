@@ -25,14 +25,20 @@ void State::IO(){
 
 void State::Job(){
 	Critical_receive();
-	if(last_t > 0 and t - last_t > 0.01){
-		vthx = (thx - last_imu_thx) / (t - last_t);
-		vthy = (thy - last_imu_thy) / (t - last_t);
-		vthz = (thz - last_imu_thz) / (t - last_t);
+	thx = imu_thx;
+	thy = imu_thy;
+	thz = imu_thz;
+	if(t < 0){
+		last_t = t;
 	}
-	last_t = t;
-	last_imu_thx = imu_thx;
-	last_imu_thy = imu_thy;
-	last_imu_thz = imu_thz;
+	else if(t - last_t > 0.01){
+		vthx = (imu_thx - last_imu_thx) / (t - last_t);
+		vthy = (imu_thy - last_imu_thy) / (t - last_t);
+		vthz = (imu_thz - last_imu_thz) / (t - last_t);
+		last_t = t;
+		last_imu_thx = imu_thx;
+		last_imu_thy = imu_thy;
+		last_imu_thz = imu_thz;
+	}
 	Critical_send();
 }
