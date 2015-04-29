@@ -2,7 +2,12 @@
 
 using namespace std;
 
-State::State() : ComThread(){}
+State::State() : ComThread(){
+	last_t = -1.;
+	x = 0.; vx = 0.; thx = 0.; vthx = 0.; last_imu_thx = 0.;
+	y = 0.; vy = 0.; thy = 0.; vthy = 0.; last_imu_thy = 0.;
+	z = 0.; vz = 0.; thz = 0.; vthz = 0.; last_imu_thz = 0.;
+}
 
 State::~State(){}
 
@@ -10,9 +15,7 @@ void State::On_start(){}
 
 void State::IO(){
 	Link_input("t", &t);
-	Link_input("depth", &depth);
 	Link_input("imu_thx", &imu_thx);   Link_input("imu_thy", &imu_thy);   Link_input("imu_thz", &imu_thz);
-	Link_input("imu_vthx", &imu_vthx); Link_input("imu_vthy", &imu_vthy); Link_input("imu_vthz", &imu_vthz);
 
 	Link_output("x", &x);       Link_output("y", &y);       Link_output("z", &z);
 	Link_output("vx", &vx);     Link_output("vy", &vy);     Link_output("vz", &vz);
@@ -22,5 +25,14 @@ void State::IO(){
 
 void State::Job(){
 	Critical_receive();
+	if(last_t > 0 and t - last_t > 0.01){
+		vthx = (thx - last_imu_thx) / (t - last_t);
+		vthy = (thy - last_imu_thy) / (t - last_t);
+		vthz = (thz - last_imu_thz) / (t - last_t);
+	}
+	last_t = t;
+	last_imu_thx = imu_thx;
+	last_imu_thy = imu_thy;
+	last_imu_thz = imu_thz;
 	Critical_send();
 }

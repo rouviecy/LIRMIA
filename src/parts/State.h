@@ -23,9 +23,7 @@ public:
 private:
 
 	float t;
-	float depth;
-	float imu_thx,  imu_thy,  imu_thz;
-	float imu_vthx, imu_vthy, imu_vthz;
+	float imu_thx, imu_thy, imu_thz;
 
 	float x,    y,    z;
 	float vx,   vy,   vz;
@@ -35,6 +33,9 @@ private:
 	void On_start();
 	void Job();
 	void IO();
+
+	float last_t;
+	float last_imu_thx, last_imu_thy, last_imu_thz;
 
 };
 
