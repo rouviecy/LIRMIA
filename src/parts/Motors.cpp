@@ -3,6 +3,9 @@
 using namespace std;
 
 Motors::Motors() : ComThread(){
+	#if defined(ENABLE_MOTORS) and (not defined(ENABLE_SERIAL_ISS) or not defined(ENABLE_I2C))
+		cout << "[Warning] You are trying to use motors without serial and i2c : motors will be disabled" << endl;
+	#endif
 }
 
 Motors::~Motors(){}
@@ -26,34 +29,30 @@ void Motors::Job(){
 	Generate_order(2, order2, motor2 > 0);
 	Generate_order(3, order3, motor3 > 0);
 	Generate_order(4, order4, motor4 > 0);
-//	cout << endl;
+	cout << endl;
 }
 
 void Motors::Generate_order(int num_motor, int power, bool positive){
-//	cout << "Motor" << num_motor << " : " << (positive ? "+" : "-") << power << endl;
-	#ifdef ENABLE_MOTORS
-		#if defined ENABLE_I2C && ENABLE_SERIAL_ISS
-			unsigned char order[8];
-			switch(num_motor){
-				case 1: order[1]= 0xB0;	break;
-				case 2: order[1]= 0xB2;	break;
-				case 3: order[1]= 0xB4;	break;
-				case 4: order[1]= 0xB6;	break;
-				default:		return;
-			}
-			order[0] = 0x55;
-			order[2] = 0x00;
-			order[3] = 0x04;
-			order[4] = positive ? 1 : 2;
-			order[5] = 0x00;
-			order[6] = power;
-			order[7] = 2;
-			i2c->Lock();
-			i2c->I2C_write(order, 8);
-			i2c->Unlock();
-		#else
-			cout << "You are trying to use motors without I2C and serial enabled ; motors will be disabled" << endl;
-		#endif
+	cout << "Motor" << num_motor << " : " << (positive ? "+" : "-") << power << endl;
+	#if defined(ENABLE_MOTORS) and defined(ENABLE_I2C) and defined(ENABLE_SERIAL_ISS)
+		unsigned char order[8];
+		switch(num_motor){
+			case 1: order[1]= 0xB0;	break;
+			case 2: order[1]= 0xB2;	break;
+			case 3: order[1]= 0xB4;	break;
+			case 4: order[1]= 0xB6;	break;
+			default:		return;
+		}
+		order[0] = 0x55;
+		order[2] = 0x00;
+		order[3] = 0x04;
+		order[4] = positive ? 1 : 2;
+		order[5] = 0x00;
+		order[6] = power;
+		order[7] = 2;
+		i2c->Lock();
+		i2c->I2C_write(order, 8);
+		i2c->Unlock();
 	#endif
 }
 

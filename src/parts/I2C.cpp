@@ -2,7 +2,11 @@
 
 using namespace std;
 
-I2C::I2C() : ComThread(){}
+I2C::I2C() : ComThread(){
+	#if defined(ENABLE_I2C) and not defined(ENABLE_SERIAL_ISS)
+		cout << "[Warning] You are trying to use i2c without serial : i2c will be disabled" << endl;
+	#endif
+}
 
 I2C::~I2C(){}
 
@@ -19,26 +23,22 @@ void I2C::Subscribe(map <int, char> keys, void (*callback) (void*, char*), void*
 }
 
 void I2C::Job(){
-	#ifdef ENABLE_I2C
-		#ifdef ENABLE_SERIAL
-			char* msg = serial->Serial_read();
-			for(size_t i = 0; i < subscriptions.size(); i++){
-				bool selected = true;
-				for(map <int, char> ::iterator it = subscriptions[i].keys.begin(); it != subscriptions[i].keys.end(); ++it){
-					if(msg[it->first] != it->second){
-						selected = false;
-						break;
-					}
-				}
-				if(selected){
-					serial->Lock();
-					subscriptions[i].callback(subscriptions[i].obj, msg);
-					serial->Unlock();
+	#if defined(ENABLE_I2C) and defined(ENABLE_SERIAL_ISS)
+		char* msg = serial->Serial_read();
+		for(size_t i = 0; i < subscriptions.size(); i++){
+			bool selected = true;
+			for(map <int, char> ::iterator it = subscriptions[i].keys.begin(); it != subscriptions[i].keys.end(); ++it){
+				if(msg[it->first] != it->second){
+					selected = false;
+					break;
 				}
 			}
-		#else
-			cout << "[Warning] You are trying to use I2C with serial disabled ; so I2C will be disabled" << endl;
-		#endif
+			if(selected){
+				serial->Lock();
+				subscriptions[i].callback(subscriptions[i].obj, msg);
+				serial->Unlock();
+			}
+		}
 	#endif
 }
 
