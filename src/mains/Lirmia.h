@@ -29,7 +29,7 @@
 #include "../parts/State_machine.h"
 
 #define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_5533330393435131F151-if00"
-#define DEV_SERIAL_ISS		"/dev/ttyUSB0"
+#define DEV_SERIAL_ISS		"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00007350-if00"
 
 class Lirmia : public Maestro{
 
