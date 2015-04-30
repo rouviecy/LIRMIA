@@ -9,25 +9,13 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 987)">
 <title>links</title>
 <polygon fill="white" stroke="none" points="-4,4 -4,-987 7204,-987 7204,4 -4,4"/>
-<g id="clust3" class="cluster"><title>cluster_44</title>
-<polygon fill="lightgrey" stroke="lightgrey" points="1208,-454 1208,-529 3791,-529 3791,-454 1208,-454"/>
-<text text-anchor="middle" x="2499.5" y="-513.8" font-family="Times,serif" font-size="14.00">Cameras &#45; 10Hz</text>
-</g>
-<g id="clust2" class="cluster"><title>cluster_8</title>
-<polygon fill="lightgrey" stroke="lightgrey" points="952,-231 952,-306 5091,-306 5091,-231 952,-231"/>
-<text text-anchor="middle" x="3021.5" y="-290.8" font-family="Times,serif" font-size="14.00">Autonomy &#45; 20Hz</text>
-</g>
 <g id="clust1" class="cluster"><title>cluster_1</title>
 <polygon fill="lightgrey" stroke="lightgrey" points="5710,-231 5710,-306 6140,-306 6140,-231 5710,-231"/>
 <text text-anchor="middle" x="5925" y="-290.8" font-family="Times,serif" font-size="14.00">Acoustic modem &#45; 1Hz</text>
 </g>
-<g id="clust8" class="cluster"><title>cluster_70</title>
-<polygon fill="lightgrey" stroke="lightgrey" points="6485,-677 6485,-752 6785,-752 6785,-677 6485,-677"/>
-<text text-anchor="middle" x="6635" y="-736.8" font-family="Times,serif" font-size="14.00">Inertial Measurement Unit &#45; 10Hz</text>
-</g>
-<g id="clust4" class="cluster"><title>cluster_59</title>
-<polygon fill="lightgrey" stroke="lightgrey" points="6889,-900 6889,-975 6991,-975 6991,-900 6889,-900"/>
-<text text-anchor="middle" x="6940" y="-959.8" font-family="Times,serif" font-size="14.00">Clock &#45; 1000Hz</text>
+<g id="clust2" class="cluster"><title>cluster_8</title>
+<polygon fill="lightgrey" stroke="lightgrey" points="952,-231 952,-306 5091,-306 5091,-231 952,-231"/>
+<text text-anchor="middle" x="3021.5" y="-290.8" font-family="Times,serif" font-size="14.00">Autonomy &#45; 20Hz</text>
 </g>
 <g id="clust9" class="cluster"><title>cluster_74</title>
 <polygon fill="lightgrey" stroke="lightgrey" points="6148,-231 6148,-306 7192,-306 7192,-231 6148,-231"/>
@@ -40,6 +28,18 @@
 <g id="clust5" class="cluster"><title>cluster_61</title>
 <polygon fill="lightgrey" stroke="lightgrey" points="6825,-677 6825,-752 6975,-752 6975,-677 6825,-677"/>
 <text text-anchor="middle" x="6900" y="-736.8" font-family="Times,serif" font-size="14.00">Depth &#45; 100Hz</text>
+</g>
+<g id="clust8" class="cluster"><title>cluster_70</title>
+<polygon fill="lightgrey" stroke="lightgrey" points="6485,-677 6485,-752 6785,-752 6785,-677 6485,-677"/>
+<text text-anchor="middle" x="6635" y="-736.8" font-family="Times,serif" font-size="14.00">Inertial Measurement Unit &#45; 100Hz</text>
+</g>
+<g id="clust3" class="cluster"><title>cluster_44</title>
+<polygon fill="lightgrey" stroke="lightgrey" points="1208,-454 1208,-529 3791,-529 3791,-454 1208,-454"/>
+<text text-anchor="middle" x="2499.5" y="-513.8" font-family="Times,serif" font-size="14.00">Cameras &#45; 10Hz</text>
+</g>
+<g id="clust4" class="cluster"><title>cluster_59</title>
+<polygon fill="lightgrey" stroke="lightgrey" points="6889,-900 6889,-975 6991,-975 6991,-900 6889,-900"/>
+<text text-anchor="middle" x="6940" y="-959.8" font-family="Times,serif" font-size="14.00">Clock &#45; 1000Hz</text>
 </g>
 <g id="clust10" class="cluster"><title>cluster_89</title>
 <polygon fill="lightgrey" stroke="lightgrey" points="5099,-231 5099,-306 5702,-306 5702,-231 5099,-231"/>

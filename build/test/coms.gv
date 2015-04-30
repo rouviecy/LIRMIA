@@ -105,7 +105,7 @@ digraph links {
 		node [style=filled,color=white];
 	}
 	subgraph cluster_70 {
-		label = "Inertial Measurement Unit - 10Hz";
+		label = "Inertial Measurement Unit - 100Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];

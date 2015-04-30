@@ -168,6 +168,7 @@ int main(int argc, char* argv[]){
 		obj_callback.remote_mode = true;
 
 		// Init remote monitor
+		usleep(1000000);
 		tcp_client_monitor.Configure(argv[1], 4241);
 
 		// Job
