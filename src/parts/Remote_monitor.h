@@ -31,6 +31,7 @@ private:
 
 	float t;
 	float thx, thy, thz;
+	float fsm_state;
 
 };
 

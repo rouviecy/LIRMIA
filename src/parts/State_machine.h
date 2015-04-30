@@ -26,6 +26,7 @@ public:
 	~State_machine();
 
 	static state_t Decode_state(float float_state);
+	static std::string Decode_state_str(float float_state);
 
 private:
 

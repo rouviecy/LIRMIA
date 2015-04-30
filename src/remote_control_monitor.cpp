@@ -1,6 +1,7 @@
 #include "interfaces/TCP_client.h"
 #include "interfaces/Joystick.h"
 #include "interfaces/vision/hsv_params.h"
+#include "parts/State_machine.h"
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <fstream>
@@ -8,11 +9,22 @@
 
 using namespace std;
 
+#define MONITOR_SIZE	500
+#define MONITOR_BORDER	50
+
 typedef struct{
 	TCP_client* tcp_client;
 	bool go_on;
 	bool remote_mode;
 } struct_callback;
+
+typedef struct{
+	float x, y, z, thz;
+	string state;
+	float min_coord, max_coord;
+	vector <vector <float> > path;
+} struct_monitor;
+	
 
 static void send_move_order(void* obj, string msg){
 	struct_callback* obj_callback = (struct_callback*) obj;
@@ -149,6 +161,45 @@ void init_joystick_listeners(Joystick* joystick, struct_callback* obj_callback){
 	#endif
 }
 
+cv::Mat Draw_monitor(struct_monitor* monitor){
+	cv::Mat img_monitor = cv::Mat::zeros(500, 500, CV_8UC3);
+	cv::Scalar red(0, 0, 255);
+	vector <float> xy; xy.push_back(monitor->x); xy.push_back(monitor->y); 
+	monitor->path.push_back(xy);
+	if	(monitor->x < monitor->min_coord){monitor->min_coord = monitor->x;}
+	else if	(monitor->x > monitor->max_coord){monitor->max_coord = monitor->x;}
+	if	(monitor->y < monitor->min_coord){monitor->min_coord = monitor->y;}
+	else if	(monitor->y > monitor->max_coord){monitor->max_coord = monitor->y;}
+	cv::Point pt_draw_prev;
+	for(size_t i = 0; i < monitor->path.size(); i++){
+		float delta_min_max = monitor->max_coord - monitor->min_coord;
+		float delta_size_border = (float) (MONITOR_SIZE - MONITOR_BORDER);
+		int draw_x = MONITOR_BORDER / 2 + (int) (delta_size_border * (monitor->path[i][0] - monitor->min_coord) / delta_min_max);
+		int draw_y = MONITOR_BORDER / 2 + (int) (delta_size_border * (monitor->path[i][1] - monitor->min_coord) / delta_min_max);
+		cv::Point pt_draw = cv::Point(draw_x, draw_y);
+		if(i != 0){
+			cv::line(img_monitor, pt_draw_prev, pt_draw, cv::Scalar(255, 0, 0));
+		}
+		pt_draw_prev = pt_draw;
+		if(i == monitor->path.size() - 1){
+			cv::circle(img_monitor, pt_draw, 10, red, 3);
+			cv::Point pt_arrow = pt_draw + cv::Point(40 * cos(monitor->thz), 40 * sin(monitor->thz));
+			cv::Point pt_arrow_l = pt_arrow + cv::Point(10 * cos(monitor->thz + 2.5), 10 * sin(monitor->thz + 2.5));
+			cv::Point pt_arrow_r = pt_arrow + cv::Point(10 * cos(monitor->thz - 2.5), 10 * sin(monitor->thz - 2.5));
+			cv::line(img_monitor, pt_draw, pt_arrow, red, 3);
+			cv::line(img_monitor, pt_arrow, pt_arrow_l, red, 3);
+			cv::line(img_monitor, pt_arrow, pt_arrow_r, red, 3);
+		}
+	}
+	string text_x = "x = " + to_string(monitor->x);
+	string text_y = "y = " + to_string(monitor->y);
+	string text_z = "z = " + to_string(monitor->z);
+	cv::putText(img_monitor, text_x, cv::Point(10, 20), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_y, cv::Point(10, 40), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_z, cv::Point(10, 60), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	return img_monitor;
+}
+
 int main(int argc, char* argv[]){
 	#if defined(ENABLE_SDL) and defined(ENABLE_TCP)
 
@@ -156,6 +207,7 @@ int main(int argc, char* argv[]){
 		Joystick joystick;
 		TCP_client tcp_client_remote, tcp_client_monitor;
 		struct_callback obj_callback;
+		struct_monitor monitor;
 		hsv_params hsv = create_HSV_params();
 
 		// Init remote controller
@@ -170,25 +222,35 @@ int main(int argc, char* argv[]){
 		// Init remote monitor
 		usleep(1000000);
 		tcp_client_monitor.Configure(argv[1], 4241);
+		monitor.min_coord = -1.;
+		monitor.max_coord = +1.;
+		monitor.path.clear();
 
 		// Job
 		send_first_HSV_params(&hsv);
 		while(obj_callback.go_on){
 			string msg_monitor = string(tcp_client_monitor.Receive());
 			size_t next;
-			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 4){
+			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 5){
 				vector <string> tokens;
-				for(size_t current = 0; tokens.size() < 4; current = next + 1){
+				for(size_t current = 0; tokens.size() < 5; current = next + 1){
 					next = msg_monitor.find_first_of("|", current);
 					tokens.push_back(msg_monitor.substr(current, next - current));
 				}
 				float t = stof(tokens[0]);
-				float thx = stof(tokens[1]);
-				float thy = stof(tokens[2]);
-				float thz = stof(tokens[3]);
-				cout << "t = " << t << "\tthx = " << thx << "\tthy = " << thy << "\tthz = " << thz << endl;
+				string fsm = State_machine::Decode_state_str(stof(tokens[1]));
+				float thx = stof(tokens[2]);
+				float thy = stof(tokens[3]);
+				float thz = stof(tokens[4]);
+				monitor.x = 0.;
+				monitor.y = 0.;
+				monitor.z = 42.;
+				monitor.thz = thz / 57.3;
+				monitor.state = fsm;
+				cout << fsm << endl;
 			}
-			usleep(10000);
+			cv::imshow("Monitor", Draw_monitor(&monitor));
+			cv::waitKey(10);
 			joystick.Update_event();
 		}
 

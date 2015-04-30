@@ -20,12 +20,14 @@ void Remote_monitor::On_start(){}
 void Remote_monitor::IO(){
 	Link_input("t", &t);
 	Link_input("thx", &thx);   Link_input("thy", &thy);   Link_input("thz", &thz);
+	Link_input("fsm_state", &fsm_state);
 }
 
 void Remote_monitor::Job(){
 	Critical_receive();
 	string msg_monitor =
 		to_string(t)+ "|" +
+		to_string(fsm_state) + "|" +
 		to_string(thx) + "|" +
 		to_string(thy) + "|" +
 		to_string(thz) + "|";

@@ -111,6 +111,7 @@ void State_machine::Job(){
 }
 
 state_t State_machine::Decode_state(float float_state){
+	// TODO : intégrer dans "interface"
 	if	(float_state < 0.5)	{return STAY;}
 	else if	(float_state < 1.5)	{return DOWN;}
 	else if	(float_state < 2.5)	{return EXPLORE;}
@@ -121,6 +122,20 @@ state_t State_machine::Decode_state(float float_state){
 	else if	(float_state < 7.5)	{return UP;}
 	else if	(float_state < 8.5)	{return REMOTE;}
 	else				{return UNKNOWN;}
+}
+
+string State_machine::Decode_state_str(float float_state){
+	// TODO : intégrer dans "interface"
+	if	(float_state < 0.5)	{return "stabilize position ";}
+	else if	(float_state < 1.5)	{return "going down";}
+	else if	(float_state < 2.5)	{return "explore";}
+	else if	(float_state < 3.5)	{return "follow object camera 1";}
+	else if	(float_state < 4.5)	{return "follow object camera 2";}
+	else if	(float_state < 5.5)	{return "follow pipeline camera 1";}
+	else if	(float_state < 6.5)	{return "follow pipeline camera 2";}
+	else if	(float_state < 7.5)	{return "going up";}
+	else if	(float_state < 8.5)	{return "remote control";}
+	else				{return "unknown ???";}
 }
 
 void State_machine::Act_remote_to_stay(void* obj){
