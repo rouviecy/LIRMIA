@@ -25,15 +25,15 @@ else(${IS_ROBOT})
 	set(ENABLE_PYTHON OFF)
 	set(ENABLE_JAVA OFF)
 	set(ENABLE_SDL ON)
-	add_definitions(-DENABLE_SERIAL_ARDUINO)
+	#add_definitions(-DENABLE_SERIAL_ARDUINO)
 	#add_definitions(-DENABLE_SERIAL_ISS)
 	#add_definitions(-DENABLE_I2C)		# needs serial ISS
 	#add_definitions(-DENABLE_DEPTH)	# needs serial ISS and I2C
-	add_definitions(-DENABLE_IMU)		# needs serial Arduino
+	#add_definitions(-DENABLE_IMU)		# needs serial Arduino
 	#add_definitions(-DENABLE_MOTORS)	# needs serial ISS and I2C
 	add_definitions(-DENABLE_TCP)
 	add_definitions(-DENABLE_CAM1)
-	#add_definitions(-DENABLE_CAM2)
+	add_definitions(-DENABLE_CAM2)
 	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 endif(${IS_ROBOT})
 
@@ -64,7 +64,8 @@ add_library(BETTERAVE_USER
 	src/parts/Logger.h		src/parts/Logger.cpp
 	src/parts/Mapping.h		src/parts/Mapping.cpp
 	src/parts/Motors.h		src/parts/Motors.cpp
-	src/parts/Remote.h		src/parts/Remote.cpp
+	src/parts/Remote_control.h	src/parts/Remote_control.cpp
+	src/parts/Remote_monitor.h	src/parts/Remote_monitor.cpp
 	src/parts/State.h		src/parts/State.cpp
 	src/parts/State_machine.h	src/parts/State_machine.cpp
 )
@@ -72,7 +73,7 @@ add_library(BETTERAVE_USER
 add_executable(lirmia src/mains/Lirmia.cpp)
 target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
 
-add_executable(remote src/remote_controller.cpp)
+add_executable(remote src/remote_control_monitor.cpp)
 target_link_libraries(remote ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
 
 add_executable(camera src/remote_cam.cpp)
