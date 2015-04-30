@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="111cm" height="68cm" viewBox="279 -102 2202 1343" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #dedede" x="1960" y="600" width="480" height="480"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1960" y="600" width="480" height="480"/>
+  </g>
+  <g>
+    <rect style="fill: #dedede" x="1960" y="20" width="480" height="480"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1960" y="20" width="480" height="480"/>
+  </g>
+  <g>
+    <rect style="fill: #dedede" x="360" y="20" width="1160" height="1060"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="360" y="20" width="1160" height="1060"/>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="825,858.5 859,858.5 859,888.5 823,888.5 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #008000" points="860,720 860,826.646 798.348,826.646 "/>
+  <g>
+    <rect style="fill: #ffffff" x="600" y="160" width="280" height="260"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="600" y="160" width="280" height="260"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="740" y="294.45">
+    <tspan x="740" y="294.45">NUC</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="580" y="220" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="580" y="220" width="40" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="600" y="244.45">
+    <tspan x="600" y="244.45">USB</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="860" y="360" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="860" y="360" width="40" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="880" y="384.45">
+    <tspan x="880" y="384.45">alim</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="860" y="180" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="860" y="180" width="40" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="880" y="204.45">
+    <tspan x="880" y="204.45">eth</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="860" y="240" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="860" y="240" width="40" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="880" y="264.45">
+    <tspan x="880" y="264.45">USB</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="940" y="480" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="940" y="480" width="40" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="960" y="496.45">
+    <tspan x="960" y="496.45">HUB</tspan>
+    <tspan x="960" y="512.45">USB</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="320" y="40" width="80" height="1020"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="320" y="40" width="80" height="1020"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="300" y="100" width="120" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="300" y="100" width="120" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="124.45">
+    <tspan x="360" y="124.45">eth</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" points="420,120 921,120 921,200 900,200 "/>
+  <g>
+    <rect style="fill: #ffffff" x="680" y="560" width="220" height="140"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="680" y="560" width="220" height="140"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="790" y="634.45">
+    <tspan x="790" y="634.45">Arduino UNO</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="880" y="580" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="880" y="580" width="40" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="900" y="604.45">
+    <tspan x="900" y="604.45">USB</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="980,500 1001,500 1001,600 920,600 "/>
+  <g>
+    <rect style="fill: #ffffff" x="840" y="680" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="840" y="680" width="40" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="860" y="704.45">
+    <tspan x="860" y="704.45">Pin10</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="740" y="290">
+    <tspan x="740" y="290"></tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="660" y="780" width="140" height="140"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="660" y="780" width="140" height="140"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="780" y="800" width="50" height="100"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="780" y="800" width="50" height="100"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="805" y="814.45">
+    <tspan x="805" y="814.45">DTR</tspan>
+    <tspan x="805" y="830.45">TXO</tspan>
+    <tspan x="805" y="846.45">RXI</tspan>
+    <tspan x="805" y="862.45">3.3V</tspan>
+    <tspan x="805" y="878.45">CTS</tspan>
+    <tspan x="805" y="894.45">GND</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="440" y="160" width="100" height="60"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="440" y="160" width="100" height="60"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="490" y="194.45">
+    <tspan x="490" y="194.45">Camera 1</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="440" y="260" width="100" height="60"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="440" y="260" width="100" height="60"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="490" y="294.45">
+    <tspan x="490" y="294.45">Camera 2</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="540,190 560,190 560,240 579.023,240 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="540,290 560,290 560,240 580,240 "/>
+  <g>
+    <rect style="fill: #ffffff" x="300" y="560" width="120" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="300" y="560" width="120" height="40"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="300" y="960" width="120" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="300" y="960" width="120" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="984.45">
+    <tspan x="360" y="984.45">alim</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="560" y="960" width="140" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="560" y="960" width="140" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="630" y="984.45">
+    <tspan x="630" y="984.45">Power converter</tspan>
+  </text>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x1="420" y1="980" x2="560" y2="980"/>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="730" y="846.45">
+    <tspan x="730" y="846.45">IMU Razor</tspan>
+    <tspan x="730" y="862.45">(5V mode)</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="700,980 1220,980 1220,873.146 860.348,873.146 "/>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="584.45">
+    <tspan x="360" y="584.45">RS232</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="300" y="440" width="120" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="300" y="440" width="120" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="464.45">
+    <tspan x="360" y="464.45">RS232</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="900,380 920,380 920,460 630,460 630,960 "/>
+  <g>
+    <rect style="fill: #ffffff" x="1040" y="460" width="100" height="80"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1040" y="460" width="100" height="80"/>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="901.001,260 1090,260 1090,460 "/>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1090" y="496.45">
+    <tspan x="1090" y="496.45">ISS</tspan>
+    <tspan x="1090" y="512.45">I2C + serial</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1260" y="260" width="100" height="60"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1260" y="260" width="100" height="60"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1310" y="286.45">
+    <tspan x="1310" y="286.45">Motor</tspan>
+    <tspan x="1310" y="302.45">Controller</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1260" y="400" width="100" height="60"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1260" y="400" width="100" height="60"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1310" y="426.45">
+    <tspan x="1310" y="426.45">Motor</tspan>
+    <tspan x="1310" y="442.45">Controller</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1260" y="540" width="100" height="60"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1260" y="540" width="100" height="60"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1310" y="566.45">
+    <tspan x="1310" y="566.45">Motor</tspan>
+    <tspan x="1310" y="582.45">Controller</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1260" y="680" width="100" height="60"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1260" y="680" width="100" height="60"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1310" y="706.45">
+    <tspan x="1310" y="706.45">Motor</tspan>
+    <tspan x="1310" y="722.45">Controller</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #008000" points="1140,500 1180,500 1180,290 1259.01,290 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #008000" points="1140,500 1180,500 1180,430 1260,430 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #008000" points="1140,500 1180,500 1180,570 1260,570 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #008000" points="1140,500 1180,500 1180,710 1260,710 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="700,980 1220,980 1220,760 1310,760 1310,740 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="700,980 1220,980 1220,620 1310,620 1310,600 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="700,980 1220,980 1220,480 1310,480 1310,460 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="700,980 1220,980 1220,340 1310,340 1310,320 "/>
+  <g>
+    <rect style="fill: #ffffff" x="1480" y="40" width="80" height="1020"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1480" y="40" width="80" height="1020"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1540" y="380" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1540" y="380" width="40" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1560" y="404.45">
+    <tspan x="1560" y="404.45">PWR</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1460" y="780" width="120" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1460" y="780" width="120" height="40"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1540" y="180" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1540" y="180" width="40" height="40"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1460" y="580" width="120" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1460" y="580" width="120" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1560" y="204.45">
+    <tspan x="1560" y="204.45">M1-2</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1520" y="604.45">
+    <tspan x="1520" y="604.45">M3</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1520" y="804.45">
+    <tspan x="1520" y="804.45">M4</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #008000" points="1360,290 1400,290 1400,220 1460,220 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #008000" points="1360,430 1400,430 1400,180 1460,180 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #008000" points="1360,570 1400,570 1400,600 1460,600 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #008000" points="1361,710 1400,710 1400,800 1460,800 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="1460,380 1440,380 1440,240 1310,240 1310,260 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="1460,380 1440,380 1440,380 1310,380 1310,400 "/>
+  <g>
+    <rect style="fill: #ffffff" x="1460" y="160" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1460" y="160" width="40" height="40"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1460" y="200" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1460" y="200" width="40" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1480" y="184.45">
+    <tspan x="1480" y="184.45">M1</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1480" y="224.45">
+    <tspan x="1480" y="224.45">M2</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1460" y="360" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1460" y="360" width="40" height="40"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1460" y="400" width="40" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1460" y="400" width="40" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1480" y="376.45">
+    <tspan x="1480" y="376.45">PWR</tspan>
+    <tspan x="1480" y="392.45">1-2</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1480" y="416.45">
+    <tspan x="1480" y="416.45">PWR</tspan>
+    <tspan x="1480" y="432.45">3-4</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #008000" points="1500,180 1520,180 1520,200 1539.02,200 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #008000" points="1500,220 1520,220 1520,200 1540,200 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="1500,380 1520,380 1520,400 1540,400 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="1500,420 1520,420 1520,400 1540,400 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="1460,420 1440,420 1440,520 1310,520 1310,540 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="1460,420 1440,420 1440,660 1310,660 1310,680 "/>
+  <g>
+    <rect style="fill: #ffffff" x="1920" y="40" width="80" height="440"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1920" y="40" width="80" height="440"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="2080" y="220" width="240" height="80"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2080" y="220" width="240" height="80"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="2200" y="264.45">
+    <tspan x="2200" y="264.45">LiPo 22V</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1900" y="240" width="120" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1900" y="240" width="120" height="40"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1960" y="264.45">
+    <tspan x="1960" y="264.45">PWR 1-2</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="2400" y="40" width="80" height="440"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2400" y="40" width="80" height="440"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1920" y="620" width="80" height="440"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1920" y="620" width="80" height="440"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="2080" y="720" width="240" height="80"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2080" y="720" width="240" height="80"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="2200" y="764.45">
+    <tspan x="2200" y="764.45">LiPo 22V</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1900" y="740" width="120" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1900" y="740" width="120" height="40"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="2400" y="620" width="80" height="440"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2400" y="620" width="80" height="440"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1960" y="764.45">
+    <tspan x="1960" y="764.45">PWR 3-4</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1580,400 1880,400 1880,260 1900,260 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1580,400 1880,400 1880,760 1900,760 "/>
+  <g>
+    <ellipse style="fill: #ffffff" cx="1680" cy="-60" rx="40" ry="40"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="1680" cy="-60" rx="40" ry="40"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="1680" cy="-60" rx="40" ry="40"/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1664,-44 1664,-76 1680,-60 1696,-76 1696,-44 "/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="1800" cy="-60" rx="40" ry="40"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="1800" cy="-60" rx="40" ry="40"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="1800" cy="-60" rx="40" ry="40"/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1784,-44 1784,-76 1800,-60 1816,-76 1816,-44 "/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="1680" cy="1160" rx="40" ry="40"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="1680" cy="1160" rx="40" ry="40"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="1680" cy="1160" rx="40" ry="40"/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1664,1176 1664,1144 1680,1160 1696,1144 1696,1176 "/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="1800" cy="1160" rx="40" ry="40"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="1800" cy="1160" rx="40" ry="40"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="1800" cy="1160" rx="40" ry="40"/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1784,1176 1784,1144 1800,1160 1816,1144 1816,1176 "/>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1580,200 1680,200 1680,-20 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1580,600 1800,600 1800,1060 1800,1060 1800,1120 "/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x1="2020" y1="260" x2="2080" y2="260"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x1="2020" y1="760" x2="2080" y2="760"/>
+  <text font-size="12.8" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1281" y="252.75">
+    <tspan x="1281" y="252.75">22V</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1281" y="394.75">
+    <tspan x="1281" y="394.75">22V</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1282" y="534.75">
+    <tspan x="1282" y="534.75">22V</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1282" y="674.75">
+    <tspan x="1282" y="674.75">22V</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1314" y="332.75">
+    <tspan x="1314" y="332.75">5V</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1314" y="473.75">
+    <tspan x="1314" y="473.75">5V</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1315" y="612.75">
+    <tspan x="1315" y="612.75">5V</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1314" y="753.25">
+    <tspan x="1314" y="753.25">5V</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1226" y="285.75">
+    <tspan x="1226" y="285.75">0xB0</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1225" y="425.75">
+    <tspan x="1225" y="425.75">0xB2</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1225" y="566.75">
+    <tspan x="1225" y="566.75">0xB4</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1225" y="705.75">
+    <tspan x="1225" y="705.75">0xB6</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1365" y="284.75">
+    <tspan x="1365" y="284.75">PWM</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1364" y="424.75">
+    <tspan x="1364" y="424.75">PWM</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1362" y="566.75">
+    <tspan x="1362" y="566.75">PWM</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1363" y="706.5">
+    <tspan x="1363" y="706.5">PWM</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="702" y="977">
+    <tspan x="702" y="977">5V</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="2080" y="880" width="240" height="80"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2080" y="880" width="240" height="80"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="2200" y="924.45">
+    <tspan x="2200" y="924.45">LiPo 12V</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1900" y="900" width="120" height="40"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1900" y="900" width="120" height="40"/>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1580,800 1680,800 1680,1120 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1580,200 1800,200 1800,-20 "/>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1960" y="924.45">
+    <tspan x="1960" y="924.45">12V</tspan>
+  </text>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" x1="2020" y1="920" x2="2080" y2="920"/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1900,920 1880,920 1880,1240 280,1240 280,980 300,980 "/>
+  <text font-size="12.8" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="602.348" y="955.896">
+    <tspan x="602.348" y="955.896">12V</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="900,260 960,260 960,480 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="960,520 960,540 480,540 480,580 420,580 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="420,460 480,460 480,500 939.009,500 "/>
+</svg>
