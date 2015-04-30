@@ -194,9 +194,10 @@ cv::Mat Draw_monitor(struct_monitor* monitor){
 	string text_x = "x = " + to_string(monitor->x);
 	string text_y = "y = " + to_string(monitor->y);
 	string text_z = "z = " + to_string(monitor->z);
-	cv::putText(img_monitor, text_x, cv::Point(10, 20), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_y, cv::Point(10, 40), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_z, cv::Point(10, 60), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, monitor->state, cv::Point(10, 20), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_x, cv::Point(10, 40), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_y, cv::Point(10, 60), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_z, cv::Point(10, 80), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
 	return img_monitor;
 }
 
