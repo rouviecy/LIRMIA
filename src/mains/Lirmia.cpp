@@ -16,7 +16,8 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&mapping,		"Mapping",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
-	Add_thread(&remote,		"Remote control",		-1);		// manual loop
+	Add_thread(&remote_control,	"Remote control",		-1);		// manual loop
+	Add_thread(&remote_monitor,	"Remote monitor",		100000);	// 100 ms
 	Add_thread(&state,		"State",			20000);		// 20 ms
 	Add_thread(&state_machine,	"Finite state machine",		40000);		// 40 s
 
@@ -25,12 +26,12 @@ Lirmia::Lirmia() : Maestro(){
 		depth.Calibrate();
 	#endif
 	Link_all();
-	remote.Set_blobs_obj(cameras.Get_blobs_obj());
+	remote_control.Set_blobs_obj(cameras.Get_blobs_obj());
 //	mapping.Link_img(cameras.Get_img1(), cameras.Get_img2());
 	Draw("coms");
 	usleep(1000000);
 	Launch_all();
-	remote.Job_and_wait_quit();
+	remote_control.Job_and_wait_quit();
 
 }
 

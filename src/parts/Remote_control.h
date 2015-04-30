@@ -1,27 +1,27 @@
 /*
- * @(#)		Remote.h
+ * @(#)		Remote_control.h
  * @version	1.0
  * @autor	C. Rouvière
  */
 
 /**
- * Remote control with TCP
+ * Remote control receiving orders from TCP
  */
 
-#ifndef REMOTE
-#define REMOTE
+#ifndef REMOTE_CONTROL
+#define REMOTE_CONTROL
 
 #include "../core/ComThread.h"
 #include "../interfaces/TCP_server.h"
 #include "../interfaces/vision/Blobs.h"
 #include "../interfaces/vision/hsv_params.h"
 
-class Remote : public ComThread{
+class Remote_control : public ComThread{
 
 public:
 
-	Remote();
-	~Remote();
+	Remote_control();
+	~Remote_control();
 
 	void Job_and_wait_quit();
 	void Set_blobs_obj(Blobs* blobs);

@@ -24,7 +24,8 @@
 #include "../parts/Logger.h"
 #include "../parts/Mapping.h"
 #include "../parts/Motors.h"
-#include "../parts/Remote.h"
+#include "../parts/Remote_control.h"
+#include "../parts/Remote_monitor.h"
 #include "../parts/State.h"
 #include "../parts/State_machine.h"
 
@@ -55,7 +56,8 @@ private:
 	Logger		logger;
 	Mapping		mapping;
 	Motors		motors;
-	Remote		remote;
+	Remote_control	remote_control;
+	Remote_monitor	remote_monitor;
 	State		state;
 	State_machine	state_machine;
 

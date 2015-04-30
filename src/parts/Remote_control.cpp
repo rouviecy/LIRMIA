@@ -1,13 +1,13 @@
-#include "Remote.h"
+#include "Remote_control.h"
 
 using namespace std;
 
-Remote::Remote() : ComThread(){
+Remote_control::Remote_control() : ComThread(){
 	remote = +1.;
 	alive = false;
 	#ifdef ENABLE_TCP
 		if(!tcp_server.Configure(4242)){return;}
-		cout << "Waiting client ..." << endl;
+		cout << "Waiting client for remote control on port 4242 ..." << endl;
 		while(tcp_server.Get_nb_clients() == 0){
 			usleep(1000000);
 		}
@@ -16,20 +16,20 @@ Remote::Remote() : ComThread(){
 	#endif
 }
 
-Remote::~Remote(){}
+Remote_control::~Remote_control(){}
 
-void Remote::On_start(){}
+void Remote_control::On_start(){}
 
-void Remote::IO(){
+void Remote_control::IO(){
 	Link_output("remote", &remote);
 	Link_output("remote_forward", &remote_forward);
 	Link_output("remote_turn", &remote_turn);
 	Link_output("remote_deeper", &remote_deeper);
 }
 
-void Remote::Job(){}
+void Remote_control::Job(){}
 
-void Remote::Job_and_wait_quit(){
+void Remote_control::Job_and_wait_quit(){
 	#ifdef ENABLE_TCP
 		while(alive){
 			char* msg_in = tcp_server.Receive(0);
@@ -65,4 +65,4 @@ void Remote::Job_and_wait_quit(){
 	#endif	
 }
 
-void Remote::Set_blobs_obj(Blobs* blobs){this->blobs = blobs;}
+void Remote_control::Set_blobs_obj(Blobs* blobs){this->blobs = blobs;}
