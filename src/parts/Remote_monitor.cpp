@@ -24,6 +24,10 @@ void Remote_monitor::IO(){
 
 void Remote_monitor::Job(){
 	Critical_receive();
-	string msg_monitor = to_string(thx) + "|" + to_string(thy) + "|" + to_string(thz) + "|";
+	string msg_monitor =
+		to_string(t)+ "|" +
+		to_string(thx) + "|" +
+		to_string(thy) + "|" +
+		to_string(thz) + "|";
 	tcp_server.Send(msg_monitor);
 }

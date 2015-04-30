@@ -174,7 +174,20 @@ int main(int argc, char* argv[]){
 		// Job
 		send_first_HSV_params(&hsv);
 		while(obj_callback.go_on){
-			cout << tcp_client_monitor.Receive() << endl;
+			string msg_monitor = string(tcp_client_monitor.Receive());
+			size_t next;
+			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 4){
+				vector <string> tokens;
+				for(size_t current = 0; tokens.size() < 4; current = next + 1){
+					next = msg_monitor.find_first_of("|", current);
+					tokens.push_back(msg_monitor.substr(current, next - current));
+				}
+				float t = stof(tokens[0]);
+				float thx = stof(tokens[1]);
+				float thy = stof(tokens[2]);
+				float thz = stof(tokens[3]);
+				cout << "t = " << t << "\tthx = " << thx << "\tthy = " << thy << "\tthz = " << thz << endl;
+			}
 			usleep(10000);
 			joystick.Update_event();
 		}
