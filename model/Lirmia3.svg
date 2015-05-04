@@ -151,16 +151,10 @@
     <tspan x="730" y="862.45">(5V mode)</tspan>
   </text>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="700,980 1220,980 1220,873.146 860.348,873.146 "/>
-  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="584.45">
-    <tspan x="360" y="584.45">RS232</tspan>
-  </text>
   <g>
     <rect style="fill: #ffffff" x="300" y="440" width="120" height="40"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="300" y="440" width="120" height="40"/>
   </g>
-  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="464.45">
-    <tspan x="360" y="464.45">RS232</tspan>
-  </text>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ff0000" points="900,380 920,380 920,460 630,460 630,960 "/>
   <g>
     <rect style="fill: #ffffff" x="1040" y="460" width="100" height="80"/>
@@ -434,4 +428,12 @@
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="900,260 960,260 960,480 "/>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="960,520 960,540 480,540 480,580 420,580 "/>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="420,460 480,460 480,500 939.009,500 "/>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="456.45">
+    <tspan x="360" y="456.45">RS232</tspan>
+    <tspan x="360" y="472.45">(depth sensor)</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="576.45">
+    <tspan x="360" y="576.45">RS232</tspan>
+    <tspan x="360" y="592.45">(acoustic modem)</tspan>
+  </text>
 </svg>
