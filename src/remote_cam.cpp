@@ -37,13 +37,17 @@ int main(int argc, char* argv[]){
 		mutex mu1, mu2;
 		char key = 'a'; char key1 = 'a'; char key2 = 'a';
 		cv::Mat img_cam1, img_blobs1, img_cam2, img_blobs2;
+		const char* window_cam1 = "camera 1";	const char* window_blobs1 = "blobs 1";
+		const char* window_cam2 = "camera 2";	const char* window_blobs2 = "blobs 2";
 		#ifdef ENABLE_CAM1
-			thr[0] = thread(open_cam, argv[1], 4243, &img_cam1, &key1, &mu1);
-			usleep(2000000);
-			thr[1] = thread(open_cam, argv[1], 4245, &img_blobs1, &key1, &mu1);
-			usleep(2000000);
+			cv::namedWindow(window_cam1, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_cam1, 800, 150);
+			cv::namedWindow(window_blobs1, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_blobs1, 1200, 150);
+			thr[0] = thread(open_cam, argv[1], 4243, &img_cam1, &key1, &mu1);	usleep(2000000);
+			thr[1] = thread(open_cam, argv[1], 4245, &img_blobs1, &key1, &mu1);	usleep(2000000);
 		#endif
 		#ifdef ENABLE_CAM2
+			cv::namedWindow(window_cam2, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_cam2, 800, 500);
+			cv::namedWindow(window_blobs2, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_blobs2, 1200, 500);
 			thr[2] = thread(open_cam, argv[1], 4244, &img_cam2, &key2, &mu2);
 			usleep(2000000);
 			thr[3] = thread(open_cam, argv[1], 4246, &img_blobs2, &key2, &mu2);
@@ -53,16 +57,16 @@ int main(int argc, char* argv[]){
 			#ifdef ENABLE_CAM1
 				if(key1 == 'b'){
 					mu1.lock();
-					cv::imshow("camera 1", img_cam1);
-					cv::imshow("blobs 1", img_blobs1);
+					cv::imshow(window_cam1, img_cam1);
+					cv::imshow(window_blobs1, img_blobs1);
 					mu1.unlock();
 				}
 			#endif
 			#ifdef ENABLE_CAM2
 				if(key2 == 'b'){
 					mu2.lock();
-					cv::imshow("camera 2", img_cam2);
-					cv::imshow("blobs 2", img_blobs2);
+					cv::imshow(window_cam2, img_cam2);
+					cv::imshow(window_blobs2, img_blobs2);
 					mu2.unlock();
 				}
 			#endif

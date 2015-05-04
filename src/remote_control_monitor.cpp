@@ -142,6 +142,7 @@ void write_HSV_params(hsv_params* hsv){
 
 void create_HSV_trackbars(hsv_params* hsv){
 	cv::namedWindow(hsv->winname, CV_WINDOW_AUTOSIZE);
+	cv::moveWindow(hsv->winname, 0, 25);
 	cv::createTrackbar(hsv->name_H_min,	hsv->winname,	&(hsv->H_min),		360,	callback_H_min,		hsv);
 	cv::createTrackbar(hsv->name_H_max,	hsv->winname,	&(hsv->H_max),		360,	callback_H_max,		hsv);
 	cv::createTrackbar(hsv->name_S_min,	hsv->winname,	&(hsv->S_min),		255,	callback_S_min,		hsv);
@@ -242,6 +243,9 @@ int main(int argc, char* argv[]){
 		struct_callback obj_callback;
 		struct_monitor monitor;
 		hsv_params hsv = create_HSV_params();
+		const char* monitor_window = "Monitor";
+		cv::namedWindow(monitor_window, cv::WINDOW_AUTOSIZE);
+		cv::moveWindow(monitor_window, 0, 350);
 
 		// Init remote controller
 		hsv.tcp = &tcp_client_remote;
@@ -287,7 +291,7 @@ int main(int argc, char* argv[]){
 				monitor.thz = thz / 57.3;
 				monitor.state = fsm;
 			}
-			cv::imshow("Monitor", Draw_monitor(&monitor));
+			cv::imshow(monitor_window, Draw_monitor(&monitor));
 			cv::waitKey(10);
 			joystick.Update_event();
 		}
