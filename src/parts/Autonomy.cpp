@@ -105,8 +105,8 @@ void Autonomy::Job(){
 	}
 	else if(current_state == EXPLORE){
 		keep_thx = thx;
-		motor1 = 0.;
-		motor2 = 0.;
+		motor1 = +0.5;
+		motor2 = +0.5;
 		motor3 = 0.;
 		motor4 = 0.;
 	}
