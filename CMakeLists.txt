@@ -13,7 +13,7 @@ if(${IS_ROBOT})
 	add_definitions(-DENABLE_SERIAL_ARDUINO)
 	add_definitions(-DENABLE_SERIAL_ISS)
 	add_definitions(-DENABLE_I2C)		# needs serial ISS
-	#add_definitions(-DENABLE_DEPTH)	# needs serial ISS and I2C
+#	add_definitions(-DENABLE_DEPTH)		# needs serial ISS and I2C
 	add_definitions(-DENABLE_IMU)		# needs serial Arduino
 	add_definitions(-DENABLE_MOTORS)	# needs serial ISS and I2C
 	add_definitions(-DENABLE_TCP)
@@ -25,15 +25,15 @@ else(${IS_ROBOT})
 	set(ENABLE_PYTHON OFF)
 	set(ENABLE_JAVA OFF)
 	set(ENABLE_SDL ON)
-	#add_definitions(-DENABLE_SERIAL_ARDUINO)
-	#add_definitions(-DENABLE_SERIAL_ISS)
-	#add_definitions(-DENABLE_I2C)		# needs serial ISS
-	#add_definitions(-DENABLE_DEPTH)	# needs serial ISS and I2C
-	#add_definitions(-DENABLE_IMU)		# needs serial Arduino
-	#add_definitions(-DENABLE_MOTORS)	# needs serial ISS and I2C
+#	add_definitions(-DENABLE_SERIAL_ARDUINO)
+#	add_definitions(-DENABLE_SERIAL_ISS)
+#	add_definitions(-DENABLE_I2C)		# needs serial ISS
+#	add_definitions(-DENABLE_DEPTH)		# needs serial ISS and I2C
+#	add_definitions(-DENABLE_IMU)		# needs serial Arduino
+#	add_definitions(-DENABLE_MOTORS)	# needs serial ISS and I2C
 	add_definitions(-DENABLE_TCP)
 	add_definitions(-DENABLE_CAM1)
-	add_definitions(-DENABLE_CAM2)
+#	add_definitions(-DENABLE_CAM2)
 	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 endif(${IS_ROBOT})
 

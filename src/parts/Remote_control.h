@@ -40,7 +40,7 @@ private:
 	float remote_forward;
 	float remote_turn;
 	float remote_deeper;
-	float fsm_unlocked;
+	float fsm_state, fsm_unlocked, fsm_down, fsm_up, fsm_explore, fsm_nofollow, fsm_stabilize;
 
 	bool alive;
 

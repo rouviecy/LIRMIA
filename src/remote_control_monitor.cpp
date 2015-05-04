@@ -40,7 +40,13 @@ static void listen_key_right	(void* obj, bool down){send_move_order(obj, "rr" + 
 static void listen_key_plus	(void* obj, bool down){send_move_order(obj, "ru" + to_string(down));}
 static void listen_key_minus	(void* obj, bool down){send_move_order(obj, "rd" + to_string(down));}
 
-static void listen_key_a(void* obj, bool down){
+static void listen_key_s	(void* obj, bool down){send_move_order(obj, "fs" + to_string(down));}
+static void listen_key_i	(void* obj, bool down){send_move_order(obj, "fu" + to_string(down));}
+static void listen_key_k	(void* obj, bool down){send_move_order(obj, "fd" + to_string(down));}
+static void listen_key_e	(void* obj, bool down){send_move_order(obj, "fe" + to_string(down));}
+static void listen_key_n	(void* obj, bool down){send_move_order(obj, "fn" + to_string(down));}
+
+static void listen_key_r(void* obj, bool down){
 	if(down){
 		struct_callback* obj_callback = (struct_callback*) obj;
 		obj_callback->remote_mode = !(obj_callback->remote_mode);
@@ -52,7 +58,7 @@ static void listen_key_l(void* obj, bool down){
 	if(down){
 		struct_callback* obj_callback = (struct_callback*) obj;
 		obj_callback->unlocked = !(obj_callback->unlocked);
-		obj_callback->tcp_client->Send(obj_callback->unlocked ? "l1" : "l0");
+		obj_callback->tcp_client->Send(obj_callback->unlocked ? "f1" : "f0");
 	}
 }
 
@@ -166,9 +172,14 @@ void init_joystick_listeners(Joystick* joystick, struct_callback* obj_callback){
 		joystick->Connect_keyboard(SDLK_RIGHT,		&listen_key_right,	obj_callback);
 		joystick->Connect_keyboard(SDLK_KP_PLUS,	&listen_key_plus,	obj_callback);
 		joystick->Connect_keyboard(SDLK_KP_MINUS,	&listen_key_minus,	obj_callback);
-		joystick->Connect_keyboard(SDLK_a,		&listen_key_a,		obj_callback);
+		joystick->Connect_keyboard(SDLK_e,		&listen_key_e,		obj_callback);
+		joystick->Connect_keyboard(SDLK_i,		&listen_key_i,		obj_callback);
+		joystick->Connect_keyboard(SDLK_k,		&listen_key_k,		obj_callback);
 		joystick->Connect_keyboard(SDLK_l,		&listen_key_l,		obj_callback);
+		joystick->Connect_keyboard(SDLK_n,		&listen_key_n,		obj_callback);
 		joystick->Connect_keyboard(SDLK_q,		&listen_key_q,		obj_callback);
+		joystick->Connect_keyboard(SDLK_r,		&listen_key_r,		obj_callback);
+		joystick->Connect_keyboard(SDLK_s,		&listen_key_s,		obj_callback);
 	#endif
 }
 

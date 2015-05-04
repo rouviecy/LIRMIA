@@ -39,7 +39,7 @@ private:
 	float remote;
 	float cam_detect_obj1, cam_detect_pipe1;
 	float cam_detect_obj2, cam_detect_pipe2;
-	float fsm_state, fsm_unlocked;
+	float fsm_state, fsm_unlocked, fsm_down, fsm_up, fsm_explore, fsm_nofollow, fsm_stabilize;
 
 	void On_start();
 	void Job();
@@ -47,19 +47,15 @@ private:
 
 	state_t current_state;
 
-	static void Act_remote_to_stay(void* obj);
-	static void Act_stay_to_down(void* obj);
-	static void Act_down_to_explore(void* obj);
-	static void Act_explore_to_follow_obj_cam1(void* obj);
-	static void Act_explore_to_follow_obj_cam2(void* obj);
-	static void Act_explore_to_follow_pipe_cam1(void* obj);
-	static void Act_explore_to_follow_pipe_cam2(void* obj);
-	static void Act_follow_obj_to_pipe_cam1(void* obj);
-	static void Act_follow_obj_to_pipe_cam2(void* obj);
-	static void Act_follow_to_explore(void* obj);
-	static void Act_explore_to_up(void* obj);
-	static void Act_up_to_stay(void* obj);
-	static void Act_stay_to_remote(void* obj);
+	static void Act_to_stay(void* obj);
+	static void Act_to_down(void* obj);
+	static void Act_to_explore(void* obj);
+	static void Act_to_follow_obj_cam1(void* obj);
+	static void Act_to_follow_obj_cam2(void* obj);
+	static void Act_to_follow_pipe_cam1(void* obj);
+	static void Act_to_follow_pipe_cam2(void* obj);
+	static void Act_to_up(void* obj);
+	static void Act_to_remote(void* obj);
 
 };
 
