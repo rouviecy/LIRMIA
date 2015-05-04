@@ -4,7 +4,7 @@ using namespace std;
 
 Remote_control::Remote_control() : ComThread(){
 	fsm_up = -1.; fsm_down = -1.; fsm_explore = -1.; fsm_nofollow = -1.; fsm_stabilize = -1.;
-	remote = +1.;
+	remote = +1.; remote_forward = 0.; remote_turn = 0.; remote_deeper = 0.;
 	fsm_unlocked = true;
 	alive = false;
 	#ifdef ENABLE_TCP
