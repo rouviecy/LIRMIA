@@ -5,7 +5,7 @@ using namespace std;
 State_machine::State_machine() : ComThread(){
 
 	fsm_state = 8.;
-	my_guard = true;
+	fsm_unlocked = true;
 
 	fsm.Add_state("remote");
 	fsm.Add_state("stay");
@@ -43,25 +43,25 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_action("act_up_to_stay",			&(State_machine::Act_up_to_stay));
 	fsm.Add_action("act_stay_to_remote",			&(State_machine::Act_stay_to_remote));
 
-	fsm.Add_guard("guard", &my_guard);
+	fsm.Add_guard("fsm_unlocked", &guard_unlocked);
 
 				// state_from		// state_to		// trigger		// guard	// action				// object
-	fsm.Add_transition(	"remote",		"stay",			"go_to_autonomous",	"guard",	"act_remote_to_stay",			(void*) this);
-	fsm.Add_transition(	"stay",			"down",			"go_down",		"guard",	"act_stay_to_down",			(void*) this);
-	fsm.Add_transition(	"down",			"explore",		"begin_explore",	"guard",	"act_down_to_explore",			(void*) this);
-	fsm.Add_transition(	"explore",		"follow_obj_cam1",	"found_something_cam1",	"guard",	"act_explore_to_follow_obj_cam1",	(void*) this);
-	fsm.Add_transition(	"explore",		"follow_obj_cam2",	"found_something_cam2",	"guard",	"act_explore_to_follow_obj_cam2",	(void*) this);
-	fsm.Add_transition(	"explore",		"follow_pipe_cam1",	"pipe_detected_cam1",	"guard",	"act_explore_to_follow_pipe_cam1",	(void*) this);
-	fsm.Add_transition(	"explore",		"follow_pipe_cam2",	"pipe_detected_cam2",	"guard",	"act_explore_to_follow_pipe_cam2",	(void*) this);
-	fsm.Add_transition(	"follow_obj_cam1",	"follow_pipe_cam1",	"pipe_detected_cam1",	"guard",	"act_follow_obj_to_pipe_cam1",		(void*) this);
-	fsm.Add_transition(	"follow_obj_cam2",	"follow_pipe_cam2",	"pipe_detected_cam2",	"guard",	"act_follow_obj_to_pipe_cam2",		(void*) this);
-	fsm.Add_transition(	"follow_obj_cam1",	"explore",		"stop_follow",		"guard",	"act_follow_to_explore",		(void*) this);
-	fsm.Add_transition(	"follow_obj_cam2",	"explore",		"stop_follow",		"guard",	"act_follow_to_explore",		(void*) this);
-	fsm.Add_transition(	"follow_pipe_cam1",	"explore",		"stop_follow",		"guard",	"act_follow_to_explore",		(void*) this);
-	fsm.Add_transition(	"follow_pipe_cam2",	"explore",		"stop_follow",		"guard",	"act_follow_to_explore",		(void*) this);
-	fsm.Add_transition(	"explore",		"up",			"go_up",		"guard",	"act_explore_to_up",			(void*) this);
-	fsm.Add_transition(	"up",			"stay",			"reach_surface",	"guard",	"act_up_to_stay",			(void*) this);
-	fsm.Add_transition(	"stay",			"remote",		"go_to_remote",		"guard",	"act_stay_to_remote",			(void*) this);
+	fsm.Add_transition(	"remote",		"stay",			"go_to_autonomous",	"fsm_unlocked",	"act_remote_to_stay",			(void*) this);
+	fsm.Add_transition(	"stay",			"down",			"go_down",		"fsm_unlocked",	"act_stay_to_down",			(void*) this);
+	fsm.Add_transition(	"down",			"explore",		"begin_explore",	"fsm_unlocked",	"act_down_to_explore",			(void*) this);
+	fsm.Add_transition(	"explore",		"follow_obj_cam1",	"found_something_cam1",	"fsm_unlocked",	"act_explore_to_follow_obj_cam1",	(void*) this);
+	fsm.Add_transition(	"explore",		"follow_obj_cam2",	"found_something_cam2",	"fsm_unlocked",	"act_explore_to_follow_obj_cam2",	(void*) this);
+	fsm.Add_transition(	"explore",		"follow_pipe_cam1",	"pipe_detected_cam1",	"fsm_unlocked",	"act_explore_to_follow_pipe_cam1",	(void*) this);
+	fsm.Add_transition(	"explore",		"follow_pipe_cam2",	"pipe_detected_cam2",	"fsm_unlocked",	"act_explore_to_follow_pipe_cam2",	(void*) this);
+	fsm.Add_transition(	"follow_obj_cam1",	"follow_pipe_cam1",	"pipe_detected_cam1",	"fsm_unlocked",	"act_follow_obj_to_pipe_cam1",		(void*) this);
+	fsm.Add_transition(	"follow_obj_cam2",	"follow_pipe_cam2",	"pipe_detected_cam2",	"fsm_unlocked",	"act_follow_obj_to_pipe_cam2",		(void*) this);
+	fsm.Add_transition(	"follow_obj_cam1",	"explore",		"stop_follow",		"fsm_unlocked",	"act_follow_to_explore",		(void*) this);
+	fsm.Add_transition(	"follow_obj_cam2",	"explore",		"stop_follow",		"fsm_unlocked",	"act_follow_to_explore",		(void*) this);
+	fsm.Add_transition(	"follow_pipe_cam1",	"explore",		"stop_follow",		"fsm_unlocked",	"act_follow_to_explore",		(void*) this);
+	fsm.Add_transition(	"follow_pipe_cam2",	"explore",		"stop_follow",		"fsm_unlocked",	"act_follow_to_explore",		(void*) this);
+	fsm.Add_transition(	"explore",		"up",			"go_up",		"fsm_unlocked",	"act_explore_to_up",			(void*) this);
+	fsm.Add_transition(	"up",			"stay",			"reach_surface",	"fsm_unlocked",	"act_up_to_stay",			(void*) this);
+	fsm.Add_transition(	"stay",			"remote",		"go_to_remote",		"fsm_unlocked",	"act_stay_to_remote",			(void*) this);
 
 	fsm.Launch("remote");
 	current_state = EXPLORE;
@@ -76,6 +76,7 @@ void State_machine::On_start(){}
 void State_machine::IO(){
 	Link_input("z", &z);
 	Link_input("remote", &remote);
+	Link_input("fsm_unlocked", &fsm_unlocked);
 	Link_input("cam_detect_obj1", &cam_detect_obj1);	Link_input("cam_detect_pipe1", &cam_detect_pipe1);
 	Link_input("cam_detect_obj2", &cam_detect_obj2);	Link_input("cam_detect_pipe2", &cam_detect_pipe2);
 	Link_output("fsm_state", &fsm_state);
@@ -83,6 +84,7 @@ void State_machine::IO(){
 
 void State_machine::Job(){
 	Critical_receive();
+	guard_unlocked = (fsm_unlocked > 0);
 	if(Decode_state(fsm_state) == REMOTE && remote < 0){fsm.Call_event("go_to_autonomous");}
 	if(Decode_state(fsm_state) == EXPLORE){
 		if(remote > 0){fsm.Call_event("go_up");}

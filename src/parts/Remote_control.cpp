@@ -25,6 +25,7 @@ void Remote_control::IO(){
 	Link_output("remote_forward", &remote_forward);
 	Link_output("remote_turn", &remote_turn);
 	Link_output("remote_deeper", &remote_deeper);
+	Link_output("fsm_unlocked", &fsm_unlocked);
 }
 
 void Remote_control::Job(){}
@@ -37,6 +38,9 @@ void Remote_control::Job_and_wait_quit(){
 				alive = false;
 				tcp_server.Close();
 			}
+			if(msg_in[0] == 'l'){
+				if(msg_in[1] == '0'){fsm_unlocked =	(msg_in[1] == '1' ? +1. :-1.);}
+			}			
 			if(msg_in[0] == 'r'){
 				if(msg_in[1] == '0'){remote = -1.;}
 				if(msg_in[1] == '1'){remote = +1.;}

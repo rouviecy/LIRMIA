@@ -33,13 +33,13 @@ private:
 	FSM fsm;
 	FSMDraw drawer;
 
-	bool my_guard;
+	bool guard_unlocked;
 
 	float z;
 	float remote;
 	float cam_detect_obj1, cam_detect_pipe1;
 	float cam_detect_obj2, cam_detect_pipe2;
-	float fsm_state;
+	float fsm_state, fsm_unlocked;
 
 	void On_start();
 	void Job();

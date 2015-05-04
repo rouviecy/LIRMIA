@@ -16,6 +16,7 @@ typedef struct{
 	TCP_client* tcp_client;
 	bool go_on;
 	bool remote_mode;
+	bool unlocked;
 } struct_callback;
 
 typedef struct{
@@ -44,6 +45,14 @@ static void listen_key_a(void* obj, bool down){
 		struct_callback* obj_callback = (struct_callback*) obj;
 		obj_callback->remote_mode = !(obj_callback->remote_mode);
 		obj_callback->tcp_client->Send(obj_callback->remote_mode ? "r1" : "r0");
+	}
+}
+
+static void listen_key_l(void* obj, bool down){
+	if(down){
+		struct_callback* obj_callback = (struct_callback*) obj;
+		obj_callback->unlocked = !(obj_callback->unlocked);
+		obj_callback->tcp_client->Send(obj_callback->unlocked ? "l1" : "l0");
 	}
 }
 
@@ -158,6 +167,7 @@ void init_joystick_listeners(Joystick* joystick, struct_callback* obj_callback){
 		joystick->Connect_keyboard(SDLK_KP_PLUS,	&listen_key_plus,	obj_callback);
 		joystick->Connect_keyboard(SDLK_KP_MINUS,	&listen_key_minus,	obj_callback);
 		joystick->Connect_keyboard(SDLK_a,		&listen_key_a,		obj_callback);
+		joystick->Connect_keyboard(SDLK_l,		&listen_key_l,		obj_callback);
 		joystick->Connect_keyboard(SDLK_q,		&listen_key_q,		obj_callback);
 	#endif
 }
@@ -228,6 +238,7 @@ int main(int argc, char* argv[]){
 		obj_callback.tcp_client = &tcp_client_remote;
 		obj_callback.go_on = true;
 		obj_callback.remote_mode = true;
+		obj_callback.unlocked = true;
 
 		// Init remote monitor
 		usleep(1000000);

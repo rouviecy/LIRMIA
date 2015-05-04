@@ -40,6 +40,7 @@ private:
 	float remote_forward;
 	float remote_turn;
 	float remote_deeper;
+	float fsm_unlocked;
 
 	bool alive;
 
