@@ -389,18 +389,6 @@
   <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1225" y="705.75">
     <tspan x="1225" y="705.75">0xB6</tspan>
   </text>
-  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1365" y="284.75">
-    <tspan x="1365" y="284.75">PWM</tspan>
-  </text>
-  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1364" y="424.75">
-    <tspan x="1364" y="424.75">PWM</tspan>
-  </text>
-  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1362" y="566.75">
-    <tspan x="1362" y="566.75">PWM</tspan>
-  </text>
-  <text font-size="12.8" style="fill: #008000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1363" y="706.5">
-    <tspan x="1363" y="706.5">PWM</tspan>
-  </text>
   <text font-size="12.8" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="702" y="977">
     <tspan x="702" y="977">5V</tspan>
   </text>
@@ -428,11 +416,11 @@
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="900,260 960,260 960,480 "/>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="960,520 960,540 480,540 480,580 420,580 "/>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="420,460 480,460 480,500 939.009,500 "/>
-  <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="456.45">
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="456.45">
     <tspan x="360" y="456.45">RS232</tspan>
     <tspan x="360" y="472.45">(depth sensor)</tspan>
   </text>
-  <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="576.45">
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="576.45">
     <tspan x="360" y="576.45">RS232</tspan>
     <tspan x="360" y="592.45">(acoustic modem)</tspan>
   </text>
