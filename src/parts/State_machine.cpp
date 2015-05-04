@@ -4,8 +4,6 @@ using namespace std;
 
 State_machine::State_machine() : ComThread(){
 
-	fsm_state = 8.;
-
 	fsm.Add_state("remote");
 	fsm.Add_state("stay");
 	fsm.Add_state("down");
@@ -78,8 +76,9 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_transition(	"stay",			"remote",		"go_to_remote",		"fsm_unlocked",	"act_to_remote",		(void*) this);
 	// End
 
+	fsm_state = 8.;
+	current_state = REMOTE;
 	fsm.Launch("remote");
-	current_state = EXPLORE;
 	drawer.Draw_FSM("FSM", &fsm);
 
 }
@@ -146,7 +145,7 @@ state_t State_machine::Decode_state(float float_state){
 
 string State_machine::Decode_state_str(float float_state){
 	// TODO : intégrer dans "interface"
-	if	(float_state < 0.5)	{return "stabilize position ";}
+	if	(float_state < 0.5)	{return "stabilize position";}
 	else if	(float_state < 1.5)	{return "going down";}
 	else if	(float_state < 2.5)	{return "explore";}
 	else if	(float_state < 3.5)	{return "follow object camera 1";}
