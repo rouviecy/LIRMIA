@@ -44,8 +44,8 @@ void Autonomy::Job(){
 		if(cam_size_obj1 < 0.20){
 			motor1 = 0.1 - cam_size_obj1 + cam_detect1_horizontal / 5;
 			motor2 = 0.1 - cam_size_obj1 - cam_detect1_horizontal / 5;
-			motor3 = +cam_detect1_vertical / 5;
-			motor4 = +cam_detect1_vertical / 5;
+			motor3 = +cam_detect1_vertical / 3;
+			motor4 = +cam_detect1_vertical / 3;
 		}
 		else{
 			motor1 = -0.1;
@@ -54,7 +54,7 @@ void Autonomy::Job(){
 			motor4 = 0.;
 		}
 	}
-	else if(current_state == FOLLOW_OBJ_CAM2){ // TODO : régler sens, remplacer 0.1 et 0.25 par un ratio de taille de blobs
+	else if(current_state == FOLLOW_OBJ_CAM2){
 		if(cam_size_obj2 < 0.20){
 			motor1 = 0.1 + (cam_detect2_vertical + cam_detect2_horizontal) / 10;
 			motor2 = 0.1 + (cam_detect2_vertical - cam_detect2_horizontal) / 10;
