@@ -23,6 +23,7 @@ typedef struct{
 	float x, y, z, thz;
 	int motor1, motor2, motor3, motor4;
 	string state;
+	bool unlocked;
 	float min_coord, max_coord;
 	vector <vector <float> > path;
 } struct_monitor;
@@ -220,14 +221,15 @@ cv::Mat Draw_monitor(struct_monitor* monitor){
 	string text_motor2 = "motor2 = " + to_string(monitor->motor2) + "%";
 	string text_motor3 = "motor3 = " + to_string(monitor->motor3) + "%";
 	string text_motor4 = "motor4 = " + to_string(monitor->motor4) + "%";
-	cv::putText(img_monitor, monitor->state, cv::Point(10, 20), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_x, cv::Point(10, 40), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_y, cv::Point(10, 60), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_z, cv::Point(10, 80), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_motor1, cv::Point(10, 100), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_motor2, cv::Point(10, 120), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_motor3, cv::Point(10, 140), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_motor4, cv::Point(10, 160), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	string text_state = monitor->state + string(monitor->unlocked ? " [unlocked]" : " [LOCKED]");
+	cv::putText(img_monitor, text_state, cv::Point(10, 20), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_x, cv::Point(10, 60), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_y, cv::Point(10, 80), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_z, cv::Point(10, 100), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_motor1, cv::Point(10, 120), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_motor2, cv::Point(10, 140), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_motor3, cv::Point(10, 160), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(img_monitor, text_motor4, cv::Point(10, 180), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
 	return img_monitor;
 }
 
@@ -263,21 +265,22 @@ int main(int argc, char* argv[]){
 		while(obj_callback.go_on){
 			string msg_monitor = string(tcp_client_monitor.Receive());
 			size_t next;
-			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 9){
+			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 10){
 				vector <string> tokens;
-				for(size_t current = 0; tokens.size() < 9; current = next + 1){
+				for(size_t current = 0; tokens.size() < 10; current = next + 1){
 					next = msg_monitor.find_first_of("|", current);
 					tokens.push_back(msg_monitor.substr(current, next - current));
 				}
 				float t = stof(tokens[0]);
 				string fsm = State_machine::Decode_state_str(stof(tokens[1]));
-				float thx = stof(tokens[2]);
-				float thy = stof(tokens[3]);
-				float thz = stof(tokens[4]);
-				monitor.motor1 = (int) stof(tokens[5]);
-				monitor.motor2 = (int) stof(tokens[6]);
-				monitor.motor3 = (int) stof(tokens[7]);
-				monitor.motor4 = (int) stof(tokens[8]);
+				monitor.unlocked = (stof(tokens[2]) > 0);
+				float thx = stof(tokens[3]);
+				float thy = stof(tokens[4]);
+				float thz = stof(tokens[5]);
+				monitor.motor1 = (int) stof(tokens[6]);
+				monitor.motor2 = (int) stof(tokens[7]);
+				monitor.motor3 = (int) stof(tokens[8]);
+				monitor.motor4 = (int) stof(tokens[9]);
 				monitor.x = 0.;
 				monitor.y = 0.;
 				monitor.z = 42.;

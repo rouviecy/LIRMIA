@@ -25,6 +25,7 @@ void Remote_monitor::IO(){
 	Link_input("motor3", &motor3);
 	Link_input("motor4", &motor4);
 	Link_input("fsm_state", &fsm_state);
+	Link_input("fsm_unlocked", &fsm_unlocked);
 }
 
 void Remote_monitor::Job(){
@@ -32,6 +33,7 @@ void Remote_monitor::Job(){
 	string msg_monitor =
 		to_string(t)+ "|" +
 		to_string(fsm_state) + "|" +
+		to_string(fsm_unlocked) + "|" +
 		to_string(thx) + "|" +
 		to_string(thy) + "|" +
 		to_string(thz) + "|" +
