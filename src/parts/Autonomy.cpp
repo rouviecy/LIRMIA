@@ -44,8 +44,8 @@ void Autonomy::Job(){
 		if(cam_size_obj1 < 0.20){
 			motor1 = 0.1 - cam_size_obj1 + cam_detect1_horizontal / 5;
 			motor2 = 0.1 - cam_size_obj1 - cam_detect1_horizontal / 5;
-			motor3 = +cam_detect1_vertical / 3;
-			motor4 = +cam_detect1_vertical / 3;
+			motor3 = -cam_detect1_vertical / 3;
+			motor4 = -cam_detect1_vertical / 3;
 		}
 		else{
 			motor1 = -0.1;
@@ -56,8 +56,8 @@ void Autonomy::Job(){
 	}
 	else if(current_state == FOLLOW_OBJ_CAM2){
 		if(cam_size_obj2 < 0.20){
-			motor1 = 0.1 + (cam_detect2_vertical + cam_detect2_horizontal) / 10;
-			motor2 = 0.1 + (cam_detect2_vertical - cam_detect2_horizontal) / 10;
+			motor1 = (cam_detect2_vertical + cam_detect2_horizontal) / 5;
+			motor2 = (cam_detect2_vertical - cam_detect2_horizontal) / 5;
 			motor3 = cam_size_obj2 - 0.1;
 			motor4 = cam_size_obj2 - 0.1;
 		}
@@ -110,7 +110,7 @@ void Autonomy::Job(){
 		motor3 = 0.;
 		motor4 = 0.;
 	}
-	else if(current_state == UP || current_state == DOWN){ // TODO : check
+	else if(current_state == UP || current_state == DOWN || current_state == STAY){ // TODO : check
 		float diff_thx = keep_thx - thx;
 		if(diff_thx < -360){diff_thx += 360;}
 		if(diff_thx > +360){diff_thx -= 360;}
@@ -118,8 +118,14 @@ void Autonomy::Job(){
 		if(diff_thx > +180){diff_thx -= 360;}
 		motor1 = - diff_thx / 500;
 		motor2 = + diff_thx / 500;
-		motor3 = + thx / 500 - remote_deeper / 2;
-		motor4 = - thx / 500 - remote_deeper / 2;
+		if(current_state == STAY){
+			motor3 = + thx / 500;
+			motor4 = - thx / 500;
+		}
+		else{
+			motor3 = + thx / 500 - remote_deeper / 2;
+			motor4 = - thx / 500 - remote_deeper / 2;
+		}
 	}
 	else{
 		motor1 = 0.;
