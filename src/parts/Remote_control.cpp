@@ -5,6 +5,7 @@ using namespace std;
 Remote_control::Remote_control() : ComThread(){
 	fsm_up = -1.; fsm_down = -1.; fsm_explore = -1.; fsm_nofollow = -1.; fsm_stabilize = -1.;
 	remote = +1.; remote_forward = 0.; remote_turn = 0.; remote_deeper = 0.;
+	enable_streaming = -1.;
 	fsm_unlocked = true;
 	alive = false;
 	#ifdef ENABLE_TCP
@@ -33,6 +34,7 @@ void Remote_control::IO(){
 	Link_output("fsm_explore", &fsm_explore);
 	Link_output("fsm_nofollow", &fsm_nofollow);
 	Link_output("fsm_stabilize", &fsm_stabilize);
+	Link_output("enable_streaming", &enable_streaming);
 }
 
 void Remote_control::Job(){}
@@ -63,6 +65,7 @@ void Remote_control::Job_and_wait_quit(){
 				if(msg_in[1] == 'r'){remote_turn =	(msg_in[2] == '1' ? +1. : 0.);}
 				if(msg_in[1] == 'u'){remote_deeper =	(msg_in[2] == '1' ? -1. : 0.);}
 				if(msg_in[1] == 'd'){remote_deeper =	(msg_in[2] == '1' ? +1. : 0.);}
+				if(msg_in[1] == 's'){enable_streaming =	(msg_in[2] == '1' ? +1. : -1.);}
 			}
 			if(msg_in[0] == 'h' && msg_in[1] == 's' && msg_in[2] == 'v' && msg_in[3] == '_'){
 				int param = stoi(string(msg_in + 7 * sizeof(char)));

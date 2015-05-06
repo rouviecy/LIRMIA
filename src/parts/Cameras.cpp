@@ -35,6 +35,7 @@ Cameras::~Cameras(){
 void Cameras::On_start(){}
 
 void Cameras::IO(){
+	Link_input("enable_streaming", &enable_streaming);
 	Link_output("cam_size_obj1", &cam_size_obj1);			Link_output("cam_size_obj2", &cam_size_obj2);
 	Link_output("cam_detect_obj1", &cam_detect_obj1);		Link_output("cam_detect_pipe1", &cam_detect_pipe1);
 	Link_output("cam_detect_obj2", &cam_detect_obj2);		Link_output("cam_detect_pipe2", &cam_detect_pipe2);
@@ -45,6 +46,8 @@ void Cameras::IO(){
 }
 
 void Cameras::Job(){
+	Critical_receive();
+
 	#ifdef ENABLE_CAM1
 		capture1 >> img1;
 		blobs.Set_img(img1);
@@ -65,8 +68,10 @@ void Cameras::Job(){
 		cv::Mat img_pipeline1 = reco.Trouver_ligne_principale(&pipeline_detected_cam1, &pipeline_angle_cam1, &pipeline_distance_cam1);
 		cam_detect_pipe1 = pipeline_detected_cam1 ? +1.0 : -1.0;
 		#ifdef ENABLE_TCPCAM
-			camera_server.Send_tcp_img(img1, CAMERA_PORT_1);
-			camera_server.Send_tcp_img(img_pipeline1, CAMERA_PORT_3);
+			if(enable_streaming > 0){
+				camera_server.Send_tcp_img(img1, CAMERA_PORT_1);
+				camera_server.Send_tcp_img(img_pipeline1, CAMERA_PORT_3);
+			}
 		#endif
 	#endif
 
@@ -90,8 +95,10 @@ void Cameras::Job(){
 		cv::Mat img_pipeline2 = reco.Trouver_ligne_principale(&pipeline_detected_cam2, &pipeline_angle_cam2, &pipeline_distance_cam2);
 		cam_detect_pipe2 = pipeline_detected_cam2 ? +1.0 : -1.0;
 		#ifdef ENABLE_TCPCAM
-			camera_server.Send_tcp_img(img2, CAMERA_PORT_2);
-			camera_server.Send_tcp_img(img_pipeline2, CAMERA_PORT_4);
+			if(enable_streaming > 0){
+				camera_server.Send_tcp_img(img2, CAMERA_PORT_2);
+				camera_server.Send_tcp_img(img_pipeline2, CAMERA_PORT_4);
+			}
 		#endif
 	#endif
 
