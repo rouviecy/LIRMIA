@@ -42,64 +42,64 @@ void Autonomy::Job(){
 	state_t current_state = State_machine::Decode_state(fsm_state);
 	if(current_state == FOLLOW_OBJ_CAM1){
 		if(cam_size_obj1 < 0.20){
-			motor1 = 0.1 - cam_size_obj1 + cam_detect1_horizontal / 5;
-			motor2 = 0.1 - cam_size_obj1 - cam_detect1_horizontal / 5;
+			motor1 = 0.2 - cam_size_obj1 + cam_detect1_horizontal / 3;
+			motor2 = 0.2 - cam_size_obj1 - cam_detect1_horizontal / 3;
 			motor3 = -cam_detect1_vertical / 3;
 			motor4 = -cam_detect1_vertical / 3;
 		}
 		else{
-			motor1 = -0.1;
-			motor2 = -0.1;
+			motor1 = -0.2;
+			motor2 = -0.2;
 			motor3 = 0.;
 			motor4 = 0.;
 		}
 	}
 	else if(current_state == FOLLOW_OBJ_CAM2){
 		if(cam_size_obj2 < 0.20){
-			motor1 = (cam_detect2_vertical + cam_detect2_horizontal) / 5;
-			motor2 = (cam_detect2_vertical - cam_detect2_horizontal) / 5;
-			motor3 = cam_size_obj2 - 0.1;
-			motor4 = cam_size_obj2 - 0.1;
+			motor1 = (cam_detect2_vertical + cam_detect2_horizontal) / 3;
+			motor2 = (cam_detect2_vertical - cam_detect2_horizontal) / 3;
+			motor3 = cam_size_obj2 - 0.2;
+			motor4 = cam_size_obj2 - 0.2;
 		}
 		else{
 			motor1 = 0.;
 			motor2 = 0.;
-			motor3 = +0.1;
-			motor4 = +0.1;
+			motor3 = +0.2;
+			motor4 = +0.2;
 		}
 	}
 	else if(current_state == FOLLOW_PIPE_CAM1){
 		if(cam_size_obj1 < 0.20){
-			motor1 = 0.1 - cam_size_obj1 + pipeline_distance_cam1 / 5;
-			motor2 = 0.1 - cam_size_obj1 - pipeline_distance_cam1 / 5;
-			motor3 = 0.1;
-			motor4 = 0.1;
+			motor1 = 0.2 - cam_size_obj1 + pipeline_distance_cam1 / 3;
+			motor2 = 0.2 - cam_size_obj1 - pipeline_distance_cam1 / 3;
+			motor3 = 0.2;
+			motor4 = 0.2;
 		}
 		else{
-			motor1 = -0.1;
-			motor2 = -0.1;
+			motor1 = -0.2;
+			motor2 = -0.2;
 			motor3 = 0.;
 			motor4 = 0.;
 		}
 	}
 	else if(current_state == FOLLOW_PIPE_CAM2){
 		if(cam_size_obj2 < 0.20){
-			motor1 = 0.1 + (pipeline_distance_cam2 - pipeline_angle_cam2) / 5;
-			motor2 = 0.1 + (pipeline_distance_cam2 - pipeline_angle_cam2) / 5;
-			motor3 = cam_size_obj2 - 0.1;
-			motor4 = cam_size_obj2 - 0.1;
+			motor1 = 0.2 + (pipeline_distance_cam2 - pipeline_angle_cam2) / 3;
+			motor2 = 0.2 + (pipeline_distance_cam2 - pipeline_angle_cam2) / 3;
+			motor3 = cam_size_obj2 - 0.2;
+			motor4 = cam_size_obj2 - 0.2;
 		}
 		else{
 			motor1 = 0.;
 			motor2 = 0.;
-			motor3 = +0.1;
-			motor4 = +0.1;
+			motor3 = +0.2;
+			motor4 = +0.2;
 		}
 	}
 	else if(current_state == REMOTE){
 		keep_thx = thx;
-		motor1 = remote_forward / 2 - remote_turn / 2;
-		motor2 = remote_forward / 2 + remote_turn / 2;
+		motor1 = remote_forward / 2 + remote_turn / 2;
+		motor2 = remote_forward / 2 - remote_turn / 2;
 		motor3 = -remote_deeper / 2;
 		motor4 = -remote_deeper / 2;
 	}
