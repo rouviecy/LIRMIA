@@ -11,7 +11,14 @@ void open_cam(const char* host, int port, cv::Mat* img_remote, char* key_stop, m
 	tcp_client.Configure(host, port);
 	int nb_received_bytes = 0;
 	while(*key_stop != 'q'){
-		int img_size = stoi(tcp_client.Receive());
+		int img_size;
+		char* tmp_size = tcp_client.Receive();
+		try{
+			img_size = stoi(tmp_size);
+		}catch(std::exception const & e){
+			continue;
+		}
+		if(img_size <= 0){continue;}
 		unsigned char msg_in[img_size];
 		for(int i = 0; i < img_size; i+= nb_received_bytes){
 			nb_received_bytes = tcp_client.Direct_receive(msg_in + i, img_size - i);
@@ -23,7 +30,12 @@ void open_cam(const char* host, int port, cv::Mat* img_remote, char* key_stop, m
 		vector <unsigned char> msg_vect;
 		for(int i = 0; i < img_size; i++){msg_vect.push_back(msg_in[i]);}
 		mu->lock();
-		*img_remote = cv::imdecode(msg_vect, CV_LOAD_IMAGE_COLOR);
+		try{
+			*img_remote = cv::imdecode(msg_vect, CV_LOAD_IMAGE_COLOR);
+		}catch(std::exception const & e){
+			*img_remote = cv::Mat::zeros(240, 320, CV_8UC3);
+			cout << "[Warning] Bad image reception : skip to next image" << endl;
+		}
 		mu->unlock();
 		usleep(10000);
 		if(*key_stop == 'a'){*key_stop = 'b';}
@@ -48,25 +60,24 @@ int main(int argc, char* argv[]){
 		#ifdef ENABLE_CAM2
 			cv::namedWindow(window_cam2, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_cam2, 800, 500);
 			cv::namedWindow(window_blobs2, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_blobs2, 1200, 500);
-			thr[2] = thread(open_cam, argv[1], 4244, &img_cam2, &key2, &mu2);
-			usleep(2000000);
-			thr[3] = thread(open_cam, argv[1], 4246, &img_blobs2, &key2, &mu2);
-			usleep(2000000);
+			thr[2] = thread(open_cam, argv[1], 4244, &img_cam2, &key2, &mu2);	usleep(2000000);
+			thr[3] = thread(open_cam, argv[1], 4246, &img_blobs2, &key2, &mu2);	usleep(2000000);
 		#endif
+		usleep(2000000);
 		while(key != 'q'){
 			#ifdef ENABLE_CAM1
 				if(key1 == 'b'){
 					mu1.lock();
-					cv::imshow(window_cam1, img_cam1);
-					cv::imshow(window_blobs1, img_blobs1);
+					if(img_cam1.size().width > 0 && img_cam1.size().height > 0)	{cv::imshow(window_cam1, img_cam1);}
+					if(img_blobs1.size().width > 0 && img_blobs1.size().height > 0)	{cv::imshow(window_blobs1, img_blobs1);}
 					mu1.unlock();
 				}
 			#endif
 			#ifdef ENABLE_CAM2
 				if(key2 == 'b'){
 					mu2.lock();
-					cv::imshow(window_cam2, img_cam2);
-					cv::imshow(window_blobs2, img_blobs2);
+					if(img_cam2.size().width > 0 && img_cam2.size().height > 0)	{cv::imshow(window_cam2, img_cam2);}
+					if(img_blobs2.size().width > 0 && img_blobs2.size().height > 0)	{cv::imshow(window_blobs2, img_blobs2);}
 					mu2.unlock();
 				}
 			#endif
