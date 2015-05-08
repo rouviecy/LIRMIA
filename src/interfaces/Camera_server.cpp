@@ -19,7 +19,7 @@ bool Camera_server::Add_flux(int port){
 		}
 		cout << "Waiting client for TCP camera on port " << to_string(port) << " ..." << endl;
 		while(new_server->Get_nb_clients() == 0){
-			usleep(1000000);
+			usleep(200000);
 		}
 		cout << "Client for TCP camera connected on port " << to_string(port) << endl;
 		tcp_servers[port] = new_server;

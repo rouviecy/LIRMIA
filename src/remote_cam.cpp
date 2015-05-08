@@ -54,16 +54,16 @@ int main(int argc, char* argv[]){
 		#ifdef ENABLE_CAM1
 			cv::namedWindow(window_cam1, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_cam1, 800, 150);
 			cv::namedWindow(window_blobs1, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_blobs1, 1200, 150);
-			thr[0] = thread(open_cam, argv[1], 4243, &img_cam1, &key1, &mu1);	usleep(2000000);
-			thr[1] = thread(open_cam, argv[1], 4245, &img_blobs1, &key1, &mu1);	usleep(2000000);
+			thr[0] = thread(open_cam, argv[1], 4243, &img_cam1, &key1, &mu1);	usleep(500000);
+			thr[1] = thread(open_cam, argv[1], 4245, &img_blobs1, &key1, &mu1);	usleep(500000);
 		#endif
 		#ifdef ENABLE_CAM2
 			cv::namedWindow(window_cam2, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_cam2, 800, 500);
 			cv::namedWindow(window_blobs2, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_blobs2, 1200, 500);
-			thr[2] = thread(open_cam, argv[1], 4244, &img_cam2, &key2, &mu2);	usleep(2000000);
-			thr[3] = thread(open_cam, argv[1], 4246, &img_blobs2, &key2, &mu2);	usleep(2000000);
+			thr[2] = thread(open_cam, argv[1], 4244, &img_cam2, &key2, &mu2);	usleep(500000);
+			thr[3] = thread(open_cam, argv[1], 4246, &img_blobs2, &key2, &mu2);	usleep(500000);
 		#endif
-		usleep(2000000);
+		usleep(500000);
 		while(key != 'q'){
 			#ifdef ENABLE_CAM1
 				if(key1 == 'b'){
