@@ -33,10 +33,7 @@ private:
 
 	void Generate_order(int num_motor, int power, bool positive);
 
-	float motor1;
-	float motor2;
-	float motor3;
-	float motor4;
+	float motor[4];
 
 };
 

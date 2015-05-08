@@ -1,6 +1,6 @@
 /*
  * @(#)		Share.h
- * @version	2.0
+ * @version	2.1
  * @autor	C. Rouvière
  */
 
@@ -14,9 +14,18 @@
 #include <map>
 #include <mutex>
 #include <vector>
+#include <iostream>
 
-typedef std::map <std::string, float> FloatMap;
-typedef std::map <std::string, float*> PFloatMap;
+enum T_DATA { COMBOOL, COMINT, COMFLOAT };
+
+typedef struct{
+	T_DATA data_type;
+	int size;
+	void *p_data;
+}DATA;
+
+typedef std::map <std::string, void*> PVoidMap;
+typedef std::map <std::string, DATA> PDataMap;
 typedef std::vector <std::string> StringVec;
 
 class Share{
@@ -24,17 +33,18 @@ class Share{
 public:
 
 	Share();
-	void Create_data(std::string key);
-	void Send(PFloatMap input);
-	FloatMap Receive(StringVec keys);
+	~Share();
+	bool Create_data(std::string key, T_DATA data_type, int size);
+	void Update(PVoidMap io_data, bool is_input);
 
 private:
 
 	std::mutex mu;
-	FloatMap data;
+	PDataMap data;
 
 	void Lock();
 	void Unlock();
+
 };
 
 #endif

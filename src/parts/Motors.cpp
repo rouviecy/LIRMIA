@@ -13,22 +13,16 @@ Motors::~Motors(){}
 void Motors::On_start(){}
 
 void Motors::IO(){
-	Link_input("motor1", &motor1);
-	Link_input("motor2", &motor2);
-	Link_input("motor3", &motor3);
-	Link_input("motor4", &motor4);
+	Link_input("motor", COMFLOAT, 4, motor);
 }
 
 void Motors::Job(){
 	Critical_receive();
-	int order1 = min(abs((int) (255. * motor1)), 255); if(order1 < 20){order1 = 0;}
-	int order2 = min(abs((int) (255. * motor2)), 255); if(order2 < 20){order2 = 0;}
-	int order3 = min(abs((int) (255. * motor3)), 255); if(order3 < 20){order3 = 0;}
-	int order4 = min(abs((int) (255. * motor4)), 255); if(order4 < 20){order4 = 0;}
-	Generate_order(1, order1, motor1 > 0);
-	Generate_order(2, order2, motor2 > 0);
-	Generate_order(3, order3, motor3 > 0);
-	Generate_order(4, order4, motor4 > 0);
+	for(int i = 0; i < 4; i++){
+		int order = min(abs((int) (255. * motor[i])), 255);
+		if(order < 20){order = 0;}
+		Generate_order(4, order, motor[i] > 0);
+	}
 //	cout << endl;
 }
 

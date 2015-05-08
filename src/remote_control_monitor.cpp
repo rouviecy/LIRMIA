@@ -287,7 +287,7 @@ int main(int argc, char* argv[]){
 					tokens.push_back(msg_monitor.substr(current, next - current));
 				}
 				float t = stof(tokens[0]);
-				string fsm = State_machine::Decode_state_str(stof(tokens[1]));
+				string fsm = State_machine::Decode_state_str(stoi(tokens[1]));
 				monitor.unlocked = (stof(tokens[2]) > 0);
 				float thx = stof(tokens[3]);
 				float thy = stof(tokens[4]);

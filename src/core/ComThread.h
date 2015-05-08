@@ -1,6 +1,6 @@
 /*
  * @(#)		ComThread.h
- * @version	2.0
+ * @version	2.1
  * @autor	C. Rouvière
  */
 
@@ -11,7 +11,6 @@
 #ifndef COMTHREAD
 #define COMTHREAD
 
-#include <iostream>
 #include <unistd.h>
 #include <thread>
 #include "Share.h"
@@ -51,7 +50,7 @@ private:
 	std::string name;
 	
 	Share *s;
-	PFloatMap critical_input, critical_output;
+	PVoidMap critical_input, critical_output;
 	
 	void Loop_job();
 
@@ -63,11 +62,15 @@ protected:
 
 	void Link_input(		// Subscribe to a topic
 		std::string key,		// Topic name
-		float *p_float);		// Pointer to associated variable
+		T_DATA data_type,		// Type of data
+		int size,			// Size of data > 0
+		void *p_data);			// Pointer to associated variable
 
 	void Link_output(		// Publisher of a topic
 		std::string key,		// Topic name
-		float *p_float);		// Pointer to associated variable
+		T_DATA data_type,		// Type of data
+		int size,			// Size of data > 0
+		void *p_data);			// Pointer to associated variable
 
 	void Critical_receive();	// Refresh variables for subscribed topics
 	void Critical_send();		// Publish variables

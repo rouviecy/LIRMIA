@@ -15,8 +15,8 @@ Depth::~Depth(){}
 void Depth::On_start(){}
 
 void Depth::IO(){
-	Link_input("t", &t);
-	Link_output("depth", &depth);
+	Link_input("t",		COMFLOAT, 1, &t);
+	Link_output("depth",	COMFLOAT, 1, &depth);
 }
 
 void Depth::Job(){

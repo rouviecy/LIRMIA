@@ -26,8 +26,8 @@ private:
 	void Job();
 	void IO();
 
-	float obst_x,  obst_y;
-	float obst_vx, obst_vy;
+	float obst_xy[2];
+	float obst_vxy[2];
 
 };
 

@@ -26,12 +26,12 @@ private:
 	void Job();
 	void IO();
 
+	int fsm_state;
 	float t;
-	float fsm_state;
-	float x,    y,    z;
-	float vx,   vy,   vz;
-	float thx,  thy,  thz;
-	float vthx, vthy, vthz;
+	float xyz[3];
+	float vxyz[3];
+	float thxyz[3];
+	float vthxyz[3];
 
 };
 

@@ -36,9 +36,11 @@ private:
 	void Job();
 	void IO();
 
-	float remote, remote_forward, remote_turn, remote_deeper;
-	float fsm_state, fsm_unlocked, fsm_down, fsm_up, fsm_explore, fsm_nofollow, fsm_stabilize;
-	float enable_streaming;
+	int fsm_state;
+	bool remote;
+	float remote_forward, remote_turn, remote_deeper;
+	bool fsm_unlocked, fsm_down, fsm_up, fsm_explore, fsm_nofollow, fsm_stabilize;
+	bool enable_streaming;
 
 	bool alive;
 

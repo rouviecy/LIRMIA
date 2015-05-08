@@ -34,28 +34,18 @@ void ComThread::Loop_job(){
 	}
 }
 
-void ComThread::Link_input(string key, float *p_float){
-	critical_input[key] = p_float;
-	s->Create_data(key);
+void ComThread::Link_input(string key, T_DATA data_type, int size, void *p_data){
+	if(size <= 0){cout << "[Error] Trying to create data \"" + key + "\" with wrong size " + to_string(size) + " < 1" << endl; return;}
+	if(s->Create_data(key, data_type, size)){critical_input[key] = p_data;}
 }
 
-void ComThread::Link_output(string key, float *p_float){
-	critical_output[key] = p_float;
-	s->Create_data(key);
+void ComThread::Link_output(string key, T_DATA data_type, int size, void *p_data){
+	if(size <= 0){cout << "[Error] Trying to create data \"" + key + "\" with wrong size " + to_string(size) + " < 1" << endl; return;}
+	if(s->Create_data(key, data_type, size)){critical_output[key] = p_data;}
 }
 
-void ComThread::Critical_receive(){
-	StringVec keys;
-	for(PFloatMap::iterator it = critical_input.begin(); it != critical_input.end(); ++it){
-		keys.push_back(it->first);
-	}
-	FloatMap input = s->Receive(keys);
-	for(FloatMap::iterator it = input.begin(); it != input.end(); ++it){
-		*(critical_input[it->first]) = it->second;
-	}
-}
-
-void ComThread::Critical_send(){s->Send(critical_output);}
+void ComThread::Critical_receive(){s->Update(critical_input, true);}
+void ComThread::Critical_send(){s->Update(critical_output, false);}
 
 void ComThread::Set_freq(int dt_microseconds){this->dt_microseconds = dt_microseconds;}
 void ComThread::Set_name(string name){this->name = name;}
@@ -64,7 +54,7 @@ float ComThread::Get_freq(){return dt_microseconds > 0 ? 1000000. / (float) dt_m
 
 vector <string> ComThread::Get_inputs(){
 	vector <string> result;
-	for(PFloatMap::iterator it = critical_input.begin(); it != critical_input.end(); ++it){
+	for(PVoidMap::iterator it = critical_input.begin(); it != critical_input.end(); ++it){
 		result.push_back(it->first);
 	}
 	return result;
@@ -72,7 +62,7 @@ vector <string> ComThread::Get_inputs(){
 
 vector <string> ComThread::Get_outputs(){
 	vector <string> result;
-	for(PFloatMap::iterator it = critical_output.begin(); it != critical_output.end(); ++it){
+	for(PVoidMap::iterator it = critical_output.begin(); it != critical_output.end(); ++it){
 		result.push_back(it->first);
 	}
 	return result;

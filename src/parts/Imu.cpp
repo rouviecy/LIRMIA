@@ -6,7 +6,9 @@ Imu::Imu() : ComThread(){
 	#if defined(ENABLE_IMU) and not defined(ENABLE_SERIAL_ARDUINO)
 		cout << "[Warning] You are trying to use IMU without serial enabled : IMU will be disabled" << endl;
 	#endif
-	imu_thx = 0.;  imu_thy = 0.;  imu_thz = 0.;
+	imu_thxyz[0] = 0.;
+	imu_thxyz[1] = 0.;
+	imu_thxyz[2] = 0.;
 	msg.clear();
 	header_size = 0;
 }
@@ -16,9 +18,7 @@ Imu::~Imu(){}
 void Imu::On_start(){}
 
 void Imu::IO(){
-	Link_output("imu_thx", &imu_thx);
-	Link_output("imu_thy", &imu_thy);
-	Link_output("imu_thz", &imu_thz);
+	Link_output("imu_thxyz", COMFLOAT, 3, imu_thxyz);
 }
 
 void Imu::Job(){
@@ -45,9 +45,7 @@ void Imu::Job(){
 							tokens.push_back(msg_ypr.substr(current, next - current));
 						}
 						if(tokens[0].length() > 2 && tokens[1].length() > 2 && tokens[2].length() > 2){
-							imu_thz = stof(tokens[0]);
-							imu_thx = stof(tokens[1]);
-							imu_thy = stof(tokens[2]);
+							for(int i = 0; i < 3; i++){imu_thxyz[i] = stof(tokens[i]);}
 							Critical_send();
 						}
 					}

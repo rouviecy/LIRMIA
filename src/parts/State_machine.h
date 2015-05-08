@@ -25,21 +25,19 @@ public:
 	State_machine();
 	~State_machine();
 
-	static state_t Decode_state(float float_state);
-	static std::string Decode_state_str(float float_state);
+	static state_t Decode_state(int int_state);
+	static std::string Decode_state_str(int int_state);
 
 private:
 
 	FSM fsm;
 	FSMDraw drawer;
 
-	bool guard_unlocked;
-
-	float z;
-	float remote;
-	float cam_detect_obj1, cam_detect_pipe1;
-	float cam_detect_obj2, cam_detect_pipe2;
-	float fsm_state, fsm_unlocked, fsm_down, fsm_up, fsm_explore, fsm_nofollow, fsm_stabilize;
+	int fsm_state;
+	float xyz[3];
+	bool remote;
+	bool cam_detect_obj[2], cam_detect_pipe[2];
+	bool fsm_unlocked, fsm_down, fsm_up, fsm_explore, fsm_nofollow, fsm_stabilize;
 
 	void On_start();
 	void Job();

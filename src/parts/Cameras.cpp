@@ -3,12 +3,12 @@
 using namespace std;
 
 Cameras::Cameras() : ComThread(){
-	cam_detect_obj1 = -1.;		cam_detect_pipe1 = -1.;
-	cam_detect_obj2 = -1.;		cam_detect_pipe2 = -1.;
-	cam_detect1_horizontal = 0.;	cam_detect1_vertical = 0.;
-	cam_detect2_horizontal = 0.;	cam_detect2_vertical = 0.;
-	pipeline_angle_cam1 = 0.;	pipeline_distance_cam1 = 0.;
-	pipeline_angle_cam2 = 0.;	pipeline_distance_cam2 = 0.;
+	for(int i = 0; i < 2; i++){
+		cam_detect_obj[i] = false;	cam_detect_pipe[i] = false;
+		cam_detect_horizontal[i] = 0.;	cam_detect_vertical[i] = 0.;
+		cam_pipeline_angle[i] = 0.;	cam_pipeline_distance[i] = 0.;
+		cam_size_obj[i] = 0.;
+	}
 	
 	#ifdef ENABLE_CAM1
 		capture1 = cv::VideoCapture(0);
@@ -35,14 +35,15 @@ Cameras::~Cameras(){
 void Cameras::On_start(){}
 
 void Cameras::IO(){
-	Link_input("enable_streaming", &enable_streaming);
-	Link_output("cam_size_obj1", &cam_size_obj1);			Link_output("cam_size_obj2", &cam_size_obj2);
-	Link_output("cam_detect_obj1", &cam_detect_obj1);		Link_output("cam_detect_pipe1", &cam_detect_pipe1);
-	Link_output("cam_detect_obj2", &cam_detect_obj2);		Link_output("cam_detect_pipe2", &cam_detect_pipe2);
-	Link_output("cam_detect1_horizontal", &cam_detect1_horizontal);	Link_output("cam_detect1_vertical", &cam_detect1_vertical);
-	Link_output("cam_detect2_horizontal", &cam_detect2_horizontal);	Link_output("cam_detect2_vertical", &cam_detect2_vertical);
-	Link_output("pipeline_angle_cam1", &pipeline_angle_cam1);	Link_output("pipeline_distance_cam1", &pipeline_distance_cam1);
-	Link_output("pipeline_angle_cam2", &pipeline_angle_cam2);	Link_output("pipeline_distance_cam2", &pipeline_distance_cam2);
+	Link_input("enable_streaming",		COMBOOL,	1, &enable_streaming);
+	
+	Link_output("cam_detect_obj",		COMBOOL,	2, cam_detect_obj);
+	Link_output("cam_detect_pipe",		COMBOOL,	2, cam_detect_pipe);
+	Link_output("cam_detect_horizontal",	COMFLOAT,	2, cam_detect_horizontal);
+	Link_output("cam_detect_vertical",	COMFLOAT,	2, cam_detect_vertical);
+	Link_output("cam_pipeline_angle",	COMFLOAT,	2, cam_pipeline_angle);
+	Link_output("cam_pipeline_distance",	COMFLOAT,	2, cam_pipeline_distance);
+	Link_output("cam_size_obj",		COMFLOAT,	2, cam_size_obj);
 }
 
 void Cameras::Job(){
@@ -54,19 +55,14 @@ void Cameras::Job(){
 		blobs.Separer();
 		blobs.Trouver_blobs();
 		vector <float> blob_img1 = Find_biggest_blob(blobs.Get_mc(), blobs.Get_size(), blobs.Get_img_blobs().size());
-		if(blob_img1.size() > 0){
-			cam_detect_obj1 = +1.;
-			cam_detect1_horizontal = blob_img1[0];
-			cam_detect1_vertical = blob_img1[1];
-			cam_size_obj1 = blob_img1[2];
+		cam_detect_obj[0] = (blob_img1.size() > 0);
+		if(cam_detect_obj[0]){
+			cam_detect_horizontal[0] = blob_img1[0];
+			cam_detect_vertical[0] = blob_img1[1];
+			cam_size_obj[0] = blob_img1[2];
 		}
-		else{
-			cam_detect_obj1 = -1.;
-		}
-		bool pipeline_detected_cam1;
 		reco.Set_img(blobs.Get_img_blobs());
-		cv::Mat img_pipeline1 = reco.Trouver_ligne_principale(&pipeline_detected_cam1, &pipeline_angle_cam1, &pipeline_distance_cam1);
-		cam_detect_pipe1 = pipeline_detected_cam1 ? +1.0 : -1.0;
+		cv::Mat img_pipeline1 = reco.Trouver_ligne_principale(&(cam_detect_pipe[0]), &(cam_pipeline_angle[0]), &(cam_pipeline_distance[0]));
 		#ifdef ENABLE_TCPCAM
 			if(enable_streaming > 0){
 				camera_server.Send_tcp_img(img1, CAMERA_PORT_1);
@@ -81,19 +77,14 @@ void Cameras::Job(){
 		blobs.Separer();
 		blobs.Trouver_blobs();
 		vector <float> blob_img2 = Find_biggest_blob(blobs.Get_mc(), blobs.Get_size(), blobs.Get_img_blobs().size());
-		if(blob_img2.size() > 0){
-			cam_detect_obj2 = +1.;
-			cam_detect2_horizontal = blob_img2[0];
-			cam_detect2_vertical = blob_img2[1];
-			cam_size_obj2 = blob_img2[2];
+		cam_detect_obj[1] = (blob_img2.size() > 0);
+		if(cam_detect_obj[1]){
+			cam_detect_horizontal[1] = blob_img2[0];
+			cam_detect_vertical[1] = blob_img2[1];
+			cam_size_obj[1] = blob_img2[2];
 		}
-		else{
-			cam_detect_obj2 = -1.;
-		}
-		bool pipeline_detected_cam2;
 		reco.Set_img(blobs.Get_img_blobs());
-		cv::Mat img_pipeline2 = reco.Trouver_ligne_principale(&pipeline_detected_cam2, &pipeline_angle_cam2, &pipeline_distance_cam2);
-		cam_detect_pipe2 = pipeline_detected_cam2 ? +1.0 : -1.0;
+		cv::Mat img_pipeline2 = reco.Trouver_ligne_principale(&(cam_detect_pipe[1]), &(cam_pipeline_angle[1]), &(cam_pipeline_distance[1]));
 		#ifdef ENABLE_TCPCAM
 			if(enable_streaming > 0){
 				camera_server.Send_tcp_img(img2, CAMERA_PORT_2);
@@ -103,6 +94,7 @@ void Cameras::Job(){
 	#endif
 
 	Critical_send();
+
 }
 
 vector <float> Cameras::Find_biggest_blob(vector <cv::Point2i> blobs_center, vector <double> blobs_size, cv::Size img_size){

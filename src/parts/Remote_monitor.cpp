@@ -18,14 +18,11 @@ Remote_monitor::~Remote_monitor(){}
 void Remote_monitor::On_start(){}
 
 void Remote_monitor::IO(){
-	Link_input("t", &t);
-	Link_input("thx", &thx);   Link_input("thy", &thy);   Link_input("thz", &thz);
-	Link_input("motor1", &motor1);
-	Link_input("motor2", &motor2);
-	Link_input("motor3", &motor3);
-	Link_input("motor4", &motor4);
-	Link_input("fsm_state", &fsm_state);
-	Link_input("fsm_unlocked", &fsm_unlocked);
+	Link_input("t",			COMFLOAT,	1, &t);
+	Link_input("thxyz",		COMFLOAT,	3, thxyz);
+	Link_input("motor",		COMFLOAT,	4, motor);
+	Link_input("fsm_state",		COMINT,		1, &fsm_state);
+	Link_input("fsm_unlocked",	COMBOOL,	1, &fsm_unlocked);
 }
 
 void Remote_monitor::Job(){
@@ -34,12 +31,12 @@ void Remote_monitor::Job(){
 		to_string(t)+ "|" +
 		to_string(fsm_state) + "|" +
 		to_string(fsm_unlocked) + "|" +
-		to_string(thx) + "|" +
-		to_string(thy) + "|" +
-		to_string(thz) + "|" +
-		to_string(motor1 * 100) + "|" +
-		to_string(motor2 * 100) + "|" +
-		to_string(motor3 * 100) + "|" +
-		to_string(motor4 * 100) + "|";
+		to_string(thxyz[0]) + "|" +
+		to_string(thxyz[1]) + "|" +
+		to_string(thxyz[2]) + "|" +
+		to_string(motor[0] * 100) + "|" +
+		to_string(motor[1] * 100) + "|" +
+		to_string(motor[2] * 100) + "|" +
+		to_string(motor[3] * 100) + "|";
 	tcp_server.Send(msg_monitor);
 }

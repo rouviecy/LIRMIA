@@ -29,9 +29,9 @@ private:
 	void Job();
 	void IO();
 	
-	float x,   y,   z;
-	float thx, thy, thz;
-	float obst_x, obst_y;
+	float xyz[3];
+	float thxyz[3];
+	float obst_xy[2];
 
 	cv::Mat img1, img2;
 

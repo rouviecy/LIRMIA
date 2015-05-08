@@ -36,7 +36,7 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_action("act_to_up",			&(State_machine::Act_to_up));
 	fsm.Add_action("act_to_remote",			&(State_machine::Act_to_remote));
 
-	fsm.Add_guard("fsm_unlocked", &guard_unlocked);
+	fsm.Add_guard("fsm_unlocked", &fsm_unlocked);
 
 				// state_from		// state_to		// trigger		// guard	// action			// object
 	// Go to stabilization
@@ -76,7 +76,7 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_transition(	"stay",			"remote",		"go_to_remote",		"fsm_unlocked",	"act_to_remote",		(void*) this);
 	// End
 
-	fsm_state = 8.;
+	fsm_state = 8;
 	current_state = REMOTE;
 	fsm.Launch("remote");
 	drawer.Draw_FSM("FSM", &fsm);
@@ -88,81 +88,83 @@ State_machine::~State_machine(){}
 void State_machine::On_start(){}
 
 void State_machine::IO(){
-	Link_input("z", &z);
-	Link_input("remote", &remote);
-	Link_input("fsm_unlocked", &fsm_unlocked);		Link_input("fsm_stabilize", &fsm_stabilize);
-	Link_input("fsm_down", &fsm_down);			Link_input("fsm_up", &fsm_up);
-	Link_input("fsm_explore", &fsm_explore);		Link_input("fsm_nofollow", &fsm_nofollow);
-	Link_input("cam_detect_obj1", &cam_detect_obj1);	Link_input("cam_detect_pipe1", &cam_detect_pipe1);
-	Link_input("cam_detect_obj2", &cam_detect_obj2);	Link_input("cam_detect_pipe2", &cam_detect_pipe2);
-	Link_output("fsm_state", &fsm_state);
+	Link_input("xyz",		COMFLOAT,	3, xyz);
+	Link_input("remote",		COMBOOL,	1, &remote);
+	Link_input("fsm_unlocked",	COMBOOL,	1, &fsm_unlocked);
+	Link_input("fsm_stabilize",	COMBOOL,	1, &fsm_stabilize);
+	Link_input("fsm_down",		COMBOOL,	1, &fsm_down);
+	Link_input("fsm_up",		COMBOOL,	1, &fsm_up);
+	Link_input("fsm_explore",	COMBOOL,	1, &fsm_explore);
+	Link_input("fsm_nofollow",	COMBOOL,	1, &fsm_nofollow);
+	Link_input("cam_detect_obj",	COMBOOL,	2, cam_detect_obj);
+	Link_input("cam_detect_pipe",	COMBOOL,	2, cam_detect_pipe);
+	Link_output("fsm_state",	COMINT,		1, &fsm_state);
 }
 
 void State_machine::Job(){
 	Critical_receive();
-	guard_unlocked = (fsm_unlocked > 0);
-	if(Decode_state(fsm_state) != REMOTE && remote > 0){fsm.Call_event("go_to_remote");}
-	if(Decode_state(fsm_state) == REMOTE && remote < 0 || fsm_stabilize > 0){fsm.Call_event("go_to_autonomous");}
-	if(fsm_down > 0){fsm.Call_event("go_down");}
-	if(fsm_up > 0){fsm.Call_event("go_up");}
-	if(fsm_explore > 0){fsm.Call_event("begin_explore");}
-	if(fsm_nofollow > 0){fsm.Call_event("stop_follow");}
+	if(Decode_state(fsm_state) != REMOTE && remote){fsm.Call_event("go_to_remote");}
+	if(Decode_state(fsm_state) == REMOTE && !remote || fsm_stabilize){fsm.Call_event("go_to_autonomous");}
+	if(fsm_down){fsm.Call_event("go_down");}
+	if(fsm_up){fsm.Call_event("go_up");}
+	if(fsm_explore){fsm.Call_event("begin_explore");}
+	if(fsm_nofollow){fsm.Call_event("stop_follow");}
 	if(Decode_state(fsm_state) == EXPLORE){
-		if(fsm_up > 0){fsm.Call_event("go_up");}
-		if(fsm_nofollow < 0){
-			if(cam_detect_pipe1 > 0){fsm.Call_event("pipe_detected_cam1");}
-			if(cam_detect_pipe2 > 0){fsm.Call_event("pipe_detected_cam2");}
-			if(cam_detect_obj1 > 0){fsm.Call_event("found_something_cam1");}
-			if(cam_detect_obj2 > 0){fsm.Call_event("found_something_cam2");}
+		if(fsm_up){fsm.Call_event("go_up");}
+		if(!fsm_nofollow){
+			if(cam_detect_pipe[0]){fsm.Call_event("pipe_detected_cam1");}
+			if(cam_detect_pipe[1]){fsm.Call_event("pipe_detected_cam2");}
+			if(cam_detect_obj[0]){fsm.Call_event("found_something_cam1");}
+			if(cam_detect_obj[1]){fsm.Call_event("found_something_cam2");}
 		}
 	}
 	if(Decode_state(fsm_state) == FOLLOW_OBJ_CAM1){
-		if(cam_detect_pipe1 > 0){fsm.Call_event("pipe_detected_cam1");}
-		if(cam_detect_obj1 < 0 && cam_detect_pipe1 < 0){fsm.Call_event("stop_follow");}
+		if(cam_detect_pipe[0]){fsm.Call_event("pipe_detected_cam1");}
+		if(!cam_detect_obj[0] && !cam_detect_pipe[0]){fsm.Call_event("stop_follow");}
 	}
 	if(Decode_state(fsm_state) == FOLLOW_OBJ_CAM2){
-		if(cam_detect_pipe2 > 0){fsm.Call_event("pipe_detected_cam2");}
-		if(cam_detect_obj2 < 0 && cam_detect_pipe2 < 0){fsm.Call_event("stop_follow");}
+		if(cam_detect_pipe[1]){fsm.Call_event("pipe_detected_cam2");}
+		if(!cam_detect_obj[1] && !cam_detect_pipe[1]){fsm.Call_event("stop_follow");}
 	}
-	if(Decode_state(fsm_state) == FOLLOW_PIPE_CAM1 && cam_detect_pipe1 < 0){fsm.Call_event("stop_follow");}
-	if(Decode_state(fsm_state) == FOLLOW_PIPE_CAM2 && cam_detect_pipe2 < 0){fsm.Call_event("stop_follow");}
+	if(Decode_state(fsm_state) == FOLLOW_PIPE_CAM1 && !cam_detect_pipe[0]){fsm.Call_event("stop_follow");}
+	if(Decode_state(fsm_state) == FOLLOW_PIPE_CAM2 && !cam_detect_pipe[0]){fsm.Call_event("stop_follow");}
 	Critical_send();
 }
 
-state_t State_machine::Decode_state(float float_state){
-	// TODO : intégrer dans "interface"
-	if	(float_state < 0.5)	{return STAY;}
-	else if	(float_state < 1.5)	{return DOWN;}
-	else if	(float_state < 2.5)	{return EXPLORE;}
-	else if	(float_state < 3.5)	{return FOLLOW_OBJ_CAM1;}
-	else if	(float_state < 4.5)	{return FOLLOW_OBJ_CAM2;}
-	else if	(float_state < 5.5)	{return FOLLOW_PIPE_CAM1;}
-	else if	(float_state < 6.5)	{return FOLLOW_PIPE_CAM2;}
-	else if	(float_state < 7.5)	{return UP;}
-	else if	(float_state < 8.5)	{return REMOTE;}
+state_t State_machine::Decode_state(int int_state){
+	// TODO : réduire
+	if	(int_state == 0)	{return STAY;}
+	else if	(int_state == 1)	{return DOWN;}
+	else if	(int_state == 2)	{return EXPLORE;}
+	else if	(int_state == 3)	{return FOLLOW_OBJ_CAM1;}
+	else if	(int_state == 4)	{return FOLLOW_OBJ_CAM2;}
+	else if	(int_state == 5)	{return FOLLOW_PIPE_CAM1;}
+	else if	(int_state == 6)	{return FOLLOW_PIPE_CAM2;}
+	else if	(int_state == 7)	{return UP;}
+	else if	(int_state == 8)	{return REMOTE;}
 	else				{return UNKNOWN;}
 }
 
-string State_machine::Decode_state_str(float float_state){
+string State_machine::Decode_state_str(int int_state){
 	// TODO : intégrer dans "interface"
-	if	(float_state < 0.5)	{return "stabilize position";}
-	else if	(float_state < 1.5)	{return "going down";}
-	else if	(float_state < 2.5)	{return "explore";}
-	else if	(float_state < 3.5)	{return "follow object camera 1";}
-	else if	(float_state < 4.5)	{return "follow object camera 2";}
-	else if	(float_state < 5.5)	{return "follow pipeline camera 1";}
-	else if	(float_state < 6.5)	{return "follow pipeline camera 2";}
-	else if	(float_state < 7.5)	{return "going up";}
-	else if	(float_state < 8.5)	{return "remote control";}
+	if	(int_state == 0)	{return "stabilize position";}
+	else if	(int_state == 1)	{return "going down";}
+	else if	(int_state == 2)	{return "explore";}
+	else if	(int_state == 3)	{return "follow object camera 1";}
+	else if	(int_state == 4)	{return "follow object camera 2";}
+	else if	(int_state == 5)	{return "follow pipeline camera 1";}
+	else if	(int_state == 6)	{return "follow pipeline camera 2";}
+	else if	(int_state == 7)	{return "going up";}
+	else if	(int_state == 8)	{return "remote control";}
 	else				{return "unknown ???";}
 }
 
-void State_machine::Act_to_stay(void* obj)		{((State_machine*) obj)->fsm_state = 0.;}
-void State_machine::Act_to_down(void* obj)		{((State_machine*) obj)->fsm_state = 1.;}
-void State_machine::Act_to_explore(void* obj)		{((State_machine*) obj)->fsm_state = 2.;}
-void State_machine::Act_to_follow_obj_cam1(void* obj)	{((State_machine*) obj)->fsm_state = 3.;}
-void State_machine::Act_to_follow_obj_cam2(void* obj)	{((State_machine*) obj)->fsm_state = 4.;}
-void State_machine::Act_to_follow_pipe_cam1(void* obj)	{((State_machine*) obj)->fsm_state = 5.;}
-void State_machine::Act_to_follow_pipe_cam2(void* obj)	{((State_machine*) obj)->fsm_state = 6.;}
-void State_machine::Act_to_up(void* obj)		{((State_machine*) obj)->fsm_state = 7.;}
-void State_machine::Act_to_remote(void* obj)		{((State_machine*) obj)->fsm_state = 8.;}
+void State_machine::Act_to_stay(void* obj)		{((State_machine*) obj)->fsm_state = 0;}
+void State_machine::Act_to_down(void* obj)		{((State_machine*) obj)->fsm_state = 1;}
+void State_machine::Act_to_explore(void* obj)		{((State_machine*) obj)->fsm_state = 2;}
+void State_machine::Act_to_follow_obj_cam1(void* obj)	{((State_machine*) obj)->fsm_state = 3;}
+void State_machine::Act_to_follow_obj_cam2(void* obj)	{((State_machine*) obj)->fsm_state = 4;}
+void State_machine::Act_to_follow_pipe_cam1(void* obj)	{((State_machine*) obj)->fsm_state = 5;}
+void State_machine::Act_to_follow_pipe_cam2(void* obj)	{((State_machine*) obj)->fsm_state = 6;}
+void State_machine::Act_to_up(void* obj)		{((State_machine*) obj)->fsm_state = 7;}
+void State_machine::Act_to_remote(void* obj)		{((State_machine*) obj)->fsm_state = 8;}

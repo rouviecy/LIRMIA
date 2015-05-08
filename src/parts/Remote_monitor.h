@@ -30,9 +30,10 @@ private:
 	void IO();
 
 	float t;
-	float thx, thy, thz;
-	float motor1, motor2, motor3, motor4;
-	float fsm_state, fsm_unlocked;
+	float thxyz[3];
+	float motor[4];
+	int fsm_state;
+	bool fsm_unlocked;
 
 };
 

@@ -34,6 +34,7 @@ private:
 
 	float t;
 	float depth;
+
 	float z_init;
 	int calib_params[6];
 

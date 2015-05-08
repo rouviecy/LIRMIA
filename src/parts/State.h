@@ -23,19 +23,19 @@ public:
 private:
 
 	float t;
-	float imu_thx, imu_thy, imu_thz;
+	float imu_thxyz[3];
 
-	float x,    y,    z;
-	float vx,   vy,   vz;
-	float thx,  thy,  thz;
-	float vthx, vthy, vthz;
+	float xyz[3];
+	float vxyz[3];
+	float thxyz[3];
+	float vthxyz[3];
 
 	void On_start();
 	void Job();
 	void IO();
 
 	float last_t;
-	float last_imu_thx, last_imu_thy, last_imu_thz;
+	float last_imu_thxyz[3];
 
 };
 

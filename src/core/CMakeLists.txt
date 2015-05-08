@@ -38,6 +38,10 @@ if(${ENABLE_JAVA})
 		include_directories(${JNI_INCLUDE_DIRS})
 		find_library(JAVA_MAWT_LIBRARY mawt ${JAVA_LIBMAWT_PATH})
 		set(LIBS ${LIBS} ${JNI_LIBRARIES} ${JAVA_JVM_LIBRARY} ${JAVA_AWT_LIBRARY} ${JAVA_MAWT_LIBRARY})
+		add_library(BETTERAVE_CORE
+			src/core/CoreJava.h		src/core/CoreJava.cpp
+			src/core/ComJava.h		src/core/ComJava.cpp
+		)
 	endif(JNI_FOUND)
 endif(${ENABLE_JAVA})
 
@@ -47,15 +51,15 @@ if(${ENABLE_PYTHON})
 		add_definitions(-DENABLE_PYTHON)
 		include_directories(${PYTHON_INCLUDE_DIRS})
 		set(LIBS ${LIBS} ${PYTHON_LIBRARIES})
+		add_library(BETTERAVE_CORE
+			src/core/ComPython.h		src/core/ComPython.cpp
+		)
 	endif(PYTHONLIBS_FOUND)
 endif(${ENABLE_PYTHON})
 
 add_library(BETTERAVE_CORE
 	src/core/ComDraw.h		src/core/ComDraw.cpp
-	src/core/ComJava.h		src/core/ComJava.cpp
-	src/core/ComPython.h		src/core/ComPython.cpp
 	src/core/ComThread.h		src/core/ComThread.cpp
-	src/core/CoreJava.h		src/core/CoreJava.cpp
 	src/core/Maestro.h		src/core/Maestro.cpp
 	src/core/Share.h		src/core/Share.cpp
 )

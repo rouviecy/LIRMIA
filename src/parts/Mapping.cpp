@@ -11,9 +11,9 @@ Mapping::~Mapping(){}
 void Mapping::On_start(){}
 
 void Mapping::IO(){
-	Link_input("x", &x);      Link_input("y", &y);      Link_input("z", &z);
-	Link_input("thx", &thx);  Link_input("thy", &thy);  Link_input("thz", &thz);
-	Link_input("obst_x", &x); Link_input("obst_y", &y);
+	Link_input("xyz",	COMFLOAT, 3, xyz);
+	Link_input("thxyz",	COMFLOAT, 3, thxyz);
+	Link_input("obst_xy",	COMFLOAT, 2, obst_xy);
 }
 
 void Mapping::Job(){

@@ -13,7 +13,7 @@ void Clock::On_start(){
 }
 
 void Clock::IO(){
-	Link_output("t", &t);
+	Link_output("t", COMFLOAT, 1, &t);
 }
 
 void Clock::Job(){

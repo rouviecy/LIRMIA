@@ -26,8 +26,8 @@ private:
 	void Job();
 	void IO();
 	
-	float x,   y,   z;
-	float thx, thy, thz;
+	float xyz[3];
+	float thxyz[3];
 
 };
 

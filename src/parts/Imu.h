@@ -37,7 +37,7 @@ private:
 	void Job();
 	void IO();
 
-	float imu_thx,  imu_thy,  imu_thz;
+	float imu_thxyz[3];
 
 };
 

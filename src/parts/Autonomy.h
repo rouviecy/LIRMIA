@@ -27,25 +27,23 @@ private:
 	void Job();
 	void IO();
 
-	float fsm_state;
-	float remote_forward;
-	float remote_turn;
-	float remote_deeper;
+	int fsm_state;
+	float remote_forward, remote_turn, remote_deeper;
 	float t;
-	float x,    y,    z;
-	float vx,   vy,   vz;
-	float thx,  thy,  thz;
-	float vthx, vthy, vthz;
-	float obst_x,  obst_y;
-	float obst_vx, obst_vy;
-	float cam_size_obj1, cam_size_obj2;
-	float cam_detect1_horizontal, cam_detect1_vertical;
-	float cam_detect2_horizontal, cam_detect2_vertical;
-	float pipeline_angle_cam1, pipeline_distance_cam1;
-	float pipeline_angle_cam2, pipeline_distance_cam2;
-	float motor1, motor2, motor3, motor4;
+	float xyz[3];
+	float vxyz[3];
+	float thxyz[3];
+	float vthxyz[3];
+	float obst_xy[2];
+	float obst_vxy[2];
+	float cam_size_obj[2];
+	float cam_detect_horizontal[2];
+	float cam_detect_vertical[2];
+	float cam_pipeline_angle[2];
+	float cam_pipeline_distance[2];
+	float motor[4];
 
-	float keep_thx;
+	float keep_thz;
 
 };
 
