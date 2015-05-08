@@ -37,11 +37,13 @@ void ComThread::Loop_job(){
 void ComThread::Link_input(string key, T_DATA data_type, int size, void *p_data){
 	if(size <= 0){cout << "[Error] Trying to create data \"" + key + "\" with wrong size " + to_string(size) + " < 1" << endl; return;}
 	if(s->Create_data(key, data_type, size)){critical_input[key] = p_data;}
+	input_types[key] = Share::Convert_type_str(data_type, size);
 }
 
 void ComThread::Link_output(string key, T_DATA data_type, int size, void *p_data){
 	if(size <= 0){cout << "[Error] Trying to create data \"" + key + "\" with wrong size " + to_string(size) + " < 1" << endl; return;}
 	if(s->Create_data(key, data_type, size)){critical_output[key] = p_data;}
+	output_types[key] = Share::Convert_type_str(data_type, size);
 }
 
 void ComThread::Critical_receive(){s->Update(critical_input, true);}
@@ -52,18 +54,5 @@ void ComThread::Set_name(string name){this->name = name;}
 string ComThread::Get_name(){return name;}
 float ComThread::Get_freq(){return dt_microseconds > 0 ? 1000000. / (float) dt_microseconds : 0.;}
 
-vector <string> ComThread::Get_inputs(){
-	vector <string> result;
-	for(PVoidMap::iterator it = critical_input.begin(); it != critical_input.end(); ++it){
-		result.push_back(it->first);
-	}
-	return result;
-}
-
-vector <string> ComThread::Get_outputs(){
-	vector <string> result;
-	for(PVoidMap::iterator it = critical_output.begin(); it != critical_output.end(); ++it){
-		result.push_back(it->first);
-	}
-	return result;
-}
+map <string, string> ComThread::Get_inputs(){return input_types;}
+map <string, string> ComThread::Get_outputs(){return output_types;}

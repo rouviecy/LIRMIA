@@ -34,8 +34,11 @@ public:
 
 	Share();
 	~Share();
+
 	bool Create_data(std::string key, T_DATA data_type, int size);
 	void Update(PVoidMap io_data, bool is_input);
+
+	static std::string Convert_type_str(T_DATA data_type, int size);
 
 private:
 

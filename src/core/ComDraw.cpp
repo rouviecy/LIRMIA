@@ -24,17 +24,17 @@ void ComDraw::Generate_dot(string name, vector <ComThread*> threads){
 		dot_text += "\t\tstyle=filled;\n";
 		dot_text += "\t\tcolor=lightgrey;\n";
 		dot_text += "\t\tnode [style=filled,color=white];\n";
-		vector <string> inputs = threads[i]->Get_inputs();
-		vector <string> outputs = threads[i]->Get_outputs();
-		for(size_t j = 0; j < inputs.size(); j++){
+		map <string, string> inputs = threads[i]->Get_inputs();
+		map <string, string> outputs = threads[i]->Get_outputs();
+		for(StringMap::iterator it = inputs.begin(); it != inputs.end(); ++it){
 			num_elem++;
-			dot_text += "\t\t" + to_string(num_elem) + " [label = \"" + inputs[j] + "\"];\n";
-			map_in[inputs[j]].push_back(num_elem);
+			dot_text += "\t\t" + to_string(num_elem) + " [label = \"" + it->first + "\\n" + it->second + "\"];\n";
+			map_in[it->first].push_back(num_elem);
 		}
-		for(size_t j = 0; j < outputs.size(); j++){
+		for(StringMap::iterator it = outputs.begin(); it != outputs.end(); ++it){
 			num_elem++;
-			dot_text += "\t\t" + to_string(num_elem) + " [label = \"" + outputs[j] + "\"];\n";
-			map_out[outputs[j]].push_back(num_elem);
+			dot_text += "\t\t" + to_string(num_elem) + " [label = \"" + it->first + "\\n" + it->second + "\"];\n";
+			map_out[it->first].push_back(num_elem);
 		}
 		dot_text += "\t}\n";
 	}

@@ -19,28 +19,28 @@ class ComThread{
 
 public:
 
-	ComThread();					// Create the thread
+	ComThread();						// Create the thread
 
-	void Link(					// Link to shared memory
-		Share *s);					// Pointer to share object
+	void Link(						// Link to shared memory
+		Share *s);						// Pointer to share object
 
-	void Launch();					// Begin the job
+	void Launch();						// Begin the job
 
-	void Join();					// Wait the end of the thread
+	void Join();						// Wait the end of the thread
 
-	void Set_freq(					// Setup frequency thread
-		int dt_microseconds);				// Period between two jobs in μs (-1 for no loop)
+	void Set_freq(						// Setup frequency thread
+		int dt_microseconds);					// Period between two jobs in μs (-1 for no loop)
 
-	void Set_name(					// Give a string name to the thread
-		std::string name);				// New name
+	void Set_name(						// Give a string name to the thread
+		std::string name);					// New name
 
-	std::string Get_name();				// Return the name of the object
+	std::string Get_name();					// Return the name of the object
 
-	float Get_freq();				// Return the frequency of the thread
+	float Get_freq();					// Return the frequency of the thread
 
-	std::vector <std::string> Get_inputs();		// Return inputs list
+	std::map <std::string, std::string> Get_inputs();	// Return inputs map with their data types
 
-	std::vector <std::string> Get_outputs();	// Return outputs list
+	std::map <std::string, std::string> Get_outputs();	// Return outputs map with their data types
 
 private:
 
@@ -51,6 +51,8 @@ private:
 	
 	Share *s;
 	PVoidMap critical_input, critical_output;
+
+	std::map <std::string, std::string> input_types, output_types;
 	
 	void Loop_job();
 

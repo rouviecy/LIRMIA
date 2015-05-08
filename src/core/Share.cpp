@@ -64,3 +64,16 @@ void Share::Update(PVoidMap io_data, bool is_input){
 	}
 	Unlock();
 }
+
+
+string Share::Convert_type_str(T_DATA data_type, int size){
+	string result = "";
+	switch(data_type){
+		case COMBOOL:	result += "bool";	break;
+		case COMINT:	result += "int";	break;
+		case COMFLOAT:	result += "float";	break;
+		default:				break;
+	}
+	if(size > 1){result += "[" + to_string(size) + "]";}
+	return result;
+}

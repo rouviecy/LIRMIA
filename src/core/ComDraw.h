@@ -23,6 +23,8 @@
 
 class ComDraw{
 
+typedef std::map <std::string, std::string> StringMap;
+
 public:
 
 	ComDraw();
