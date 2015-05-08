@@ -22,10 +22,15 @@ FSM::~FSM(){
 	}
 }
 
-bool FSM::Add_state(string name){
+bool FSM::Add_state(string name, int id){
 	if(states.count(name) > 0){
 		cout << "[Warning] Trying to create state \"" + name + "\" which already exist" << endl;
 		return false;
+	}
+	for(StateMap::iterator it = states.begin(); it != states.end(); ++it){
+		if(it->second->id == id){
+			cout << "[Error] Failed to create state \"" + name + "\" : id " + to_string(id) + " is already used" << endl;
+		}
 	}
 	state* new_state = new state;
 	if(new_state == NULL){
@@ -33,6 +38,7 @@ bool FSM::Add_state(string name){
 		return false;
 	}
 	new_state->name = name;
+	new_state->id = id;
 	states[name] = new_state;
 	return true;
 }
@@ -127,6 +133,7 @@ bool FSM::Launch(string state_init){
 		return false;
 	}
 	current_states.push_back(states[state_init]);
+	current_states_id.push_back(states[state_init]->id);
 	return true;
 }
 
@@ -142,6 +149,7 @@ bool FSM::Call_event(string name){
 		for(size_t j = 0; j < current_states.size(); j++){
 			if(current_states[j] != states[processed_transition->state_from]){continue;}
 			current_states[j] = states[processed_transition->state_to];
+			current_states_id[j] = current_states[j]->id;
 			string action = processed_transition->action;
 			if(!action.empty() && actions[action]->action != NULL){
 				actions[action]->action(processed_transition->obj);
@@ -159,4 +167,14 @@ vector <state*> FSM::Get_states(){
 	return result;
 }
 
+string FSM::Get_state_name_by_id(int id){
+	for(StateMap::iterator it = states.begin(); it != states.end(); ++it){
+		if(it->second->id == id){
+			return it->first;
+		}
+	}
+	return "";
+}
+
 vector <state*> FSM::Get_current_states(){return current_states;}
+vector <int> FSM::Get_current_states_id(){return current_states_id;}

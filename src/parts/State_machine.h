@@ -16,7 +16,7 @@
 #include "../interfaces/FSM.h"
 #include "../interfaces/FSMDraw.h"
 
-enum state_t {REMOTE, STAY, DOWN, EXPLORE, FOLLOW_OBJ_CAM1, FOLLOW_OBJ_CAM2, FOLLOW_PIPE_CAM1, FOLLOW_PIPE_CAM2, UP, UNKNOWN};
+enum state_t {STAY, DOWN, EXPLORE, FOLLOW_OBJ_CAM1, FOLLOW_OBJ_CAM2, FOLLOW_PIPE_CAM1, FOLLOW_PIPE_CAM2, UP, REMOTE};
 
 class State_machine : public ComThread{
 
@@ -25,7 +25,6 @@ public:
 	State_machine();
 	~State_machine();
 
-	static state_t Decode_state(int int_state);
 	static std::string Decode_state_str(int int_state);
 
 private:
@@ -45,15 +44,7 @@ private:
 
 	state_t current_state;
 
-	static void Act_to_stay(void* obj);
-	static void Act_to_down(void* obj);
-	static void Act_to_explore(void* obj);
-	static void Act_to_follow_obj_cam1(void* obj);
-	static void Act_to_follow_obj_cam2(void* obj);
-	static void Act_to_follow_pipe_cam1(void* obj);
-	static void Act_to_follow_pipe_cam2(void* obj);
-	static void Act_to_up(void* obj);
-	static void Act_to_remote(void* obj);
+	static void Update_fsm(void* obj);
 
 };
 

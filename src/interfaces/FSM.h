@@ -36,6 +36,7 @@ typedef struct{
 
 typedef struct{
 	std::string name;
+	int id;
 	std::vector <transition*> transitions;
 }state;
 
@@ -66,7 +67,7 @@ public:
 	FSM();
 	~FSM();
 
-	bool Add_state(std::string name);
+	bool Add_state(std::string name, int id);
 
 	bool Add_event(std::string name);
 
@@ -87,8 +88,10 @@ public:
 	bool Call_event(std::string name);
 
 	std::vector <state*> Get_states();
+	std::string Get_state_name_by_id(int id);
 
 	std::vector <state*> Get_current_states();
+	std::vector <int> Get_current_states_id();
 
 private:
 
@@ -98,6 +101,7 @@ private:
 	FuncMap actions;
 
 	std::vector <state*> current_states;
+	std::vector <int> current_states_id;
 
 };
 
