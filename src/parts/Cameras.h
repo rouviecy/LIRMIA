@@ -46,7 +46,7 @@ private:
 	void Job();
 	void IO();
 
-	float enable_streaming;
+	bool enable_streaming;
 	bool cam_detect_obj[2];		bool cam_detect_pipe[2];
 	float cam_detect_horizontal[2];	float cam_detect_vertical[2];
 	float cam_pipeline_angle[2];	float cam_pipeline_distance[2];

@@ -64,7 +64,7 @@ void Cameras::Job(){
 		reco.Set_img(blobs.Get_img_blobs());
 		cv::Mat img_pipeline1 = reco.Trouver_ligne_principale(&(cam_detect_pipe[0]), &(cam_pipeline_angle[0]), &(cam_pipeline_distance[0]));
 		#ifdef ENABLE_TCPCAM
-			if(enable_streaming > 0){
+			if(enable_streaming){
 				camera_server.Send_tcp_img(img1, CAMERA_PORT_1);
 				camera_server.Send_tcp_img(img_pipeline1, CAMERA_PORT_3);
 			}
@@ -86,7 +86,7 @@ void Cameras::Job(){
 		reco.Set_img(blobs.Get_img_blobs());
 		cv::Mat img_pipeline2 = reco.Trouver_ligne_principale(&(cam_detect_pipe[1]), &(cam_pipeline_angle[1]), &(cam_pipeline_distance[1]));
 		#ifdef ENABLE_TCPCAM
-			if(enable_streaming > 0){
+			if(enable_streaming){
 				camera_server.Send_tcp_img(img2, CAMERA_PORT_2);
 				camera_server.Send_tcp_img(img_pipeline2, CAMERA_PORT_4);
 			}
