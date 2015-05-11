@@ -14,7 +14,7 @@ Logger::Logger() : ComThread(){
 			<< setfill('0') << setw(2) << now->tm_min << ":"
 			<< setfill('0') << setw(2) << now->tm_sec << "--LIRMIA.log";
 	log_file.open(log_name.str());
-	string header = "t\tstate\t\t\t\tx\ty\tz\tvx\tvy\tvz\tthx\tthy\tthz\tvthx\tvthy\tvthz";
+	string header = "t\tstate\t\t\t\tx\ty\tz\tvx\tvy\tvz\tthx\tthy\tthz\tmotor1\tmotor2\tmotor3\tmotor4";
 	log_file << header << "\n";
 	last_t_save = -1.;
 }
@@ -32,6 +32,7 @@ void Logger::IO(){
 	Link_input("vxyz",	COMFLOAT,	3, vxyz);
 	Link_input("thxyz",	COMFLOAT,	3, thxyz);
 	Link_input("vthxyz",	COMFLOAT,	3, vthxyz);
+	Link_input("motor",	COMFLOAT,	4, motor);
 }
 
 void Logger::Job(){
@@ -45,7 +46,7 @@ void Logger::Job(){
 			<< xyz[0]	<< "\t" << xyz[1]	<< "\t" << xyz[2]	<< "\t"
 			<< vxyz[0]	<< "\t" << vxyz[1]	<< "\t" << vxyz[2]	<< "\t"
 			<< thxyz[0]	<< "\t" << thxyz[1]	<< "\t" << thxyz[2]	<< "\t"
-			<< vthxyz[0]	<< "\t" << vthxyz[1]	<< "\t" << vthxyz[2];
+			<< motor[0]	<< "\t" << motor[1]	<< "\t" << motor[2]	<< "\t"		<< motor[3];
 	log_file << new_line.str() << "\n";
 	if(t - last_t_save > 5){
 		log_file.flush();

@@ -6,7 +6,7 @@ State::State() : ComThread(){
 	last_t = -1.;
 	xyz[0] = 0.; vxyz[0] = 0.; thxyz[0] = 0.; vthxyz[0] = 0.; last_imu_thxyz[0] = 0.;
 	xyz[1] = 0.; vxyz[1] = 0.; thxyz[1] = 0.; vthxyz[1] = 0.; last_imu_thxyz[1] = 0.;
-	xyz[2] = 0.; vxyz[2] = 0.; thxyz[2] = 0.; vthxyz[2] = 0.; last_imu_thxyz[2] = 0.;
+	xyz[2] = 42.;vxyz[2] = 0.; thxyz[2] = 0.; vthxyz[2] = 0.; last_imu_thxyz[2] = 0.;
 }
 
 State::~State(){}

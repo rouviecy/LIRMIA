@@ -37,6 +37,7 @@ private:
 	float vxyz[3];
 	float thxyz[3];
 	float vthxyz[3];
+	float motor[4];
 
 	std::ofstream log_file;
 	float last_t_save;

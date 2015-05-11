@@ -30,6 +30,7 @@ private:
 	void IO();
 
 	float t;
+	float xyz[3];
 	float thxyz[3];
 	float motor[4];
 	int fsm_state;
