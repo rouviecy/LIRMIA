@@ -125,16 +125,16 @@ void State_machine::Job(){
 
 string State_machine::Decode_state_str(int int_state){
 	switch(int_state){
-		case 0:		return "stabilize position";
-		case 1:		return "going down";
-		case 2:		return "explore";
-		case 3:		return "follow object camera 1";
-		case 4:		return "follow object camera 2";
+		case 0:		return "stabilize position      ";
+		case 1:		return "going down              ";
+		case 2:		return "explore                 ";
+		case 3:		return "follow object camera 1  ";
+		case 4:		return "follow object camera 2  ";
 		case 5:		return "follow pipeline camera 1";
 		case 6:		return "follow pipeline camera 2";
-		case 7:		return "going up";
-		case 8:		return "remote control";
-		default :	return "unknown ???";
+		case 7:		return "going up                ";
+		case 8:		return "remote control          ";
+		default :	return "unknown ???             ";
 	}
 }
 

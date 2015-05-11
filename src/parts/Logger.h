@@ -12,6 +12,11 @@
 #define LOGGUER
 
 #include "../core/ComThread.h"
+#include "./State_machine.h"
+#include <ctime>
+#include <sstream>
+#include <iomanip>
+#include <fstream>
 
 class Logger : public ComThread{
 
@@ -32,6 +37,9 @@ private:
 	float vxyz[3];
 	float thxyz[3];
 	float vthxyz[3];
+
+	std::ofstream log_file;
+	float last_t_save;
 
 };
 
