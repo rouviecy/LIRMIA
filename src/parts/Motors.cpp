@@ -21,7 +21,7 @@ void Motors::Job(){
 	for(int i = 0; i < 4; i++){
 		int order = min(abs((int) (255. * motor[i])), 255);
 		if(order < 20){order = 0;}
-		Generate_order(4, order, motor[i] > 0);
+		Generate_order(i, order, motor[i] > 0);
 	}
 //	cout << endl;
 }
@@ -31,10 +31,10 @@ void Motors::Generate_order(int num_motor, int power, bool positive){
 	#if defined(ENABLE_MOTORS) and defined(ENABLE_I2C) and defined(ENABLE_SERIAL_ISS)
 		unsigned char order[8];
 		switch(num_motor){
-			case 1: order[1]= 0xB0;	break;
-			case 2: order[1]= 0xB2;	break;
-			case 3: order[1]= 0xB4;	break;
-			case 4: order[1]= 0xB6;	break;
+			case 0: order[1]= 0xB0;	break;
+			case 1: order[1]= 0xB2;	break;
+			case 2: order[1]= 0xB4;	break;
+			case 3: order[1]= 0xB6;	break;
 			default:		return;
 		}
 		order[0] = 0x55;
