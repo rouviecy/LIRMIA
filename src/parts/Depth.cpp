@@ -66,10 +66,10 @@ int Depth::Read(int index){
 	resquest[0] = 0x54;
 	resquest[1] = 0xEF;
 	resquest[2] = 0x03;
-	i2c->I2C_write(request_depth2, 1);
+	i2c->I2C_write(resquest, 1);
 	unsigned char* answer = (unsigned char*) i2c->I2C_read();
-	if(index == 0){return answer[3] << 16 | buf[4] << 8 | buf[5];}
-	if(index == 1){return answer[2] << 16 | buf[3] << 8 | buf[4];}
+	if(index == 0){return answer[3] << 16 | answer[4] << 8 | answer[5];}
+	if(index == 1){return answer[2] << 16 | answer[3] << 8 | answer[4];}
 	return 0;
 }
 
