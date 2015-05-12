@@ -16,7 +16,7 @@
 #include "../interfaces/FSM.h"
 #include "../interfaces/FSMDraw.h"
 
-enum state_t {STAY, DOWN, EXPLORE, FOLLOW_OBJ_CAM1, FOLLOW_OBJ_CAM2, FOLLOW_PIPE_CAM1, FOLLOW_PIPE_CAM2, UP, REMOTE};
+enum state_t {STAY, DOWN, EXPLORE, FOLLOW_OBJ_CAM1, FOLLOW_OBJ_CAM2, FOLLOW_PIPE_CAM1, FOLLOW_PIPE_CAM2, FOLLOW_WALL, UP, REMOTE};
 
 class State_machine : public ComThread{
 
@@ -41,8 +41,6 @@ private:
 	void On_start();
 	void Job();
 	void IO();
-
-	state_t current_state;
 
 	static void Update_fsm(void* obj);
 

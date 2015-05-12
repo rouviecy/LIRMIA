@@ -89,6 +89,12 @@ void Autonomy::Job(){
 			motor[3] = +0.2;
 		}
 	}
+	else if(fsm_state == FOLLOW_WALL){
+		motor[0] = 0.;
+		motor[1] = 0.;
+		motor[2] = 0.;
+		motor[3] = 0.;
+	}
 	else if(fsm_state == REMOTE){
 		keep_thz = thxyz[3];
 		motor[0] = remote_forward / 2 + remote_turn / 2;

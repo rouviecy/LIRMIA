@@ -11,6 +11,7 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_state("follow_obj_cam2",	FOLLOW_OBJ_CAM2);
 	fsm.Add_state("follow_pipe_cam1",	FOLLOW_PIPE_CAM1);
 	fsm.Add_state("follow_pipe_cam2",	FOLLOW_PIPE_CAM2);
+	fsm.Add_state("follow_wall",		FOLLOW_WALL);
 	fsm.Add_state("up",			UP);
 	fsm.Add_state("remote",			REMOTE);
 
@@ -21,6 +22,7 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_event("found_something_cam2");
 	fsm.Add_event("pipe_detected_cam1");
 	fsm.Add_event("pipe_detected_cam2");
+	fsm.Add_event("wall_detected");
 	fsm.Add_event("stop_follow");
 	fsm.Add_event("go_up");
 	fsm.Add_event("reach_surface");
@@ -48,12 +50,14 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_transition(	"explore",		"follow_obj_cam2",	"found_something_cam2",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"explore",		"follow_pipe_cam1",	"pipe_detected_cam1",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"explore",		"follow_pipe_cam2",	"pipe_detected_cam2",	"fsm_unlocked",	"update_fsm",	(void*) this);
+	fsm.Add_transition(	"explore",		"follow_wall",		"wall_detected",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"follow_obj_cam1",	"follow_pipe_cam1",	"pipe_detected_cam1",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"follow_obj_cam2",	"follow_pipe_cam2",	"pipe_detected_cam2",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"follow_obj_cam1",	"explore",		"stop_follow",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"follow_obj_cam2",	"explore",		"stop_follow",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"follow_pipe_cam1",	"explore",		"stop_follow",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"follow_pipe_cam2",	"explore",		"stop_follow",		"fsm_unlocked",	"update_fsm",	(void*) this);
+	fsm.Add_transition(	"follow_wall",		"explore",		"stop_follow",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"stay",			"explore",		"begin_explore",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	// End
 
@@ -62,14 +66,14 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_transition(	"follow_obj_cam2",	"explore",		"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"follow_pipe_cam1",	"explore",		"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"follow_pipe_cam2",	"explore",		"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
+	fsm.Add_transition(	"follow_wall",		"explore",		"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"explore",		"stay",			"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"down",			"stay",			"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"up",			"stay",			"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"stay",			"remote",		"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	// End
 
-	fsm_state = 8;
-	current_state = REMOTE;
+	fsm_state = REMOTE;
 	fsm.Launch("remote");
 	drawer.Draw_FSM("FSM", &fsm);
 
@@ -95,6 +99,7 @@ void State_machine::IO(){
 
 void State_machine::Job(){
 	Critical_receive();
+	// TODO : appel de l'événement "wall_detected"
 	if(fsm_state != REMOTE && remote){fsm.Call_event("go_to_remote");}
 	if(fsm_state == REMOTE && !remote || fsm_stabilize){fsm.Call_event("go_to_autonomous");}
 	if(fsm_down){fsm.Call_event("go_down");}
@@ -125,16 +130,17 @@ void State_machine::Job(){
 
 string State_machine::Decode_state_str(int int_state){
 	switch(int_state){
-		case 0:		return "stabilize position      ";
-		case 1:		return "going down              ";
-		case 2:		return "explore                 ";
-		case 3:		return "follow object camera 1  ";
-		case 4:		return "follow object camera 2  ";
-		case 5:		return "follow pipeline camera 1";
-		case 6:		return "follow pipeline camera 2";
-		case 7:		return "going up                ";
-		case 8:		return "remote control          ";
-		default :	return "unknown ???             ";
+		case STAY:		return "stabilize position      ";
+		case DOWN:		return "going down              ";
+		case EXPLORE:		return "explore                 ";
+		case FOLLOW_OBJ_CAM1:	return "follow object camera 1  ";
+		case FOLLOW_OBJ_CAM2:	return "follow object camera 2  ";
+		case FOLLOW_PIPE_CAM1:	return "follow pipeline camera 1";
+		case FOLLOW_PIPE_CAM2:	return "follow pipeline camera 2";
+		case FOLLOW_WALL:	return "following wall          ";
+		case UP:		return "going up                ";
+		case REMOTE:		return "remote control          ";
+		default :		return "unknown ???             ";
 	}
 }
 

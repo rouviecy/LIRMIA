@@ -6,6 +6,7 @@ digraph links {
 	follow_obj_cam2;
 	follow_pipe_cam1;
 	follow_pipe_cam2;
+	follow_wall;
 	remote;
 	stay;
 	up;
@@ -17,6 +18,7 @@ digraph links {
 	explore->follow_obj_cam2 [label = "found_something_cam2\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	explore->follow_pipe_cam1 [label = "pipe_detected_cam1\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	explore->follow_pipe_cam2 [label = "pipe_detected_cam2\nfsm_unlocked\nupdate_fsm"] [minlen=4]
+	explore->follow_wall [label = "wall_detected\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	explore->stay [label = "go_to_remote\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	follow_obj_cam1->follow_pipe_cam1 [label = "pipe_detected_cam1\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	follow_obj_cam1->explore [label = "stop_follow\nfsm_unlocked\nupdate_fsm"] [minlen=4]
@@ -28,6 +30,8 @@ digraph links {
 	follow_pipe_cam1->explore [label = "go_to_remote\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	follow_pipe_cam2->explore [label = "stop_follow\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	follow_pipe_cam2->explore [label = "go_to_remote\nfsm_unlocked\nupdate_fsm"] [minlen=4]
+	follow_wall->explore [label = "stop_follow\nfsm_unlocked\nupdate_fsm"] [minlen=4]
+	follow_wall->explore [label = "go_to_remote\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	remote->stay [label = "go_to_autonomous\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	stay->down [label = "go_down\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	stay->up [label = "go_up\nfsm_unlocked\nupdate_fsm"] [minlen=4]
