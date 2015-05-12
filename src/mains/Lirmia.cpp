@@ -48,7 +48,7 @@ void Lirmia::Init_serial(){
 		imu.Set_serial(&serial_arduino);
 	#endif
 	#ifdef ENABLE_SERIAL_ISS
-		serial_iss.Serial_init(DEV_SERIAL_ISS, B115200, true);
+		serial_iss.Serial_init(DEV_SERIAL_ISS, B115200, false);
 		#ifdef ENABLE_I2C
 			unsigned char init_I2C_and_serial[5];
 			init_I2C_and_serial[0] = 0x5A;	// initial command

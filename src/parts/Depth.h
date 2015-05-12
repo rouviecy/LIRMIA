@@ -37,6 +37,7 @@ private:
 
 	float z_init;
 	int calib_params[6];
+	int read(int index);
 
 };
 

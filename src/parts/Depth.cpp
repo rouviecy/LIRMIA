@@ -23,21 +23,20 @@ void Depth::Job(){
 	Critical_receive();
 	#if defined(ENABLE_DEPTH) and defined(ENABLE_I2C) and defined(ENABLE_SERIAL_ISS)
 // TODO : add check keys and subscribe to i2c
-/*		unsigned char request_depth1[1]	= {0x42};
-		unsigned char request_depth2[1]	= {0x52};
-		unsigned char request_end[1]	= {0x00};
-		serial->Lock();
-		serial->Serial_write(request_depth1, 1);
-		string answer1 = serial->Serial_read();
-		serial->Serial_write(request_depth2, 1);
-		string answer2 = serial->Serial_read();
-		serial->Unlock();
+/*		unsigned char request_depth1[2]	= {0x42, 0x00};
+		unsigned char request_depth2[2]	= {0x52, 0x00};
+		i2c->Lock();
+		i2c->I2C_write(request_depth1, 1);
+		int answer1 = Read(0);
+		i2c->I2C_write(request_depth2, 1);
+		int answer2 = Read(1);
+		i2c->Unlock();
 
-		float dt = (float) (answer2[0] - calib_params[4] * 256);
-		float tem = 2000. + dt * ((float) calib_params[5]) / 8388608.;
-		float off = ((float) calib_params[1] * 65536 * 4  + (calib_params[3] * dt)) / 32.;
-		float sens = ((float) calib_params[0] * 65536 * 2 + (calib_params[2] * dt)) / 128.;
-		float P = (((float) answer1[0]) * (sens / 2097152.) - off) / 32768.;
+		float dt = (float) (answer2 - calib_params[4] << 8);
+		float tem = 2000. + dt * (float) calib_params[5] / 8388608.;
+		float off  = ((float) (calib_params[1] << 16) * 4. + ((float) calib_params[3] * dt)) / 32.;
+		float sens = ((float) (calib_params[0] << 16) * 2. + ((float) calib_params[2] * dt)) / 128.;
+		float P = ((float) answer1 * sens / 2097152. - off) / 32768.;
 
 		if(tem > 2000.){
 			P = P / 100;
@@ -51,7 +50,7 @@ void Depth::Job(){
 			tem = tem - t2;
 			off = off - off2;
 			sens = sens - sens2;
-			P = ((((float) answer1[0]) * sens / 2097152.) - off) / 32768.;
+			P = ((float) answer1 * sens / 2097152. - off) / 32768.;
 			P = P / 100;
 			tem = tem / 100;
 		}
@@ -60,6 +59,18 @@ void Depth::Job(){
 		depth = (P * 100.) / 9810. - z_init;
 		Critical_send();
 */	#endif
+}
+
+int Depth::Read(int index){
+	unsigned char resquest[3];
+	resquest[0] = 0x54;
+	resquest[1] = 0xEF;
+	resquest[2] = 0x03;
+	i2c->I2C_write(request_depth2, 1);
+	unsigned char* answer = (unsigned char*) i2c->I2C_read();
+	if(index == 0){return answer[3] << 16 | buf[4] << 8 | buf[5];}
+	if(index == 1){return answer[2] << 16 | buf[3] << 8 | buf[4];}
+	return 0;
 }
 
 void Depth::Calibrate(){
@@ -71,20 +82,22 @@ void Depth::Calibrate(){
 		resquest_calibration[3] = 0x1E;
 		i2c->Lock();
 		i2c->I2C_write(resquest_calibration, 4);
-		usleep(5000000);
+		usleep(5000);
 		for(int i = 0; i < 6; i++){
 			resquest_calibration[1] = 0xEE;
 			resquest_calibration[2] = 0x01;
 			resquest_calibration[3] = 0xA2 + (i * 2);
 			i2c->I2C_write(resquest_calibration, 4);
-			usleep(5000000);
+			usleep(5000);
 			resquest_calibration[1] = 0xEF;
 			resquest_calibration[2] = 0x02;
 			i2c->I2C_write(resquest_calibration, 3);
-			usleep(5000000);
-			string answer_calibration = i2c->I2C_read();
+			usleep(5000);
+			unsigned char* answer_calibration = (unsigned char*) i2c->I2C_read();
 			if(i == 0)	{calib_params[i] = (int) ((answer_calibration[4] << 8) | answer_calibration[5]);}
 			else		{calib_params[i] = (int) ((answer_calibration[1] << 8) | answer_calibration[2]);}
+cout << calib_params[i] << endl;
+			usleep(5000);
 		}
 		i2c->Unlock();
 	#endif
