@@ -23,10 +23,11 @@ typedef struct{
 typedef struct{
 	float x, y, z, thz;
 	int motor1, motor2, motor3, motor4;
-	string state;
+	int state;
 	bool unlocked;
 	float min_coord, max_coord;
 	vector <vector <float> > path;
+	vector <vector <float> > objects;
 } struct_monitor;
 	
 
@@ -200,6 +201,13 @@ cv::Mat Draw_monitor(struct_monitor* monitor){
 	cv::Scalar red(0, 0, 255);
 	vector <float> xy; xy.push_back(monitor->x); xy.push_back(monitor->y); 
 	monitor->path.push_back(xy);
+	if(monitor->state == FOLLOW_OBJ_CAM1){
+		vector <float> new_object;
+		new_object.push_back(monitor->x + 1. * cos(monitor->thz));
+		new_object.push_back(monitor->y + 1. * sin(monitor->thz));
+		monitor->objects.push_back(new_object);
+		
+	}
 	if	(monitor->x < monitor->min_coord){monitor->min_coord = monitor->x;}
 	else if	(monitor->x > monitor->max_coord){monitor->max_coord = monitor->x;}
 	if	(monitor->y < monitor->min_coord){monitor->min_coord = monitor->y;}
@@ -225,6 +233,14 @@ cv::Mat Draw_monitor(struct_monitor* monitor){
 			cv::line(img_monitor, pt_arrow, pt_arrow_r, red, 3);
 		}
 	}
+	for(size_t i = 0; i < monitor->objects.size(); i++){
+		float delta_min_max = monitor->max_coord - monitor->min_coord;
+		float delta_size_border = (float) (MONITOR_SIZE - MONITOR_BORDER);
+		int draw_x = MONITOR_BORDER / 2 + (int) (delta_size_border * (monitor->objects[i][0] - monitor->min_coord) / delta_min_max);
+		int draw_y = MONITOR_BORDER / 2 + (int) (delta_size_border * (monitor->objects[i][1] - monitor->min_coord) / delta_min_max);
+		cv::Point pt_draw = cv::Point(draw_x, draw_y);
+		cv::circle(img_monitor, pt_draw, 5, red, -1);
+	}
 	string text_x = "x = " + to_string(monitor->x) + " m";
 	string text_y = "y = " + to_string(monitor->y) + " m";
 	string text_z = "z = " + to_string(monitor->z) + " m";
@@ -232,7 +248,7 @@ cv::Mat Draw_monitor(struct_monitor* monitor){
 	string text_motor2 = "motor2 = " + to_string(monitor->motor2) + "%";
 	string text_motor3 = "motor3 = " + to_string(monitor->motor3) + "%";
 	string text_motor4 = "motor4 = " + to_string(monitor->motor4) + "%";
-	string text_state = monitor->state + string(monitor->unlocked ? " [unlocked]" : " [LOCKED]");
+	string text_state = State_machine::Decode_state_str(monitor->state) + string(monitor->unlocked ? " [unlocked]" : " [LOCKED]");
 	cv::putText(img_monitor, text_state, cv::Point(10, 20), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
 	cv::putText(img_monitor, text_x, cv::Point(10, 60), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
 	cv::putText(img_monitor, text_y, cv::Point(10, 80), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
@@ -288,7 +304,7 @@ int main(int argc, char* argv[]){
 					tokens.push_back(msg_monitor.substr(current, next - current));
 				}
 				float t = stof(tokens[0]);
-				monitor.state = State_machine::Decode_state_str(stoi(tokens[1]));
+				monitor.state = stoi(tokens[1]);
 				monitor.unlocked = (stof(tokens[2]) > 0);
 				monitor.x = stof(tokens[3]) / 1000;
 				monitor.y = stof(tokens[4]) / 1000;
