@@ -32,6 +32,8 @@ void Simulator::Job(){
 		for(int i = 0; i < 6; i++){
 			acceleration[i] = acceleration[i] * 0.95;
 			velocity[i] = velocity[i] * 0.995;
+			if(i < 3)	{Saturate(&(acceleration[i]), 5.);	Saturate(&(velocity[i]), 1.);}
+			else		{Saturate(&(acceleration[i]), 50.);	Saturate(&(velocity[i]), 180.);}
 		}
 
 		if(last_t > 0){
@@ -48,4 +50,8 @@ void Simulator::Job(){
 
 		Critical_send();
 	#endif
+}
+
+void Simulator::Saturate(float* number, float maximum){
+	if(fabs(*number) > maximum){*number = *number > 0 ? +maximum : -maximum;}
 }

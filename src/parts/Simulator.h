@@ -36,6 +36,8 @@ private:
 	float acceleration[6];
 	float velocity[6];
 
+	void Saturate(float* number, float maximum);
+
 };
 
 #endif
