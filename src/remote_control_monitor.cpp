@@ -9,8 +9,9 @@
 
 using namespace std;
 
-#define MONITOR_SIZE	500
-#define MONITOR_BORDER	50
+#define MONITOR_SIZE		500
+#define MONITOR_BORDER		50
+#define DELTA_SIZE_BORDER	450.0
 
 typedef struct{
 	TCP_client* tcp_client;
@@ -196,51 +197,37 @@ void init_joystick_listeners(Joystick* joystick, struct_callback* obj_callback){
 	#endif
 }
 
-cv::Mat Draw_monitor(struct_monitor* monitor){
-	cv::Mat img_monitor = cv::Mat::zeros(500, 500, CV_8UC3);
-	cv::Scalar red(0, 0, 255);
-	vector <float> xy; xy.push_back(monitor->x); xy.push_back(monitor->y); 
-	monitor->path.push_back(xy);
-	if(monitor->state == FOLLOW_OBJ_CAM1){
-		vector <float> new_object;
-		new_object.push_back(monitor->x + 1. * cos(monitor->thz));
-		new_object.push_back(monitor->y + 1. * sin(monitor->thz));
-		monitor->objects.push_back(new_object);
-		
-	}
+cv::Point Scale_point(float x, float y, struct_monitor* monitor){
+	float delta_min_max = monitor->max_coord - monitor->min_coord;
+	int draw_x = MONITOR_BORDER / 2 + (int) (DELTA_SIZE_BORDER * (x - monitor->min_coord) / delta_min_max);
+	int draw_y = MONITOR_BORDER / 2 + (int) (DELTA_SIZE_BORDER * (y - monitor->min_coord) / delta_min_max);
+	return cv::Point(draw_x, draw_y);
+}
+
+void Draw_arrow(cv::Mat* img, cv::Point origin, int length, float angle, cv::Scalar color){
+	cv::Point pt_arrow = origin + cv::Point(length * cos(angle), length * sin(angle));
+	cv::Point pt_arrow_l = pt_arrow + cv::Point(length * cos(angle + 2.5) / 4, length * sin(angle + 2.5) / 4);
+	cv::Point pt_arrow_r = pt_arrow + cv::Point(length * cos(angle - 2.5) / 4, length * sin(angle - 2.5) / 4);
+	cv::line(*img, origin, pt_arrow, color, 3);
+	cv::line(*img, pt_arrow, pt_arrow_l, color, 3);
+	cv::line(*img, pt_arrow, pt_arrow_r, color, 3);
+}
+
+void Add_point_to_collection(vector <vector <float> > *collection, float x, float y){
+	vector <float> new_point;
+	new_point.push_back(x);
+	new_point.push_back(y);
+	collection->push_back(new_point);
+}
+
+void Resize_monitor(struct_monitor *monitor){
 	if	(monitor->x < monitor->min_coord){monitor->min_coord = monitor->x;}
 	else if	(monitor->x > monitor->max_coord){monitor->max_coord = monitor->x;}
 	if	(monitor->y < monitor->min_coord){monitor->min_coord = monitor->y;}
 	else if	(monitor->y > monitor->max_coord){monitor->max_coord = monitor->y;}
-	cv::Point pt_draw_prev;
-	for(size_t i = 0; i < monitor->path.size(); i++){
-		float delta_min_max = monitor->max_coord - monitor->min_coord;
-		float delta_size_border = (float) (MONITOR_SIZE - MONITOR_BORDER);
-		int draw_x = MONITOR_BORDER / 2 + (int) (delta_size_border * (monitor->path[i][0] - monitor->min_coord) / delta_min_max);
-		int draw_y = MONITOR_BORDER / 2 + (int) (delta_size_border * (monitor->path[i][1] - monitor->min_coord) / delta_min_max);
-		cv::Point pt_draw = cv::Point(draw_x, draw_y);
-		if(i != 0){
-			cv::line(img_monitor, pt_draw_prev, pt_draw, cv::Scalar(255, 0, 0));
-		}
-		pt_draw_prev = pt_draw;
-		if(i == monitor->path.size() - 1){
-			cv::circle(img_monitor, pt_draw, 10, red, 3);
-			cv::Point pt_arrow = pt_draw + cv::Point(40 * cos(monitor->thz), 40 * sin(monitor->thz));
-			cv::Point pt_arrow_l = pt_arrow + cv::Point(10 * cos(monitor->thz + 2.5), 10 * sin(monitor->thz + 2.5));
-			cv::Point pt_arrow_r = pt_arrow + cv::Point(10 * cos(monitor->thz - 2.5), 10 * sin(monitor->thz - 2.5));
-			cv::line(img_monitor, pt_draw, pt_arrow, red, 3);
-			cv::line(img_monitor, pt_arrow, pt_arrow_l, red, 3);
-			cv::line(img_monitor, pt_arrow, pt_arrow_r, red, 3);
-		}
-	}
-	for(size_t i = 0; i < monitor->objects.size(); i++){
-		float delta_min_max = monitor->max_coord - monitor->min_coord;
-		float delta_size_border = (float) (MONITOR_SIZE - MONITOR_BORDER);
-		int draw_x = MONITOR_BORDER / 2 + (int) (delta_size_border * (monitor->objects[i][0] - monitor->min_coord) / delta_min_max);
-		int draw_y = MONITOR_BORDER / 2 + (int) (delta_size_border * (monitor->objects[i][1] - monitor->min_coord) / delta_min_max);
-		cv::Point pt_draw = cv::Point(draw_x, draw_y);
-		cv::circle(img_monitor, pt_draw, 5, red, -1);
-	}
+}
+
+void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
 	string text_x = "x = " + to_string(monitor->x) + " m";
 	string text_y = "y = " + to_string(monitor->y) + " m";
 	string text_z = "z = " + to_string(monitor->z) + " m";
@@ -249,14 +236,41 @@ cv::Mat Draw_monitor(struct_monitor* monitor){
 	string text_motor3 = "motor3 = " + to_string(monitor->motor3) + "%";
 	string text_motor4 = "motor4 = " + to_string(monitor->motor4) + "%";
 	string text_state = State_machine::Decode_state_str(monitor->state) + string(monitor->unlocked ? " [unlocked]" : " [LOCKED]");
-	cv::putText(img_monitor, text_state, cv::Point(10, 20), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_x, cv::Point(10, 60), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_y, cv::Point(10, 80), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_z, cv::Point(10, 100), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_motor1, cv::Point(10, 120), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_motor2, cv::Point(10, 140), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_motor3, cv::Point(10, 160), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
-	cv::putText(img_monitor, text_motor4, cv::Point(10, 180), CV_FONT_HERSHEY_SIMPLEX, 0.5, red);
+	cv::putText(*img, text_state,	cv::Point(10, 20),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_x,	cv::Point(10, 60),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_y,	cv::Point(10, 80),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_z,	cv::Point(10, 100),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor1,	cv::Point(10, 120),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor2,	cv::Point(10, 140),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor3,	cv::Point(10, 160),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor4,	cv::Point(10, 180),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+}
+
+cv::Mat Draw_monitor(struct_monitor* monitor){
+	cv::Mat img_monitor = cv::Mat::zeros(500, 500, CV_8UC3);
+	cv::Scalar red(0, 0, 255);
+	Add_point_to_collection(&(monitor->path), monitor->x, monitor->y); 
+	if(monitor->state == FOLLOW_OBJ_CAM1){
+		Add_point_to_collection(&(monitor->objects), monitor->x + 1. * cos(monitor->thz), monitor->y + 1. * sin(monitor->thz));
+	}
+	Resize_monitor(monitor);
+	cv::Point pt_draw_prev;
+	for(size_t i = 0; i < monitor->path.size(); i++){
+		cv::Point pt_draw = Scale_point(monitor->path[i][0], monitor->path[i][1], monitor);
+		if(i != 0){
+			cv::line(img_monitor, pt_draw_prev, pt_draw, cv::Scalar(255, 0, 0));
+		}
+		pt_draw_prev = pt_draw;
+		if(i == monitor->path.size() - 1){
+			cv::circle(img_monitor, pt_draw, 10, red, 3);
+			Draw_arrow(&img_monitor, pt_draw, 40, monitor->thz, red);
+		}
+	}
+	for(size_t i = 0; i < monitor->objects.size(); i++){
+		cv::Point pt_draw =Scale_point(monitor->objects[i][0], monitor->objects[i][1], monitor);
+		cv::circle(img_monitor, pt_draw, 5, red, -1);
+	}
+	Text_monitor(monitor, &img_monitor, red);
 	return img_monitor;
 }
 
@@ -264,7 +278,6 @@ int main(int argc, char* argv[]){
 	#if defined(ENABLE_SDL) and defined(ENABLE_TCP)
 
 		// Manipulated objects
-		setlocale(LC_NUMERIC, "C");
 		Joystick joystick;
 		TCP_client tcp_client_remote, tcp_client_monitor;
 		struct_callback obj_callback;
