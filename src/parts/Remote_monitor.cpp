@@ -32,9 +32,9 @@ void Remote_monitor::Job(){
 		to_string(t)+ "|" +
 		to_string(fsm_state) + "|" +
 		to_string(fsm_unlocked) + "|" +
-		to_string(xyz[0]) + "|" +
-		to_string(xyz[1]) + "|" +
-		to_string(xyz[2]) + "|" +
+		to_string((int) (xyz[0] * 1000)) + "|" +
+		to_string((int) (xyz[1] * 1000)) + "|" +
+		to_string((int) (xyz[2] * 1000)) + "|" +
 		to_string(thxyz[2]) + "|" +
 		to_string(motor[0] * 100) + "|" +
 		to_string(motor[1] * 100) + "|" +

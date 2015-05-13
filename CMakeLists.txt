@@ -13,13 +13,14 @@ if(${IS_ROBOT})
 	add_definitions(-DENABLE_SERIAL_ARDUINO)
 	add_definitions(-DENABLE_SERIAL_ISS)
 	add_definitions(-DENABLE_I2C)		# needs serial ISS
-#	add_definitions(-DENABLE_DEPTH)		# needs serial ISS and I2C
+	add_definitions(-DENABLE_DEPTH)		# needs serial ISS and I2C
 	add_definitions(-DENABLE_IMU)		# needs serial Arduino
 	add_definitions(-DENABLE_MOTORS)	# needs serial ISS and I2C
 	add_definitions(-DENABLE_TCP)
 	add_definitions(-DENABLE_CAM1)
 	add_definitions(-DENABLE_CAM2)
 	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
+#	add_definitions(-DENABLE_SIMULATOR)
 else(${IS_ROBOT})
 	set(ENABLE_GRAPHVIZ ON)
 	set(ENABLE_PYTHON OFF)
@@ -35,6 +36,7 @@ else(${IS_ROBOT})
 	add_definitions(-DENABLE_CAM1)
 #	add_definitions(-DENABLE_CAM2)
 	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
+	add_definitions(-DENABLE_SIMULATOR)
 endif(${IS_ROBOT})
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)
@@ -66,6 +68,7 @@ add_library(BETTERAVE_USER
 	src/parts/Motors.h		src/parts/Motors.cpp
 	src/parts/Remote_control.h	src/parts/Remote_control.cpp
 	src/parts/Remote_monitor.h	src/parts/Remote_monitor.cpp
+	src/parts/Simulator.h		src/parts/Simulator.cpp
 	src/parts/State.h		src/parts/State.cpp
 	src/parts/State_machine.h	src/parts/State_machine.cpp
 )

@@ -12,12 +12,13 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&depth,		"Depth",			10000);		// 10 s
 	Add_thread(&echosonder,		"Echo sonder",			100000);	// 100 ms
 	Add_thread(&i2c,		"I2C",				10000);		// 10 ms
-	Add_thread(&imu,		"Inertial Measurement Unit",	10000);	// 	10 ms
+	Add_thread(&imu,		"Inertial Measurement Unit",	10000);		// 10 ms
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&mapping,		"Mapping",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
 	Add_thread(&remote_control,	"Remote control",		-1);		// manual loop
 	Add_thread(&remote_monitor,	"Remote monitor",		100000);	// 100 ms
+	Add_thread(&simulator,		"Simulator",			5000);		// 5 ms
 	Add_thread(&state,		"State",			20000);		// 20 ms
 	Add_thread(&state_machine,	"Finite state machine",		40000);		// 40 s
 

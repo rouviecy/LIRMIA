@@ -225,9 +225,9 @@ cv::Mat Draw_monitor(struct_monitor* monitor){
 			cv::line(img_monitor, pt_arrow, pt_arrow_r, red, 3);
 		}
 	}
-	string text_x = "x = " + to_string(monitor->x);
-	string text_y = "y = " + to_string(monitor->y);
-	string text_z = "z = " + to_string(monitor->z);
+	string text_x = "x = " + to_string(monitor->x) + " m";
+	string text_y = "y = " + to_string(monitor->y) + " m";
+	string text_z = "z = " + to_string(monitor->z) + " m";
 	string text_motor1 = "motor1 = " + to_string(monitor->motor1) + "%";
 	string text_motor2 = "motor2 = " + to_string(monitor->motor2) + "%";
 	string text_motor3 = "motor3 = " + to_string(monitor->motor3) + "%";
@@ -248,6 +248,7 @@ int main(int argc, char* argv[]){
 	#if defined(ENABLE_SDL) and defined(ENABLE_TCP)
 
 		// Manipulated objects
+		setlocale(LC_NUMERIC, "C");
 		Joystick joystick;
 		TCP_client tcp_client_remote, tcp_client_monitor;
 		struct_callback obj_callback;
@@ -289,9 +290,9 @@ int main(int argc, char* argv[]){
 				float t = stof(tokens[0]);
 				monitor.state = State_machine::Decode_state_str(stoi(tokens[1]));
 				monitor.unlocked = (stof(tokens[2]) > 0);
-				monitor.x = stof(tokens[3]);
-				monitor.y = stof(tokens[4]);
-				monitor.z = stof(tokens[5]);
+				monitor.x = stof(tokens[3]) / 1000;
+				monitor.y = stof(tokens[4]) / 1000;
+				monitor.z = stof(tokens[5]) / 1000;
 				monitor.thz = stof(tokens[6]) / 57.3;
 				monitor.motor1 = (int) stof(tokens[7]);
 				monitor.motor2 = (int) stof(tokens[8]);

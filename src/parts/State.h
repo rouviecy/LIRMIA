@@ -24,6 +24,8 @@ private:
 
 	float t;
 	float imu_thxyz[3];
+	float simu_xyz[3];
+	float simu_thxyz[3];
 
 	float xyz[3];
 	float vxyz[3];
@@ -35,7 +37,7 @@ private:
 	void IO();
 
 	float last_t;
-	float last_imu_thxyz[3];
+	float last_thxyz[3];
 
 };
 

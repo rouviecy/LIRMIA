@@ -26,6 +26,7 @@
 #include "../parts/Motors.h"
 #include "../parts/Remote_control.h"
 #include "../parts/Remote_monitor.h"
+#include "../parts/Simulator.h"
 #include "../parts/State.h"
 #include "../parts/State_machine.h"
 
@@ -58,6 +59,7 @@ private:
 	Motors		motors;
 	Remote_control	remote_control;
 	Remote_monitor	remote_monitor;
+	Simulator	simulator;
 	State		state;
 	State_machine	state_machine;
 
