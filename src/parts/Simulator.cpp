@@ -32,8 +32,8 @@ void Simulator::Job(){
 		for(int i = 0; i < 6; i++){
 			acceleration[i] = acceleration[i] * 0.95;
 			velocity[i] = velocity[i] * 0.995;
-			if(i < 3)	{Saturate(&(acceleration[i]), 5.);	Saturate(&(velocity[i]), 1.);}
-			else		{Saturate(&(acceleration[i]), 50.);	Saturate(&(velocity[i]), 180.);}
+			if(i < 3)	{Saturate(&(acceleration[i]), 5., false);	Saturate(&(velocity[i]), 1., false);}
+			else		{Saturate(&(acceleration[i]), 50., false);	Saturate(&(velocity[i]), 180., false);}
 		}
 
 		if(last_t > 0){
@@ -44,6 +44,9 @@ void Simulator::Job(){
 			velocity[0] += acceleration[0] * dt;		simu_xyz[0] += cos(0.01745 * simu_thxyz[2]) * velocity[0] * dt;
 			velocity[1] += acceleration[1] * dt;		simu_xyz[1] += sin(0.01745 * simu_thxyz[2]) * velocity[0] * dt;
 			velocity[2] += acceleration[2] * dt;		simu_xyz[2] += velocity[2] * dt;
+			Saturate(&(simu_thxyz[0]), 90., true);
+			Saturate(&(simu_thxyz[1]), 180., true);
+			Saturate(&(simu_thxyz[2]), 180., true);
 		}
 
 		last_t = t;
@@ -52,6 +55,12 @@ void Simulator::Job(){
 	#endif
 }
 
-void Simulator::Saturate(float* number, float maximum){
-	if(fabs(*number) > maximum){*number = *number > 0 ? +maximum : -maximum;}
+void Simulator::Saturate(float* number, float maximum, bool cycle){
+	if(cycle){
+		while(*number > +maximum){*number -= 2 * maximum;}
+		while(*number < -maximum){*number += 2 * maximum;}
+	}
+	else{
+		if(fabs(*number) > maximum){*number = *number > 0 ? +maximum : -maximum;}
+	}
 }
