@@ -18,9 +18,7 @@ Acoustic_modem::Acoustic_modem() : ComThread(){
 	fsm.Add_state("master_want_z",		MASTER_WANT_Z);
 	fsm.Add_state("master_want_ypr",	MASTER_WANT_YPR);
 	fsm.Add_state("master_want_command",	MASTER_WANT_COMMAND);
-	fsm.Add_state("master_confirm_x",	MASTER_CONFIRM_X);
-	fsm.Add_state("master_confirm_y",	MASTER_CONFIRM_Y);
-	fsm.Add_state("master_confirm_z",	MASTER_CONFIRM_Z);
+	fsm.Add_state("master_confirm_xyz",	MASTER_CONFIRM_XYZ);
 	fsm.Add_state("master_confirm_ypr",	MASTER_CONFIRM_YPR);
 	fsm.Add_state("master_confirm_command",	MASTER_CONFIRM_COMMAND);
 
@@ -40,7 +38,7 @@ Acoustic_modem::Acoustic_modem() : ComThread(){
 	fsm.Add_event("want_xyz");
 	fsm.Add_event("want_ypr");
 	fsm.Add_event("want_command");
-	fsm.Add_event("receive_data");
+	fsm.Add_event("receive_good_data");
 	fsm.Add_event("receive_confirm_msg");
 	fsm.Add_event("receive_wrong_msg");
 
@@ -59,9 +57,7 @@ Acoustic_modem::Acoustic_modem() : ComThread(){
 
 	// Master actions
 	fsm.Add_action("send_key_and_stabilize",		&(Acoustic_modem::Send_key_and_stabilize));
-	fsm.Add_action("send_request_x",			&(Acoustic_modem::Send_request_x));
-	fsm.Add_action("send_request_y",			&(Acoustic_modem::Send_request_y));
-	fsm.Add_action("send_request_z",			&(Acoustic_modem::Send_request_z));
+	fsm.Add_action("send_request_xyz",			&(Acoustic_modem::Send_request_xyz));
 	fsm.Add_action("send_request_ypr",			&(Acoustic_modem::Send_request_ypr));
 	fsm.Add_action("send_request_command",			&(Acoustic_modem::Send_request_command));
 	fsm.Add_action("send_same_msg",				&(Acoustic_modem::Send_same_msg));
@@ -86,26 +82,24 @@ Acoustic_modem::Acoustic_modem() : ComThread(){
 	fsm.Add_transition(	"master_bad_com",		"master_good_com",		"receive_good_key_confirm",	"",		"",					(void*) this);
 
 	// Master wants XYZ
-	fsm.Add_transition(	"master_good_com",		"master_want_x",		"want_xyz",			"",		"send_request_x",			(void*) this);
-	fsm.Add_transition(	"master_want_x",		"master_confirm_x",		"receive_data",			"",		"send_same_msg",			(void*) this);
-	fsm.Add_transition(	"master_confirm_x",		"master_bad_com",		"receive_wrong_msg",		"",		"send_key_and_stabilize",		(void*) this);
-	fsm.Add_transition(	"master_confirm_x",		"master_want_y",		"receive_confirm_msg",		"",		"send_request_y",			(void*) this);
-	fsm.Add_transition(	"master_want_y",		"master_confirm_y",		"receive_data",			"",		"send_same_msg",			(void*) this);
-	fsm.Add_transition(	"master_confirm_y",		"master_bad_com",		"receive_wrong_msg",		"",		"send_key_and_stabilize",		(void*) this);
-	fsm.Add_transition(	"master_confirm_y",		"master_want_z",		"receive_confirm_msg",		"",		"send_request_z",			(void*) this);
-	fsm.Add_transition(	"master_want_z",		"master_confirm_z",		"receive_data",			"",		"send_same_msg",			(void*) this);
-	fsm.Add_transition(	"master_confirm_z",		"master_bad_com",		"receive_wrong_msg",		"",		"send_key_and_stabilize",		(void*) this);
-	fsm.Add_transition(	"master_confirm_z",		"idle",				"receive_confirm_msg",		"",		"back_to_idle",				(void*) this);
+	fsm.Add_transition(	"master_good_com",		"master_want_x",		"want_xyz",			"",		"send_request_xyz",			(void*) this);
+	fsm.Add_transition(	"master_want_x",		"master_want_y",		"receive_good_data",		"",		"send_same_msg",			(void*) this);
+	fsm.Add_transition(	"master_want_y",		"master_want_z",		"receive_good_data",		"",		"send_same_msg",			(void*) this);
+	fsm.Add_transition(	"master_want_z",		"master_confirm_xyz",		"receive_good_data",		"",		"send_same_msg",			(void*) this);
+	fsm.Add_transition(	"master_want_y",		"master_bad_com",		"receive_wrong_msg",		"",		"send_key_and_stabilize",		(void*) this);
+	fsm.Add_transition(	"master_want_z",		"master_bad_com",		"receive_wrong_msg",		"",		"send_key_and_stabilize",		(void*) this);
+	fsm.Add_transition(	"master_confirm_xyz",		"master_bad_com",		"receive_wrong_msg",		"",		"send_key_and_stabilize",		(void*) this);
+	fsm.Add_transition(	"master_confirm_xyz",		"idle",				"receive_confirm_msg",		"",		"back_to_idle",				(void*) this);
 
 	// Master wants YPR
 	fsm.Add_transition(	"master_good_com",		"master_want_ypr",		"want_ypr",			"",		"send_request_ypr",			(void*) this);
-	fsm.Add_transition(	"master_want_ypr",		"master_confirm_ypr",		"receive_data",			"",		"send_same_msg",			(void*) this);
+	fsm.Add_transition(	"master_want_ypr",		"master_confirm_ypr",		"receive_good_data",		"",		"send_same_msg",			(void*) this);
 	fsm.Add_transition(	"master_confirm_ypr",		"master_bad_com",		"receive_wrong_msg",		"",		"send_key_and_stabilize",		(void*) this);
 	fsm.Add_transition(	"master_confirm_ypr",		"idle",				"receive_confirm_msg",		"",		"back_to_idle",				(void*) this);
 
 	// Master wants to command
 	fsm.Add_transition(	"master_good_com",		"master_want_command",		"want_command",			"",		"send_request_command",			(void*) this);
-	fsm.Add_transition(	"master_want_command",		"master_confirm_command",	"receive_data",			"",		"send_same_msg",			(void*) this);
+	fsm.Add_transition(	"master_want_command",		"master_confirm_command",	"receive_good_data",		"",		"send_same_msg",			(void*) this);
 	fsm.Add_transition(	"master_confirm_command",	"master_bad_com",		"receive_wrong_msg",		"",		"send_key_and_stabilize",		(void*) this);
 	fsm.Add_transition(	"master_confirm_command",	"idle",				"receive_confirm_msg",		"",		"back_to_idle",				(void*) this);
 
@@ -161,9 +155,7 @@ void Acoustic_modem::Job(){
 void Acoustic_modem::Back_to_idle(void* obj){}
 
 void Acoustic_modem::Send_key_and_stabilize(void* obj){}
-void Acoustic_modem::Send_request_x(void* obj){}
-void Acoustic_modem::Send_request_y(void* obj){}
-void Acoustic_modem::Send_request_z(void* obj){}
+void Acoustic_modem::Send_request_xyz(void* obj){}
 void Acoustic_modem::Send_request_ypr(void* obj){}
 void Acoustic_modem::Send_request_command(void* obj){}
 void Acoustic_modem::Send_same_msg(void* obj){}

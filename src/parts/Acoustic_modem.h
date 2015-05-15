@@ -17,7 +17,7 @@
 
 enum state_com_t {
 	IDLE,
-	MASTER_BAD_COM, MASTER_GOOD_COM, MASTER_WANT_X, MASTER_WANT_Y, MASTER_WANT_Z, MASTER_WANT_YPR, MASTER_WANT_COMMAND, MASTER_CONFIRM_X, MASTER_CONFIRM_Y, MASTER_CONFIRM_Z, MASTER_CONFIRM_YPR, MASTER_CONFIRM_COMMAND,
+	MASTER_BAD_COM, MASTER_GOOD_COM, MASTER_WANT_X, MASTER_WANT_Y, MASTER_WANT_Z, MASTER_WANT_YPR, MASTER_WANT_COMMAND, MASTER_CONFIRM_XYZ, MASTER_CONFIRM_YPR, MASTER_CONFIRM_COMMAND,
 	SLAVE_GOOD_COM, SLAVE_IMPROVE_ANGLE, SLAVE_IMPROVE_DISTANCE, SLAVE_SEND_X, SLAVE_SEND_Y, SLAVE_SEND_Z, SLAVE_SEND_YPR, SLAVE_EXEC_COMMAND
 };
 
@@ -45,9 +45,7 @@ private:
 	static void Back_to_idle			(void* obj);
 
 	static void Send_key_and_stabilize		(void* obj);
-	static void Send_request_x			(void* obj);
-	static void Send_request_y			(void* obj);
-	static void Send_request_z			(void* obj);
+	static void Send_request_xyz			(void* obj);
 	static void Send_request_ypr			(void* obj);
 	static void Send_request_command		(void* obj);
 	static void Send_same_msg			(void* obj);
