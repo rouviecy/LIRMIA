@@ -1,0 +1,66 @@
+digraph links {
+	edge [fontsize = 10];
+	idle;
+	master_bad_com;
+	master_confirm_command;
+	master_confirm_x;
+	master_confirm_y;
+	master_confirm_ypr;
+	master_confirm_z;
+	master_good_com;
+	master_want_command;
+	master_want_x;
+	master_want_y;
+	master_want_ypr;
+	master_want_z;
+	slave_exec_command;
+	slave_good_com;
+	slave_improve_angle;
+	slave_improve_distance;
+	slave_send_x;
+	slave_send_y;
+	slave_send_ypr;
+	slave_send_z;
+	idle[shape=doublecircle];
+	idle->master_bad_com [label = "want_something\n\nsend_key_and_stabilize"] [minlen=4]
+	idle->slave_good_com [label = "receive_good_key\n\nstabilize_without_obliquity"] [minlen=4]
+	idle->slave_improve_angle [label = "receive_bad_key\n\nstabilize_with_little_obliquity"] [minlen=4]
+	master_bad_com->master_bad_com [label = "want_something\n\nsend_key_and_stabilize"] [minlen=4]
+	master_bad_com->master_good_com [label = "receive_good_key_confirm\n\n"] [minlen=4]
+	master_confirm_command->master_bad_com [label = "receive_wrong_msg\n\nsend_key_and_stabilize"] [minlen=4]
+	master_confirm_command->idle [label = "receive_confirm_msg\n\nback_to_idle"] [minlen=4]
+	master_confirm_x->master_bad_com [label = "receive_wrong_msg\n\nsend_key_and_stabilize"] [minlen=4]
+	master_confirm_x->master_want_y [label = "receive_confirm_msg\n\nsend_request_y"] [minlen=4]
+	master_confirm_y->master_bad_com [label = "receive_wrong_msg\n\nsend_key_and_stabilize"] [minlen=4]
+	master_confirm_y->master_want_z [label = "receive_confirm_msg\n\nsend_request_z"] [minlen=4]
+	master_confirm_ypr->master_bad_com [label = "receive_wrong_msg\n\nsend_key_and_stabilize"] [minlen=4]
+	master_confirm_ypr->idle [label = "receive_confirm_msg\n\nback_to_idle"] [minlen=4]
+	master_confirm_z->master_bad_com [label = "receive_wrong_msg\n\nsend_key_and_stabilize"] [minlen=4]
+	master_confirm_z->idle [label = "receive_confirm_msg\n\nback_to_idle"] [minlen=4]
+	master_good_com->master_want_x [label = "want_xyz\n\nsend_request_x"] [minlen=4]
+	master_good_com->master_want_ypr [label = "want_ypr\n\nsend_request_ypr"] [minlen=4]
+	master_good_com->master_want_command [label = "want_command\n\nsend_request_command"] [minlen=4]
+	master_want_command->master_confirm_command [label = "receive_data\n\nsend_same_msg"] [minlen=4]
+	master_want_x->master_confirm_x [label = "receive_data\n\nsend_same_msg"] [minlen=4]
+	master_want_y->master_confirm_y [label = "receive_data\n\nsend_same_msg"] [minlen=4]
+	master_want_ypr->master_confirm_ypr [label = "receive_data\n\nsend_same_msg"] [minlen=4]
+	master_want_z->master_confirm_z [label = "receive_data\n\nsend_same_msg"] [minlen=4]
+	slave_exec_command->idle [label = "receive_good_confirm\n\nback_to_idle"] [minlen=4]
+	slave_exec_command->slave_improve_angle [label = "receive_wrong_confirm\n\nstabilize_with_little_obliquity"] [minlen=4]
+	slave_good_com->slave_send_x [label = "receive_request_xyz\n\nsend_x"] [minlen=4]
+	slave_good_com->slave_send_ypr [label = "receive_request_ypr\n\nsend_ypr"] [minlen=4]
+	slave_good_com->slave_exec_command [label = "receive_request_command\n\nexec_command"] [minlen=4]
+	slave_improve_angle->slave_good_com [label = "receive_good_key\n\n"] [minlen=4]
+	slave_improve_angle->slave_improve_angle [label = "receive_bad_key\n\nchange_precession"] [minlen=4]
+	slave_improve_angle->slave_improve_distance [label = "best_orientation\n\ndecrease_distance"] [minlen=4]
+	slave_improve_distance->slave_good_com [label = "receive_good_key\n\n"] [minlen=4]
+	slave_improve_distance->slave_improve_distance [label = "receive_bad_key\n\ndecrease_distance"] [minlen=4]
+	slave_send_x->slave_send_y [label = "receive_good_confirm\n\nsend_y"] [minlen=4]
+	slave_send_x->slave_improve_angle [label = "receive_wrong_confirm\n\nstabilize_with_little_obliquity"] [minlen=4]
+	slave_send_y->slave_send_z [label = "receive_good_confirm\n\nsend_z"] [minlen=4]
+	slave_send_y->slave_improve_angle [label = "receive_wrong_confirm\n\nstabilize_with_little_obliquity"] [minlen=4]
+	slave_send_ypr->idle [label = "receive_good_confirm\n\nback_to_idle"] [minlen=4]
+	slave_send_ypr->slave_improve_angle [label = "receive_wrong_confirm\n\nstabilize_with_little_obliquity"] [minlen=4]
+	slave_send_z->idle [label = "receive_good_confirm\n\nback_to_idle"] [minlen=4]
+	slave_send_z->slave_improve_angle [label = "receive_wrong_confirm\n\nstabilize_with_little_obliquity"] [minlen=4]
+}

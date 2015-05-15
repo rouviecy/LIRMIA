@@ -12,6 +12,7 @@ if(${IS_ROBOT})
 	set(ENABLE_SDL OFF)
 	add_definitions(-DENABLE_SERIAL_ARDUINO)
 	add_definitions(-DENABLE_SERIAL_ISS)
+	add_definitions(-DENABLE_SERIAL_RS232)
 	add_definitions(-DENABLE_I2C)		# needs serial ISS
 	add_definitions(-DENABLE_DEPTH)		# needs serial ISS and I2C
 	add_definitions(-DENABLE_IMU)		# needs serial Arduino
@@ -20,6 +21,7 @@ if(${IS_ROBOT})
 	add_definitions(-DENABLE_CAM1)
 	add_definitions(-DENABLE_CAM2)
 	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
+	add_definitions(-DENABLE_MODEM)		# needs serial RS232
 #	add_definitions(-DENABLE_SIMULATOR)
 else(${IS_ROBOT})
 	set(ENABLE_GRAPHVIZ ON)
@@ -28,6 +30,7 @@ else(${IS_ROBOT})
 	set(ENABLE_SDL ON)
 #	add_definitions(-DENABLE_SERIAL_ARDUINO)
 #	add_definitions(-DENABLE_SERIAL_ISS)
+	add_definitions(-DENABLE_SERIAL_RS232)
 #	add_definitions(-DENABLE_I2C)		# needs serial ISS
 #	add_definitions(-DENABLE_DEPTH)		# needs serial ISS and I2C
 #	add_definitions(-DENABLE_IMU)		# needs serial Arduino
@@ -36,6 +39,7 @@ else(${IS_ROBOT})
 	add_definitions(-DENABLE_CAM1)
 #	add_definitions(-DENABLE_CAM2)
 	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
+	add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	add_definitions(-DENABLE_SIMULATOR)
 endif(${IS_ROBOT})
 
