@@ -85,3 +85,6 @@ target_link_libraries(remote ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE
 
 add_executable(camera src/remote_cam.cpp)
 target_link_libraries(camera ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
+
+add_executable(recam src/local_cam_rec.cpp)
+target_link_libraries(recam ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
