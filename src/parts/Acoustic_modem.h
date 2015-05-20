@@ -14,6 +14,7 @@
 #include "../core/ComThread.h"
 #include "../interfaces/FSM.h"
 #include "../interfaces/FSMDraw.h"
+#include "../interfaces/Serial.h"
 #include <queue>
 
 #define MAX_COMMANDS_IN_BUFFER			10
@@ -53,14 +54,19 @@ public:
 	Acoustic_modem();
 	~Acoustic_modem();
 
+	void Set_serial(Serial* serial);
+
 	void Get_xyz();
 	void Get_ypr();
 	void Send_command(command_t command);
+	void Stop_receive();
 
 private:
 
+	// Objects
 	FSM fsm;
 	FSMDraw drawer;
+	Serial* serial;
 
 	// ComThread
 	void On_start();
@@ -90,12 +96,14 @@ private:
 	std::queue <command_t> command_buffer;
 
 	// Acoustic communication
+	std::thread thr_reception;
+	bool receive_go_on;
 	std::queue <std::string> in_msg_queue;
 	std::string last_msg;
 	bool Compare_msg(std::string msg1, std::string msg2);
 	float Decode_acoustic_msg(std::string msg, int begin, int end);
 	void Process_data(char wanted_header, float* destination);
-	void Get_acoustic_msg();
+	void Get_acoustic_msg_loop();
 	void Send_acoustic_msg(std::string msg);
 
 	// Common actions

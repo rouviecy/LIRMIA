@@ -32,7 +32,7 @@
 
 #define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_5533330393435131F151-if00"
 #define DEV_SERIAL_ISS		"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00007350-if00"
-#define DEV_SERIAL_MODEM	"/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
+#define DEV_SERIAL_RS232	"/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
 
 class Lirmia : public Maestro{
 
@@ -43,7 +43,7 @@ public:
 
 private:
 
-	Serial serial_arduino, serial_iss;
+	Serial serial_arduino, serial_iss, serial_rs232;
 
 	void Init_serial();
 

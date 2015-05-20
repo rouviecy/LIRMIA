@@ -37,9 +37,16 @@ Lirmia::Lirmia() : Maestro(){
 }
 
 void Lirmia::Shutdown(){
+	acoustic_modem.Stop_receive();
 	Join_all();
-	#ifdef ENABLE_SERIAL
-		serial.Serial_close();
+	#ifdef ENABLE_SERIAL_ARDUINO
+		serial_arduino.Serial_close();
+	#endif
+	#ifdef ENABLE_SERIAL_ISS
+		serial_iss.Serial_close();
+	#endif
+	#ifdef ENABLE_SERIAL_RS232
+		serial_rs232.Serial_close();
 	#endif
 }
 
@@ -62,6 +69,10 @@ void Lirmia::Init_serial(){
 			depth.Set_i2c(&i2c);
 			motors.Set_i2c(&i2c);
 		#endif
+	#endif
+	#ifdef ENABLE_SERIAL_RS232
+		serial_rs232.Serial_init(DEV_SERIAL_RS232, B9600, true);
+		acoustic_modem.Set_serial(&serial_rs232);
 	#endif
 }
 

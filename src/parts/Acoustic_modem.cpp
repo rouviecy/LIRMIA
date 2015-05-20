@@ -9,6 +9,7 @@ Acoustic_modem::Acoustic_modem() : ComThread(){
 	last_t_msg = -1.;
 	need_xyz = false;
 	need_ypr = false;
+	receive_go_on = false;
 
 	modem_txyz[0] = -1.; modem_txyz[1] = 0.; modem_txyz[2] = 0.; modem_txyz[3] = 0.;
 	modem_typr[0] = -1.; modem_typr[1] = 0.; modem_typr[2] = 0.; modem_typr[3] = 0.;
@@ -38,9 +39,9 @@ Acoustic_modem::Acoustic_modem() : ComThread(){
 		fsm.Add_state("master_confirm_command",	MASTER_CONFIRM_COMMAND);
 
 		// Slave states
-		fsm.Add_state("slave_good_com",		SLAVE_GOOD_COM);
 		fsm.Add_state("slave_improve_angle",	SLAVE_IMPROVE_ANGLE);
 		fsm.Add_state("slave_improve_distance",	SLAVE_IMPROVE_DISTANCE);
+		fsm.Add_state("slave_good_com",		SLAVE_GOOD_COM);
 		fsm.Add_state("slave_send_x",		SLAVE_SEND_X);
 		fsm.Add_state("slave_send_y",		SLAVE_SEND_Y);
 		fsm.Add_state("slave_send_z",		SLAVE_SEND_Z);
@@ -159,8 +160,8 @@ Acoustic_modem::Acoustic_modem() : ComThread(){
 Acoustic_modem::~Acoustic_modem(){}
 
 void Acoustic_modem::On_start(){
-// TODO : lancement d'un thread de réception de messages	
-	
+	receive_go_on = true;
+	thr_reception = thread(&Acoustic_modem::Get_acoustic_msg_loop, this);
 }
 
 void Acoustic_modem::IO(){
@@ -330,12 +331,20 @@ void Acoustic_modem::Process_data(char wanted_header, float* destination){
 	}
 }
 
-void Acoustic_modem::Get_acoustic_msg(){
-	// TODO ----------appel par thread séparé------------------
+void Acoustic_modem::Get_acoustic_msg_loop(){
+	while(receive_go_on){
+		serial->Lock();
+		char* msg = serial->Serial_read();
+cout << msg << endl;
+//		in_msg_queue.push(string(msg));
+		serial->Unlock();
+	}
 }
 
 void Acoustic_modem::Send_acoustic_msg(std::string msg){
-	// TODO
+	serial->Lock();
+	serial->Serial_write((unsigned char*) msg.c_str(), 4);
+	serial->Unlock();
 }
 
 // TODO ...
@@ -388,3 +397,7 @@ void Acoustic_modem::Send_ypr(void* obj){}
 void Acoustic_modem::Exec_command(void* obj){}
 void Acoustic_modem::Send_confirm_msg(void* obj){}
 void Acoustic_modem::Send_wrong_msg(void* obj){}
+
+void Acoustic_modem::Stop_receive(){receive_go_on = false; thr_reception.join();}
+
+void Acoustic_modem::Set_serial(Serial* serial){this->serial = serial;}
