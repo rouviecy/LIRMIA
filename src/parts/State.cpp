@@ -35,6 +35,7 @@ void State::Job(){
 		thxyz[1] = simu_thxyz[1];
 		thxyz[2] = simu_thxyz[2];
 	#else
+		xyz[2] = depth;
 		thxyz[0] = imu_thxyz[2];
 		thxyz[1] = imu_thxyz[1];
 		thxyz[2] = imu_thxyz[0];

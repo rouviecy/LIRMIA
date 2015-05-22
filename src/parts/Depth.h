@@ -21,23 +21,21 @@ public:
 	Depth();
 	~Depth();
 
-	void Calibrate();
-	void Set_i2c(I2C* i2c);
+	void Set_serial(Serial* serial);
 
 private:
 
-	I2C* i2c;
+	Serial* serial;
 
 	void On_start();
 	void Job();
 	void IO();
 
+	std::vector <char> msg;
+	int header_size;
+
 	float t;
 	float depth;
-
-	float z_init;
-	int calib_params[6];
-	int Read(int index);
 
 };
 

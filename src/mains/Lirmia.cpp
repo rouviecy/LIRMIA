@@ -23,9 +23,6 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&state_machine,	"Finite state machine",		40000);		// 40 s
 
 	Init_serial();
-	#ifdef ENABLE_DEPTH
-		depth.Calibrate();
-	#endif
 	Link_all();
 	remote_control.Set_blobs_obj(cameras.Get_blobs_obj());
 //	mapping.Link_img(cameras.Get_img1(), cameras.Get_img2());
@@ -54,6 +51,7 @@ void Lirmia::Init_serial(){
 	#ifdef ENABLE_SERIAL_ARDUINO
 		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B57600, true);
 		imu.Set_serial(&serial_arduino);
+		depth.Set_serial(&serial_arduino);
 	#endif
 	#ifdef ENABLE_SERIAL_ISS
 		serial_iss.Serial_init(DEV_SERIAL_ISS, B115200, false);
@@ -66,7 +64,6 @@ void Lirmia::Init_serial(){
 			init_I2C_and_serial[4] = 0x19;	// baudrate 115200
 			serial_iss.Serial_write(init_I2C_and_serial, 5);
 			i2c.Set_serial(&serial_iss);
-			depth.Set_i2c(&i2c);
 			motors.Set_i2c(&i2c);
 		#endif
 	#endif
