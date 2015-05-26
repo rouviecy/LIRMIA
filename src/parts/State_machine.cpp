@@ -124,7 +124,7 @@ void State_machine::Job(){
 		if(!cam_detect_obj[1] && !cam_detect_pipe[1]){fsm.Call_event("stop_follow");}
 	}
 	if(fsm_state == FOLLOW_PIPE_CAM1 && !cam_detect_pipe[0]){fsm.Call_event("stop_follow");}
-	if(fsm_state == FOLLOW_PIPE_CAM2 && !cam_detect_pipe[0]){fsm.Call_event("stop_follow");}
+	if(fsm_state == FOLLOW_PIPE_CAM2 && !cam_detect_pipe[1]){fsm.Call_event("stop_follow");}
 	Critical_send();
 }
 
