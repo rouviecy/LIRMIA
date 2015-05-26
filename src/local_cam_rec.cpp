@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <fstream>
 
-#define BUFFER_SIZE 100
+#define BUFFER_SIZE 25
 
 using namespace std;
 
