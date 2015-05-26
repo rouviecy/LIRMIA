@@ -40,14 +40,13 @@ void Depth::Job(){
 					string msg_ypr = string(msg.data());
 					if(count(msg_ypr.begin(), msg_ypr.end(), ',') == 1){
 						vector <string> tokens;
-						for(size_t current = 0; tokens.size() < 1; current = next + 1){
-							next = msg_ypr.find_first_of(",", current);
-							tokens.push_back(msg_ypr.substr(current, next - current));
-						}
-						if(tokens[0].length() > 3){
-							depth = stof(tokens[i]);
+						next = msg_ypr.find_first_of(",", 0);
+						string msg_depth = msg_ypr.substr(0, next);
+						try{
+							depth = stof(msg_depth);
 							Critical_send();
 						}
+						catch(std::exception const & e){}
 					}
 					header_size = 0;
 					msg.clear();
@@ -60,6 +59,5 @@ void Depth::Job(){
 		serial->Unlock();
 	#endif
 }
-
 
 void Depth::Set_serial(Serial* serial){this->serial = serial;}
