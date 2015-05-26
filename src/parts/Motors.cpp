@@ -28,6 +28,7 @@ void Motors::Job(){
 
 void Motors::Generate_order(int num_motor, int power, bool positive){
 //	cout << "Motor" << num_motor << " : " << (positive ? "+" : "-") << power << endl;
+	if(num_motor > 1){return;} // TODO : remove this line when motors 2 and 3 will not break I2C communication
 	#if defined(ENABLE_MOTORS) and defined(ENABLE_I2C) and defined(ENABLE_SERIAL_ISS)
 		unsigned char order[8];
 		switch(num_motor){
