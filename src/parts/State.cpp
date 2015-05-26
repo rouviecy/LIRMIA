@@ -15,6 +15,7 @@ void State::On_start(){}
 
 void State::IO(){
 	Link_input("t",			COMFLOAT, 1, &t);
+	Link_input("depth",		COMFLOAT, 1, &depth);
 	Link_input("imu_thxyz",		COMFLOAT, 3, imu_thxyz);
 	Link_input("simu_xyz",		COMFLOAT, 3, simu_xyz);
 	Link_input("simu_thxyz",	COMFLOAT, 3, simu_thxyz);

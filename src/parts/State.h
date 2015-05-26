@@ -23,6 +23,7 @@ public:
 private:
 
 	float t;
+	float depth;
 	float imu_thxyz[3];
 	float simu_xyz[3];
 	float simu_thxyz[3];
