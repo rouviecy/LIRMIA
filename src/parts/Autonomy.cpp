@@ -35,10 +35,10 @@ void Autonomy::Job(){
 	Critical_receive();
 	if(fsm_state == FOLLOW_OBJ_CAM1){
 		if(cam_size_obj[0] < 0.20){
-			motor[0] = 0.2 - cam_size_obj[0] + cam_detect_horizontal[0] / 3;
-			motor[1] = 0.2 - cam_size_obj[0] - cam_detect_horizontal[0] / 3;
-			motor[2] = -cam_detect_vertical[0] / 3;
-			motor[3] = -cam_detect_vertical[0] / 3;
+			motor[0] = 0.2 - cam_size_obj[0] + cam_detect_horizontal[0] / 5;
+			motor[1] = 0.2 - cam_size_obj[0] - cam_detect_horizontal[0] / 5;
+			motor[2] = -cam_detect_vertical[0] / 5;
+			motor[3] = -cam_detect_vertical[0] / 5;
 		}
 		else{
 			motor[0] = -0.2;
@@ -49,8 +49,8 @@ void Autonomy::Job(){
 	}
 	else if(fsm_state == FOLLOW_OBJ_CAM2){
 		if(cam_size_obj[1] < 0.20){
-			motor[0] = (cam_detect_vertical[1] + cam_detect_horizontal[1]) / 3;
-			motor[1] = (cam_detect_vertical[1] - cam_detect_horizontal[1]) / 3;
+			motor[0] = (- cam_detect_vertical[1] + cam_detect_horizontal[1]) / 5;
+			motor[1] = (- cam_detect_vertical[1] - cam_detect_horizontal[1]) / 5;
 			motor[2] = cam_size_obj[1] - 0.2;
 			motor[3] = cam_size_obj[1] - 0.2;
 		}
@@ -63,8 +63,8 @@ void Autonomy::Job(){
 	}
 	else if(fsm_state == FOLLOW_PIPE_CAM1){
 		if(cam_size_obj[0] < 0.20){
-			motor[0] = 0.2 - cam_size_obj[0] + cam_pipeline_distance[0] / 3;
-			motor[1] = 0.2 - cam_size_obj[0] - cam_pipeline_distance[0] / 3;
+			motor[0] = 0.2 - cam_size_obj[0] + cam_pipeline_distance[0] / 5;
+			motor[1] = 0.2 - cam_size_obj[0] - cam_pipeline_distance[0] / 5;
 			motor[2] = 0.2;
 			motor[3] = 0.2;
 		}
@@ -77,8 +77,8 @@ void Autonomy::Job(){
 	}
 	else if(fsm_state == FOLLOW_PIPE_CAM2){
 		if(cam_size_obj[1] < 0.20){
-			motor[0] = 0.2 + (cam_pipeline_distance[1] - cam_pipeline_angle[1]) / 3;
-			motor[1] = 0.2 + (cam_pipeline_distance[1] - cam_pipeline_angle[1]) / 3;
+			motor[0] = 0.1 - (-cam_pipeline_distance[1] + cam_pipeline_angle[1]) / 5;
+			motor[1] = 0.1 + (-cam_pipeline_distance[1] + cam_pipeline_angle[1]) / 5;
 			motor[2] = cam_size_obj[1] - 0.2;
 			motor[3] = cam_size_obj[1] - 0.2;
 		}
@@ -104,8 +104,8 @@ void Autonomy::Job(){
 	}
 	else if(fsm_state == EXPLORE){
 		keep_thz = thxyz[3];
-		motor[0] = +0.5;
-		motor[1] = +0.5;
+		motor[0] = 0.;
+		motor[1] = 0.;
 		motor[2] = 0.;
 		motor[3] = 0.;
 	}
