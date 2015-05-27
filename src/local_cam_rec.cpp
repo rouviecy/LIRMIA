@@ -34,6 +34,17 @@ string Generate_folder(){
 	return path;
 }
 
+string Img_path(string path, int cam_index, int img_index){
+	stringstream img_path_ss;
+	img_path_ss	<< path
+			<< "CAM"
+			<< cam_index
+			<< "_"
+			<< setfill('0') << setw(6) << img_index
+			<< ".jpg";
+	return img_path_ss.str();
+}
+
 int main(){
 	cv::VideoCapture capture1, capture2;
 	cv::Mat buffer1[BUFFER_SIZE];
@@ -51,7 +62,7 @@ int main(){
 	#endif
 
 	cv::waitKey(1000);
-	int cycles = 0;
+	int cycles = -1;
 	for(int i = 0; true; i++){
 		if(i == BUFFER_SIZE){
 			i = 0;
@@ -59,10 +70,10 @@ int main(){
 			for(int j = 0; j < BUFFER_SIZE; j++){
 				int index = cycles * BUFFER_SIZE + j;
 				#ifdef ENABLE_CAM1
-					cv::imwrite(path + "CAM1_" + to_string(index) + ".jpg", buffer1[j]);
+					cv::imwrite(Img_path(path, 1, index), buffer1[j]);
 				#endif
 				#ifdef ENABLE_CAM2
-					cv::imwrite(path + "CAM2_" + to_string(index) + ".jpg", buffer2[j]);
+					cv::imwrite(Img_path(path, 2, index), buffer2[j]);
 				#endif
 			}
 		}
