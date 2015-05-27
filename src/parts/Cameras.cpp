@@ -9,7 +9,7 @@ Cameras::Cameras() : ComThread(){
 		cam_pipeline_angle[i] = 0.;	cam_pipeline_distance[i] = 0.;
 		cam_size_obj[i] = 0.;
 	}
-	
+
 	#ifdef ENABLE_CAM1
 		capture1 = cv::VideoCapture(0);
 		#ifdef ENABLE_TCPCAM
@@ -23,7 +23,17 @@ Cameras::Cameras() : ComThread(){
 			camera_server.Add_flux(CAMERA_PORT_2);
 			camera_server.Add_flux(CAMERA_PORT_4);
 		#endif
-	#endif	
+	#endif
+
+	#ifdef ENABLE_RECORDCAM
+		#if defined(ENABLE_CAM1) and defined(ENABLE_CAM2)
+			camera_server.Enable_record(2);
+		#elif defined(ENABLE_CAM1)
+			camera_server.Enable_record(1);
+		#elif defined(ENABLE_CAM2)
+			camera_server.Enable_record(1);
+		#endif
+	#endif
 }
 
 Cameras::~Cameras(){
@@ -36,7 +46,7 @@ void Cameras::On_start(){}
 
 void Cameras::IO(){
 	Link_input("enable_streaming",		COMBOOL,	1, &enable_streaming);
-	
+
 	Link_output("cam_detect_obj",		COMBOOL,	2, cam_detect_obj);
 	Link_output("cam_detect_pipe",		COMBOOL,	2, cam_detect_pipe);
 	Link_output("cam_detect_horizontal",	COMFLOAT,	2, cam_detect_horizontal);
@@ -63,12 +73,15 @@ void Cameras::Job(){
 		}
 		reco.Set_img(blobs.Get_img_blobs());
 		cv::Mat img_pipeline1 = reco.Trouver_ligne_principale(&(cam_detect_pipe[0]), &(cam_pipeline_angle[0]), &(cam_pipeline_distance[0]));
-		#ifdef ENABLE_TCPCAM
-			if(enable_streaming){
+		if(enable_streaming){
+			#ifdef ENABLE_RECORDCAM
+				camera_server.Record_img(img1, 0);
+			#endif
+			#ifdef ENABLE_TCPCAM
 				camera_server.Send_tcp_img(img1, CAMERA_PORT_1);
 				camera_server.Send_tcp_img(img_pipeline1, CAMERA_PORT_3);
-			}
-		#endif
+			#endif
+		}
 	#endif
 
 	#ifdef ENABLE_CAM2
@@ -85,12 +98,15 @@ void Cameras::Job(){
 		}
 		reco.Set_img(blobs.Get_img_blobs());
 		cv::Mat img_pipeline2 = reco.Trouver_ligne_principale(&(cam_detect_pipe[1]), &(cam_pipeline_angle[1]), &(cam_pipeline_distance[1]));
-		#ifdef ENABLE_TCPCAM
-			if(enable_streaming){
+		if(enable_streaming){
+			#ifdef ENABLE_RECORDCAM
+				camera_server.Record_img(img2, 1);
+			#endif
+			#ifdef ENABLE_TCPCAM
 				camera_server.Send_tcp_img(img2, CAMERA_PORT_2);
 				camera_server.Send_tcp_img(img_pipeline2, CAMERA_PORT_4);
-			}
-		#endif
+			#endif
+		}
 	#endif
 
 	Critical_send();

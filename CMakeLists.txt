@@ -20,6 +20,7 @@ if(${IS_ROBOT})
 	add_definitions(-DENABLE_TCP)
 	add_definitions(-DENABLE_CAM1)
 	add_definitions(-DENABLE_CAM2)
+	add_definitions(-DENABLE_RECORDCAM)	# need CAM1/CAM2
 	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 	add_definitions(-DENABLE_MODEM)		# needs serial RS232
 #	add_definitions(-DENABLE_SIMULATOR)
@@ -38,6 +39,7 @@ else(${IS_ROBOT})
 	add_definitions(-DENABLE_TCP)
 	add_definitions(-DENABLE_CAM1)
 #	add_definitions(-DENABLE_CAM2)
+	add_definitions(-DENABLE_RECORDCAM)	# need CAM1/CAM2
 	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 	add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	add_definitions(-DENABLE_SIMULATOR)
