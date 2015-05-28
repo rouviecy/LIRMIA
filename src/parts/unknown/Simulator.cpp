@@ -28,15 +28,15 @@ void Simulator::Job(){
 	#ifdef ENABLE_SIMULATOR
 		Critical_receive();
 
-		acceleration[0] += motor * 0.1;						// X-translation
+		acceleration[0] += motor * 0.05;					// X-translation
 		acceleration[1] += (bow_thrusters[0] - bow_thrusters[1]) * 0.01;	// Y-translation
-		acceleration[2] += rudder * motor * 10.;				// Z-rotation
+		acceleration[2] += rudder * motor * 5.;					// Z-rotation
 
 		for(int i = 0; i < 3; i++){
 			acceleration[i] = acceleration[i] * 0.95;
 			velocity[i] = velocity[i] * 0.995;
-			if(i < 2)	{Saturate(&(acceleration[i]), 5., false);	Saturate(&(velocity[i]), 1., false);}
-			else		{Saturate(&(acceleration[i]), 20., false);	Saturate(&(velocity[i]), 180., false);}
+			if(i < 2)	{Saturate(&(acceleration[i]), 3., false);	Saturate(&(velocity[i]), 1., false);}
+			else		{Saturate(&(acceleration[i]), 10., false);	Saturate(&(velocity[i]), 180., false);}
 		}
 
 		if(last_t > 0){

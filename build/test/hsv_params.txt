@@ -1,2 +1,2 @@
 H_min, H_max, S_min, S_max, V_min, V_max, nb_dilate, nb_erode, seuil,
-90,102,87,255,120,255,9,9,1000,
+116,145,116,255,126,255,9,9,1000,

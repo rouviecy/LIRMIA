@@ -38,10 +38,10 @@ void Autonomy::Job(){
 		bow_thrusters[1]	= -remote_lateral;
 	}
 	else if(fsm_state == FOLLOW_OBJ_CAM){// TODO : check
-		motor			= cam_detect_horizontal;
-		rudder			= 0.;
-		bow_thrusters[0]	= +cam_detect_vertical;
-		bow_thrusters[1]	= -cam_detect_vertical;
+		motor			= -cam_detect_vertical;
+		rudder			= -cam_detect_horizontal;
+		bow_thrusters[0]	= +cam_detect_horizontal;
+		bow_thrusters[1]	= -cam_detect_horizontal;
 	}
 	else{
 		motor			= 0.;

@@ -16,7 +16,7 @@
 #include "../../interfaces/FSM.h"
 #include "../../interfaces/FSMDraw.h"
 
-enum state_t {REMOTE, FOLLOW_OBJ_CAM};
+enum state_t {REMOTE, FOLLOW_OBJ_CAM, LOST_OBJ_CAM};
 
 class State_machine : public ComThread{
 
