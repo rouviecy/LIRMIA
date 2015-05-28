@@ -23,7 +23,7 @@ void Remote_monitor::IO(){
 	Link_input("thz",		COMFLOAT,	1, &thz);
 	Link_input("motor",		COMFLOAT,	1, &motor);
 	Link_input("rudder",		COMFLOAT,	1, &rudder);
-	Link_input("bow_thrusters",	COMFLOAT,	2, bow_thrusters);
+	Link_input("bow_thruster",	COMFLOAT,	1, &bow_thruster);
 	Link_input("fsm_state",		COMINT,		1, &fsm_state);
 }
 
@@ -37,7 +37,6 @@ void Remote_monitor::Job(){
 		to_string(thz) + "|" +
 		to_string(motor * 100) + "|" +
 		to_string(rudder * 100) + "|" +
-		to_string(bow_thrusters[0] * 100) + "|" +
-		to_string(bow_thrusters[1] * 100) + "|";
+		to_string(bow_thruster * 100) + "|";
 	tcp_server.Send(msg_monitor);
 }

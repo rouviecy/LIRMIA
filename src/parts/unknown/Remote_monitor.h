@@ -34,7 +34,7 @@ private:
 	float thz;
 	float motor;
 	float rudder;
-	float bow_thrusters[2];
+	float bow_thruster;
 	int fsm_state;
 
 };

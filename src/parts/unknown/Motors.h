@@ -37,7 +37,7 @@ private:
 
 	float motor;
 	float rudder;
-	float bow_thrusters[2];
+	float bow_thruster;
 
 };
 

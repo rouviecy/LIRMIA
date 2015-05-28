@@ -28,7 +28,7 @@ private:
 	void IO();
 
 	int fsm_state;
-	float remote_forward, remote_turn, remote_lateral;
+	float remote_forward, remote_turn;
 	float t;
 	float xy[2];
 	float thz;
@@ -37,7 +37,7 @@ private:
 
 	float motor;
 	float rudder;
-	float bow_thrusters[2];
+	float bow_thruster;
 
 };
 

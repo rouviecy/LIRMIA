@@ -38,7 +38,7 @@ private:
 
 	int fsm_state;
 	bool remote;
-	float remote_forward, remote_turn, remote_lateral;
+	float remote_forward, remote_turn;
 	bool enable_streaming;
 
 	bool alive;

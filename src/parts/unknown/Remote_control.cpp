@@ -3,7 +3,7 @@
 using namespace std;
 
 Remote_control::Remote_control() : ComThread(){
-	remote = true; remote_forward = 0.; remote_turn = 0.; remote_lateral = 0.;
+	remote = true; remote_forward = 0.; remote_turn = 0.;
 	enable_streaming = false;
 	alive = false;
 	#ifdef ENABLE_TCP
@@ -25,7 +25,6 @@ void Remote_control::IO(){
 	Link_output("remote",		COMBOOL,	1, &remote);
 	Link_output("remote_forward",	COMFLOAT,	1, &remote_forward);
 	Link_output("remote_turn",	COMFLOAT,	1, &remote_turn);
-	Link_output("remote_lateral",	COMFLOAT,	1, &remote_lateral);
 	Link_output("enable_streaming",	COMBOOL,	1, &enable_streaming);
 }
 
@@ -46,8 +45,6 @@ void Remote_control::Job_and_wait_quit(){
 				if(msg_in[1] == 'b'){remote_forward =	(msg_in[2] == '1' ? -1. : 0.);}
 				if(msg_in[1] == 'l'){remote_turn =	(msg_in[2] == '1' ? -1. : 0.);}
 				if(msg_in[1] == 'r'){remote_turn =	(msg_in[2] == '1' ? +1. : 0.);}
-				if(msg_in[1] == 'w'){remote_lateral =	(msg_in[2] == '1' ? -1. : 0.);}
-				if(msg_in[1] == 'e'){remote_lateral =	(msg_in[2] == '1' ? +1. : 0.);}
 				if(msg_in[1] == 's'){enable_streaming =	(msg_in[2] == '1');}
 			}
 			if(msg_in[0] == 'h' && msg_in[1] == 's' && msg_in[2] == 'v' && msg_in[3] == '_'){

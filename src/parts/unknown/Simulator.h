@@ -32,7 +32,7 @@ private:
 	float simu_thz;
 	float motor;
 	float rudder;
-	float bow_thrusters[2];
+	float bow_thruster;
 
 	float last_t;
 	float acceleration[3];

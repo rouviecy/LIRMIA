@@ -18,18 +18,16 @@ void Motors::On_start(){}
 void Motors::IO(){
 	Link_input("motor",		COMFLOAT, 1, &motor);
 	Link_input("rudder",		COMFLOAT, 1, &rudder);
-	Link_input("bow_thrusters",	COMFLOAT, 2, bow_thrusters);
+	Link_input("bow_thruster",	COMFLOAT, 1, &bow_thruster);
 }
 
 void Motors::Job(){
 	Critical_receive();
 	int order_motor = min(abs((int) (255. * motor)), 255);
-	int order_bow1 = min(abs((int) (255. * bow_thrusters[0])), 255);
-	int order_bow2 = min(abs((int) (255. * bow_thrusters[1])), 255);
+	int order_bow = min(abs((int) (255. * bow_thruster)), 255);
 	int order_rudder = min(abs((int) (180. * rudder)), 180);
 	Generate_order_i2c(0, order_motor, motor > 0);
-	Generate_order_i2c(1, order_bow1, bow_thrusters[0] > 0);
-	Generate_order_i2c(2, order_bow2, bow_thrusters[1] > 0);
+	Generate_order_i2c(1, order_bow, bow_thruster > 0);
 	Generate_order_arduino(rudder > 0 ? +order_rudder : -order_rudder);
 }
 
@@ -39,8 +37,6 @@ void Motors::Generate_order_i2c(int num_motor, int power, bool positive){
 		switch(num_motor){
 			case 0: order[1]= 0xB0;	break; // TODO : change addresses
 			case 1: order[1]= 0xB2;	break;
-			case 2: order[1]= 0xB4;	break;
-			case 3: order[1]= 0xB6;	break;
 			default:		return;
 		}
 		order[0] = 0x55;
