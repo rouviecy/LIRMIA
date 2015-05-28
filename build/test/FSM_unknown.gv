@@ -1,0 +1,8 @@
+digraph links {
+	edge [fontsize = 10];
+	follow_obj_cam;
+	remote;
+	remote[shape=doublecircle];
+	follow_obj_cam->remote [label = "go_to_remote\n\n"] [minlen=4]
+	remote->follow_obj_cam [label = "go_to_autonomous\n\n"] [minlen=4]
+}

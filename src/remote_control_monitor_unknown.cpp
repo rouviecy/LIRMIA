@@ -1,7 +1,7 @@
 #include "interfaces/TCP_client.h"
 #include "interfaces/Joystick.h"
 #include "interfaces/vision/hsv_params.h"
-#include "parts/lirmia/State_machine.h"
+#include "parts/unknown/State_machine.h"
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <fstream>
@@ -22,13 +22,13 @@ typedef struct{
 } struct_callback;
 
 typedef struct{
-	float x, y, z, thz;
-	int motor1, motor2, motor3, motor4;
+	float x, y, thz;
+	int motor;
+	int rudder;
+	int bow_thruster[2];
 	int state;
-	bool unlocked;
 	float min_coord, max_coord;
 	vector <vector <float> > path;
-	vector <vector <float> > objects;
 } struct_monitor;
 	
 
@@ -41,28 +41,14 @@ static void listen_key_up	(void* obj, bool down){send_move_order(obj, "ra" + to_
 static void listen_key_down	(void* obj, bool down){send_move_order(obj, "rb" + to_string(down));}
 static void listen_key_left	(void* obj, bool down){send_move_order(obj, "rl" + to_string(down));}
 static void listen_key_right	(void* obj, bool down){send_move_order(obj, "rr" + to_string(down));}
-static void listen_key_plus	(void* obj, bool down){send_move_order(obj, "ru" + to_string(down));}
-static void listen_key_minus	(void* obj, bool down){send_move_order(obj, "rd" + to_string(down));}
-
-static void listen_key_s	(void* obj, bool down){send_move_order(obj, "fs" + to_string(down));}
-static void listen_key_i	(void* obj, bool down){send_move_order(obj, "fu" + to_string(down));}
-static void listen_key_k	(void* obj, bool down){send_move_order(obj, "fd" + to_string(down));}
-static void listen_key_e	(void* obj, bool down){send_move_order(obj, "fe" + to_string(down));}
-static void listen_key_n	(void* obj, bool down){send_move_order(obj, "fn" + to_string(down));}
+static void listen_key_plus	(void* obj, bool down){send_move_order(obj, "rw" + to_string(down));}
+static void listen_key_minus	(void* obj, bool down){send_move_order(obj, "re" + to_string(down));}
 
 static void listen_key_r(void* obj, bool down){
 	if(down){
 		struct_callback* obj_callback = (struct_callback*) obj;
 		obj_callback->remote_mode = !(obj_callback->remote_mode);
 		obj_callback->tcp_client->Send(obj_callback->remote_mode ? "r1" : "r0");
-	}
-}
-
-static void listen_key_l(void* obj, bool down){
-	if(down){
-		struct_callback* obj_callback = (struct_callback*) obj;
-		obj_callback->unlocked = !(obj_callback->unlocked);
-		obj_callback->tcp_client->Send(obj_callback->unlocked ? "f1" : "f0");
 	}
 }
 
@@ -186,14 +172,8 @@ void init_joystick_listeners(Joystick* joystick, struct_callback* obj_callback){
 		joystick->Connect_keyboard(SDLK_KP_PLUS,	&listen_key_plus,	obj_callback);
 		joystick->Connect_keyboard(SDLK_KP_MINUS,	&listen_key_minus,	obj_callback);
 		joystick->Connect_keyboard(SDLK_c,		&listen_key_c,		obj_callback);
-		joystick->Connect_keyboard(SDLK_e,		&listen_key_e,		obj_callback);
-		joystick->Connect_keyboard(SDLK_i,		&listen_key_i,		obj_callback);
-		joystick->Connect_keyboard(SDLK_k,		&listen_key_k,		obj_callback);
-		joystick->Connect_keyboard(SDLK_l,		&listen_key_l,		obj_callback);
-		joystick->Connect_keyboard(SDLK_n,		&listen_key_n,		obj_callback);
 		joystick->Connect_keyboard(SDLK_q,		&listen_key_q,		obj_callback);
 		joystick->Connect_keyboard(SDLK_r,		&listen_key_r,		obj_callback);
-		joystick->Connect_keyboard(SDLK_s,		&listen_key_s,		obj_callback);
 	#endif
 }
 
@@ -213,13 +193,6 @@ void Draw_arrow(cv::Mat* img, cv::Point origin, int length, float angle, cv::Sca
 	cv::line(*img, pt_arrow, pt_arrow_r, color, 3);
 }
 
-void Add_point_to_collection(vector <vector <float> > *collection, float x, float y){
-	vector <float> new_point;
-	new_point.push_back(x);
-	new_point.push_back(y);
-	collection->push_back(new_point);
-}
-
 void Resize_monitor(struct_monitor *monitor){
 	if	(monitor->x < monitor->min_coord){monitor->min_coord = monitor->x;}
 	else if	(monitor->x > monitor->max_coord){monitor->max_coord = monitor->x;}
@@ -230,29 +203,31 @@ void Resize_monitor(struct_monitor *monitor){
 void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
 	string text_x = "x = " + to_string(monitor->x) + " m";
 	string text_y = "y = " + to_string(monitor->y) + " m";
-	string text_z = "z = " + to_string(monitor->z) + " m";
-	string text_motor1 = "motor1 = " + to_string(monitor->motor1) + "%";
-	string text_motor2 = "motor2 = " + to_string(monitor->motor2) + "%";
-	string text_motor3 = "motor3 = " + to_string(monitor->motor3) + "%";
-	string text_motor4 = "motor4 = " + to_string(monitor->motor4) + "%";
-	string text_state = State_machine::Decode_state_str(monitor->state) + string(monitor->unlocked ? " [unlocked]" : " [LOCKED]");
+	string text_motor1 = "motor = " + to_string(monitor->motor) + "%";
+	string text_motor2 = "rudder = " + to_string(monitor->rudder) + "%";
+	string text_motor3 = "bow thruster 1 = " + to_string(monitor->bow_thruster[0]) + "%";
+	string text_motor4 = "bow thruster 2 = " + to_string(monitor->bow_thruster[1]) + "%";
+	string text_state = State_machine::Decode_state_str(monitor->state);
 	cv::putText(*img, text_state,	cv::Point(10, 20),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_x,	cv::Point(10, 60),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_y,	cv::Point(10, 80),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_z,	cv::Point(10, 100),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor1,	cv::Point(10, 120),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor2,	cv::Point(10, 140),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor3,	cv::Point(10, 160),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor4,	cv::Point(10, 180),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor1,	cv::Point(10, 100),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor2,	cv::Point(10, 120),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor3,	cv::Point(10, 140),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor4,	cv::Point(10, 160),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+}
+
+void Add_point_to_collection(vector <vector <float> > *collection, float x, float y){
+	vector <float> new_point;
+	new_point.push_back(x);
+	new_point.push_back(y);
+	collection->push_back(new_point);
 }
 
 cv::Mat Draw_monitor(struct_monitor* monitor){
 	cv::Mat img_monitor = cv::Mat::zeros(500, 500, CV_8UC3);
 	cv::Scalar red(0, 0, 255);
 	Add_point_to_collection(&(monitor->path), monitor->x, monitor->y);
-	if(monitor->state == FOLLOW_OBJ_CAM1){
-		Add_point_to_collection(&(monitor->objects), monitor->x + 1. * cos(monitor->thz), monitor->y + 1. * sin(monitor->thz));
-	}
 	Resize_monitor(monitor);
 	cv::Point pt_draw_prev;
 	for(size_t i = 0; i < monitor->path.size(); i++){
@@ -265,10 +240,6 @@ cv::Mat Draw_monitor(struct_monitor* monitor){
 			cv::circle(img_monitor, pt_draw, 10, red, 3);
 			Draw_arrow(&img_monitor, pt_draw, 40, monitor->thz, red);
 		}
-	}
-	for(size_t i = 0; i < monitor->objects.size(); i++){
-		cv::Point pt_draw =Scale_point(monitor->objects[i][0], monitor->objects[i][1], monitor);
-		cv::circle(img_monitor, pt_draw, 5, red, -1);
 	}
 	Text_monitor(monitor, &img_monitor, red);
 	return img_monitor;
@@ -291,7 +262,7 @@ int main(int argc, char* argv[]){
 		hsv.tcp = &tcp_client_remote;
 		create_HSV_trackbars(&hsv);
 		init_joystick_listeners(&joystick, &obj_callback);
-		tcp_client_remote.Configure(argv[1], 4242);
+		tcp_client_remote.Configure(argv[1], 5242);
 		obj_callback.tcp_client = &tcp_client_remote;
 		obj_callback.go_on = true;
 		obj_callback.remote_mode = true;
@@ -300,7 +271,7 @@ int main(int argc, char* argv[]){
 
 		// Init remote monitor
 		usleep(1000000);
-		tcp_client_monitor.Configure(argv[1], 4241);
+		tcp_client_monitor.Configure(argv[1], 5241);
 		monitor.min_coord = -1.;
 		monitor.max_coord = +1.;
 		monitor.path.clear();
@@ -310,23 +281,21 @@ int main(int argc, char* argv[]){
 		while(obj_callback.go_on){
 			string msg_monitor = string(tcp_client_monitor.Receive());
 			size_t next;
-			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 11){
+			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 9){
 				vector <string> tokens;
-				for(size_t current = 0; tokens.size() < 11; current = next + 1){
+				for(size_t current = 0; tokens.size() < 9; current = next + 1){
 					next = msg_monitor.find_first_of("|", current);
 					tokens.push_back(msg_monitor.substr(current, next - current));
 				}
 				float t = stof(tokens[0]);
 				monitor.state = stoi(tokens[1]);
-				monitor.unlocked = (stof(tokens[2]) > 0);
-				monitor.x = stof(tokens[3]) / 1000;
-				monitor.y = stof(tokens[4]) / 1000;
-				monitor.z = stof(tokens[5]) / 1000;
-				monitor.thz = stof(tokens[6]) / 57.3;
-				monitor.motor1 = (int) stof(tokens[7]);
-				monitor.motor2 = (int) stof(tokens[8]);
-				monitor.motor3 = (int) stof(tokens[9]);
-				monitor.motor4 = (int) stof(tokens[10]);
+				monitor.x = stof(tokens[2]) / 1000;
+				monitor.y = stof(tokens[3]) / 1000;
+				monitor.thz = stof(tokens[4]) / 57.3;
+				monitor.motor = (int) stof(tokens[5]);
+				monitor.rudder = (int) stof(tokens[6]);
+				monitor.bow_thruster[0] = (int) stof(tokens[7]);
+				monitor.bow_thruster[1] = (int) stof(tokens[8]);
 			}
 			cv::imshow(monitor_window, Draw_monitor(&monitor));
 			cv::waitKey(10);

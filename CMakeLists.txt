@@ -3,9 +3,10 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_ROBOT OFF)
+set(IS_LIRMIA OFF)
+set(IS_UNKNOWN OFF)
 
-if(${IS_ROBOT})
+if(${IS_LIRMIA})
 	set(ENABLE_GRAPHVIZ OFF)
 	set(ENABLE_PYTHON OFF)
 	set(ENABLE_JAVA OFF)
@@ -24,7 +25,20 @@ if(${IS_ROBOT})
 	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 	add_definitions(-DENABLE_MODEM)		# needs serial RS232
 #	add_definitions(-DENABLE_SIMULATOR)
-else(${IS_ROBOT})
+elseif(${IS_UNKNOWN})
+	set(ENABLE_GRAPHVIZ OFF)
+	set(ENABLE_PYTHON OFF)
+	set(ENABLE_JAVA OFF)
+	set(ENABLE_SDL OFF)
+	add_definitions(-DENABLE_SERIAL_ARDUINO)
+	add_definitions(-DENABLE_SERIAL_ISS)
+	add_definitions(-DENABLE_I2C)		# needs serial ISS
+	add_definitions(-DENABLE_MOTORS)	# needs serial arduino, serial ISS and I2C
+	add_definitions(-DENABLE_TCP)
+	add_definitions(-DENABLE_CAM1)
+	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
+	add_definitions(-DENABLE_SIMULATOR)
+else(${IS_LIRMIA})
 	set(ENABLE_GRAPHVIZ ON)
 	set(ENABLE_PYTHON OFF)
 	set(ENABLE_JAVA OFF)
@@ -43,7 +57,7 @@ else(${IS_ROBOT})
 	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 	add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	add_definitions(-DENABLE_SIMULATOR)
-endif(${IS_ROBOT})
+endif(${IS_LIRMIA})
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces/vision/CMakeLists.txt)
@@ -53,14 +67,23 @@ set(OTHER_LIBS
 	${OpenCV_LIBS}
 )
 
-add_library(BETTERAVE_USER
-	src/interfaces/Camera_server.h	src/interfaces/Camera_server.cpp
+add_library(BETTERAVE_USER_COMMON
+	src/interfaces/Camera_server.h		src/interfaces/Camera_server.cpp
 	src/interfaces/FSM.h			src/interfaces/FSM.cpp
 	src/interfaces/FSMDraw.h		src/interfaces/FSMDraw.cpp
 	src/interfaces/Joystick.h		src/interfaces/Joystick.cpp
 	src/interfaces/Serial.h			src/interfaces/Serial.cpp
 	src/interfaces/TCP_client.h		src/interfaces/TCP_client.cpp
 	src/interfaces/TCP_server.h		src/interfaces/TCP_server.cpp
+	src/parts/Acoustic_modem.h		src/parts/Acoustic_modem.cpp
+	src/parts/Clock.h			src/parts/Clock.cpp
+	src/parts/Depth.h			src/parts/Depth.cpp
+	src/parts/Echosonder.h			src/parts/Echosonder.cpp
+	src/parts/I2C.h				src/parts/I2C.cpp
+	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp
+)
+
+add_library(BETTERAVE_USER_LIRMIA
 	src/parts/lirmia/Autonomy.h		src/parts/lirmia/Autonomy.cpp
 	src/parts/lirmia/Cameras.h		src/parts/lirmia/Cameras.cpp
 	src/parts/lirmia/Logger.h		src/parts/lirmia/Logger.cpp
@@ -71,23 +94,37 @@ add_library(BETTERAVE_USER
 	src/parts/lirmia/Simulator.h		src/parts/lirmia/Simulator.cpp
 	src/parts/lirmia/State.h		src/parts/lirmia/State.cpp
 	src/parts/lirmia/State_machine.h	src/parts/lirmia/State_machine.cpp
-	src/parts/Acoustic_modem.h		src/parts/Acoustic_modem.cpp
-	src/parts/Clock.h			src/parts/Clock.cpp
-	src/parts/Depth.h			src/parts/Depth.cpp
-	src/parts/Echosonder.h			src/parts/Echosonder.cpp
-	src/parts/I2C.h				src/parts/I2C.cpp
-	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp
+)
 
+add_library(BETTERAVE_USER_UNKNOWN
+	src/parts/unknown/Autonomy.h		src/parts/unknown/Autonomy.cpp
+	src/parts/unknown/Cameras.h		src/parts/unknown/Cameras.cpp
+	src/parts/unknown/Logger.h		src/parts/unknown/Logger.cpp
+	src/parts/unknown/Motors.h		src/parts/unknown/Motors.cpp
+	src/parts/unknown/Remote_control.h	src/parts/unknown/Remote_control.cpp
+	src/parts/unknown/Remote_monitor.h	src/parts/unknown/Remote_monitor.cpp
+	src/parts/unknown/Simulator.h		src/parts/unknown/Simulator.cpp
+	src/parts/unknown/State.h		src/parts/unknown/State.cpp
+	src/parts/unknown/State_machine.h	src/parts/unknown/State_machine.cpp
 )
 
 add_executable(lirmia src/mains/Lirmia.cpp)
-target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+
+add_executable(unknown src/mains/Unknown.cpp)
+target_link_libraries(unknown ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_UNKNOWN BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 
 add_executable(remote_lirmia src/remote_control_monitor_lirmia.cpp)
-target_link_libraries(remote_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(remote_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 
-add_executable(camera src/remote_cam.cpp)
-target_link_libraries(camera ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
+add_executable(remote_unknown src/remote_control_monitor_unknown.cpp)
+target_link_libraries(remote_unknown ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_UNKNOWN BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+
+add_executable(camera_lirmia src/remote_cam_lirmia.cpp)
+target_link_libraries(camera_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+
+add_executable(camera_unknown src/remote_cam_unknown.cpp)
+target_link_libraries(camera_unknown ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 
 add_executable(recam src/local_cam_rec.cpp)
-target_link_libraries(recam ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(recam ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
