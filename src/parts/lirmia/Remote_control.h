@@ -11,10 +11,10 @@
 #ifndef REMOTE_CONTROL
 #define REMOTE_CONTROL
 
-#include "../core/ComThread.h"
-#include "../interfaces/TCP_server.h"
-#include "../interfaces/vision/Blobs.h"
-#include "../interfaces/vision/hsv_params.h"
+#include "../../core/ComThread.h"
+#include "../../interfaces/TCP_server.h"
+#include "../../interfaces/vision/Blobs.h"
+#include "../../interfaces/vision/hsv_params.h"
 
 class Remote_control : public ComThread{
 

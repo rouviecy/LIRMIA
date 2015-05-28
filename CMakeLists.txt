@@ -55,35 +55,36 @@ set(OTHER_LIBS
 
 add_library(BETTERAVE_USER
 	src/interfaces/Camera_server.h	src/interfaces/Camera_server.cpp
-	src/interfaces/FSM.h		src/interfaces/FSM.cpp
-	src/interfaces/FSMDraw.h	src/interfaces/FSMDraw.cpp
-	src/interfaces/Joystick.h	src/interfaces/Joystick.cpp
-	src/interfaces/Serial.h		src/interfaces/Serial.cpp
-	src/interfaces/TCP_client.h	src/interfaces/TCP_client.cpp
-	src/interfaces/TCP_server.h	src/interfaces/TCP_server.cpp
-	src/parts/Acoustic_modem.h	src/parts/Acoustic_modem.cpp
-	src/parts/Clock.h		src/parts/Clock.cpp
-	src/parts/Autonomy.h		src/parts/Autonomy.cpp
-	src/parts/Cameras.h		src/parts/Cameras.cpp
-	src/parts/Depth.h		src/parts/Depth.cpp
-	src/parts/Echosonder.h		src/parts/Echosonder.cpp
-	src/parts/I2C.h			src/parts/I2C.cpp
-	src/parts/Imu.h			src/parts/Imu.cpp
-	src/parts/Logger.h		src/parts/Logger.cpp
-	src/parts/Mapping.h		src/parts/Mapping.cpp
-	src/parts/Motors.h		src/parts/Motors.cpp
-	src/parts/Remote_control.h	src/parts/Remote_control.cpp
-	src/parts/Remote_monitor.h	src/parts/Remote_monitor.cpp
-	src/parts/Simulator.h		src/parts/Simulator.cpp
-	src/parts/State.h		src/parts/State.cpp
-	src/parts/State_machine.h	src/parts/State_machine.cpp
+	src/interfaces/FSM.h			src/interfaces/FSM.cpp
+	src/interfaces/FSMDraw.h		src/interfaces/FSMDraw.cpp
+	src/interfaces/Joystick.h		src/interfaces/Joystick.cpp
+	src/interfaces/Serial.h			src/interfaces/Serial.cpp
+	src/interfaces/TCP_client.h		src/interfaces/TCP_client.cpp
+	src/interfaces/TCP_server.h		src/interfaces/TCP_server.cpp
+	src/parts/lirmia/Autonomy.h		src/parts/lirmia/Autonomy.cpp
+	src/parts/lirmia/Cameras.h		src/parts/lirmia/Cameras.cpp
+	src/parts/lirmia/Logger.h		src/parts/lirmia/Logger.cpp
+	src/parts/lirmia/Mapping.h		src/parts/lirmia/Mapping.cpp
+	src/parts/lirmia/Motors.h		src/parts/lirmia/Motors.cpp
+	src/parts/lirmia/Remote_control.h	src/parts/lirmia/Remote_control.cpp
+	src/parts/lirmia/Remote_monitor.h	src/parts/lirmia/Remote_monitor.cpp
+	src/parts/lirmia/Simulator.h		src/parts/lirmia/Simulator.cpp
+	src/parts/lirmia/State.h		src/parts/lirmia/State.cpp
+	src/parts/lirmia/State_machine.h	src/parts/lirmia/State_machine.cpp
+	src/parts/Acoustic_modem.h		src/parts/Acoustic_modem.cpp
+	src/parts/Clock.h			src/parts/Clock.cpp
+	src/parts/Depth.h			src/parts/Depth.cpp
+	src/parts/Echosonder.h			src/parts/Echosonder.cpp
+	src/parts/I2C.h				src/parts/I2C.cpp
+	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp
+
 )
 
 add_executable(lirmia src/mains/Lirmia.cpp)
 target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
 
-add_executable(remote src/remote_control_monitor.cpp)
-target_link_libraries(remote ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
+add_executable(remote_lirmia src/remote_control_monitor_lirmia.cpp)
+target_link_libraries(remote_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)
 
 add_executable(camera src/remote_cam.cpp)
 target_link_libraries(camera ${LIBS} ${OTHER_LIBS} BETTERAVE_USER BETTERAVE_CORE VISION_LIBS)

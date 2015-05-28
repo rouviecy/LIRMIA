@@ -11,7 +11,7 @@
 #ifndef STATE
 #define STATE
 
-#include "../core/ComThread.h"
+#include "../../core/ComThread.h"
 
 class State : public ComThread{
 

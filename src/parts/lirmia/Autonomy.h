@@ -11,8 +11,8 @@
 #ifndef AUTONOMY
 #define AUTONOMY
 
-#include "../core/ComThread.h"
-#include "State_machine.h"
+#include "../../core/ComThread.h"
+#include "./State_machine.h"
 
 class Autonomy : public ComThread{
 

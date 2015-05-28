@@ -12,9 +12,9 @@
 #define STATE_MACHINE
 
 #include <cmath>
-#include "../core/ComThread.h"
-#include "../interfaces/FSM.h"
-#include "../interfaces/FSMDraw.h"
+#include "../../core/ComThread.h"
+#include "../../interfaces/FSM.h"
+#include "../../interfaces/FSMDraw.h"
 
 enum state_t {STAY, DOWN, EXPLORE, FOLLOW_OBJ_CAM1, FOLLOW_OBJ_CAM2, FOLLOW_PIPE_CAM1, FOLLOW_PIPE_CAM2, FOLLOW_WALL, UP, REMOTE};
 

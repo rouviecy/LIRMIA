@@ -11,8 +11,8 @@
 #ifndef REMOTE_MONITOR
 #define REMOTE_MONITOR
 
-#include "../core/ComThread.h"
-#include "../interfaces/TCP_server.h"
+#include "../../core/ComThread.h"
+#include "../../interfaces/TCP_server.h"
 
 class Remote_monitor : public ComThread{
 

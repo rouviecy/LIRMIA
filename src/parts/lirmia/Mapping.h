@@ -11,7 +11,7 @@
 #ifndef MAPPING
 #define MAPPING
 
-#include "../core/ComThread.h"
+#include "../../core/ComThread.h"
 #include <opencv2/opencv.hpp>
 
 class Mapping : public ComThread{

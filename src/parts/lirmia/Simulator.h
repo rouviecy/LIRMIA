@@ -11,7 +11,7 @@
 #ifndef SIMULATOR
 #define SIMULATOR
 
-#include "../core/ComThread.h"
+#include "../../core/ComThread.h"
 #include <cmath>
 
 class Simulator : public ComThread{

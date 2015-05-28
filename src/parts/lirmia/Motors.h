@@ -11,8 +11,8 @@
 #ifndef MOTORS
 #define MOTORS
 
-#include "../core/ComThread.h"
-#include "I2C.h"
+#include "../../core/ComThread.h"
+#include "../I2C.h"
 
 class Motors : public ComThread{
 

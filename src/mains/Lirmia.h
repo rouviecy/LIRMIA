@@ -13,22 +13,23 @@
 
 #include "../core/Maestro.h"
 #include "../interfaces/Serial.h"
+#include "../parts/lirmia/Autonomy.h"
+#include "../parts/lirmia/Cameras.h"
+#include "../parts/lirmia/Logger.h"
+#include "../parts/lirmia/Mapping.h"
+#include "../parts/lirmia/Motors.h"
+#include "../parts/lirmia/Remote_control.h"
+#include "../parts/lirmia/Remote_monitor.h"
+#include "../parts/lirmia/Simulator.h"
+#include "../parts/lirmia/State.h"
+#include "../parts/lirmia/State_machine.h"
 #include "../parts/Acoustic_modem.h"
-#include "../parts/Autonomy.h"
 #include "../parts/Clock.h"
-#include "../parts/Cameras.h"
 #include "../parts/Depth.h"
 #include "../parts/Echosonder.h"
 #include "../parts/I2C.h"
-#include "../parts/Imu.h"
-#include "../parts/Logger.h"
-#include "../parts/Mapping.h"
-#include "../parts/Motors.h"
-#include "../parts/Remote_control.h"
-#include "../parts/Remote_monitor.h"
-#include "../parts/Simulator.h"
-#include "../parts/State.h"
-#include "../parts/State_machine.h"
+#include "../parts/Imu_razor.h"
+
 
 #define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_5533330393435131F151-if00"
 #define DEV_SERIAL_ISS		"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00007350-if00"
@@ -54,7 +55,7 @@ private:
 	Depth		depth;
 	Echosonder	echosonder;
 	I2C		i2c;
-	Imu		imu;
+	Imu_razor	imu;
 	Logger		logger;
 	Mapping		mapping;
 	Motors		motors;

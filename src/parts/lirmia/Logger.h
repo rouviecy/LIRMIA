@@ -11,7 +11,7 @@
 #ifndef LOGGUER
 #define LOGGUER
 
-#include "../core/ComThread.h"
+#include "../../core/ComThread.h"
 #include "./State_machine.h"
 #include <ctime>
 #include <sstream>

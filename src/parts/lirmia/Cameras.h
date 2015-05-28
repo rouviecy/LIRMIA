@@ -11,10 +11,10 @@
 #ifndef CAMERAS
 #define CAMERAS
 
-#include "../interfaces/vision/Blobs.h"
-#include "../interfaces/vision/Reco.h"
-#include "../interfaces/Camera_server.h"
-#include "../core/ComThread.h"
+#include "../../interfaces/vision/Blobs.h"
+#include "../../interfaces/vision/Reco.h"
+#include "../../interfaces/Camera_server.h"
+#include "../../core/ComThread.h"
 #include <opencv2/opencv.hpp>
 
 class Cameras : public ComThread{

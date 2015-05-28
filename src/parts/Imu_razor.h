@@ -1,5 +1,5 @@
 /*
- * @(#)		Imu.h
+ * @(#)		Imu_razor.h
  * @version	1.0
  * @autor	C. Rouvière
  */
@@ -8,8 +8,8 @@
  * Inertial Measurement Unit with serial
  */
 
-#ifndef IMU
-#define IMU
+#ifndef IMU_RAZOR
+#define IMU_RAZOR
 
 #include <cmath>
 #include <vector>
@@ -17,12 +17,12 @@
 #include "../core/ComThread.h"
 #include "../interfaces/Serial.h"
 
-class Imu : public ComThread{
+class Imu_razor : public ComThread{
 
 public:
 
-	Imu();
-	~Imu();
+	Imu_razor();
+	~Imu_razor();
 
 	void Set_serial(Serial* serial);
 

@@ -335,7 +335,7 @@ void Acoustic_modem::Get_acoustic_msg_loop(){
 	while(receive_go_on){
 		serial->Lock();
 		char* msg = serial->Serial_read();
-cout << msg << endl;
+//cout << msg << endl;
 //		in_msg_queue.push(string(msg));
 		serial->Unlock();
 	}

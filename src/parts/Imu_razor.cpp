@@ -1,8 +1,8 @@
-#include "Imu.h"
+#include "Imu_razor.h"
 
 using namespace std;
 
-Imu::Imu() : ComThread(){
+Imu_razor::Imu_razor() : ComThread(){
 	#if defined(ENABLE_IMU) and not defined(ENABLE_SERIAL_ARDUINO)
 		cout << "[Warning] You are trying to use IMU without serial enabled : IMU will be disabled" << endl;
 	#endif
@@ -13,15 +13,15 @@ Imu::Imu() : ComThread(){
 	header_size = 0;
 }
 
-Imu::~Imu(){}
+Imu_razor::~Imu_razor(){}
 
-void Imu::On_start(){}
+void Imu_razor::On_start(){}
 
-void Imu::IO(){
+void Imu_razor::IO(){
 	Link_output("imu_thxyz", COMFLOAT, 3, imu_thxyz);
 }
 
-void Imu::Job(){
+void Imu_razor::Job(){
 	#if defined(ENABLE_IMU) && defined(ENABLE_SERIAL_ARDUINO)
 		serial->Lock();
 		char* answer = serial->Serial_read();
@@ -61,4 +61,4 @@ void Imu::Job(){
 	#endif
 }
 
-void Imu::Set_serial(Serial* serial){this->serial = serial;}
+void Imu_razor::Set_serial(Serial* serial){this->serial = serial;}
