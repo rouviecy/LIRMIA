@@ -49,8 +49,8 @@ int main(int argc, char* argv[]){
 		mutex mu1, mu2;
 		char key = 'a'; char key1 = 'a'; char key2 = 'a';
 		cv::Mat img_cam1, img_blobs1, img_cam2, img_blobs2;
-		const char* window_cam1 = "camera 1";	const char* window_blobs1 = "blobs 1";
-		const char* window_cam2 = "camera 2";	const char* window_blobs2 = "blobs 2";
+		const char* window_cam1 = "Lirmia camera 1";	const char* window_blobs1 = "Lirmia blobs 1";
+		const char* window_cam2 = "Lirmia camera 2";	const char* window_blobs2 = "Lirmia blobs 2";
 		#ifdef ENABLE_CAM1
 			cv::namedWindow(window_cam1, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_cam1, 800, 150);
 			cv::namedWindow(window_blobs1, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_blobs1, 1200, 150);

@@ -49,7 +49,7 @@ int main(int argc, char* argv[]){
 		mutex mu;
 		char key = 'a'; char key1 = 'a';
 		cv::Mat img_cam, img_blobs;
-		const char* window_cam = "camera";	const char* window_blobs = "blobs";
+		const char* window_cam = "Unknown camera";	const char* window_blobs = "Unknown blobs";
 		#ifdef ENABLE_CAM1
 			cv::namedWindow(window_cam, cv::WINDOW_AUTOSIZE);			cv::moveWindow(window_cam, 800, 150);
 			cv::namedWindow(window_blobs, cv::WINDOW_AUTOSIZE);			cv::moveWindow(window_blobs, 1200, 150);

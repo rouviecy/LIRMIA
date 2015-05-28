@@ -254,7 +254,7 @@ int main(int argc, char* argv[]){
 		struct_callback obj_callback;
 		struct_monitor monitor;
 		hsv_params hsv = create_HSV_params();
-		const char* monitor_window = "Monitor";
+		const char* monitor_window = "Unknown monitor";
 		cv::namedWindow(monitor_window, cv::WINDOW_AUTOSIZE);
 		cv::moveWindow(monitor_window, 0, 350);
 
