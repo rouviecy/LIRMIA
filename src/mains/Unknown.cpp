@@ -7,6 +7,7 @@ Unknown::Unknown() : Maestro(){
 	// Warning : pass-by-reference to avoid slicing !
 	Add_thread(&autonomy,		"Autonomy",			50000);		// 50 ms
 	Add_thread(&cameras,		"Cameras",			100000);	// 100 ms
+	Add_thread(&gps,		"GPS",				10000);		// 10 ms
 	Add_thread(&internal_clock,	"Clock",			1000);		// 1 ms
 	Add_thread(&i2c,		"I2C",				10000);		// 10 ms
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
@@ -40,8 +41,7 @@ void Unknown::Shutdown(){
 void Unknown::Init_serial(){
 	#ifdef ENABLE_SERIAL_ARDUINO
 		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B57600, true);
-		imu.Set_serial(&serial_arduino);
-		depth.Set_serial(&serial_arduino);
+		gps.Set_serial(&serial_arduino);
 	#endif
 	#ifdef ENABLE_SERIAL_ISS
 		serial_iss.Serial_init(DEV_SERIAL_ISS, B115200, false);

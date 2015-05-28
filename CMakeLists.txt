@@ -4,59 +4,60 @@ project(betterave)
 find_package(PkgConfig)
 
 set(IS_LIRMIA OFF)
-set(IS_UNKNOWN OFF)
+set(IS_UNKNOWN ON)
+set(IS_SIMU ON)
 
 if(${IS_LIRMIA})
-	set(ENABLE_GRAPHVIZ OFF)
 	set(ENABLE_PYTHON OFF)
 	set(ENABLE_JAVA OFF)
-	set(ENABLE_SDL OFF)
-	add_definitions(-DENABLE_SERIAL_ARDUINO)
-	add_definitions(-DENABLE_SERIAL_ISS)
-	add_definitions(-DENABLE_SERIAL_RS232)
-	add_definitions(-DENABLE_I2C)		# needs serial ISS
-	add_definitions(-DENABLE_DEPTH)		# needs serial ISS and I2C
-	add_definitions(-DENABLE_IMU)		# needs serial Arduino
-	add_definitions(-DENABLE_MOTORS)	# needs serial ISS and I2C
-	add_definitions(-DENABLE_TCP)
-	add_definitions(-DENABLE_CAM1)
-	add_definitions(-DENABLE_CAM2)
-	add_definitions(-DENABLE_RECORDCAM)	# need CAM1/CAM2
-	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
-	add_definitions(-DENABLE_MODEM)		# needs serial RS232
-#	add_definitions(-DENABLE_SIMULATOR)
+	if(${IS_SIMU})
+		set(ENABLE_GRAPHVIZ ON)
+		set(ENABLE_SDL ON)
+		add_definitions(-DENABLE_TCP)
+		add_definitions(-DENABLE_CAM1)
+#		add_definitions(-DENABLE_CAM2)
+		add_definitions(-DENABLE_RECORDCAM)	# needs CAM1/CAM2
+		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
+		add_definitions(-DENABLE_MODEM)		# needs serial RS232
+		add_definitions(-DENABLE_SIMULATOR)
+	else(${IS_SIMU})
+		set(ENABLE_GRAPHVIZ OFF)
+		set(ENABLE_SDL OFF)
+		add_definitions(-DENABLE_SERIAL_ARDUINO)
+		add_definitions(-DENABLE_SERIAL_ISS)
+		add_definitions(-DENABLE_SERIAL_RS232)
+		add_definitions(-DENABLE_I2C)		# needs serial ISS
+		add_definitions(-DENABLE_DEPTH)		# needs serial ISS and I2C
+		add_definitions(-DENABLE_IMU)		# needs serial Arduino
+		add_definitions(-DENABLE_MOTORS)	# needs serial ISS and I2C
+		add_definitions(-DENABLE_TCP)
+		add_definitions(-DENABLE_CAM1)
+		add_definitions(-DENABLE_CAM2)
+		add_definitions(-DENABLE_RECORDCAM)	# needs CAM1/CAM2
+		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
+		add_definitions(-DENABLE_MODEM)		# needs serial RS232
+	endif(${IS_SIMU})
 elseif(${IS_UNKNOWN})
-	set(ENABLE_GRAPHVIZ OFF)
 	set(ENABLE_PYTHON OFF)
 	set(ENABLE_JAVA OFF)
-	set(ENABLE_SDL OFF)
-	add_definitions(-DENABLE_SERIAL_ARDUINO)
-	add_definitions(-DENABLE_SERIAL_ISS)
-	add_definitions(-DENABLE_I2C)		# needs serial ISS
-	add_definitions(-DENABLE_MOTORS)	# needs serial arduino, serial ISS and I2C
-	add_definitions(-DENABLE_TCP)
-	add_definitions(-DENABLE_CAM1)
-	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
-	add_definitions(-DENABLE_SIMULATOR)
-else(${IS_LIRMIA})
-	set(ENABLE_GRAPHVIZ ON)
-	set(ENABLE_PYTHON OFF)
-	set(ENABLE_JAVA OFF)
-	set(ENABLE_SDL ON)
-#	add_definitions(-DENABLE_SERIAL_ARDUINO)
-#	add_definitions(-DENABLE_SERIAL_ISS)
-	add_definitions(-DENABLE_SERIAL_RS232)
-#	add_definitions(-DENABLE_I2C)		# needs serial ISS
-#	add_definitions(-DENABLE_DEPTH)		# needs serial ISS and I2C
-#	add_definitions(-DENABLE_IMU)		# needs serial Arduino
-#	add_definitions(-DENABLE_MOTORS)	# needs serial ISS and I2C
-	add_definitions(-DENABLE_TCP)
-	add_definitions(-DENABLE_CAM1)
-#	add_definitions(-DENABLE_CAM2)
-	add_definitions(-DENABLE_RECORDCAM)	# need CAM1/CAM2
-	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
-	add_definitions(-DENABLE_MODEM)		# needs serial RS232
-	add_definitions(-DENABLE_SIMULATOR)
+	if(${IS_SIMU})
+		set(ENABLE_GRAPHVIZ ON)
+		set(ENABLE_SDL ON)
+		add_definitions(-DENABLE_TCP)
+		add_definitions(-DENABLE_CAM1)
+		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
+		add_definitions(-DENABLE_SIMULATOR)
+	else(${IS_SIMU})
+		set(ENABLE_GRAPHVIZ OFF)
+		set(ENABLE_SDL OFF)
+		add_definitions(-DENABLE_SERIAL_ARDUINO)
+		add_definitions(-DENABLE_SERIAL_ISS)
+		add_definitions(-DENABLE_I2C)		# needs serial ISS
+		add_definitions(-DENABLE_MOTORS)	# needs serial arduino, serial ISS and I2C
+		add_definitions(-DENABLE_TCP)
+		add_definitions(-DENABLE_CAM1)
+		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
+	endif(${IS_SIMU})
 endif(${IS_LIRMIA})
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)
@@ -79,6 +80,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Clock.h			src/parts/Clock.cpp
 	src/parts/Depth.h			src/parts/Depth.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
+	src/parts/Gps.h				src/parts/Gps.cpp
 	src/parts/I2C.h				src/parts/I2C.cpp
 	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp
 )

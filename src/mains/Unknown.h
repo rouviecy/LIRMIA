@@ -23,6 +23,7 @@
 #include "../parts/unknown/State.h"
 #include "../parts/unknown/State_machine.h"
 #include "../parts/Clock.h"
+#include "../parts/Gps.h"
 #include "../parts/I2C.h"
 
 #define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_5533330393435131F151-if00"
@@ -44,6 +45,7 @@ private:
 	Autonomy	autonomy;
 	Cameras		cameras;
 	Clock		internal_clock;
+	Gps		gps;
 	I2C		i2c;
 	Logger		logger;
 	Motors		motors;
