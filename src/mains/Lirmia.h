@@ -27,7 +27,6 @@
 #include "../parts/Clock.h"
 #include "../parts/Depth.h"
 #include "../parts/Echosonder.h"
-#include "../parts/I2C.h"
 #include "../parts/Imu_razor.h"
 
 
@@ -54,7 +53,6 @@ private:
 	Clock		internal_clock;
 	Depth		depth;
 	Echosonder	echosonder;
-	I2C		i2c;
 	Imu_razor	imu;
 	Logger		logger;
 	Mapping		mapping;

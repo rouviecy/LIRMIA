@@ -26,10 +26,9 @@ if(${IS_LIRMIA})
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
 		add_definitions(-DENABLE_SERIAL_RS232)
-		add_definitions(-DENABLE_I2C)		# needs serial ISS
-		add_definitions(-DENABLE_DEPTH)		# needs serial ISS and I2C
+		add_definitions(-DENABLE_DEPTH)		# needs serial Arduino
 		add_definitions(-DENABLE_IMU)		# needs serial Arduino
-		add_definitions(-DENABLE_MOTORS)	# needs serial ISS and I2C
+		add_definitions(-DENABLE_MOTORS)	# needs serial ISS
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_CAM2)
@@ -81,7 +80,6 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Depth.h			src/parts/Depth.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
 	src/parts/Gps.h				src/parts/Gps.cpp
-	src/parts/I2C.h				src/parts/I2C.cpp
 	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp
 )
 

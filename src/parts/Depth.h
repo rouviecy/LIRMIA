@@ -12,7 +12,7 @@
 #define DEPTH
 
 #include "../core/ComThread.h"
-#include "I2C.h"
+#include "../interfaces/Serial.h"
 
 class Depth : public ComThread{
 

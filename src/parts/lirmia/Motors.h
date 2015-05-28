@@ -12,7 +12,7 @@
 #define MOTORS
 
 #include "../../core/ComThread.h"
-#include "../I2C.h"
+#include "../../interfaces/Serial.h"
 
 class Motors : public ComThread{
 
@@ -21,11 +21,11 @@ public:
 	Motors();
 	~Motors();
 
-	void Set_i2c(I2C* i2c);
+	void Set_serial(Serial* serial);
 
 private:
 
-	I2C* i2c;
+	Serial* serial;
 
 	void On_start();
 	void Job();

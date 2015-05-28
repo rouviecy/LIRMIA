@@ -13,7 +13,6 @@
 
 #include "../../core/ComThread.h"
 #include "../../interfaces/Serial.h"
-#include "../I2C.h"
 
 class Motors : public ComThread{
 
@@ -22,13 +21,12 @@ public:
 	Motors();
 	~Motors();
 
-	void Set_i2c(I2C* i2c);
+	void Set_iss(Serial* serial);
 	void Set_arduino(Serial* serial);
 
 private:
 
-	I2C* i2c;
-	Serial* arduino;
+	Serial *arduino, *iss;
 
 	void On_start();
 	void Job();

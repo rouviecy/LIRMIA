@@ -24,7 +24,6 @@
 #include "../parts/unknown/State_machine.h"
 #include "../parts/Clock.h"
 #include "../parts/Gps.h"
-#include "../parts/I2C.h"
 
 #define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_5533330393435131F151-if00"
 #define DEV_SERIAL_ISS		"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00007350-if00"
@@ -46,7 +45,6 @@ private:
 	Cameras		cameras;
 	Clock		internal_clock;
 	Gps		gps;
-	I2C		i2c;
 	Logger		logger;
 	Motors		motors;
 	Remote_control	remote_control;

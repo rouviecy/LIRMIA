@@ -62,5 +62,5 @@ void Motors::Generate_order_arduino(int angle){
 	#endif
 }
 
-void Motors::Set_i2c(I2C* i2c){this->i2c = i2c;}
+void Motors::Set_iss(Serial* serial){this->iss = serial;}
 void Motors::Set_arduino(Serial* serial){this->arduino = serial;}
