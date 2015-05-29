@@ -5,154 +5,158 @@ digraph links {
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		2 [label = "cam_detect_horizontal\nfloat"];
-		3 [label = "cam_detect_vertical\nfloat"];
-		4 [label = "fsm_state\nint"];
-		5 [label = "remote_forward\nfloat"];
-		6 [label = "remote_turn\nfloat"];
-		7 [label = "t\nfloat"];
-		8 [label = "thz\nfloat"];
-		9 [label = "xy\nfloat[2]"];
-		10 [label = "bow_thruster\nfloat"];
-		11 [label = "motor\nfloat"];
-		12 [label = "rudder\nfloat"];
+		2 [label = "cam_detect_horizontal\nfloat[2]"];
+		3 [label = "cam_detect_size\nfloat[2]"];
+		4 [label = "cam_detect_vertical\nfloat[2]"];
+		5 [label = "fsm_state\nint"];
+		6 [label = "remote_forward\nfloat"];
+		7 [label = "remote_turn\nfloat"];
+		8 [label = "t\nfloat"];
+		9 [label = "thz\nfloat"];
+		10 [label = "xy\nfloat[2]"];
+		11 [label = "bow_thruster\nfloat"];
+		12 [label = "motor\nfloat"];
+		13 [label = "rudder\nfloat"];
 	}
-	subgraph cluster_13 {
+	subgraph cluster_14 {
 		label = "Cameras - 10Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		14 [label = "enable_streaming\nbool"];
-		15 [label = "cam_detect_horizontal\nfloat"];
-		16 [label = "cam_detect_obj\nbool"];
-		17 [label = "cam_detect_vertical\nfloat"];
+		15 [label = "enable_streaming\nbool"];
+		16 [label = "cam_detect_horizontal\nfloat[2]"];
+		17 [label = "cam_detect_obj\nbool[2]"];
+		18 [label = "cam_detect_size\nfloat[2]"];
+		19 [label = "cam_detect_vertical\nfloat[2]"];
 	}
-	subgraph cluster_18 {
+	subgraph cluster_20 {
 		label = "GPS - 100Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		19 [label = "gps_xy\nfloat[2]"];
+		21 [label = "gps_xy\nfloat[2]"];
 	}
-	subgraph cluster_20 {
+	subgraph cluster_22 {
 		label = "Clock - 1000Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		21 [label = "t\nfloat"];
+		23 [label = "t\nfloat"];
 	}
-	subgraph cluster_22 {
+	subgraph cluster_24 {
 		label = "Logger - 1Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		23 [label = "bow_thrusters\nfloat[2]"];
-		24 [label = "fsm_state\nint"];
-		25 [label = "motor\nfloat"];
-		26 [label = "rudder\nfloat"];
-		27 [label = "t\nfloat"];
-		28 [label = "thz\nfloat"];
-		29 [label = "xy\nfloat[2]"];
+		25 [label = "bow_thrusters\nfloat[2]"];
+		26 [label = "fsm_state\nint"];
+		27 [label = "motor\nfloat"];
+		28 [label = "rudder\nfloat"];
+		29 [label = "t\nfloat"];
+		30 [label = "thz\nfloat"];
+		31 [label = "xy\nfloat[2]"];
 	}
-	subgraph cluster_30 {
+	subgraph cluster_32 {
 		label = "Motors - 100Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		31 [label = "bow_thruster\nfloat"];
-		32 [label = "motor\nfloat"];
-		33 [label = "rudder\nfloat"];
+		33 [label = "bow_thruster\nfloat"];
+		34 [label = "motor\nfloat"];
+		35 [label = "rudder\nfloat"];
 	}
-	subgraph cluster_34 {
+	subgraph cluster_36 {
 		label = "Remote control - 0Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		35 [label = "enable_streaming\nbool"];
-		36 [label = "remote\nbool"];
-		37 [label = "remote_forward\nfloat"];
-		38 [label = "remote_turn\nfloat"];
+		37 [label = "enable_streaming\nbool"];
+		38 [label = "remote\nbool"];
+		39 [label = "remote_forward\nfloat"];
+		40 [label = "remote_turn\nfloat"];
 	}
-	subgraph cluster_39 {
+	subgraph cluster_41 {
 		label = "Remote monitor - 10Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		40 [label = "bow_thruster\nfloat"];
-		41 [label = "fsm_state\nint"];
-		42 [label = "motor\nfloat"];
-		43 [label = "rudder\nfloat"];
-		44 [label = "t\nfloat"];
-		45 [label = "thz\nfloat"];
-		46 [label = "xy\nfloat[2]"];
+		42 [label = "bow_thruster\nfloat"];
+		43 [label = "fsm_state\nint"];
+		44 [label = "motor\nfloat"];
+		45 [label = "rudder\nfloat"];
+		46 [label = "t\nfloat"];
+		47 [label = "thz\nfloat"];
+		48 [label = "xy\nfloat[2]"];
 	}
-	subgraph cluster_47 {
+	subgraph cluster_49 {
 		label = "Simulator - 200Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		48 [label = "bow_thruster\nfloat"];
-		49 [label = "motor\nfloat"];
-		50 [label = "rudder\nfloat"];
-		51 [label = "t\nfloat"];
-		52 [label = "simu_thz\nfloat"];
-		53 [label = "simu_xy\nfloat[2]"];
+		50 [label = "bow_thruster\nfloat"];
+		51 [label = "motor\nfloat"];
+		52 [label = "rudder\nfloat"];
+		53 [label = "t\nfloat"];
+		54 [label = "simu_thz\nfloat"];
+		55 [label = "simu_xy\nfloat[2]"];
 	}
-	subgraph cluster_54 {
+	subgraph cluster_56 {
 		label = "State - 50Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		55 [label = "compass\nfloat"];
-		56 [label = "gps_xy\nfloat[2]"];
-		57 [label = "simu_thz\nfloat"];
-		58 [label = "simu_xy\nfloat[2]"];
-		59 [label = "t\nfloat"];
-		60 [label = "thz\nfloat"];
-		61 [label = "xy\nfloat[2]"];
+		57 [label = "compass\nfloat"];
+		58 [label = "gps_xy\nfloat[2]"];
+		59 [label = "simu_thz\nfloat"];
+		60 [label = "simu_xy\nfloat[2]"];
+		61 [label = "t\nfloat"];
+		62 [label = "thz\nfloat"];
+		63 [label = "xy\nfloat[2]"];
 	}
-	subgraph cluster_62 {
+	subgraph cluster_64 {
 		label = "Finite state machine - 25Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		63 [label = "cam_detect_obj\nbool"];
-		64 [label = "remote\nbool"];
-		65 [label = "fsm_state\nint"];
+		65 [label = "cam_detect_obj\nbool[2]"];
+		66 [label = "remote\nbool"];
+		67 [label = "sub_is_underwater\nbool"];
+		68 [label = "fsm_state\nint"];
 	}
-	10->31 [minlen=5];
-	10->40 [minlen=5];
-	10->48 [minlen=5];
-	15->2 [minlen=5];
-	16->63 [minlen=5];
-	17->3 [minlen=5];
-	35->14 [minlen=5];
-	65->4 [minlen=5];
-	65->24 [minlen=5];
-	65->41 [minlen=5];
-	19->56 [minlen=5];
-	11->25 [minlen=5];
-	11->32 [minlen=5];
+	11->33 [minlen=5];
 	11->42 [minlen=5];
-	11->49 [minlen=5];
-	36->64 [minlen=5];
-	37->5 [minlen=5];
-	38->6 [minlen=5];
-	12->26 [minlen=5];
-	12->33 [minlen=5];
-	12->43 [minlen=5];
-	12->50 [minlen=5];
-	52->57 [minlen=5];
-	53->58 [minlen=5];
-	21->7 [minlen=5];
-	21->27 [minlen=5];
-	21->44 [minlen=5];
-	21->51 [minlen=5];
-	21->59 [minlen=5];
-	60->8 [minlen=5];
-	60->28 [minlen=5];
-	60->45 [minlen=5];
-	61->9 [minlen=5];
-	61->29 [minlen=5];
-	61->46 [minlen=5];
+	11->50 [minlen=5];
+	16->2 [minlen=5];
+	17->65 [minlen=5];
+	18->3 [minlen=5];
+	19->4 [minlen=5];
+	37->15 [minlen=5];
+	68->5 [minlen=5];
+	68->26 [minlen=5];
+	68->43 [minlen=5];
+	21->58 [minlen=5];
+	12->27 [minlen=5];
+	12->34 [minlen=5];
+	12->44 [minlen=5];
+	12->51 [minlen=5];
+	38->66 [minlen=5];
+	39->6 [minlen=5];
+	40->7 [minlen=5];
+	13->28 [minlen=5];
+	13->35 [minlen=5];
+	13->45 [minlen=5];
+	13->52 [minlen=5];
+	54->59 [minlen=5];
+	55->60 [minlen=5];
+	23->8 [minlen=5];
+	23->29 [minlen=5];
+	23->46 [minlen=5];
+	23->53 [minlen=5];
+	23->61 [minlen=5];
+	62->9 [minlen=5];
+	62->30 [minlen=5];
+	62->47 [minlen=5];
+	63->10 [minlen=5];
+	63->31 [minlen=5];
+	63->48 [minlen=5];
 }

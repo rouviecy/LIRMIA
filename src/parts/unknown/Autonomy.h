@@ -32,8 +32,9 @@ private:
 	float t;
 	float xy[2];
 	float thz;
-	float cam_detect_horizontal;
-	float cam_detect_vertical;
+	float cam_detect_size[2];
+	float cam_detect_horizontal[2];
+	float cam_detect_vertical[2];
 
 	float motor;
 	float rudder;

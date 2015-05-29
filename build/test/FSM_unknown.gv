@@ -1,12 +1,20 @@
 digraph links {
 	edge [fontsize = 10];
-	follow_obj_cam;
-	lost_obj_cam;
+	follow_cam_sub;
+	follow_cam_surf;
+	lost_cam_sub;
+	lost_cam_surf;
 	remote;
 	remote[shape=doublecircle];
-	follow_obj_cam->lost_obj_cam [label = "lost_obj\n\n"] [minlen=4]
-	follow_obj_cam->remote [label = "go_to_remote\n\n"] [minlen=4]
-	lost_obj_cam->follow_obj_cam [label = "detected_obj\n\n"] [minlen=4]
-	lost_obj_cam->remote [label = "go_to_remote\n\n"] [minlen=4]
-	remote->follow_obj_cam [label = "go_to_autonomous\n\n"] [minlen=4]
+	follow_cam_sub->follow_cam_surf [label = "begin_follow_surf\n\nupdate_fsm"] [minlen=4]
+	follow_cam_sub->lost_cam_sub [label = "lost_sub\n\nupdate_fsm"] [minlen=4]
+	follow_cam_sub->remote [label = "go_to_remote\n\nupdate_fsm"] [minlen=4]
+	follow_cam_surf->follow_cam_sub [label = "begin_follow_sub\n\nupdate_fsm"] [minlen=4]
+	follow_cam_surf->lost_cam_surf [label = "lost_surf\n\nupdate_fsm"] [minlen=4]
+	follow_cam_surf->remote [label = "go_to_remote\n\nupdate_fsm"] [minlen=4]
+	lost_cam_sub->follow_cam_sub [label = "detected_sub\n\nupdate_fsm"] [minlen=4]
+	lost_cam_sub->remote [label = "go_to_remote\n\nupdate_fsm"] [minlen=4]
+	lost_cam_surf->follow_cam_surf [label = "detected_surf\n\nupdate_fsm"] [minlen=4]
+	lost_cam_surf->remote [label = "go_to_remote\n\nupdate_fsm"] [minlen=4]
+	remote->follow_cam_surf [label = "go_to_autonomous\n\nupdate_fsm"] [minlen=4]
 }

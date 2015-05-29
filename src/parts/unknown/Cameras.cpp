@@ -3,15 +3,25 @@
 using namespace std;
 
 Cameras::Cameras() : ComThread(){
-	cam_detect_obj = false;
-	cam_detect_horizontal = 0.;
-	cam_detect_vertical = 0.;
+	for(int i = 0; i < 2; i++){
+		cam_detect_obj[i] = false;
+		cam_detect_horizontal[i] = 0.;
+		cam_detect_vertical[i] = 0.;
+		cam_detect_size[i] = 0.;
+	}
 
 	#ifdef ENABLE_CAM1
-		capture = cv::VideoCapture(0);
+		capture1 = cv::VideoCapture(0);
 		#ifdef ENABLE_TCPCAM
 			camera_server.Add_flux(CAMERA_PORT_1);
+			camera_server.Add_flux(CAMERA_PORT_3);
+		#endif
+	#endif
+	#ifdef ENABLE_CAM2
+		capture2 = cv::VideoCapture(1);
+		#ifdef ENABLE_TCPCAM
 			camera_server.Add_flux(CAMERA_PORT_2);
+			camera_server.Add_flux(CAMERA_PORT_4);
 		#endif
 	#endif
 }
@@ -27,34 +37,57 @@ void Cameras::On_start(){}
 void Cameras::IO(){
 	Link_input("enable_streaming",		COMBOOL,	1, &enable_streaming);
 
-	Link_output("cam_detect_obj",		COMBOOL,	1, &cam_detect_obj);
-	Link_output("cam_detect_horizontal",	COMFLOAT,	1, &cam_detect_horizontal);
-	Link_output("cam_detect_vertical",	COMFLOAT,	1, &cam_detect_vertical);
+	Link_output("cam_detect_obj",		COMBOOL,	2, cam_detect_obj);
+	Link_output("cam_detect_horizontal",	COMFLOAT,	2, cam_detect_horizontal);
+	Link_output("cam_detect_vertical",	COMFLOAT,	2, cam_detect_vertical);
+	Link_output("cam_detect_size",		COMFLOAT,	2, cam_detect_size);
 }
 
 void Cameras::Job(){
 	Critical_receive();
 
 	#ifdef ENABLE_CAM1
-		capture >> img;
-		blobs.Set_img(img);
+		capture1 >> img1;
+		blobs.Set_img(img1);
 		blobs.Separer();
 		blobs.Trouver_blobs();
-		vector <float> blob_img = Find_biggest_blob(blobs.Get_mc(), blobs.Get_size(), blobs.Get_img_blobs().size());
-		cam_detect_obj = (blob_img.size() > 0);
-		if(cam_detect_obj){
-			cam_detect_horizontal = blob_img[0];
-			cam_detect_vertical = blob_img[1];
+		vector <float> blob_img1 = Find_biggest_blob(blobs.Get_mc(), blobs.Get_size(), blobs.Get_img_blobs().size());
+		cam_detect_obj[0] = (blob_img1.size() > 0);
+		if(cam_detect_obj[0]){
+			cam_detect_horizontal[0] = blob_img1[0];
+			cam_detect_vertical[0] = blob_img1[1];
+			cam_detect_size[0] = blob_img1[2];
 		}
-		if(enable_streaming){
-			#ifdef ENABLE_TCPCAM
-				camera_server.Send_tcp_img(img, CAMERA_PORT_1);
-				camera_server.Send_tcp_img(blobs.Get_img_blobs(), CAMERA_PORT_2);
-			#endif
+		#ifdef ENABLE_TCPCAM
+			if(enable_streaming){
+				camera_server.Send_tcp_img(img1, CAMERA_PORT_1);
+				camera_server.Send_tcp_img(blobs.Get_img_blobs(), CAMERA_PORT_3);
+			}
+		#endif
+	#endif
+
+	#ifdef ENABLE_CAM2
+		capture2 >> img2;
+		blobs.Set_img(img2);
+		blobs.Separer();
+		blobs.Trouver_blobs();
+		vector <float> blob_img2 = Find_biggest_blob(blobs.Get_mc(), blobs.Get_size(), blobs.Get_img_blobs().size());
+		cam_detect_obj[1] = (blob_img2.size() > 0);
+		if(cam_detect_obj[1]){
+			cam_detect_horizontal[1] = blob_img2[0];
+			cam_detect_vertical[1] = blob_img2[1];
+			cam_detect_size[1] = blob_img2[2];
 		}
+		#ifdef ENABLE_TCPCAM
+			if(enable_streaming){
+				camera_server.Send_tcp_img(img2, CAMERA_PORT_2);
+				camera_server.Send_tcp_img(blobs.Get_img_blobs(), CAMERA_PORT_4);
+			}
+		#endif
 	#endif
 
 	Critical_send();
+
 }
 
 vector <float> Cameras::Find_biggest_blob(vector <cv::Point2i> blobs_center, vector <double> blobs_size, cv::Size img_size){

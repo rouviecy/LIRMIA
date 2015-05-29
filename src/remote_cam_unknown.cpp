@@ -46,32 +46,51 @@ void open_cam(const char* host, int port, cv::Mat* img_remote, char* key_stop, m
 int main(int argc, char* argv[]){
 	#if defined(ENABLE_TCP) and defined(ENABLE_TCPCAM)
 		thread thr[4];
-		mutex mu;
-		char key = 'a'; char key1 = 'a';
-		cv::Mat img_cam, img_blobs;
-		const char* window_cam = "Unknown camera";	const char* window_blobs = "Unknown blobs";
+		mutex mu1, mu2;
+		char key = 'a'; char key1 = 'a'; char key2 = 'a';
+		cv::Mat img_cam1, img_blobs1, img_cam2, img_blobs2;
+		const char* window_cam1 = "Unknown camera 1";	const char* window_blobs1 = "Unknown blobs 1";
+		const char* window_cam2 = "Unknown camera 2";	const char* window_blobs2 = "Unknown blobs 2";
 		#ifdef ENABLE_CAM1
-			cv::namedWindow(window_cam, cv::WINDOW_AUTOSIZE);			cv::moveWindow(window_cam, 800, 150);
-			cv::namedWindow(window_blobs, cv::WINDOW_AUTOSIZE);			cv::moveWindow(window_blobs, 1200, 150);
-			thr[0] = thread(open_cam, argv[1], 5243, &img_cam, &key1, &mu);		usleep(500000);
-			thr[1] = thread(open_cam, argv[1], 5244, &img_blobs, &key1, &mu);	usleep(500000);
+			cv::namedWindow(window_cam1, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_cam1, 800, 150);
+			cv::namedWindow(window_blobs1, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_blobs1, 1200, 150);
+			thr[0] = thread(open_cam, argv[1], 5243, &img_cam1, &key1, &mu1);	usleep(500000);
+			thr[1] = thread(open_cam, argv[1], 5245, &img_blobs1, &key1, &mu1);	usleep(500000);
+		#endif
+		#ifdef ENABLE_CAM2
+			cv::namedWindow(window_cam2, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_cam2, 800, 500);
+			cv::namedWindow(window_blobs2, cv::WINDOW_AUTOSIZE);	cv::moveWindow(window_blobs2, 1200, 500);
+			thr[2] = thread(open_cam, argv[1], 5244, &img_cam2, &key2, &mu2);	usleep(500000);
+			thr[3] = thread(open_cam, argv[1], 5246, &img_blobs2, &key2, &mu2);	usleep(500000);
 		#endif
 		usleep(500000);
 		while(key != 'q'){
 			#ifdef ENABLE_CAM1
 				if(key1 == 'b'){
-					mu.lock();
-					if(img_cam.size().width > 0 && img_cam.size().height > 0)	{cv::imshow(window_cam, img_cam);}
-					if(img_blobs.size().width > 0 && img_blobs.size().height > 0)	{cv::imshow(window_blobs, img_blobs);}
-					mu.unlock();
+					mu1.lock();
+					if(img_cam1.size().width > 0 && img_cam1.size().height > 0)	{cv::imshow(window_cam1, img_cam1);}
+					if(img_blobs1.size().width > 0 && img_blobs1.size().height > 0)	{cv::imshow(window_blobs1, img_blobs1);}
+					mu1.unlock();
+				}
+			#endif
+			#ifdef ENABLE_CAM2
+				if(key2 == 'b'){
+					mu2.lock();
+					if(img_cam2.size().width > 0 && img_cam2.size().height > 0)	{cv::imshow(window_cam2, img_cam2);}
+					if(img_blobs2.size().width > 0 && img_blobs2.size().height > 0)	{cv::imshow(window_blobs2, img_blobs2);}
+					mu2.unlock();
 				}
 			#endif
 			key = cv::waitKey(10);
 		}
-		key1 = 'q';
+		key1 = 'q'; key2 = 'q';
 		#ifdef ENABLE_CAM1
 			thr[0].join();
 			thr[1].join();
+		#endif
+		#ifdef ENABLE_CAM2
+			thr[2].join();
+			thr[3].join();
 		#endif
 	#else
 		cout << "[Error] You need to activate TCP and TCPCAM to use remote camera" << endl;
