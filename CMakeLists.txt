@@ -42,22 +42,26 @@ elseif(${IS_UNKNOWN})
 	if(${IS_SIMU})
 		set(ENABLE_GRAPHVIZ ON)
 		set(ENABLE_SDL ON)
+		add_definitions(-DENABLE_SERIAL_RS232)
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
-		add_definitions(-DENABLE_CAM2)
+#		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_SIMULATOR)
+		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	else(${IS_SIMU})
 		set(ENABLE_GRAPHVIZ OFF)
 		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
+		add_definitions(-DENABLE_SERIAL_RS232)
 		add_definitions(-DENABLE_I2C)		# needs serial ISS
 		add_definitions(-DENABLE_MOTORS)	# needs serial arduino, serial ISS and I2C
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
+		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	endif(${IS_SIMU})
 endif(${IS_LIRMIA})
 
@@ -77,7 +81,6 @@ add_library(BETTERAVE_USER_COMMON
 	src/interfaces/Serial.h			src/interfaces/Serial.cpp
 	src/interfaces/TCP_client.h		src/interfaces/TCP_client.cpp
 	src/interfaces/TCP_server.h		src/interfaces/TCP_server.cpp
-	src/parts/Acoustic_modem.h		src/parts/Acoustic_modem.cpp
 	src/parts/Clock.h			src/parts/Clock.cpp
 	src/parts/Depth.h			src/parts/Depth.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
@@ -86,6 +89,7 @@ add_library(BETTERAVE_USER_COMMON
 )
 
 add_library(BETTERAVE_USER_LIRMIA
+	src/parts/lirmia/Acoustic_modem.h	src/parts/lirmia/Acoustic_modem.cpp
 	src/parts/lirmia/Autonomy.h		src/parts/lirmia/Autonomy.cpp
 	src/parts/lirmia/Cameras.h		src/parts/lirmia/Cameras.cpp
 	src/parts/lirmia/Logger.h		src/parts/lirmia/Logger.cpp
@@ -99,6 +103,7 @@ add_library(BETTERAVE_USER_LIRMIA
 )
 
 add_library(BETTERAVE_USER_UNKNOWN
+	src/parts/unknown/Acoustic_modem.h	src/parts/unknown/Acoustic_modem.cpp
 	src/parts/unknown/Autonomy.h		src/parts/unknown/Autonomy.cpp
 	src/parts/unknown/Cameras.h		src/parts/unknown/Cameras.cpp
 	src/parts/unknown/Logger.h		src/parts/unknown/Logger.cpp

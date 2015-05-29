@@ -13,6 +13,7 @@
 
 #include "../core/Maestro.h"
 #include "../interfaces/Serial.h"
+#include "../parts/lirmia/Acoustic_modem.h"
 #include "../parts/lirmia/Autonomy.h"
 #include "../parts/lirmia/Cameras.h"
 #include "../parts/lirmia/Logger.h"
@@ -23,7 +24,6 @@
 #include "../parts/lirmia/Simulator.h"
 #include "../parts/lirmia/State.h"
 #include "../parts/lirmia/State_machine.h"
-#include "../parts/Acoustic_modem.h"
 #include "../parts/Clock.h"
 #include "../parts/Depth.h"
 #include "../parts/Echosonder.h"

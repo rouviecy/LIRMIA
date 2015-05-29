@@ -5,6 +5,7 @@ using namespace std;
 Unknown::Unknown() : Maestro(){
 
 	// Warning : pass-by-reference to avoid slicing !
+	Add_thread(&acoustic_modem,	"Acoustic modem",		1000000);	// 1 s
 	Add_thread(&autonomy,		"Autonomy",			50000);		// 50 ms
 	Add_thread(&cameras,		"Cameras",			100000);	// 100 ms
 	Add_thread(&gps,		"GPS",				10000);		// 10 ms
@@ -35,6 +36,9 @@ void Unknown::Shutdown(){
 	#ifdef ENABLE_SERIAL_ISS
 		serial_iss.Serial_close();
 	#endif
+	#ifdef ENABLE_SERIAL_RS232
+		serial_rs232.Serial_close();
+	#endif
 }
 
 void Unknown::Init_serial(){
@@ -43,8 +47,6 @@ void Unknown::Init_serial(){
 		gps.Set_serial(&serial_arduino);
 		motor.Set_serial(&serial_arduino);
 	#endif
-	#ifdef ENABLE_SERIAL_ISS
-		serial_iss.Serial_init(DEV_SERIAL_ISS, B115200, false);
 	#ifdef ENABLE_SERIAL_ISS
 		serial_iss.Serial_init(DEV_SERIAL_ISS, B115200, false);
 		unsigned char init_I2C_and_serial[5];
@@ -56,12 +58,14 @@ void Unknown::Init_serial(){
 		serial_iss.Serial_write(init_I2C_and_serial, 5);
 		motors.Set_iss(&serial_iss);
 	#endif
+	#ifdef ENABLE_SERIAL_RS232
+		serial_rs232.Serial_init(DEV_SERIAL_RS232, B9600, true);
+		acoustic_modem.Set_serial(&serial_rs232);
 	#endif
 }
 
 int main(){
 	Unknown robot;
-//	usleep(50000000);
 	robot.Shutdown();
 	return 0;
 }
