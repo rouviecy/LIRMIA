@@ -13,6 +13,7 @@
 
 #include "../core/ComThread.h"
 #include "../interfaces/Serial.h"
+#include <algorithm>
 
 class Depth : public ComThread{
 

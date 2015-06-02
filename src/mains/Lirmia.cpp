@@ -61,7 +61,7 @@ void Lirmia::Init_serial(){
 		init_I2C_and_serial[3] = 0x00;	// baudrate
 		init_I2C_and_serial[4] = 0x19;	// baudrate 115200
 		serial_iss.Serial_write(init_I2C_and_serial, 5);
-		motors.Set_serial(&serial);
+		motors.Set_serial(&serial_iss);
 	#endif
 	#ifdef ENABLE_SERIAL_RS232
 		serial_rs232.Serial_init(DEV_SERIAL_RS232, B9600, true);

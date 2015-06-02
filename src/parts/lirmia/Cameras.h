@@ -54,7 +54,7 @@ private:
 	float cam_pipeline_angle[2];	float cam_pipeline_distance[2];
 	float cam_size_obj[2];
 	bool cam_detect_opi;
-	float cam_opi_horizontal, cam_opi_vertical;
+	float cam_opi_horizontal, cam_opi_vertical, cam_size_opi;
 
 	cv::Mat img1, img2;
 
