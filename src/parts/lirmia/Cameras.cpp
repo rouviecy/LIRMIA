@@ -79,16 +79,7 @@ void Cameras::Job(){
 
 	#ifdef ENABLE_CAM1
 		capture1 >> img1;
-		blobs.Set_img(img1);
-		blobs.Separer();
-		blobs.Trouver_blobs();
-		vector <float> blob_img1 = Find_biggest_blob(blobs.Get_mc(), blobs.Get_size(), blobs.Get_img_blobs().size());
-		cam_detect_obj[0] = (blob_img1.size() > 0);
-		if(cam_detect_obj[0]){
-			cam_detect_horizontal[0] = blob_img1[0];
-			cam_detect_vertical[0] = blob_img1[1];
-			cam_size_obj[0] = blob_img1[2];
-		}
+		Find_blobs(&img1, &blobs, &(cam_detect_obj[0]), &(cam_detect_horizontal[0]), &(cam_detect_vertical[0]), &(cam_size_obj[0]));
 		reco.Set_img(blobs.Get_img_blobs());
 		cv::Mat img_pipeline1 = reco.Trouver_ligne_principale(&(cam_detect_pipe[0]), &(cam_pipeline_angle[0]), &(cam_pipeline_distance[0]));
 		if(enable_streaming){
@@ -104,24 +95,10 @@ void Cameras::Job(){
 
 	#ifdef ENABLE_CAM2
 		capture2 >> img2;
-
-		// Find blobs (with pipeline color)
-		blobs.Set_img(img2);
-		blobs.Separer();
-		blobs.Trouver_blobs();
-		vector <float> blob_img2 = Find_biggest_blob(blobs.Get_mc(), blobs.Get_size(), blobs.Get_img_blobs().size());
-		cam_detect_obj[1] = (blob_img2.size() > 0);
-		if(cam_detect_obj[1]){
-			cam_detect_horizontal[1] = blob_img2[0];
-			cam_detect_vertical[1] = blob_img2[1];
-			cam_size_obj[1] = blob_img2[2];
-		}
-
-		// Find pipeline
+		Find_blobs(&img2, &blobs, &(cam_detect_obj[1]), &(cam_detect_horizontal[1]), &(cam_detect_vertical[1]), &(cam_size_obj[1]));
 		reco.Set_img(blobs.Get_img_blobs());
 		cv::Mat img_pipeline2 = reco.Trouver_ligne_principale(&(cam_detect_pipe[1]), &(cam_pipeline_angle[1]), &(cam_pipeline_distance[1]));
-
-		// Find blobs (with another color)
+// TODO : à factoriser
 		blobs_extra.Set_img(img2);
 		blobs_extra.Separer();
 		blobs_extra.Trouver_blobs();
@@ -133,6 +110,7 @@ cout << "Détection d'une OPI" << endl;
 			cam_opi_vertical = blob_extra_img[1];
 			cam_size_opi = blob_extra_img[2];
 		}
+// END TODO
 		if(enable_streaming){
 			#ifdef ENABLE_RECORDCAM
 				camera_server.Record_img(img2, 1);
@@ -163,6 +141,29 @@ vector <float> Cameras::Find_biggest_blob(vector <cv::Point2i> blobs_center, vec
 		result.push_back((float) (max_size / (img_size.width * img_size.height)));
 	}
 	return result;
+}
+
+void Cameras::Find_blobs(cv::Mat* img, Blobs* blobs_finder, bool* out_detected, float* out_horizontal, float* out_vertical, float* out_size){
+	blobs_finder->Set_img(*img);
+	blobs_finder->Separer();
+	blobs_finder->Trouver_blobs();
+	vector <cv::Point2i> blobs_center = blobs_finder->Get_mc();
+	vector <double> blobs_size = blobs_finder->Get_size();
+	cv::Size img_size = blobs_finder->Get_img_blobs().size();
+	double max_size = 0;
+	int index_biggest = 0;
+	for(size_t i = 0; i < blobs_size.size(); i++){
+		if(blobs_size[i] > max_size){
+			max_size = blobs_size[i];
+			index_biggest = i;
+		}
+	}
+	*out_detected = (max_size > 100);
+	if(*out_detected){
+		*out_horizontal = (float) (2 * blobs_center[index_biggest].x) / img_size.width - 1.;
+		*out_vertical = (float) (2 * blobs_center[index_biggest].y) / img_size.height - 1.;
+		*out_size = (float) (max_size / (img_size.width * img_size.height));
+	}
 }
 
 cv::Mat Cameras::Get_img1(){return img1;}

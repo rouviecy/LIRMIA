@@ -58,6 +58,7 @@ private:
 
 	cv::Mat img1, img2;
 
+	void Find_blobs(cv::Mat* img, Blobs* blobs_finder, bool* out_detected, float* out_horizontal, float* out_vertical, float* out_size);
 	std::vector <float> Find_biggest_blob(std::vector <cv::Point2i> blobs_center, std::vector <double> blobs_size, cv::Size img_size);
 
 };
