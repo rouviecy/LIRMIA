@@ -3,9 +3,9 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA ON)
+set(IS_LIRMIA OFF)
 set(IS_UNKNOWN OFF)
-set(IS_SIMU ON)
+set(IS_SIMU OFF)
 
 if(${IS_LIRMIA})
 	set(ENABLE_PYTHON OFF)
@@ -15,7 +15,7 @@ if(${IS_LIRMIA})
 		set(ENABLE_SDL ON)
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
-#		add_definitions(-DENABLE_CAM2)
+		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_RECORDCAM)	# needs CAM1/CAM2
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 #		add_definitions(-DENABLE_MODEM)		# needs serial RS232
@@ -63,6 +63,15 @@ elseif(${IS_UNKNOWN})
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	endif(${IS_SIMU})
+else(${IS_LIRMIA})
+	set(ENABLE_GRAPHVIZ ON)
+	set(ENABLE_SDL ON)
+	add_definitions(-DENABLE_TCP)
+	add_definitions(-DENABLE_CAM1)
+	add_definitions(-DENABLE_CAM2)
+	add_definitions(-DENABLE_RECORDCAM)	# needs CAM1/CAM2
+	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
+#	add_definitions(-DENABLE_MODEM)		# needs serial RS232
 endif(${IS_LIRMIA})
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)
