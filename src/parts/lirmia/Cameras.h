@@ -13,6 +13,7 @@
 
 #include "../../interfaces/vision/Blobs.h"
 #include "../../interfaces/vision/Reco.h"
+#include "../../interfaces/vision/hsv_params.h"
 #include "../../interfaces/Camera_server.h"
 #include "../../core/ComThread.h"
 #include <opencv2/opencv.hpp>
@@ -38,8 +39,9 @@ private:
 
 	cv::VideoCapture capture1, capture2;
 
-	Blobs blobs;
+	Blobs blobs, blobs_extra;
 	Camera_server camera_server;
+	hsv_params* hsv_extra;
 	Reco reco;
 
 	void On_start();
@@ -51,6 +53,8 @@ private:
 	float cam_detect_horizontal[2];	float cam_detect_vertical[2];
 	float cam_pipeline_angle[2];	float cam_pipeline_distance[2];
 	float cam_size_obj[2];
+	bool cam_detect_opi;
+	float cam_opi_horizontal, cam_opi_vertical;
 
 	cv::Mat img1, img2;
 

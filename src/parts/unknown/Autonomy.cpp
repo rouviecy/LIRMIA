@@ -53,7 +53,7 @@ void Autonomy::Job(){
 		}
 	}
 	else if(fsm_state == LOST_CAM_SUB){
-		motor		= 0.;
+		motor		= 0.2;
 		rudder		= 0.;
 		bow_thruster	= 0.;
 	}

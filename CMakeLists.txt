@@ -3,8 +3,8 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA OFF)
-set(IS_UNKNOWN ON)
+set(IS_LIRMIA ON)
+set(IS_UNKNOWN OFF)
 set(IS_SIMU ON)
 
 if(${IS_LIRMIA})
@@ -18,7 +18,7 @@ if(${IS_LIRMIA})
 #		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_RECORDCAM)	# needs CAM1/CAM2
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
-		add_definitions(-DENABLE_MODEM)		# needs serial RS232
+#		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 		add_definitions(-DENABLE_SIMULATOR)
 	else(${IS_SIMU})
 		set(ENABLE_GRAPHVIZ OFF)
@@ -48,7 +48,7 @@ elseif(${IS_UNKNOWN})
 #		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_SIMULATOR)
-		add_definitions(-DENABLE_MODEM)		# needs serial RS232
+#		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	else(${IS_SIMU})
 		set(ENABLE_GRAPHVIZ OFF)
 		set(ENABLE_SDL OFF)

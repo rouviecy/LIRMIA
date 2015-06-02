@@ -9,6 +9,21 @@ Cameras::Cameras() : ComThread(){
 		cam_pipeline_angle[i] = 0.;	cam_pipeline_distance[i] = 0.;
 		cam_size_obj[i] = 0.;
 	}
+	cam_detect_opi = false;
+	cam_opi_horizontal = 0.;
+	cam_opi_vertical = 0.;
+	hsv_extra = new hsv_params;
+	hsv_extra->H_min = 113;
+	hsv_extra->H_max = 137;
+	hsv_extra->S_min = 161;
+	hsv_extra->S_max = 255;
+	hsv_extra->V_min = 108;
+	hsv_extra->V_max = 255;
+	hsv_extra->nb_dilate = 9;
+	hsv_extra->nb_erode = 9;
+	hsv_extra->seuil = 1000;
+	blobs_extra.Definir_limites_separation(hsv_extra);
+	delete hsv_extra;
 
 	#ifdef ENABLE_CAM1
 		capture1 = cv::VideoCapture(0);
@@ -54,6 +69,9 @@ void Cameras::IO(){
 	Link_output("cam_pipeline_angle",	COMFLOAT,	2, cam_pipeline_angle);
 	Link_output("cam_pipeline_distance",	COMFLOAT,	2, cam_pipeline_distance);
 	Link_output("cam_size_obj",		COMFLOAT,	2, cam_size_obj);
+	Link_output("cam_detect_opi",		COMBOOL,	1, &cam_detect_opi);
+	Link_output("cam_opi_horizontal",	COMFLOAT,	1, &cam_opi_horizontal);
+	Link_output("cam_opi_vertical",		COMFLOAT,	1, &cam_opi_vertical);
 }
 
 void Cameras::Job(){
@@ -86,6 +104,8 @@ void Cameras::Job(){
 
 	#ifdef ENABLE_CAM2
 		capture2 >> img2;
+
+		// Find blobs (with pipeline color)
 		blobs.Set_img(img2);
 		blobs.Separer();
 		blobs.Trouver_blobs();
@@ -96,8 +116,23 @@ void Cameras::Job(){
 			cam_detect_vertical[1] = blob_img2[1];
 			cam_size_obj[1] = blob_img2[2];
 		}
+
+		// Find pipeline
 		reco.Set_img(blobs.Get_img_blobs());
 		cv::Mat img_pipeline2 = reco.Trouver_ligne_principale(&(cam_detect_pipe[1]), &(cam_pipeline_angle[1]), &(cam_pipeline_distance[1]));
+
+		// Find blobs (with another color)
+		blobs_extra.Set_img(img2);
+		blobs_extra.Separer();
+		blobs_extra.Trouver_blobs();
+		vector <float> blob_extra_img = Find_biggest_blob(blobs_extra.Get_mc(), blobs_extra.Get_size(), blobs_extra.Get_img_blobs().size());
+		cam_detect_opi = (blob_extra_img.size() > 0);
+		if(cam_detect_opi){
+cout << "Détection d'une OPI" << endl;
+			cam_opi_horizontal = blob_extra_img[0];
+			cam_opi_vertical = blob_extra_img[1];
+			cam_size_opi = blob_extra_img[2];
+		}
 		if(enable_streaming){
 			#ifdef ENABLE_RECORDCAM
 				camera_server.Record_img(img2, 1);
@@ -110,7 +145,6 @@ void Cameras::Job(){
 	#endif
 
 	Critical_send();
-
 }
 
 vector <float> Cameras::Find_biggest_blob(vector <cv::Point2i> blobs_center, vector <double> blobs_size, cv::Size img_size){
