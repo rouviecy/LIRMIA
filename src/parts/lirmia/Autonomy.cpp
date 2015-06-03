@@ -109,7 +109,7 @@ void Autonomy::Job(){
 		motor[2] = 0.;
 		motor[3] = 0.;
 	}
-	else if(fsm_state == UP || fsm_state == DOWN || fsm_state == STAY){ // TODO : check
+	else if(fsm_state == STAY){ // TODO : check
 		float diff_thz = keep_thz - thxyz[3];
 		if(diff_thz < -360){diff_thz += 360;}
 		if(diff_thz > +360){diff_thz -= 360;}
@@ -117,14 +117,20 @@ void Autonomy::Job(){
 		if(diff_thz > +180){diff_thz -= 360;}
 		motor[0] = - diff_thz / 500;
 		motor[1] = + diff_thz / 500;
-		if(fsm_state == STAY){
-			motor[2] = + thxyz[2] / 500;
-			motor[3] = - thxyz[2] / 500;
-		}
-		else{
-			motor[2] = + thxyz[2] / 500 - remote_deeper / 2;
-			motor[3] = - thxyz[2] / 500 - remote_deeper / 2;
-		}
+		motor[2] = + thxyz[2] / 500;
+		motor[3] = - thxyz[2] / 500;
+	}
+	else if(fsm_state == UP){
+		motor[0] = +0.;
+		motor[1] = +0.;
+		motor[2] = +0.5;
+		motor[3] = +0.5;
+	}
+	else if(fsm_state == DOWN){
+		motor[0] = +0.;
+		motor[1] = +0.;
+		motor[2] = -0.5;
+		motor[3] = -0.5;
 	}
 	else{
 		motor[0] = 0.;

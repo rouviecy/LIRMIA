@@ -94,6 +94,8 @@ void State_machine::IO(){
 	Link_input("fsm_nofollow",	COMBOOL,	1, &fsm_nofollow);
 	Link_input("cam_detect_obj",	COMBOOL,	2, cam_detect_obj);
 	Link_input("cam_detect_pipe",	COMBOOL,	2, cam_detect_pipe);
+	Link_input("cam_detect_opi",	COMBOOL,	1, &cam_detect_opi);
+
 	Link_output("fsm_state",	COMINT,		1, &fsm_state);
 }
 
@@ -108,7 +110,7 @@ void State_machine::Job(){
 	if(fsm_nofollow){fsm.Call_event("stop_follow");}
 	if(fsm_state == EXPLORE){
 		if(fsm_up){fsm.Call_event("go_up");}
-		if(!fsm_nofollow){
+		if(!fsm_nofollow && !cam_detect_opi){
 			if(cam_detect_pipe[0]){fsm.Call_event("pipe_detected_cam1");}
 			if(cam_detect_pipe[1]){fsm.Call_event("pipe_detected_cam2");}
 			if(cam_detect_obj[0]){fsm.Call_event("found_something_cam1");}
@@ -125,6 +127,18 @@ void State_machine::Job(){
 	}
 	if(fsm_state == FOLLOW_PIPE_CAM1 && !cam_detect_pipe[0]){fsm.Call_event("stop_follow");}
 	if(fsm_state == FOLLOW_PIPE_CAM2 && !cam_detect_pipe[1]){fsm.Call_event("stop_follow");}
+	if(cam_detect_opi){
+		switch(fsm_state){
+			case EXPLORE:		fsm.Call_event("go_to_autonomous");	break;
+			case STAY:		fsm.Call_event("go_up");		break;
+			case FOLLOW_OBJ_CAM1:	fsm.Call_event("stop_follow");		break;
+			case FOLLOW_OBJ_CAM2:	fsm.Call_event("stop_follow");		break;
+			case FOLLOW_PIPE_CAM1:	fsm.Call_event("stop_follow");		break;
+			case FOLLOW_PIPE_CAM2:	fsm.Call_event("stop_follow");		break;
+			default:							break;
+		}
+	}
+
 	Critical_send();
 }
 
