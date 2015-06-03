@@ -18,6 +18,7 @@ Cameras::Cameras() : ComThread(){
 	hsv_extra->nb_dilate = 9;	hsv_extra->nb_erode = 9;	hsv_extra->seuil = 1000;
 	blobs_extra.Definir_limites_separation(hsv_extra);
 	delete hsv_extra;
+	keep_count_detect_opi = 0;
 
 	#ifdef ENABLE_CAM1
 		capture1 = cv::VideoCapture(0);
@@ -94,7 +95,13 @@ void Cameras::Job(){
 		reco.Set_img(blobs.Get_img_blobs());
 		cv::Mat img_pipeline2 = reco.Trouver_ligne_principale(&(cam_detect_pipe[1]), &(cam_pipeline_angle[1]), &(cam_pipeline_distance[1]));
 		if(cam_detect_opi){
-			cout << "Détection d'une OPI" << endl;
+			keep_count_detect_opi++;
+			if(keep_count_detect_opi > 5){
+				cout << "Détection d'une OPI" << endl;
+			}
+		}
+		else{
+			keep_count_detect_opi = 0;
 		}
 
 		if(enable_streaming){
