@@ -139,3 +139,11 @@ void Camera_server::Record_img(cv::Mat img, int cam_index){
 	img.copyTo(img_buffers[cam_index][cycle_position[cam_index]]);
 	cycle_position[cam_index]++;
 }
+
+void Camera_server::Direct_record_img(cv::Mat img, std::string id){
+	if(!enabled_record){
+		cout << "[Error] Trying to record an image while recording is not enabled : abord mission" << endl;
+		return;
+	}
+	cv::imwrite(path_record + id, img);
+}

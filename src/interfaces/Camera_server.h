@@ -37,6 +37,7 @@ public:
 
 	bool Send_tcp_img(cv::Mat img, int port);
 	void Record_img(cv::Mat img, int cam_index);
+	void Direct_record_img(cv::Mat img, std::string id);
 
 private:
 

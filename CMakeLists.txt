@@ -3,9 +3,10 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA OFF)
+set(IS_LIRMIA ON)
 set(IS_UNKNOWN OFF)
-set(IS_SIMU OFF)
+set(IS_R2D2 OFF)
+set(IS_SIMU ON)
 
 if(${IS_LIRMIA})
 	set(ENABLE_PYTHON OFF)
@@ -42,7 +43,6 @@ elseif(${IS_UNKNOWN})
 	if(${IS_SIMU})
 		set(ENABLE_GRAPHVIZ ON)
 		set(ENABLE_SDL ON)
-		add_definitions(-DENABLE_SERIAL_RS232)
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 #		add_definitions(-DENABLE_CAM2)
@@ -62,6 +62,24 @@ elseif(${IS_UNKNOWN})
 		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_MODEM)		# needs serial RS232
+	endif(${IS_SIMU})
+elseif(${IS_R2D2})
+	set(ENABLE_PYTHON OFF)
+	set(ENABLE_JAVA OFF)
+	if(${IS_SIMU})
+		set(ENABLE_GRAPHVIZ ON)
+		set(ENABLE_SDL ON)
+		add_definitions(-DENABLE_TCP)
+		add_definitions(-DENABLE_CAM1)
+		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
+	else(${IS_SIMU})
+		set(ENABLE_GRAPHVIZ OFF)
+		set(ENABLE_SDL OFF)
+#		add_definitions(-DENABLE_SERIAL)
+#		add_definitions(-DENABLE_MOTORS)	# needs serial
+		add_definitions(-DENABLE_TCP)
+		add_definitions(-DENABLE_CAM1)
+		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
 	endif(${IS_SIMU})
 else(${IS_LIRMIA})
 	set(ENABLE_GRAPHVIZ ON)
@@ -124,23 +142,39 @@ add_library(BETTERAVE_USER_UNKNOWN
 	src/parts/unknown/State_machine.h	src/parts/unknown/State_machine.cpp
 )
 
-add_executable(lirmia src/mains/Lirmia.cpp)
-target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+add_library(BETTERAVE_USER_R2D2
+	src/parts/r2d2/Autonomy.h		src/parts/r2d2/Autonomy.cpp
+	src/parts/r2d2/Cameras.h		src/parts/r2d2/Cameras.cpp
+	src/parts/r2d2/Logger.h			src/parts/r2d2/Logger.cpp
+	src/parts/r2d2/Motors.h			src/parts/r2d2/Motors.cpp
+	src/parts/r2d2/Remote_control.h		src/parts/r2d2/Remote_control.cpp
+	src/parts/r2d2/Remote_monitor.h		src/parts/r2d2/Remote_monitor.cpp
+	src/parts/r2d2/State_machine.h		src/parts/r2d2/State_machine.cpp
+)
 
+add_executable(lirmia src/mains/Lirmia.cpp)
 add_executable(unknown src/mains/Unknown.cpp)
+add_executable(r2d2 src/mains/R2D2.cpp)
+
+target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 target_link_libraries(unknown ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_UNKNOWN BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(r2d2 ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_R2D2 BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 
 add_executable(remote_lirmia src/remote_control_monitor_lirmia.cpp)
-target_link_libraries(remote_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-
 add_executable(remote_unknown src/remote_control_monitor_unknown.cpp)
+add_executable(remote_r2d2 src/remote_control_monitor_r2d2.cpp)
+
+target_link_libraries(remote_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 target_link_libraries(remote_unknown ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_UNKNOWN BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(remote_r2d2 ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_R2D2 BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 
 add_executable(camera_lirmia src/remote_cam_lirmia.cpp)
-target_link_libraries(camera_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-
 add_executable(camera_unknown src/remote_cam_unknown.cpp)
+add_executable(camera_r2d2 src/remote_cam_r2d2.cpp)
+
+target_link_libraries(camera_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 target_link_libraries(camera_unknown ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(camera_r2d2 ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 
 add_executable(recam src/local_cam_rec.cpp)
 target_link_libraries(recam ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
