@@ -102,6 +102,17 @@ void State_machine::IO(){
 void State_machine::Job(){
 	Critical_receive();
 	// TODO : appel de l'événement "wall_detected"
+		if(cam_detect_opi){
+		switch(fsm_state){
+			case EXPLORE:		fsm.Call_event("go_to_autonomous");	break;
+			case STAY:		fsm.Call_event("go_up");		break;
+			case FOLLOW_OBJ_CAM1:	fsm.Call_event("stop_follow");		break;
+			case FOLLOW_OBJ_CAM2:	fsm.Call_event("stop_follow");		break;
+			case FOLLOW_PIPE_CAM1:	fsm.Call_event("stop_follow");		break;
+			case FOLLOW_PIPE_CAM2:	fsm.Call_event("stop_follow");		break;
+			default:							break;
+		}
+	}
 	if(fsm_state != REMOTE && remote){fsm.Call_event("go_to_remote");}
 	if(fsm_state == REMOTE && !remote || fsm_stabilize){fsm.Call_event("go_to_autonomous");}
 	if(fsm_down){fsm.Call_event("go_down");}
@@ -127,17 +138,6 @@ void State_machine::Job(){
 	}
 	if(fsm_state == FOLLOW_PIPE_CAM1 && !cam_detect_pipe[0]){fsm.Call_event("stop_follow");}
 	if(fsm_state == FOLLOW_PIPE_CAM2 && !cam_detect_pipe[1]){fsm.Call_event("stop_follow");}
-	if(cam_detect_opi){
-		switch(fsm_state){
-			case EXPLORE:		fsm.Call_event("go_to_autonomous");	break;
-			case STAY:		fsm.Call_event("go_up");		break;
-			case FOLLOW_OBJ_CAM1:	fsm.Call_event("stop_follow");		break;
-			case FOLLOW_OBJ_CAM2:	fsm.Call_event("stop_follow");		break;
-			case FOLLOW_PIPE_CAM1:	fsm.Call_event("stop_follow");		break;
-			case FOLLOW_PIPE_CAM2:	fsm.Call_event("stop_follow");		break;
-			default:							break;
-		}
-	}
 
 	Critical_send();
 }

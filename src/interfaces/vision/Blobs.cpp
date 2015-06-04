@@ -4,7 +4,7 @@ using namespace std;
 
 // Constructeur
 Blobs::Blobs(){
-	rouge = cv::Scalar(0, 0, 255); bleu = cv::Scalar(255, 0, 0);
+	rouge = cv::Scalar(0, 0, 255); bleu = cv::Scalar(255, 0, 0); blanc = cv::Scalar(255, 255, 255);
 	morpho_kern = cv::Mat::ones(cv::Size(3,3), CV_8U);
 	hsv_params *hsv = (hsv_params*) malloc(sizeof(hsv_params));
 	hsv->H_min =		80;
@@ -98,4 +98,13 @@ std::vector <double> Blobs::Get_size() const{return taille;}
 void Blobs::Set_img(cv::Mat image){
 	image.copyTo(img_brute);
 	cv::cvtColor(img_brute, img_HSV, CV_RGB2HSV, 3);
+}
+cv::Mat Blobs::Get_contour(int index){
+	cv::Mat result = cv::Mat::zeros(img_sep.size(), CV_8UC3);
+	vector <vector <cv::Point2i> > the_blob;
+	the_blob.push_back(liste_blobs[index]);
+	vector <cv::Vec4i> monarchie;
+	monarchie.push_back(hierarchie_blobs[index]);
+	drawContours(result, the_blob, 0, bleu, 5, 8, monarchie);
+	return result;
 }

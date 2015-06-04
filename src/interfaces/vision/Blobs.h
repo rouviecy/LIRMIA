@@ -34,6 +34,7 @@ public:
 	std::vector <cv::Point2i> Get_mc() const;	// Guetter sur le centre massique de chaque blob
 	std::vector <cv::Rect> Get_rect() const;	// Guetter sur les rectangles englobants des blobs
 	std::vector <double> Get_size() const;		// Guetter sur les tailles des blobs
+	cv::Mat Get_contour(int index);			// Guetter sur le contour d'un blob
 
 	void Set_img(cv::Mat image);				// Setter d'image à traiter
 	void Definir_limites_separation(hsv_params *hsv);	// Récupération des paramètres de segmentation HSV
@@ -47,7 +48,7 @@ private:
 
 	double seuil_taille_blobs;	// taille minimum des blobs
 	cv::Mat morpho_kern;		// pour érodation et dilatation
-	cv::Scalar rouge, bleu;		// des couleurs ...
+	cv::Scalar bleu, blanc, rouge;	// des couleurs ...
 
 	cv::Mat img_brute;		// image input
 	cv::Mat img_HSV;		// image dans l'espace HSV
