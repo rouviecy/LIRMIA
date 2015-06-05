@@ -15,7 +15,7 @@
 #include <vector>
 #include <algorithm>
 #include "../core/ComThread.h"
-#include "../interfaces/Serial.h"
+#include "./Subscriber.h"
 
 class Imu_razor : public ComThread{
 
@@ -24,18 +24,17 @@ public:
 	Imu_razor();
 	~Imu_razor();
 
-	void Set_serial(Serial* serial);
+	void Subscribe(Subscriber* subscriber);
 
 private:
 
 	Serial* serial;
 
-	std::vector <char> msg;
-	int header_size;
-
 	void On_start();
 	void Job();
 	void IO();
+
+	static void Process_serial_data(void* object, char* input_msg);
 
 	float imu_thxyz[3];
 

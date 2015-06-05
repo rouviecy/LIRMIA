@@ -113,6 +113,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
 	src/parts/Gps.h				src/parts/Gps.cpp
 	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp
+	src/parts/Subscriber.h			src/parts/Subscriber.cpp
 )
 
 add_library(BETTERAVE_USER_LIRMIA

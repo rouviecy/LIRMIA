@@ -12,7 +12,7 @@
 #define DEPTH
 
 #include "../core/ComThread.h"
-#include "../interfaces/Serial.h"
+#include "./Subscriber.h"
 #include <algorithm>
 
 class Depth : public ComThread{
@@ -22,21 +22,18 @@ public:
 	Depth();
 	~Depth();
 
-	void Set_serial(Serial* serial);
+	void Subscribe(Subscriber* subscriber);
 
 private:
-
-	Serial* serial;
 
 	void On_start();
 	void Job();
 	void IO();
 
-	std::vector <char> msg;
-	int header_size;
-
 	float t;
 	float depth;
+
+	static void Process_serial_data(void* object, char* input_msg);
 
 };
 

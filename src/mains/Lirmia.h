@@ -28,6 +28,7 @@
 #include "../parts/Depth.h"
 #include "../parts/Echosonder.h"
 #include "../parts/Imu_razor.h"
+#include "../parts/Subscriber.h"
 
 
 #define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_5533330393435131F151-if00"
@@ -62,6 +63,7 @@ private:
 	Simulator	simulator;
 	State		state;
 	State_machine	state_machine;
+	Subscriber	subscriber;
 
 };
 

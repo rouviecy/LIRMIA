@@ -9,9 +9,7 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&autonomy,		"Autonomy",			50000);		// 50 ms
 	Add_thread(&cameras,		"Cameras",			100000);	// 100 ms
 	Add_thread(&internal_clock,	"Clock",			1000);		// 1 ms
-	Add_thread(&depth,		"Depth",			10000);		// 10 s
 	Add_thread(&echosonder,		"Echo sonder",			100000);	// 100 ms
-	Add_thread(&imu,		"Inertial Measurement Unit",	10000);		// 10 ms
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&mapping,		"Mapping",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
@@ -19,7 +17,8 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&remote_monitor,	"Remote monitor",		100000);	// 100 ms
 	Add_thread(&simulator,		"Simulator",			5000);		// 5 ms
 	Add_thread(&state,		"State",			20000);		// 20 ms
-	Add_thread(&state_machine,	"Finite state machine",		40000);		// 40 s
+	Add_thread(&state_machine,	"Finite state machine",		40000);		// 40 ms
+	Add_thread(&subscriber,		"Subscriber",			40000);		// 40 ms
 
 	Init_serial();
 	Link_all();
@@ -49,8 +48,9 @@ void Lirmia::Shutdown(){
 void Lirmia::Init_serial(){
 	#ifdef ENABLE_SERIAL_ARDUINO
 		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B57600, true);
-		imu.Set_serial(&serial_arduino);
-		depth.Set_serial(&serial_arduino);
+		subscriber.Set_serial(&serial_arduino);
+		imu.Subscribe(&subscriber);
+		depth.Subscribe(&subscriber);
 	#endif
 	#ifdef ENABLE_SERIAL_ISS
 		serial_iss.Serial_init(DEV_SERIAL_ISS, B115200, false);

@@ -4,11 +4,6 @@ using namespace std;
 
 Depth::Depth() : ComThread(){
 	depth = 0.;
-	#if defined(ENABLE_DEPTH) and not defined(ENABLE_SERIAL_ARDUINO)
-		cout << "[Warning] You are trying to use depth sensor without Arduino serial enabled : depth sensor will be disabled" << endl;
-	#endif
-	msg.clear();
-	header_size = 0;
 }
 
 Depth::~Depth(){}
@@ -21,43 +16,34 @@ void Depth::IO(){
 }
 
 void Depth::Job(){
-	Critical_receive();
-	#if defined(ENABLE_DEPTH) and defined(ENABLE_SERIAL_ARDUINO)
-		serial->Lock();
-		char* answer = serial->Serial_read();
-		for(int i = 0; i < SERIAL_BUFFER_LEN; i++){
-			switch(header_size){
-				case 0:	header_size = (answer[i] == '#') ? header_size + 1 : 0; break;
-				case 1:	header_size = (answer[i] == 'D') ? header_size + 1 : 0; break;
-				case 2:	header_size = (answer[i] == 'E') ? header_size + 1 : 0; break;
-				case 3:	header_size = (answer[i] == 'P') ? header_size + 1 : 0; break;
-				case 4:	header_size = (answer[i] == '=') ? header_size + 1 : 0; break;
-				default:
-				if(answer[i] == '\n' && header_size > 4){
-					msg.push_back(',');
-					msg.push_back('\0');
-					size_t next;
-					string msg_ypr = string(msg.data());
-					if(count(msg_ypr.begin(), msg_ypr.end(), ',') == 1){
-						vector <string> tokens;
-						next = msg_ypr.find_first_of(",", 0);
-						string msg_depth = msg_ypr.substr(0, next);
-						try{
-							depth = stof(msg_depth);
-							Critical_send();
-						}
-						catch(std::exception const & e){}
-					}
-					header_size = 0;
-					msg.clear();
-					continue;
-				}
-				msg.push_back(answer[i]);
-				break;
-			}
-		}
-		serial->Unlock();
-	#endif
+	cout << "[Warning] Depth thread should not be launched : only Subscriber should call it" << endl;
 }
 
-void Depth::Set_serial(Serial* serial){this->serial = serial;}
+void Depth::Process_serial_data(void* object, char* input_msg){
+	Depth* self = (Depth*) object;
+	string msg_ypr = string(input_msg + 5 * sizeof(char));
+	if(count(msg_ypr.begin(), msg_ypr.end(), ',') == 1){
+		vector <string> tokens;
+		size_t next = msg_ypr.find_first_of(",", 0);
+		string msg_depth = msg_ypr.substr(0, next);
+		try{
+			self->depth = stof(msg_depth);
+			self->Critical_send();
+		}
+		catch(std::exception const & e){}
+	}
+}
+
+void Depth::Subscribe(Subscriber* subscriber){
+	#if defined(ENABLE_DEPTH) and not defined(ENABLE_SERIAL_ARDUINO)
+		cout << "[Warning] You are trying to use depth sensor without serial enabled : depth sensor will be disabled" << endl;
+		return;
+	#endif
+	map <int, char> keys;
+	keys[0] = '#';
+	keys[1] = 'D';
+	keys[2] = 'E';
+	keys[3] = 'P';
+	keys[4] = '=';
+	subscriber->Subscribe(keys, &(Depth::Process_serial_data), (void*) this);
+}
