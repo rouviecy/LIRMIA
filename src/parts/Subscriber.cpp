@@ -11,6 +11,10 @@ void Subscriber::On_start(){}
 void Subscriber::IO(){}
 
 void Subscriber::Subscribe(map <int, char> keys, void (*callback) (void*, char*), void* obj){
+	#ifndef ENABLE_SERIAL
+		cout << "[Error] Serial needs to be enabled to use Subscriber" << endl;
+		return;
+	#endif
 	subscription new_subscription;
 	new_subscription.keys = keys;
 	new_subscription.callback = callback;
@@ -19,6 +23,9 @@ void Subscriber::Subscribe(map <int, char> keys, void (*callback) (void*, char*)
 }
 
 void Subscriber::Job(){
+	#ifndef ENABLE_SERIAL
+		return;
+	#endif
 	char* msg = serial->Serial_read();
 	for(size_t i = 0; i < subscriptions.size(); i++){
 		bool selected = true;
