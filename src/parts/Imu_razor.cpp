@@ -16,9 +16,7 @@ void Imu_razor::IO(){
 	Link_output("imu_thxyz", COMFLOAT, 3, imu_thxyz);
 }
 
-void Imu_razor::Job(){
-	cout << "[Warning] IMU thread should not be launched : only Subscriber should call it" << endl;
-}
+void Imu_razor::Job(){} // Do nothing : this object should only be called by subscriber
 
 void Imu_razor::Process_serial_data(void* object, char* input_msg){
 	Imu_razor* self = (Imu_razor*) object;

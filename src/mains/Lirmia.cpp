@@ -10,6 +10,8 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&cameras,		"Cameras",			100000);	// 100 ms
 	Add_thread(&internal_clock,	"Clock",			1000);		// 1 ms
 	Add_thread(&echosonder,		"Echo sonder",			100000);	// 100 ms
+	Add_thread(&depth,		"Depth",			-1);		// subscriber callback
+	Add_thread(&imu,		"IMU",				-1);		// subscriber callback
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&mapping,		"Mapping",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms

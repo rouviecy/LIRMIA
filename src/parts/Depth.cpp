@@ -15,9 +15,7 @@ void Depth::IO(){
 	Link_output("depth",	COMFLOAT, 1, &depth);
 }
 
-void Depth::Job(){
-	cout << "[Warning] Depth thread should not be launched : only Subscriber should call it" << endl;
-}
+void Depth::Job(){} // Do nothing : this object should only be called by subscriber
 
 void Depth::Process_serial_data(void* object, char* input_msg){
 	Depth* self = (Depth*) object;
