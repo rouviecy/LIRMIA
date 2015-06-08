@@ -12,8 +12,10 @@ Acoustic_modem::Acoustic_modem() : ComThread(){
 Acoustic_modem::~Acoustic_modem(){}
 
 void Acoustic_modem::On_start(){
-	receive_go_on = true;
-	thr_reception = thread(&Acoustic_modem::Get_acoustic_msg_loop, this);
+	#if defined(ENABLE_MODEM) and defined(ENABLE_SERIAL_RS232)
+		receive_go_on = true;
+		thr_reception = thread(&Acoustic_modem::Get_acoustic_msg_loop, this);
+	#endif
 }
 
 void Acoustic_modem::IO(){
