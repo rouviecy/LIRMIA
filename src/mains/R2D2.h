@@ -22,7 +22,7 @@
 #include "../parts/r2d2/State_machine.h"
 #include "../parts/Clock.h"
 
-#define DEV_SERIAL_ARDUINO	"/dev/ttyACM0" // TODO : by-id
+#define DEV_SERIAL_POLOLU	"/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Micro_Maestro_6-Servo_Controller_00097868-if00"
 
 class R2D2 : public Maestro{
 

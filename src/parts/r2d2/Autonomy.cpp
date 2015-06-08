@@ -11,6 +11,7 @@ Autonomy::~Autonomy(){}
 void Autonomy::On_start(){}
 
 void Autonomy::IO(){
+	Link_input("fsm_state",			COMINT,		1, &fsm_state);
 	Link_input("remote_forward",		COMFLOAT,	1, &remote_forward);
 	Link_input("remote_turn",		COMFLOAT,	1, &remote_turn);
 	Link_input("remote_deeper",		COMFLOAT,	1, &remote_deeper);

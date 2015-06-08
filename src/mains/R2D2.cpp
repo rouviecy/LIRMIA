@@ -32,8 +32,8 @@ void R2D2::Shutdown(){
 }
 
 void R2D2::Init_serial(){
-	#ifdef ENABLE_SERIAL_ARDUINO
-		serial_arduino.Serial_init(DEV_SERIAL, B4800, true);
+	#ifdef ENABLE_SERIAL
+		serial.Serial_init(DEV_SERIAL_POLOLU, B4800, true);
 		motors.Set_serial(&serial);
 	#endif
 }
