@@ -32,7 +32,7 @@ void Logger::IO(){
 	Link_input("thz",		COMFLOAT,	1, &thz);
 	Link_input("motor",		COMFLOAT,	1, &motor);
 	Link_input("rudder",		COMFLOAT,	1, &rudder);
-	Link_input("bow_thrusters",	COMFLOAT,	2, bow_thrusters);
+	Link_input("bow_thruster",	COMFLOAT,	1, &bow_thruster);
 }
 
 void Logger::Job(){
@@ -44,7 +44,7 @@ void Logger::Job(){
 	new_line.precision(2);
 	new_line	<< t		<< "\t" << State_machine::Decode_state_str(fsm_state)	<< "\t"
 			<< xy[0]	<< "\t" << xy[1]	<< "\t"	<< thz			<< "\t"
-			<< motor	<< "\t" << rudder	<< "\t" << bow_thrusters[0]	<< "\t"		<< bow_thrusters[1];
+			<< motor	<< "\t" << rudder	<< "\t" << bow_thruster		<< "\t";
 	log_file << new_line.str() << "\n";
 	if(t - last_t_save > 5){
 		log_file.flush();

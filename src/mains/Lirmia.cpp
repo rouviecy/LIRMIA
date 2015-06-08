@@ -24,7 +24,7 @@ Lirmia::Lirmia() : Maestro(){
 	Link_all();
 	remote_control.Set_blobs_obj(cameras.Get_blobs_obj());
 //	mapping.Link_img(cameras.Get_img1(), cameras.Get_img2());
-	Draw("coms");
+	Draw("coms_lirmia");
 	usleep(1000000);
 	Launch_all();
 	remote_control.Job_and_wait_quit();

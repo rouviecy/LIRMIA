@@ -37,7 +37,7 @@ private:
 	float thz;
 	float motor;
 	float rudder;
-	float bow_thrusters[2];
+	float bow_thruster;
 
 	std::ofstream log_file;
 	float last_t_save;

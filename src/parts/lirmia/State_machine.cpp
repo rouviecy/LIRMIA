@@ -75,7 +75,7 @@ State_machine::State_machine() : ComThread(){
 
 	fsm_state = REMOTE;
 	fsm.Launch("remote");
-	drawer.Draw_FSM("FSM", &fsm);
+	drawer.Draw_FSM("FSM_lirmia", &fsm);
 
 }
 
