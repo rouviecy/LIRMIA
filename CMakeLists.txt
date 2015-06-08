@@ -3,9 +3,9 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA OFF)
+set(IS_LIRMIA ON)
 set(IS_UNKNOWN OFF)
-set(IS_R2D2 ON)
+set(IS_R2D2 OFF)
 set(IS_SIMU ON)
 
 if(${IS_LIRMIA})
@@ -101,6 +101,7 @@ set(OTHER_LIBS
 )
 
 add_library(BETTERAVE_USER_COMMON
+	src/interfaces/Camera_client.h		src/interfaces/Camera_client.cpp
 	src/interfaces/Camera_server.h		src/interfaces/Camera_server.cpp
 	src/interfaces/FSM.h			src/interfaces/FSM.cpp
 	src/interfaces/FSMDraw.h		src/interfaces/FSMDraw.cpp

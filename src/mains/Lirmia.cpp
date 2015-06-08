@@ -18,7 +18,7 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&simulator,		"Simulator",			5000);		// 5 ms
 	Add_thread(&state,		"State",			20000);		// 20 ms
 	Add_thread(&state_machine,	"Finite state machine",		40000);		// 40 ms
-	Add_thread(&subscriber,		"Subscriber",			40000);		// 40 ms
+//	Add_thread(&subscriber,		"Subscriber",			40000);		// 40 ms
 
 	Init_serial();
 	Link_all();
