@@ -48,6 +48,7 @@ elseif(${IS_UNKNOWN})
 		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_SIMULATOR)
+add_definitions(-DENABLE_GPS)
 #		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	else(${IS_SIMU})
 		set(ENABLE_GRAPHVIZ OFF)

@@ -8,7 +8,7 @@ Unknown::Unknown() : Maestro(){
 	Add_thread(&acoustic_modem,	"Acoustic modem",		1000000);	// 1 s
 	Add_thread(&autonomy,		"Autonomy",			50000);		// 50 ms
 	Add_thread(&cameras,		"Cameras",			100000);	// 100 ms
-	Add_thread(&gps,		"GPS",				10000);		// 10 ms
+	Add_thread(&gps,		"GPS",				-1);		// subscriber callback
 	Add_thread(&internal_clock,	"Clock",			1000);		// 1 ms
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
