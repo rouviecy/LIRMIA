@@ -1,6 +1,6 @@
 /*
  * @(#)		TCP_server.h
- * @version	1.0
+ * @version	1.1
  * @autor	C. Rouvière
  */
 
@@ -9,6 +9,8 @@
  * 	- First, call Configure(const char* server_ip, int server_port) to connect to server
  * 	- Call Send(string msg) to send your msg to server
  * 	- Call Receive() to wait a message from server
+ * 	- Call Direct_send(unsigned char* msg, int msg_size) to avoid string
+ * 	- Call Direct_receive(unsigned char* msg, int msg_size) to avoid string ; it also returns length of incoming message
  * 	- Close() is called by destructor if you forget ...
  */
 

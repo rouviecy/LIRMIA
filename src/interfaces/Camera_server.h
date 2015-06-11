@@ -1,11 +1,16 @@
 /*
  * @(#)		Camera_server.h
- * @version	1.0
+ * @version	2.0
  * @autor	C. Rouvière
  */
 
 /**
  * Send camera video with TCP server and record it on hard-drive
+ * 	- First, call Add_flux(int port) to create a new TCP server (one per video flow)
+ * 	- If you also want to record on hard-drive, call once Enable_record(int nb_cams)
+ * 	- Call Send_tcp_img(cv::Mat img, int port) to send an image (which will be encoded)
+ * 	- Call Record_img(cv::Mat img, int cam_index) to send an image to a buffer (which is written to hard-drive when full)
+ * 	- Call Direct_record_img(cv::Mat img, std::string id) to write an image to hard-drive without buffer
  */
 
 #ifndef CAMERA_SERVER

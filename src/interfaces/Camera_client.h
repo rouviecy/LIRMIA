@@ -1,6 +1,6 @@
 /*
  * @(#)		Camera_client.h
- * @version	1.0
+ * @version	2.0
  * @autor	C. Rouvière
  */
 
@@ -32,8 +32,13 @@ class Camera_client{
 
 public:
 
-	void Subscribe_cam(std::string window_name, char* host, int port, int window_pos_x, int window_pos_y);
-	void Show_video();
+	void Subscribe_cam(			// Subscribe (call once) to a video flow created by Camera_server
+		std::string window_name,		// Name of the window where to show the video
+		char* host,				// Camera_server IP
+		int port,				// Camera_server port
+		int window_pos_x,			// X position of the window
+		int window_pos_y);			// Y position of the window
+	void Show_video();			// Update all video after each call
 
 private:
 

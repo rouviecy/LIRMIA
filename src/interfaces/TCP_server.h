@@ -1,6 +1,6 @@
 /*
  * @(#)		TCP_server.h
- * @version	1.0
+ * @version	1.1
  * @autor	C. Rouvière
  */
 
@@ -9,6 +9,8 @@
  * 	- First, call Configure(int server_port) to open socket and wait clients
  * 	- Call Send(string msg) to broadcast your msg to every clients
  * 	- Call Receive(int client_index) to wait a message from client with this index
+ * 	- Call Direct_send(unsigned char* msg, int msg_size) to avoid string
+ * 	- Call Direct_receive(int client_index, unsigned char* msg, int msg_size) to avoid string ; it also returns length of incoming message
  * 	- Close() is called by destructor if you forget ...
  */
 
