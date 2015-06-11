@@ -3,8 +3,8 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA ON)
-set(IS_UNKNOWN OFF)
+set(IS_LIRMIA OFF)
+set(IS_UNKNOWN ON)
 set(IS_R2D2 OFF)
 set(IS_SIMU ON)
 
@@ -48,6 +48,7 @@ elseif(${IS_UNKNOWN})
 		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_SIMULATOR)
+add_definitions(-DENABLE_SERIAL_ARDUINO)
 add_definitions(-DENABLE_GPS)
 #		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	else(${IS_SIMU})

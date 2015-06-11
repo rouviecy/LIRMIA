@@ -17,6 +17,7 @@ Unknown::Unknown() : Maestro(){
 	Add_thread(&simulator,		"Simulator",			5000);		// 5 ms
 	Add_thread(&state,		"State",			20000);		// 20 ms
 	Add_thread(&state_machine,	"Finite state machine",		40000);		// 40 s
+	Add_thread(&subscriber,		"Subscriber",			40000);		// 40 ms
 
 	Init_serial();
 	Link_all();
@@ -44,7 +45,8 @@ void Unknown::Shutdown(){
 void Unknown::Init_serial(){
 	#ifdef ENABLE_SERIAL_ARDUINO
 		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B57600, true);
-		gps.Set_serial(&serial_arduino);
+		subscriber.Set_serial(&serial_arduino);
+		gps.Subscribe(&subscriber);
 		motors.Set_arduino(&serial_arduino);
 	#endif
 	#ifdef ENABLE_SERIAL_ISS
