@@ -33,7 +33,7 @@ void R2D2::Shutdown(){
 
 void R2D2::Init_serial(){
 	#ifdef ENABLE_SERIAL
-		serial.Serial_init(DEV_SERIAL_POLOLU, B4800, true);
+		serial.Serial_init(DEV_SERIAL_POLOLU, B9600, true);
 		motors.Set_serial(&serial);
 	#endif
 }
