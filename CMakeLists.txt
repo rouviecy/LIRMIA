@@ -4,8 +4,8 @@ project(betterave)
 find_package(PkgConfig)
 
 set(IS_LIRMIA OFF)
-set(IS_UNKNOWN ON)
-set(IS_R2D2 OFF)
+set(IS_UNKNOWN OFF)
+set(IS_R2D2 ON)
 set(IS_SIMU ON)
 
 if(${IS_LIRMIA})
@@ -57,7 +57,6 @@ add_definitions(-DENABLE_GPS)
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
 		add_definitions(-DENABLE_SERIAL_RS232)
-		add_definitions(-DENABLE_I2C)		# needs serial ISS
 		add_definitions(-DENABLE_MOTORS)	# needs serial arduino, serial ISS and I2C
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
@@ -77,8 +76,8 @@ elseif(${IS_R2D2})
 	else(${IS_SIMU})
 		set(ENABLE_GRAPHVIZ OFF)
 		set(ENABLE_SDL OFF)
-#		add_definitions(-DENABLE_SERIAL)
-#		add_definitions(-DENABLE_MOTORS)	# needs serial
+		add_definitions(-DENABLE_SERIAL)
+		add_definitions(-DENABLE_MOTORS)	# needs serial
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1

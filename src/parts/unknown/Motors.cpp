@@ -3,8 +3,8 @@
 using namespace std;
 
 Motors::Motors() : ComThread(){
-	#if defined(ENABLE_MOTORS) and (not defined(ENABLE_SERIAL_ISS) or not defined(ENABLE_I2C))
-		cout << "[Warning] You are trying to use motors without serial and i2c : motors will be disabled" << endl;
+	#if defined(ENABLE_MOTORS) and not defined(ENABLE_SERIAL_ISS)
+		cout << "[Warning] You are trying to use motors without serial iss : motors will be disabled" << endl;
 	#endif
 	#if defined(ENABLE_MOTORS) and not defined(ENABLE_SERIAL_ARDUINO)
 		cout << "[Warning] You are trying to use rudder without arduino : rudder will be disabled" << endl;
@@ -32,7 +32,7 @@ void Motors::Job(){
 }
 
 void Motors::Generate_order_i2c(int num_motor, int power, bool positive){
-	#if defined(ENABLE_MOTORS) and defined(ENABLE_I2C) and defined(ENABLE_SERIAL_ISS)
+	#if defined(ENABLE_MOTORS) and defined(ENABLE_SERIAL_ISS)
 		unsigned char order[8];
 		switch(num_motor){
 			case 0: order[1]= 0xB0;	break; // TODO : change addresses
@@ -46,15 +46,16 @@ void Motors::Generate_order_i2c(int num_motor, int power, bool positive){
 		order[5] = 0x00;
 		order[6] = power;
 		order[7] = 2;
-		i2c->Lock();
-		i2c->I2C_write(order, 8);
-		i2c->Unlock();
+		iss->Lock();
+		iss->I2C_write(order, 8);
+		iss->Unlock();
 	#endif
 }
 
 void Motors::Generate_order_arduino(int angle){
 	#if defined(ENABLE_MOTORS) and defined(ENABLE_SERIAL_ARDUINO)
-		// TODO : envoyer ordre gouvernail à l'arduino
+		unsigned char msg = (unsigned char) ((angle * 127) / 180 + 127);
+		arduino.Serial_write(&msg, 1);
 	#endif
 }
 
