@@ -4,9 +4,9 @@ project(betterave)
 find_package(PkgConfig)
 
 set(IS_LIRMIA OFF)
-set(IS_UNKNOWN OFF)
-set(IS_R2D2 ON)
-set(IS_SIMU ON)
+set(IS_UNKNOWN ON)
+set(IS_R2D2 OFF)
+set(IS_SIMU OFF)
 
 if(${IS_LIRMIA})
 	set(ENABLE_PYTHON OFF)

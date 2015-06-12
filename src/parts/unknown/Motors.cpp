@@ -47,7 +47,7 @@ void Motors::Generate_order_i2c(int num_motor, int power, bool positive){
 		order[6] = power;
 		order[7] = 2;
 		iss->Lock();
-		iss->I2C_write(order, 8);
+		iss->Serial_write(order, 8);
 		iss->Unlock();
 	#endif
 }
@@ -55,7 +55,7 @@ void Motors::Generate_order_i2c(int num_motor, int power, bool positive){
 void Motors::Generate_order_arduino(int angle){
 	#if defined(ENABLE_MOTORS) and defined(ENABLE_SERIAL_ARDUINO)
 		unsigned char msg = (unsigned char) ((angle * 127) / 180 + 127);
-		arduino.Serial_write(&msg, 1);
+		arduino->Serial_write(&msg, 1);
 	#endif
 }
 

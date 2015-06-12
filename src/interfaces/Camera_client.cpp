@@ -67,7 +67,6 @@ void Camera_client::Show_video(){
 				}
 				threads_cam[i]->mu.unlock();
 			}
-			
 		}
 		key = cv::waitKey(10);
 	}
