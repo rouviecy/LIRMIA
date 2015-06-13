@@ -29,7 +29,6 @@ private:
 
 	int fsm_state;
 	float remote_forward, remote_turn, remote_deeper;
-	float t;
 	float cam_size_obj;
 	float cam_detect_horizontal;
 	float cam_detect_vertical;

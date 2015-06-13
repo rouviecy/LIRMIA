@@ -7,12 +7,12 @@ R2D2::R2D2() : Maestro(){
 	// Warning : pass-by-reference to avoid slicing !
 	Add_thread(&autonomy,		"Autonomy",			50000);		// 50 ms
 	Add_thread(&cameras,		"Cameras",			100000);	// 100 ms
-	Add_thread(&internal_clock,	"Clock",			1000);		// 1 ms
+	Add_thread(&internal_clock,	"Clock",			500000);	// 500 ms
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
 	Add_thread(&remote_control,	"Remote control",		-1);		// manual loop
 	Add_thread(&remote_monitor,	"Remote monitor",		100000);	// 100 ms
-	Add_thread(&state_machine,	"State machine",		10000);		// 10ms
+	Add_thread(&state_machine,	"State machine",		10000);		// 10 ms
 
 	Init_serial();
 	Link_all();

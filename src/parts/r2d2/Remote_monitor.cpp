@@ -18,7 +18,6 @@ Remote_monitor::~Remote_monitor(){}
 void Remote_monitor::On_start(){}
 
 void Remote_monitor::IO(){
-	Link_input("t",			COMFLOAT,	1, &t);
 	Link_input("motor",		COMFLOAT,	4, motor);
 	Link_input("fsm_state",		COMINT,		1, &fsm_state);
 	Link_input("fsm_unlocked",	COMBOOL,	1, &fsm_unlocked);
@@ -27,7 +26,6 @@ void Remote_monitor::IO(){
 void Remote_monitor::Job(){
 	Critical_receive();
 	string msg_monitor =
-		to_string(t)+ "|" +
 		to_string(fsm_state) + "|" +
 		to_string(fsm_unlocked) + "|" +
 

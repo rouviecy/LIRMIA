@@ -29,7 +29,6 @@ private:
 	void Job();
 	void IO();
 
-	float t;
 	float motor[4];
 	int fsm_state;
 	bool fsm_unlocked;

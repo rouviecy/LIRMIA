@@ -310,23 +310,22 @@ int main(int argc, char* argv[]){
 		while(obj_callback.go_on){
 			string msg_monitor = string(tcp_client_monitor.Receive());
 			size_t next;
-			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 11){
+			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 10){
 				vector <string> tokens;
-				for(size_t current = 0; tokens.size() < 11; current = next + 1){
+				for(size_t current = 0; tokens.size() < 10; current = next + 1){
 					next = msg_monitor.find_first_of("|", current);
 					tokens.push_back(msg_monitor.substr(current, next - current));
 				}
-				float t = stof(tokens[0]);
-				monitor.state = stoi(tokens[1]);
-				monitor.unlocked = (stof(tokens[2]) > 0);
-				monitor.x = stof(tokens[3]) / 1000;
-				monitor.y = stof(tokens[4]) / 1000;
-				monitor.z = stof(tokens[5]) / 1000;
-				monitor.thz = stof(tokens[6]) / 57.3;
-				monitor.motor1 = (int) stof(tokens[7]);
-				monitor.motor2 = (int) stof(tokens[8]);
-				monitor.motor3 = (int) stof(tokens[9]);
-				monitor.motor4 = (int) stof(tokens[10]);
+				monitor.state = stoi(tokens[0]);
+				monitor.unlocked = (stof(tokens[1]) > 0);
+				monitor.x = stof(tokens[2]) / 1000;
+				monitor.y = stof(tokens[3]) / 1000;
+				monitor.z = stof(tokens[4]) / 1000;
+				monitor.thz = stof(tokens[5]) / 57.3;
+				monitor.motor1 = (int) stof(tokens[6]);
+				monitor.motor2 = (int) stof(tokens[7]);
+				monitor.motor3 = (int) stof(tokens[8]);
+				monitor.motor4 = (int) stof(tokens[9]);
 			}
 			cv::imshow(monitor_window, Draw_monitor(&monitor));
 			cv::waitKey(10);
