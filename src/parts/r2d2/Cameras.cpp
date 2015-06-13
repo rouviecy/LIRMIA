@@ -7,7 +7,7 @@ Cameras::Cameras() : ComThread(){
 	cam_detect_horizontal = 0.;	cam_detect_vertical = 0.;
 	cam_pipeline_angle = 0.;	cam_pipeline_distance = 0.;
 	cam_size_obj= 0.;
-	
+
 	#ifdef ENABLE_CAM1
 		capture = cv::VideoCapture(0);
 		capture.set(CV_CAP_PROP_FRAME_WIDTH, 400);
@@ -30,7 +30,7 @@ void Cameras::On_start(){}
 
 void Cameras::IO(){
 	Link_input("enable_streaming",		COMBOOL,	1, &enable_streaming);
-	
+
 	Link_output("cam_detect_obj",		COMBOOL,	1, &cam_detect_obj);
 	Link_output("cam_detect_pipe",		COMBOOL,	1, &cam_detect_pipe);
 	Link_output("cam_detect_horizontal",	COMFLOAT,	1, &cam_detect_horizontal);
@@ -45,6 +45,7 @@ void Cameras::Job(){
 
 	#ifdef ENABLE_CAM1
 		capture >> img;
+		cv::flip(img, img, -1);
 		blobs.Set_img(img);
 		blobs.Separer();
 		blobs.Trouver_blobs();
