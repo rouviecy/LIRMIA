@@ -42,9 +42,9 @@ private:
 	void IO();
 
 	bool enable_streaming;
-	bool cam_detect_obj;		bool cam_detect_pipe;
-	float cam_detect_horizontal;	float cam_detect_vertical;
-	float cam_pipeline_angle;	float cam_pipeline_distance;
+	bool cam_detect_obj;
+	float cam_detect_horizontal;
+	float cam_detect_vertical;
 	float cam_size_obj;
 
 	cv::Mat img;

@@ -8,7 +8,6 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_state("down",			DOWN);
 	fsm.Add_state("explore",		EXPLORE);
 	fsm.Add_state("follow_obj_cam",		FOLLOW_OBJ_CAM);
-	fsm.Add_state("follow_pipe_cam",	FOLLOW_PIPE_CAM);
 	fsm.Add_state("follow_wall",		FOLLOW_WALL);
 	fsm.Add_state("up",			UP);
 	fsm.Add_state("remote",			REMOTE);
@@ -17,7 +16,6 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_event("go_down");
 	fsm.Add_event("begin_explore");
 	fsm.Add_event("found_something_cam");
-	fsm.Add_event("pipe_detected_cam");
 	fsm.Add_event("wall_detected");
 	fsm.Add_event("stop_follow");
 	fsm.Add_event("go_up");
@@ -43,18 +41,14 @@ State_machine::State_machine() : ComThread(){
 
 	// Between explore and follow
 	fsm.Add_transition(	"explore",		"follow_obj_cam",	"found_something_cam",	"fsm_unlocked",	"update_fsm",	(void*) this);
-	fsm.Add_transition(	"explore",		"follow_pipe_cam",	"pipe_detected_cam",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"explore",		"follow_wall",		"wall_detected",	"fsm_unlocked",	"update_fsm",	(void*) this);
-	fsm.Add_transition(	"follow_obj_cam",	"follow_pipe_cam",	"pipe_detected_cam",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"follow_obj_cam",	"explore",		"stop_follow",		"fsm_unlocked",	"update_fsm",	(void*) this);
-	fsm.Add_transition(	"follow_pipe_cam",	"explore",		"stop_follow",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"follow_wall",		"explore",		"stop_follow",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"stay",			"explore",		"begin_explore",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	// End
 
 	// Go back to remote chain
 	fsm.Add_transition(	"follow_obj_cam",	"explore",		"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
-	fsm.Add_transition(	"follow_pipe_cam",	"explore",		"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"follow_wall",		"explore",		"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"explore",		"stay",			"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"down",			"stay",			"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
@@ -81,7 +75,6 @@ void State_machine::IO(){
 	Link_input("fsm_explore",	COMBOOL,	1, &fsm_explore);
 	Link_input("fsm_nofollow",	COMBOOL,	1, &fsm_nofollow);
 	Link_input("cam_detect_obj",	COMBOOL,	1, &cam_detect_obj);
-	Link_input("cam_detect_pipe",	COMBOOL,	1, &cam_detect_pipe);
 	Link_output("fsm_state",	COMINT,		1, &fsm_state);
 }
 
@@ -96,16 +89,9 @@ void State_machine::Job(){
 	if(fsm_nofollow){fsm.Call_event("stop_follow");}
 	if(fsm_state == EXPLORE){
 		if(fsm_up){fsm.Call_event("go_up");}
-		if(!fsm_nofollow){
-			if(cam_detect_pipe){fsm.Call_event("pipe_detected_cam");}
-			if(cam_detect_obj){fsm.Call_event("found_something_cam");}
-		}
+		if(cam_detect_obj && !fsm_nofollow){fsm.Call_event("found_something_cam");}
 	}
-	if(fsm_state == FOLLOW_OBJ_CAM){
-		if(cam_detect_pipe){fsm.Call_event("pipe_detected_cam");}
-		if(!cam_detect_obj && !cam_detect_pipe){fsm.Call_event("stop_follow");}
-	}
-	if(fsm_state == FOLLOW_PIPE_CAM && !cam_detect_pipe){fsm.Call_event("stop_follow");}
+	if(fsm_state == FOLLOW_OBJ_CAM && !cam_detect_obj){fsm.Call_event("stop_follow");}
 	Critical_send();
 }
 
@@ -115,7 +101,6 @@ string State_machine::Decode_state_str(int int_state){
 		case DOWN:		return "going down            ";
 		case EXPLORE:		return "explore               ";
 		case FOLLOW_OBJ_CAM:	return "follow object camera  ";
-		case FOLLOW_PIPE_CAM:	return "follow pipeline camera";
 		case FOLLOW_WALL:	return "following wall        ";
 		case UP:		return "going up              ";
 		case REMOTE:		return "remote control        ";

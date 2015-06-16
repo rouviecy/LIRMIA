@@ -32,8 +32,6 @@ private:
 	float cam_size_obj;
 	float cam_detect_horizontal;
 	float cam_detect_vertical;
-	float cam_pipeline_angle;
-	float cam_pipeline_distance;
 	float motor[4];
 
 	float keep_thz;

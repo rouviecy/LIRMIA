@@ -3,9 +3,9 @@
 using namespace std;
 
 Cameras::Cameras() : ComThread(){
-	cam_detect_obj = false;		cam_detect_pipe = false;
-	cam_detect_horizontal = 0.;	cam_detect_vertical = 0.;
-	cam_pipeline_angle = 0.;	cam_pipeline_distance = 0.;
+	cam_detect_obj = false;
+	cam_detect_horizontal = 0.;
+	cam_detect_vertical = 0.;
 	cam_size_obj= 0.;
 
 	#ifdef ENABLE_CAM1
@@ -32,11 +32,8 @@ void Cameras::IO(){
 	Link_input("enable_streaming",		COMBOOL,	1, &enable_streaming);
 
 	Link_output("cam_detect_obj",		COMBOOL,	1, &cam_detect_obj);
-	Link_output("cam_detect_pipe",		COMBOOL,	1, &cam_detect_pipe);
 	Link_output("cam_detect_horizontal",	COMFLOAT,	1, &cam_detect_horizontal);
 	Link_output("cam_detect_vertical",	COMFLOAT,	1, &cam_detect_vertical);
-	Link_output("cam_pipeline_angle",	COMFLOAT,	1, &cam_pipeline_angle);
-	Link_output("cam_pipeline_distance",	COMFLOAT,	1, &cam_pipeline_distance);
 	Link_output("cam_size_obj",		COMFLOAT,	1, &cam_size_obj);
 }
 
@@ -56,12 +53,10 @@ void Cameras::Job(){
 			cam_detect_vertical = blob_img[1];
 			cam_size_obj = blob_img[2];
 		}
-		reco.Set_img(blobs.Get_img_blobs());
-		cv::Mat img_pipeline = reco.Trouver_ligne_principale(&cam_detect_pipe, &cam_pipeline_angle, &cam_pipeline_distance);
 		#ifdef ENABLE_TCPCAM
 			if(enable_streaming){
 				camera_server.Send_tcp_img(img, CAMERA_PORT_1);
-				camera_server.Send_tcp_img(img_pipeline, CAMERA_PORT_3);
+				camera_server.Send_tcp_img(blobs.Get_img_blobs(), CAMERA_PORT_3);
 			}
 		#endif
 	#endif

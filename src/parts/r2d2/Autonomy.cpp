@@ -18,8 +18,6 @@ void Autonomy::IO(){
 	Link_input("cam_size_obj",		COMFLOAT,	1, &cam_size_obj);
 	Link_input("cam_detect_horizontal",	COMFLOAT,	1, &cam_detect_horizontal);
 	Link_input("cam_detect_vertical",	COMFLOAT,	1, &cam_detect_vertical);
-	Link_input("cam_pipeline_angle",	COMFLOAT,	1, &cam_pipeline_angle);
-	Link_input("cam_pipeline_distance",	COMFLOAT,	1, &cam_pipeline_distance);
 
 	Link_output("motor",			COMFLOAT,	4, motor);
 }
@@ -28,28 +26,14 @@ void Autonomy::Job(){
 	Critical_receive();
 	if(fsm_state == FOLLOW_OBJ_CAM){
 		if(cam_size_obj < 0.20){
-			motor[1] = 0.2 - cam_size_obj + cam_detect_horizontal / 3;
-			motor[2] = 0.2 - cam_size_obj - cam_detect_horizontal / 3;
-			motor[0] = -cam_detect_vertical / 3;
-			motor[3] = -cam_detect_vertical / 3;
+			motor[1] = 0.2 - cam_size_obj + cam_detect_horizontal / 20;
+			motor[2] = 0.2 - cam_size_obj - cam_detect_horizontal / 20;
+			motor[0] = -cam_detect_vertical / 20;
+			motor[3] = -cam_detect_vertical / 20;
 		}
 		else{
-			motor[1] = -0.2;
-			motor[2] = -0.2;
-			motor[0] = 0.;
-			motor[3] = 0.;
-		}
-	}
-	else if(fsm_state == FOLLOW_PIPE_CAM){
-		if(cam_size_obj < 0.20){
-			motor[1] = 0.2 - cam_size_obj + cam_pipeline_distance / 3;
-			motor[2] = 0.2 - cam_size_obj - cam_pipeline_distance / 3;
-			motor[0] = 0.2;
-			motor[3] = 0.2;
-		}
-		else{
-			motor[1] = -0.2;
-			motor[2] = -0.2;
+			motor[1] = -0.05;
+			motor[2] = -0.05;
 			motor[0] = 0.;
 			motor[3] = 0.;
 		}
@@ -62,8 +46,8 @@ void Autonomy::Job(){
 	}
 	else if(fsm_state == REMOTE){
 //		keep_thz = thxyz[3];
-		motor[1] = remote_forward / 2 + remote_turn / 2;
-		motor[2] = remote_forward / 2 - remote_turn / 2;
+		motor[1] = - (remote_forward / 2 + remote_turn / 2);
+		motor[2] = remote_turn / 2 - remote_forward / 2;
 		motor[0] = -remote_deeper / 2;
 		motor[3] = -remote_deeper / 2;
 	}
