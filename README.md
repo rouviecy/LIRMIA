@@ -23,7 +23,7 @@ Enable camera (load `bcm2835-v4l2` and `v4l2-ctl` after each boot) :
     sudo raspi-config
     sudo apt-get install v4l-utils
     sudo modprobe bcm2835-v4l2
-    sudo v4l2-ctl --set-fmt-video=width=400,height=300,pixelformat="H264" -d /dev/video0
+    sudo v4l2-ctl --set-fmt-video=width=200,height=150,pixelformat="H264" -d /dev/video0
 
 Disable Serial over console :
 
