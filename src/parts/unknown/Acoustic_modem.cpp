@@ -45,6 +45,7 @@ void Acoustic_modem::Job(){
 					default:
 						break;
 				}
+				input_flow.pop();
 			}
 		}
 	#endif

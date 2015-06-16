@@ -16,11 +16,13 @@ void setup(){
 
 void loop(){
     while(GPS_Serial.available()){
-        Serial.write(GPS_serial.read());
+        Serial.write(GPS_Serial.read());
     }
-    while(Serial.available(){
-        order = (int) Serial.read() - 127; // incoming order from -127 to +127
-        rudder.write(90 + (order * 90) / 127);
+    while(Serial.available()){
+        order = 90 + ((int) Serial.read() * 90) / 127;
+        if(order < 0){order = 0;}
+        if(order > 180){order = 180;}
+        rudder.write(order);
     }
     delay(200);
 }

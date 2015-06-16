@@ -35,7 +35,7 @@ void Motors::Generate_order_i2c(int num_motor, int power, bool positive){
 	#if defined(ENABLE_MOTORS) and defined(ENABLE_SERIAL_ISS)
 		unsigned char order[8];
 		switch(num_motor){
-			case 0: order[1]= 0xB0;	break; // TODO : change addresses
+			case 0: order[1]= 0xB0;	break;
 			case 1: order[1]= 0xB2;	break;
 			default:		return;
 		}
