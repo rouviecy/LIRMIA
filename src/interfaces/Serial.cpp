@@ -7,6 +7,9 @@ Serial::Serial(){
 }
 
 void Serial::Serial_init(const char* path, int baudrate, bool canonical_mode){
+	this->path = string(path);
+	this->baudrate = baudrate;
+	this->canonical_mode = canonical_mode;
 	device = open(path, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
 	memset(&tio_new, 0, sizeof(tio_new));
 	tcgetattr(device, &tio_old);
@@ -43,6 +46,9 @@ void Serial::Serial_close(){
 
 void Serial::Serial_write(unsigned char* msg, int len){
 	int res = write(device, msg, len);
+	if(res < 0){
+		Serial_init(path.c_str(), baudrate, canonical_mode);
+	}
 }
 
 char* Serial::Serial_read(){
