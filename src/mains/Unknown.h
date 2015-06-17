@@ -24,6 +24,7 @@
 #include "../parts/unknown/State.h"
 #include "../parts/unknown/State_machine.h"
 #include "../parts/Clock.h"
+#include "../parts/Compass_CMPS10.h"
 #include "../parts/Gps.h"
 #include "../parts/Subscriber.h"
 
@@ -49,6 +50,7 @@ private:
 	Acoustic_modem	acoustic_modem;
 	Autonomy	autonomy;
 	Cameras		cameras;
+	Compass_CMPS10	compass;
 	Clock		internal_clock;
 	Gps		gps;
 	Logger		logger;

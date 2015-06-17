@@ -8,6 +8,7 @@ Unknown::Unknown() : Maestro(){
 	Add_thread(&acoustic_modem,	"Acoustic modem",		1000000);	// 1 s
 	Add_thread(&autonomy,		"Autonomy",			50000);		// 50 ms
 	Add_thread(&cameras,		"Cameras",			100000);	// 100 ms
+	Add_thread(&compass,		"Compass",			100000);	// 100 ms
 	Add_thread(&gps,		"GPS",				-1);		// subscriber callback
 	Add_thread(&internal_clock,	"Clock",			1000);		// 1 ms
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
@@ -59,6 +60,7 @@ void Unknown::Init_serial(){
 		init_I2C_and_serial[4] = 0x19;	// baudrate 115200
 		serial_iss.Serial_write(init_I2C_and_serial, 5);
 		motors.Set_iss(&serial_iss);
+		compass.Set_iss(&serial_iss);
 	#endif
 	#ifdef ENABLE_SERIAL_RS232
 		serial_rs232.Serial_init(DEV_SERIAL_RS232, B9600, true);

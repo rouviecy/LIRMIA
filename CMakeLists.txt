@@ -48,8 +48,8 @@ elseif(${IS_UNKNOWN})
 		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_SIMULATOR)
-add_definitions(-DENABLE_SERIAL_ARDUINO)
-add_definitions(-DENABLE_GPS)
+#add_definitions(-DENABLE_SERIAL_ARDUINO)
+#add_definitions(-DENABLE_GPS)
 #		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	else(${IS_SIMU})
 		set(ENABLE_GRAPHVIZ OFF)
@@ -74,6 +74,7 @@ elseif(${IS_R2D2})
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
 	else(${IS_SIMU})
+		set(ENABLE_CROSS_RASPBERRY ON)
 		set(ENABLE_GRAPHVIZ OFF)
 		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL)
@@ -111,6 +112,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/interfaces/TCP_client.h		src/interfaces/TCP_client.cpp
 	src/interfaces/TCP_server.h		src/interfaces/TCP_server.cpp
 	src/parts/Clock.h			src/parts/Clock.cpp
+	src/parts/Compass_CMPS10.h		src/parts/Compass_CMPS10.cpp
 	src/parts/Depth.h			src/parts/Depth.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
 	src/parts/Gps.h				src/parts/Gps.cpp
