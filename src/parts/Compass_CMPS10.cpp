@@ -25,9 +25,13 @@ void Compass_CMPS10::Job(){
 	serial->Lock();
 	serial->Serial_write(request_compass, 4);
 	char* answer = serial->Serial_read();
-	int angle = ((int) answer[2] * 256 + (int) answer[3]);
-	compass = (float) angle / 10.;
+	float angle_v1 = (float) ((int) answer[2] * 256 + (int) answer[3]) / 10;
+	float angle_v2 = (float) ((int) answer[1] * 360) / 255;
+	if(fabs(angle_v1 - angle_v2) < 5){
+		compass = angle_v1;
+	}
 	serial->Unlock();
+	Critical_send();
 }
 
 void Compass_CMPS10::Set_iss(Serial* serial){this->serial = serial;}

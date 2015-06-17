@@ -13,6 +13,7 @@
 
 #include "../core/ComThread.h"
 #include "../interfaces/Serial.h"
+#include <cmath>
 
 class Compass_CMPS10 : public ComThread{
 
