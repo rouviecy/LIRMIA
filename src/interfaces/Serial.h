@@ -43,6 +43,10 @@ private:
 	std::mutex mu;
 	struct termios tio_new, tio_old;
 
+	std::string path;
+	int baudrate;
+	bool canonical_mode;
+
 };
 
 #endif
