@@ -45,7 +45,7 @@ void Unknown::Shutdown(){
 
 void Unknown::Init_serial(){
 	#ifdef ENABLE_SERIAL_ARDUINO
-		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B57600, true);
+		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B4800, true);
 		subscriber.Set_serial(&serial_arduino);
 		gps.Subscribe(&subscriber);
 		motors.Set_arduino(&serial_arduino);
