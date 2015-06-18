@@ -38,6 +38,8 @@ private:
 	float thxyz[3];
 	float vthxyz[3];
 	float motor[4];
+	float cam_pipeline_angle[2];
+	float cam_pipeline_distance[2];
 
 	std::ofstream log_file;
 	float last_t_save;
