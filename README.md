@@ -38,17 +38,17 @@ Remember to adjust `IS_XXX` in `CMakeLists.txt` to choose a robot or a simulator
     make
 
 ### Execute
-On LIRMIA :
+On LIRMIA robot :
 
     sudo ./lirmia
 
-On R2D2 :
+On R2D2 robot :
 
     sudo ./r2d2
 
-On Unknown :
+On Sayab robot :
 
-    sudo ./unknown
+    sudo ./sayab
 
 On remote controller :
 
