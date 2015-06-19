@@ -3,8 +3,8 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA OFF)
-set(IS_UNKNOWN ON)
+set(IS_LIRMIA ON)
+set(IS_SAYAB OFF)
 set(IS_R2D2 OFF)
 set(IS_SIMU ON)
 
@@ -37,7 +37,7 @@ if(${IS_LIRMIA})
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	endif(${IS_SIMU})
-elseif(${IS_UNKNOWN})
+elseif(${IS_SAYAB})
 	set(ENABLE_PYTHON OFF)
 	set(ENABLE_JAVA OFF)
 	if(${IS_SIMU})
@@ -74,7 +74,6 @@ elseif(${IS_R2D2})
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
 	else(${IS_SIMU})
-		set(ENABLE_CROSS_RASPBERRY ON)
 		set(ENABLE_GRAPHVIZ OFF)
 		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL)
@@ -134,17 +133,17 @@ add_library(BETTERAVE_USER_LIRMIA
 	src/parts/lirmia/State_machine.h	src/parts/lirmia/State_machine.cpp
 )
 
-add_library(BETTERAVE_USER_UNKNOWN
-	src/parts/unknown/Acoustic_modem.h	src/parts/unknown/Acoustic_modem.cpp
-	src/parts/unknown/Autonomy.h		src/parts/unknown/Autonomy.cpp
-	src/parts/unknown/Cameras.h		src/parts/unknown/Cameras.cpp
-	src/parts/unknown/Logger.h		src/parts/unknown/Logger.cpp
-	src/parts/unknown/Motors.h		src/parts/unknown/Motors.cpp
-	src/parts/unknown/Remote_control.h	src/parts/unknown/Remote_control.cpp
-	src/parts/unknown/Remote_monitor.h	src/parts/unknown/Remote_monitor.cpp
-	src/parts/unknown/Simulator.h		src/parts/unknown/Simulator.cpp
-	src/parts/unknown/State.h		src/parts/unknown/State.cpp
-	src/parts/unknown/State_machine.h	src/parts/unknown/State_machine.cpp
+add_library(BETTERAVE_USER_SAYAB
+	src/parts/sayab/Acoustic_modem.h	src/parts/sayab/Acoustic_modem.cpp
+	src/parts/sayab/Autonomy.h		src/parts/sayab/Autonomy.cpp
+	src/parts/sayab/Cameras.h		src/parts/sayab/Cameras.cpp
+	src/parts/sayab/Logger.h		src/parts/sayab/Logger.cpp
+	src/parts/sayab/Motors.h		src/parts/sayab/Motors.cpp
+	src/parts/sayab/Remote_control.h	src/parts/sayab/Remote_control.cpp
+	src/parts/sayab/Remote_monitor.h	src/parts/sayab/Remote_monitor.cpp
+	src/parts/sayab/Simulator.h		src/parts/sayab/Simulator.cpp
+	src/parts/sayab/State.h			src/parts/sayab/State.cpp
+	src/parts/sayab/State_machine.h		src/parts/sayab/State_machine.cpp
 )
 
 add_library(BETTERAVE_USER_R2D2
@@ -158,27 +157,27 @@ add_library(BETTERAVE_USER_R2D2
 )
 
 add_executable(lirmia src/mains/Lirmia.cpp)
-add_executable(unknown src/mains/Unknown.cpp)
+add_executable(sayab src/mains/Sayab.cpp)
 add_executable(r2d2 src/mains/R2D2.cpp)
 
 target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-target_link_libraries(unknown ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_UNKNOWN BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(sayab ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_SAYAB BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 target_link_libraries(r2d2 ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_R2D2 BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 
 add_executable(remote_lirmia src/remote_control_monitor_lirmia.cpp)
-add_executable(remote_unknown src/remote_control_monitor_unknown.cpp)
+add_executable(remote_sayab src/remote_control_monitor_sayab.cpp)
 add_executable(remote_r2d2 src/remote_control_monitor_r2d2.cpp)
 
 target_link_libraries(remote_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-target_link_libraries(remote_unknown ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_UNKNOWN BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(remote_sayab ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_SAYAB BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 target_link_libraries(remote_r2d2 ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_R2D2 BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 
 add_executable(camera_lirmia src/remote_cam_lirmia.cpp)
-add_executable(camera_unknown src/remote_cam_unknown.cpp)
+add_executable(camera_sayab src/remote_cam_sayab.cpp)
 add_executable(camera_r2d2 src/remote_cam_r2d2.cpp)
 
 target_link_libraries(camera_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-target_link_libraries(camera_unknown ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(camera_sayab ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 target_link_libraries(camera_r2d2 ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 
 add_executable(recam src/local_cam_rec.cpp)

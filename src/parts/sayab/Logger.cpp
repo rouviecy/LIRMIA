@@ -12,7 +12,7 @@ Logger::Logger() : ComThread(){
 			<< setfill('0') << setw(2) << now->tm_mday << "--"
 			<< setfill('0') << setw(2) << now->tm_hour << ":"
 			<< setfill('0') << setw(2) << now->tm_min << ":"
-			<< setfill('0') << setw(2) << now->tm_sec << "--Unnamed.log";
+			<< setfill('0') << setw(2) << now->tm_sec << "--Sayab.log";
 	log_file.open(log_name.str());
 	string header = "t\tstate\t\t\t\tx\ty\tthz\tmotor\trudder\tbow1\tbow2";
 	log_file << header << "\n";

@@ -1,8 +1,8 @@
-#include "Unknown.h"
+#include "Sayab.h"
 
 using namespace std;
 
-Unknown::Unknown() : Maestro(){
+Sayab::Sayab() : Maestro(){
 
 	// Warning : pass-by-reference to avoid slicing !
 	Add_thread(&acoustic_modem,	"Acoustic modem",		1000000);	// 1 s
@@ -23,14 +23,14 @@ Unknown::Unknown() : Maestro(){
 	Init_serial();
 	Link_all();
 	remote_control.Set_blobs_obj(cameras.Get_blobs_obj());
-	Draw("coms_unknown");
+	Draw("coms_sayab");
 	usleep(1000000);
 	Launch_all();
 	remote_control.Job_and_wait_quit();
 
 }
 
-void Unknown::Shutdown(){
+void Sayab::Shutdown(){
 	Join_all();
 	#ifdef ENABLE_SERIAL_ARDUINO
 		serial_arduino.Serial_close();
@@ -43,7 +43,7 @@ void Unknown::Shutdown(){
 	#endif
 }
 
-void Unknown::Init_serial(){
+void Sayab::Init_serial(){
 	#ifdef ENABLE_SERIAL_ARDUINO
 		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B4800, true);
 		subscriber.Set_serial(&serial_arduino);
@@ -69,7 +69,7 @@ void Unknown::Init_serial(){
 }
 
 int main(){
-	Unknown robot;
+	Sayab robot;
 	robot.Shutdown();
 	return 0;
 }

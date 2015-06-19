@@ -1,28 +1,28 @@
 /*
- * @(#)		Unknown.h
+ * @(#)		Sayab.h
  * @version	1.0
  * @autor	C. Rouvière
  */
 
 /**
- * Unknown robot
+ * Sayab roboat
  */
 
-#ifndef UNKNOWN
-#define UNKNOWN
+#ifndef SAYAB
+#define SAYAB
 
 #include "../core/Maestro.h"
 #include "../interfaces/Serial.h"
-#include "../parts/unknown/Acoustic_modem.h"
-#include "../parts/unknown/Autonomy.h"
-#include "../parts/unknown/Cameras.h"
-#include "../parts/unknown/Logger.h"
-#include "../parts/unknown/Motors.h"
-#include "../parts/unknown/Remote_control.h"
-#include "../parts/unknown/Remote_monitor.h"
-#include "../parts/unknown/Simulator.h"
-#include "../parts/unknown/State.h"
-#include "../parts/unknown/State_machine.h"
+#include "../parts/sayab/Acoustic_modem.h"
+#include "../parts/sayab/Autonomy.h"
+#include "../parts/sayab/Cameras.h"
+#include "../parts/sayab/Logger.h"
+#include "../parts/sayab/Motors.h"
+#include "../parts/sayab/Remote_control.h"
+#include "../parts/sayab/Remote_monitor.h"
+#include "../parts/sayab/Simulator.h"
+#include "../parts/sayab/State.h"
+#include "../parts/sayab/State_machine.h"
 #include "../parts/Clock.h"
 #include "../parts/Compass_CMPS10.h"
 #include "../parts/Gps.h"
@@ -34,11 +34,11 @@
 // TO CHECK :
 #define DEV_SERIAL_RS232	"/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
 
-class Unknown : public Maestro{
+class Sayab : public Maestro{
 
 public:
 
-	Unknown();
+	Sayab();
 	void Shutdown();
 
 private:
