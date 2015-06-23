@@ -11,7 +11,7 @@ void Subscriber::On_start(){}
 void Subscriber::IO(){}
 
 void Subscriber::Subscribe(map <int, char> keys, void (*callback) (void*, char*), void* obj){
-	#ifndef ENABLE_SERIAL
+	#ifndef ENABLE_SERIAL_ARDUINO
 		cout << "[Error] Serial needs to be enabled to use Subscriber" << endl;
 		return;
 	#endif
@@ -23,7 +23,7 @@ void Subscriber::Subscribe(map <int, char> keys, void (*callback) (void*, char*)
 }
 
 void Subscriber::Job(){
-	#ifndef ENABLE_SERIAL
+	#ifndef ENABLE_SERIAL_ARDUINO
 		return;
 	#endif
 	char* msg = serial->Serial_read();

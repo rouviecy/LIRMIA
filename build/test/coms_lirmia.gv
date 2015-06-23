@@ -180,7 +180,7 @@ digraph links {
 		104 [label = "fsm_state\nint"];
 	}
 	subgraph cluster_105 {
-		label = "Subscriber - 25Hz";
+		label = "Subscriber - 10Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];

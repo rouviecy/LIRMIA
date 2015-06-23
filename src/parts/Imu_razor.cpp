@@ -21,13 +21,14 @@ void Imu_razor::Job(){} // Do nothing : this object should only be called by sub
 void Imu_razor::Process_serial_data(void* object, char* input_msg){
 	Imu_razor* self = (Imu_razor*) object;
 	string msg_ypr = string(input_msg + 5 * sizeof(char));
-	if(count(msg_ypr.begin(), msg_ypr.end(), ',') == 3){
+	if(count(msg_ypr.begin(), msg_ypr.end(), ',') == 2){
 		vector <string> tokens;
 		size_t next;
-		for(size_t current = 0; tokens.size() < 3; current = next + 1){
+		for(size_t current = 0; tokens.size() < 2; current = next + 1){
 			next = msg_ypr.find_first_of(",", current);
 			tokens.push_back(msg_ypr.substr(current, next - current));
 		}
+		tokens.push_back(msg_ypr.substr(next + 1, msg_ypr.size() - next - 1));
 		if(tokens[0].length() > 2 && tokens[1].length() > 2 && tokens[2].length() > 2){
 			for(int i = 0; i < 3; i++){(self->imu_thxyz)[i] = stof(tokens[i]);}
 			self->Critical_send();
