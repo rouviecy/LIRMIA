@@ -76,9 +76,9 @@ float compute_depth(){
 void setup(){
     Serial.begin(57600);
     IMU_Serial.begin(57600);
-    Wire.begin();
-    calibrate_depth_sensor();
-    z_init = compute_depth();
+//    Wire.begin();
+//    calibrate_depth_sensor();
+//    z_init = compute_depth();
 }
 
 void loop(){
@@ -91,10 +91,10 @@ void loop(){
       }
     }
     Serial.println("");
-    float z = compute_depth() - z_init;
-    Serial.print("#DEP=");
-    Serial.print(z);
-    Serial.println(",");
+//    float z = compute_depth() - z_init;
+//    Serial.print("#DEP=");
+//    Serial.print(z);
+//    Serial.println(",");
     delay(200);
 }
 
