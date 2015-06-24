@@ -18,7 +18,7 @@
 #include <opencv2/opencv.hpp>
 #include "Blobs.h"
 #include "Reco.h"
-#include "hsv_params.h"
+#include "HSV_tools.h"
 
 class Body{
 
@@ -45,22 +45,22 @@ public:
 
 private:
 
-	hsv_params *hsv_jaune;
-	hsv_params *hsv_vert;
-	hsv_params *hsv_rose;
-	hsv_params *hsv_lavande;
-	hsv_params *hsv_turq;
-	hsv_params *hsv_beige;
-	hsv_params *hsv_mauve;
-	hsv_params *hsv_pastis;
+	HSV_tools hsv_jaune;
+	HSV_tools hsv_vert;
+	HSV_tools hsv_rose;
+	HSV_tools hsv_lavande;
+	HSV_tools hsv_turq;
+	HSV_tools hsv_beige;
+	HSV_tools hsv_mauve;
+	HSV_tools hsv_pastis;
 
-	hsv_params *hsv_Tete[2];
-	hsv_params *hsv_T_torso[2];	hsv_params *hsv_B_torso[2];
-	hsv_params *hsv_L_shoulder[2];	hsv_params *hsv_R_shoulder[2];
-	hsv_params *hsv_L_elbow[2];	hsv_params *hsv_R_elbow[2];
-	hsv_params *hsv_L_hand[2];	hsv_params *hsv_R_hand[2];
-	hsv_params *hsv_L_knee[2];	hsv_params *hsv_R_knee[2];
-	hsv_params *hsv_L_foot[2];	hsv_params *hsv_R_foot[2];
+	HSV_tools *hsv_Tete[2];
+	HSV_tools *hsv_T_torso[2];	HSV_tools *hsv_B_torso[2];
+	HSV_tools *hsv_L_shoulder[2];	HSV_tools *hsv_R_shoulder[2];
+	HSV_tools *hsv_L_elbow[2];	HSV_tools *hsv_R_elbow[2];
+	HSV_tools *hsv_L_hand[2];	HSV_tools *hsv_R_hand[2];
+	HSV_tools *hsv_L_knee[2];	HSV_tools *hsv_R_knee[2];
+	HSV_tools *hsv_L_foot[2];	HSV_tools *hsv_R_foot[2];
 
 	cv::Mat img;
 	cv::Point2i Tete, T_torso, B_torso, L_shoulder, R_shoulder, L_elbow, R_elbow, L_hand, R_hand, L_knee, R_knee, L_foot, R_foot;
@@ -70,7 +70,7 @@ private:
 
 	void Couleurs();
 	void Membres();
-	std::vector <cv::Point2i> Update_blobs(hsv_params *hsv_1, hsv_params *hsv_2);
+	std::vector <cv::Point2i> Update_blobs(HSV_tools *hsv_1, HSV_tools *hsv_2);
 
 };
 

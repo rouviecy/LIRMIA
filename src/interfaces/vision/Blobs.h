@@ -20,7 +20,7 @@
 
 #include <mutex>
 #include <opencv2/opencv.hpp>
-#include "hsv_params.h"
+#include "HSV_tools.h"
 
 class Blobs{
 
@@ -37,7 +37,7 @@ public:
 	cv::Mat Get_contour(int index);			// Guetter sur le contour d'un blob
 
 	void Set_img(cv::Mat image);				// Setter d'image à traiter
-	void Definir_limites_separation(hsv_params *hsv);	// Récupération des paramètres de segmentation HSV
+	void Definir_limites_separation(HSV_tools *hsv);	// Récupération des paramètres de segmentation HSV
 	void Separer();						// Séparer selon les paramètres
 	void Trouver_blobs();					// Convertir les données en liste de blobs
 	void Relier();						// Relier les blobs

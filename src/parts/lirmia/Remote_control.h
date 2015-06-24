@@ -14,7 +14,7 @@
 #include "../../core/ComThread.h"
 #include "../../interfaces/TCP_server.h"
 #include "../../interfaces/vision/Blobs.h"
-#include "../../interfaces/vision/hsv_params.h"
+#include "../../interfaces/vision/HSV_tools.h"
 
 class Remote_control : public ComThread{
 
@@ -29,7 +29,7 @@ public:
 private:
 
 	TCP_server tcp_server;
-	hsv_params hsv;
+	HSV_tools hsv;
 	Blobs* blobs;
 
 	void On_start();

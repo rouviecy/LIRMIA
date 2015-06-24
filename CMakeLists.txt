@@ -3,9 +3,9 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA ON)
+set(IS_LIRMIA OFF)
 set(IS_SAYAB OFF)
-set(IS_R2D2 OFF)
+set(IS_R2D2 ON)
 set(IS_SIMU ON)
 
 if(${IS_LIRMIA})
@@ -16,7 +16,7 @@ if(${IS_LIRMIA})
 		set(ENABLE_SDL ON)
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
-		add_definitions(-DENABLE_CAM2)
+#		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_RECORDCAM)	# needs CAM1/CAM2
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 #		add_definitions(-DENABLE_MODEM)		# needs serial RS232
@@ -182,3 +182,6 @@ target_link_libraries(camera_r2d2 ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BE
 
 add_executable(recam src/local_cam_rec.cpp)
 target_link_libraries(recam ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+
+add_executable(unit_testing_pipeline src/units_testing/pipeline.cpp)
+target_link_libraries(unit_testing_pipeline ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)

@@ -12,12 +12,11 @@ Cameras::Cameras() : ComThread(){
 	cam_detect_opi = false;
 	cam_opi_horizontal = 0.;
 	cam_opi_vertical = 0.;
-	hsv_extra = new hsv_params;
-	hsv_extra->H_min = 113;		hsv_extra->S_min = 161;		hsv_extra->V_min = 108;
-	hsv_extra->H_max = 137;		hsv_extra->S_max = 255;		hsv_extra->V_max = 255;
-	hsv_extra->nb_dilate = 9;	hsv_extra->nb_erode = 9;	hsv_extra->seuil = 1000;
-	blobs_extra.Definir_limites_separation(hsv_extra);
-	delete hsv_extra;
+	HSV_tools hsv_extra;
+	hsv_extra.H_min = 113;		hsv_extra.S_min = 161;		hsv_extra.V_min = 108;
+	hsv_extra.H_max = 137;		hsv_extra.S_max = 255;		hsv_extra.V_max = 255;
+	hsv_extra.nb_dilate = 9;	hsv_extra.nb_erode = 9;		hsv_extra.seuil = 1000;
+	blobs_extra.Definir_limites_separation(&hsv_extra);
 	keep_count_detect_opi = 0;
 	index_opi = 0;
 
@@ -74,8 +73,9 @@ void Cameras::Job(){
 	Critical_receive();
 
 	#ifdef ENABLE_CAM1
+		// TODO : OPI recording (as CAM2)
 		capture1 >> img1;
-		Find_blobs(&img1, &blobs, &(cam_detect_obj[0]), &(cam_detect_horizontal[0]), &(cam_detect_vertical[0]), &(cam_size_obj[0]));
+		Cameras::Find_blobs(&img1, &blobs, &(cam_detect_obj[0]), &(cam_detect_horizontal[0]), &(cam_detect_vertical[0]), &(cam_size_obj[0]));
 		reco.Set_img(blobs.Get_img_blobs());
 		cv::Mat img_pipeline1 = reco.Trouver_ligne_principale(&(cam_detect_pipe[0]), &(cam_pipeline_angle[0]), &(cam_pipeline_distance[0]));
 		if(enable_streaming){
@@ -92,8 +92,8 @@ void Cameras::Job(){
 	#ifdef ENABLE_CAM2
 		capture2 >> img2;
 		bool instant_detected_opi = false;
-		Find_blobs(&img2, &blobs, &(cam_detect_obj[1]), &(cam_detect_horizontal[1]), &(cam_detect_vertical[1]), &(cam_size_obj[1]));
-		int num_blob_opi = Find_blobs(&img2, &blobs_extra, &instant_detected_opi, &cam_opi_horizontal, &cam_opi_vertical, &cam_size_opi);
+		Cameras::Find_blobs(&img2, &blobs, &(cam_detect_obj[1]), &(cam_detect_horizontal[1]), &(cam_detect_vertical[1]), &(cam_size_obj[1]));
+		int num_blob_opi = Cameras::Find_blobs(&img2, &blobs_extra, &instant_detected_opi, &cam_opi_horizontal, &cam_opi_vertical, &cam_size_opi);
 		reco.Set_img(blobs.Get_img_blobs());
 		cv::Mat img_pipeline2 = reco.Trouver_ligne_principale(&(cam_detect_pipe[1]), &(cam_pipeline_angle[1]), &(cam_pipeline_distance[1]));
 		if(instant_detected_opi){

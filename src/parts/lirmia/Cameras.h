@@ -13,7 +13,7 @@
 
 #include "../../interfaces/vision/Blobs.h"
 #include "../../interfaces/vision/Reco.h"
-#include "../../interfaces/vision/hsv_params.h"
+#include "../../interfaces/vision/HSV_tools.h"
 #include "../../interfaces/Camera_server.h"
 #include "../../core/ComThread.h"
 #include <opencv2/opencv.hpp>
@@ -30,6 +30,8 @@ public:
 
 	Blobs* Get_blobs_obj();
 
+	static int Find_blobs(cv::Mat* img, Blobs* blobs_finder, bool* out_detected, float* out_horizontal, float* out_vertical, float* out_size);
+
 private:
 
 	#define CAMERA_PORT_1 4243
@@ -41,7 +43,6 @@ private:
 
 	Blobs blobs, blobs_extra;
 	Camera_server camera_server;
-	hsv_params* hsv_extra;
 	Reco reco;
 
 	void On_start();
@@ -59,8 +60,6 @@ private:
 	cv::Mat img1, img2;
 	int keep_count_detect_opi;
 	int index_opi;
-
-	int Find_blobs(cv::Mat* img, Blobs* blobs_finder, bool* out_detected, float* out_horizontal, float* out_vertical, float* out_size);
 
 };
 

@@ -9,52 +9,47 @@ Gui::Gui(){
 	rouge = cv::Scalar(0, 0, 255);
 	dim_1 = cv::Size(1, 1);
 	pod_centre = cv::Point(TAILLE_POD / 2, TAILLE_POD / 2);
-	hsv = (hsv_params*) malloc(sizeof(hsv_params));
-	hsv2 = (hsv_params*) malloc(sizeof(hsv_params));
 	wrap = (STRUCT_WRAP_BOUND*) malloc(sizeof(STRUCT_WRAP_BOUND));
 }
 
-Gui::~Gui(){
-	free(hsv);
-	free(hsv2);
-}
+Gui::~Gui(){}
 
 // Créer des trackbars pour une séparation des couleurs en HSV
 void Gui::Creer_trackbar_HSV_sep(const char* titre_fenetre){
 	cv::namedWindow(titre_fenetre, CV_WINDOW_AUTOSIZE);
-	strcpy(hsv->winname, titre_fenetre);
-	hsv->H_min = 0; hsv->H_max = 0; hsv->S_min = 0; hsv->S_max = 0; hsv->V_min = 0; hsv->V_max = 0; hsv->seuil = 0;
-	hsv->nb_dilate = 0; hsv->nb_erode = 0;
-	strcpy(hsv->name_H_min, "H_min"); strcpy(hsv->name_S_min, "S_min"); strcpy(hsv->name_V_min, "V_min");
-	strcpy(hsv->name_H_max, "H_max"); strcpy(hsv->name_S_max, "S_max"); strcpy(hsv->name_V_max , "V_max");
-	strcpy(hsv->name_nb_dilate , "nb_dilate"); strcpy(hsv->name_nb_erode, "nb_erode"); strcpy(hsv->name_seuil, "seuil");
-	cv::createTrackbar(hsv->name_H_min, hsv->winname, &(hsv->H_min), 360, Callback_HSV, hsv);
-	cv::createTrackbar(hsv->name_H_max, hsv->winname, &(hsv->H_max), 360, Callback_HSV, hsv);
-	cv::createTrackbar(hsv->name_S_min, hsv->winname, &(hsv->S_min), 255, Callback_HSV, hsv);
-	cv::createTrackbar(hsv->name_S_max, hsv->winname, &(hsv->S_max), 255, Callback_HSV, hsv);
-	cv::createTrackbar(hsv->name_V_min, hsv->winname, &(hsv->V_min), 255, Callback_HSV, hsv);
-	cv::createTrackbar(hsv->name_V_max, hsv->winname, &(hsv->V_max), 255, Callback_HSV, hsv);
-	cv::createTrackbar(hsv->name_seuil, hsv->winname, &(hsv->seuil), 9999, Callback_HSV, hsv);
-	cv::createTrackbar(hsv->name_nb_dilate, hsv->winname, &(hsv->nb_dilate), 20, Callback_HSV, hsv);
-	cv::createTrackbar(hsv->name_nb_erode, hsv->winname, &(hsv->nb_erode), 20, Callback_HSV, hsv);
+	strcpy(hsv.winname, titre_fenetre);
+	hsv.H_min = 0; hsv.H_max = 0; hsv.S_min = 0; hsv.S_max = 0; hsv.V_min = 0; hsv.V_max = 0; hsv.seuil = 0;
+	hsv.nb_dilate = 0; hsv.nb_erode = 0;
+	strcpy(hsv.name_H_min, "H_min"); strcpy(hsv.name_S_min, "S_min"); strcpy(hsv.name_V_min, "V_min");
+	strcpy(hsv.name_H_max, "H_max"); strcpy(hsv.name_S_max, "S_max"); strcpy(hsv.name_V_max , "V_max");
+	strcpy(hsv.name_nb_dilate , "nb_dilate"); strcpy(hsv.name_nb_erode, "nb_erode"); strcpy(hsv.name_seuil, "seuil");
+	cv::createTrackbar(hsv.name_H_min, hsv.winname, &(hsv.H_min), 360, Callback_HSV, &hsv);
+	cv::createTrackbar(hsv.name_H_max, hsv.winname, &(hsv.H_max), 360, Callback_HSV, &hsv);
+	cv::createTrackbar(hsv.name_S_min, hsv.winname, &(hsv.S_min), 255, Callback_HSV, &hsv);
+	cv::createTrackbar(hsv.name_S_max, hsv.winname, &(hsv.S_max), 255, Callback_HSV, &hsv);
+	cv::createTrackbar(hsv.name_V_min, hsv.winname, &(hsv.V_min), 255, Callback_HSV, &hsv);
+	cv::createTrackbar(hsv.name_V_max, hsv.winname, &(hsv.V_max), 255, Callback_HSV, &hsv);
+	cv::createTrackbar(hsv.name_seuil, hsv.winname, &(hsv.seuil), 9999, Callback_HSV, &hsv);
+	cv::createTrackbar(hsv.name_nb_dilate, hsv.winname, &(hsv.nb_dilate), 20, Callback_HSV, &hsv);
+	cv::createTrackbar(hsv.name_nb_erode, hsv.winname, &(hsv.nb_erode), 20, Callback_HSV, &hsv);
 }
 void Gui::Creer_trackbar_HSV_sep2(const char* titre_fenetre){
 	cv::namedWindow(titre_fenetre, CV_WINDOW_AUTOSIZE);
-	strcpy(hsv2->winname, titre_fenetre);
-	hsv2->H_min = 0; hsv2->H_max = 0; hsv2->S_min = 0; hsv2->S_max = 0; hsv2->V_min = 0; hsv2->V_max = 0; hsv2->seuil = 0;
-	hsv2->nb_dilate = 0; hsv2->nb_erode = 0;
-	strcpy(hsv2->name_H_min, "H_min"); strcpy(hsv2->name_S_min, "S_min"); strcpy(hsv2->name_V_min, "V_min");
-	strcpy(hsv2->name_H_max, "H_max"); strcpy(hsv2->name_S_max, "S_max"); strcpy(hsv2->name_V_max , "V_max");
-	strcpy(hsv2->name_nb_dilate , "nb_dilate"); strcpy(hsv2->name_nb_erode, "nb_erode"); strcpy(hsv2->name_seuil, "seuil");
-	cv::createTrackbar(hsv2->name_H_min, hsv2->winname, &(hsv2->H_min), 360, Callback_HSV, hsv2);
-	cv::createTrackbar(hsv2->name_H_max, hsv2->winname, &(hsv2->H_max), 360, Callback_HSV, hsv2);
-	cv::createTrackbar(hsv2->name_S_min, hsv2->winname, &(hsv2->S_min), 255, Callback_HSV, hsv2);
-	cv::createTrackbar(hsv2->name_S_max, hsv2->winname, &(hsv2->S_max), 255, Callback_HSV, hsv2);
-	cv::createTrackbar(hsv2->name_V_min, hsv2->winname, &(hsv2->V_min), 255, Callback_HSV, hsv2);
-	cv::createTrackbar(hsv2->name_V_max, hsv2->winname, &(hsv2->V_max), 255, Callback_HSV, hsv2);
-	cv::createTrackbar(hsv2->name_seuil, hsv2->winname, &(hsv2->seuil), 9999, Callback_HSV, hsv2);
-	cv::createTrackbar(hsv2->name_nb_dilate, hsv2->winname, &(hsv2->nb_dilate), 10, Callback_HSV, hsv2);
-	cv::createTrackbar(hsv2->name_nb_erode, hsv2->winname, &(hsv2->nb_erode), 10, Callback_HSV, hsv2);
+	strcpy(hsv2.winname, titre_fenetre);
+	hsv2.H_min = 0; hsv2.H_max = 0; hsv2.S_min = 0; hsv2.S_max = 0; hsv2.V_min = 0; hsv2.V_max = 0; hsv2.seuil = 0;
+	hsv2.nb_dilate = 0; hsv2.nb_erode = 0;
+	strcpy(hsv2.name_H_min, "H_min"); strcpy(hsv2.name_S_min, "S_min"); strcpy(hsv2.name_V_min, "V_min");
+	strcpy(hsv2.name_H_max, "H_max"); strcpy(hsv2.name_S_max, "S_max"); strcpy(hsv2.name_V_max , "V_max");
+	strcpy(hsv2.name_nb_dilate , "nb_dilate"); strcpy(hsv2.name_nb_erode, "nb_erode"); strcpy(hsv2.name_seuil, "seuil");
+	cv::createTrackbar(hsv2.name_H_min, hsv2.winname, &(hsv2.H_min), 360, Callback_HSV, &hsv2);
+	cv::createTrackbar(hsv2.name_H_max, hsv2.winname, &(hsv2.H_max), 360, Callback_HSV, &hsv2);
+	cv::createTrackbar(hsv2.name_S_min, hsv2.winname, &(hsv2.S_min), 255, Callback_HSV, &hsv2);
+	cv::createTrackbar(hsv2.name_S_max, hsv2.winname, &(hsv2.S_max), 255, Callback_HSV, &hsv2);
+	cv::createTrackbar(hsv2.name_V_min, hsv2.winname, &(hsv2.V_min), 255, Callback_HSV, &hsv2);
+	cv::createTrackbar(hsv2.name_V_max, hsv2.winname, &(hsv2.V_max), 255, Callback_HSV, &hsv2);
+	cv::createTrackbar(hsv2.name_seuil, hsv2.winname, &(hsv2.seuil), 9999, Callback_HSV, &hsv2);
+	cv::createTrackbar(hsv2.name_nb_dilate, hsv2.winname, &(hsv2.nb_dilate), 10, Callback_HSV, &hsv2);
+	cv::createTrackbar(hsv2.name_nb_erode, hsv2.winname, &(hsv2.nb_erode), 10, Callback_HSV, &hsv2);
 }
 // Créer des trackbars pour les transformations
 void Gui::Creer_trackbar_transfo(const char* titre_fenetre){
@@ -77,7 +72,7 @@ void Gui::Creer_trackbar_transfo(const char* titre_fenetre){
 
 // Callback des trackbars HSV
 void Gui::Callback_HSV(int value, void *object){
-	hsv_params *arg = (hsv_params*)object;
+	HSV_tools *arg = (HSV_tools*)object;
 	if(arg->H_min > arg->H_max){cv::setTrackbarPos((char*) arg->name_H_max, (char*) arg->winname, arg->H_min);};
 	if(arg->S_min > arg->S_max){cv::setTrackbarPos((char*) arg->name_S_max, (char*) arg->winname, arg->S_min);};
 	if(arg->V_min > arg->V_max){cv::setTrackbarPos((char*) arg->name_V_max, (char*) arg->winname, arg->V_min);};
@@ -123,6 +118,6 @@ void Gui::Ajouter_vecteurs(const std::string titre_fenetre, cv::Mat image, vecto
 }
 
 // Guetters et setters
-hsv_params *Gui::Get_HSV_bound() const{return hsv;}
-hsv_params *Gui::Get_HSV_bound2() const{return hsv2;}
+HSV_tools *Gui::Get_HSV_bound(){return &hsv;}
+HSV_tools *Gui::Get_HSV_bound2(){return &hsv2;}
 STRUCT_WRAP_BOUND *Gui::Get_wrap_bound() const{return wrap;}

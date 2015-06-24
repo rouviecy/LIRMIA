@@ -11,13 +11,13 @@ add_library(VISION_LIBS
 	src/interfaces/vision/Calibrate.h		src/interfaces/vision/Calibrate.cpp
 	src/interfaces/vision/Flux_cam.h		src/interfaces/vision/Flux_cam.cpp
 	src/interfaces/vision/Gui.h			src/interfaces/vision/Gui.cpp
+	src/interfaces/vision/HSV_tools.h		src/interfaces/vision/HSV_tools.cpp
 	src/interfaces/vision/Instruments.h		src/interfaces/vision/Instruments.cpp
 	src/interfaces/vision/IO_file.h			src/interfaces/vision/IO_file.cpp
 	src/interfaces/vision/Reco.h			src/interfaces/vision/Reco.cpp
 	src/interfaces/vision/Tracking.h		src/interfaces/vision/Tracking.cpp
 	src/interfaces/vision/Transfo.h			src/interfaces/vision/Transfo.cpp
 	src/interfaces/vision/Utils.h			src/interfaces/vision/Utils.cpp
-	src/interfaces/vision/hsv_params.h
 	src/interfaces/vision/struct_wrap_bound.h
 	src/interfaces/vision/struct_nom.h
 	src/interfaces/vision/struct_vignette.h
