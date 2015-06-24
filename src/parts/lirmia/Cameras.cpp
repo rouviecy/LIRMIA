@@ -77,7 +77,7 @@ void Cameras::Job(){
 		capture1 >> img1;
 		Cameras::Find_blobs(&img1, &blobs, &(cam_detect_obj[0]), &(cam_detect_horizontal[0]), &(cam_detect_vertical[0]), &(cam_size_obj[0]));
 		reco.Set_img(blobs.Get_img_blobs());
-		cv::Mat img_pipeline1 = reco.Trouver_ligne_principale(&(cam_detect_pipe[0]), &(cam_pipeline_angle[0]), &(cam_pipeline_distance[0]));
+		cv::Mat img_pipeline1 = reco.Trouver_ligne_principale(false, &(cam_detect_pipe[0]), &(cam_pipeline_angle[0]), &(cam_pipeline_distance[0]));
 		if(enable_streaming){
 			#ifdef ENABLE_RECORDCAM
 				camera_server.Record_img(img1, 0);
@@ -95,7 +95,7 @@ void Cameras::Job(){
 		Cameras::Find_blobs(&img2, &blobs, &(cam_detect_obj[1]), &(cam_detect_horizontal[1]), &(cam_detect_vertical[1]), &(cam_size_obj[1]));
 		int num_blob_opi = Cameras::Find_blobs(&img2, &blobs_extra, &instant_detected_opi, &cam_opi_horizontal, &cam_opi_vertical, &cam_size_opi);
 		reco.Set_img(blobs.Get_img_blobs());
-		cv::Mat img_pipeline2 = reco.Trouver_ligne_principale(&(cam_detect_pipe[1]), &(cam_pipeline_angle[1]), &(cam_pipeline_distance[1]));
+		cv::Mat img_pipeline2 = reco.Trouver_ligne_principale(false, &(cam_detect_pipe[1]), &(cam_pipeline_angle[1]), &(cam_pipeline_distance[1]));
 		if(instant_detected_opi){
 			keep_count_detect_opi++;
 			if(keep_count_detect_opi > 5){

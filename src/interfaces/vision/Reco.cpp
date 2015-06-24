@@ -299,13 +299,14 @@ vector <int> Reco::Liste_edges_int(cv::Subdiv2D s, int max_x, int max_y, cv::Mat
 	return resultat_vector;
 }
 
-cv::Mat Reco::Trouver_ligne_principale(bool* detected, float* angle, float* ecart){
+cv::Mat Reco::Trouver_ligne_principale(bool save_tmp_img, bool* detected, float* angle, float* ecart){
 	// Extraire les contours
 	cv::Mat image_contours;
 	image.copyTo(image_quadrillage);
 	cv::cvtColor(image, image, CV_RGB2GRAY, 1);
 	cv::equalizeHist(image, image);
 	cv::Canny(image, image_contours, 300, 800);
+	if(save_tmp_img){cv::imwrite("img_contours.png", image_contours);}
 
 	// Trouver les lignes
 	vector <cv::Vec4i> lignes;
@@ -315,6 +316,13 @@ cv::Mat Reco::Trouver_ligne_principale(bool* detected, float* angle, float* ecar
 		*angle = 0.;
 		*ecart = 0.;
 		return image;
+	}
+	if(save_tmp_img){
+		cv::Mat img_hough = cv::Mat::zeros(image.size(), CV_8U);
+		for(size_t i = 0; i < lignes.size(); i++){
+			cv::line(img_hough, cv::Point(lignes[i][0], lignes[i][1]), cv::Point(lignes[i][2], lignes[i][3]), bleu);
+		}
+		cv::imwrite("img_hough.png", img_hough);
 	}
 
 	// Calculer les angles et distances par rapport à la verticale
@@ -342,6 +350,11 @@ cv::Mat Reco::Trouver_ligne_principale(bool* detected, float* angle, float* ecar
 		centre += cv::Point2i(distance_moyenne / cos(angle_moyen), 0);
 	}
 	cv::line(image, centre + pt_excentre, centre - pt_excentre, blanc, 5);
+	if(save_tmp_img){
+		cv::Mat img_pipe = cv::Mat::zeros(image.size(), CV_8U);
+		cv::line(img_pipe, centre + pt_excentre, centre - pt_excentre, blanc, 5);
+		cv::imwrite("img_pipe.png", img_pipe);
+	}
 	*detected = true;
 	*angle = angle_moyen;
 	*ecart = 2 * distance_moyenne / image.size().width;
