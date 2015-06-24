@@ -4,6 +4,9 @@ using namespace std;
 
 Autonomy::Autonomy() : ComThread(){
 	for(int i = 0; i < 4; i++){motor[i] = 0.;}
+	last_cam_detect_horizontal = 0.;
+	last_cam_detect_vertical = 0.;
+	last_t = -1.;
 }
 
 Autonomy::~Autonomy(){}
@@ -15,6 +18,7 @@ void Autonomy::IO(){
 	Link_input("remote_forward",		COMFLOAT,	1, &remote_forward);
 	Link_input("remote_turn",		COMFLOAT,	1, &remote_turn);
 	Link_input("remote_deeper",		COMFLOAT,	1, &remote_deeper);
+	Link_input("t",				COMFLOAT,	1, &t);
 	Link_input("cam_size_obj",		COMFLOAT,	1, &cam_size_obj);
 	Link_input("cam_detect_horizontal",	COMFLOAT,	1, &cam_detect_horizontal);
 	Link_input("cam_detect_vertical",	COMFLOAT,	1, &cam_detect_vertical);
@@ -26,10 +30,15 @@ void Autonomy::Job(){
 	Critical_receive();
 	if(fsm_state == FOLLOW_OBJ_CAM){
 		if(cam_size_obj < 0.20){
+			float v_horizontal = (cam_detect_horizontal - last_cam_detect_horizontal) / (t - last_t);
+			float v_vertical = (cam_detect_vertical - last_cam_detect_vertical) / (t - last_t);
 			motor[1] = 0.2 - cam_size_obj + cam_detect_horizontal / 20;
 			motor[2] = 0.2 - cam_size_obj - cam_detect_horizontal / 20;
 			motor[0] = -cam_detect_vertical / 20;
 			motor[3] = -cam_detect_vertical / 20;
+			last_cam_detect_horizontal = cam_detect_horizontal;
+			last_cam_detect_vertical = cam_detect_vertical;
+			last_t = t;
 		}
 		else{
 			motor[1] = -0.05;

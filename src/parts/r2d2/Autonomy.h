@@ -32,9 +32,11 @@ private:
 	float cam_size_obj;
 	float cam_detect_horizontal;
 	float cam_detect_vertical;
+	float t;
 	float motor[4];
 
 	float keep_thz;
+	float last_cam_detect_horizontal, last_cam_detect_vertical, last_t;
 
 };
 
