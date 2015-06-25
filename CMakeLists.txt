@@ -183,5 +183,7 @@ target_link_libraries(camera_r2d2 ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BE
 add_executable(recam src/local_cam_rec.cpp)
 target_link_libraries(recam ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 
+add_executable(unit_testing_blobs src/units_testing/blobs.cpp)
 add_executable(unit_testing_pipeline src/units_testing/pipeline.cpp)
+target_link_libraries(unit_testing_blobs ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
 target_link_libraries(unit_testing_pipeline ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)

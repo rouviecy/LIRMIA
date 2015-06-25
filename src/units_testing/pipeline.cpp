@@ -25,7 +25,7 @@ int main(int argc, char* argv[]){
 		cv::imshow("Blob", blobs.Get_img_blobs());
 	}
 
-	cv::imwrite("img_blobs.png", blobs.Get_img_blobs());
+	cv::imwrite("img_hsv_pipe.png", blobs.Get_img_blobs());
 	reco.Set_img(blobs.Get_img_blobs());
 	cv::Mat img_pipeline = reco.Trouver_ligne_principale(true, &detected_pipe, &angle_pipe, &distance_pipe);
 	if(detected_obj){
