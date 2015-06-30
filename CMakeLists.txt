@@ -16,7 +16,7 @@ if(${IS_LIRMIA})
 		set(ENABLE_SDL ON)
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
-#		add_definitions(-DENABLE_CAM2)
+		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_RECORDCAM)	# needs CAM1/CAM2
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 #		add_definitions(-DENABLE_MODEM)		# needs serial RS232
@@ -77,6 +77,7 @@ elseif(${IS_R2D2})
 		set(ENABLE_GRAPHVIZ OFF)
 		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL)
+		add_definitions(-DENABLE_I2C)
 		add_definitions(-DENABLE_MOTORS)	# needs serial
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
@@ -106,6 +107,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/interfaces/Camera_server.h		src/interfaces/Camera_server.cpp
 	src/interfaces/FSM.h			src/interfaces/FSM.cpp
 	src/interfaces/FSMDraw.h		src/interfaces/FSMDraw.cpp
+	src/interfaces/I2C.h			src/interfaces/I2C.cpp
 	src/interfaces/Joystick.h		src/interfaces/Joystick.cpp
 	src/interfaces/Serial.h			src/interfaces/Serial.cpp
 	src/interfaces/TCP_client.h		src/interfaces/TCP_client.cpp
@@ -153,6 +155,7 @@ add_library(BETTERAVE_USER_R2D2
 	src/parts/r2d2/Motors.h			src/parts/r2d2/Motors.cpp
 	src/parts/r2d2/Remote_control.h		src/parts/r2d2/Remote_control.cpp
 	src/parts/r2d2/Remote_monitor.h		src/parts/r2d2/Remote_monitor.cpp
+	src/parts/r2d2/State.h			src/parts/r2d2/State.cpp
 	src/parts/r2d2/State_machine.h		src/parts/r2d2/State_machine.cpp
 )
 

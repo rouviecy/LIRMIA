@@ -11,6 +11,10 @@ void Serial::Serial_init(const char* path, int baudrate, bool canonical_mode){
 	this->baudrate = baudrate;
 	this->canonical_mode = canonical_mode;
 	device = open(path, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
+	if(device < 0){
+		cout << "[Error] Unable to open serial port to " + this->path << endl;
+		return;
+	}
 	memset(&tio_new, 0, sizeof(tio_new));
 	tcgetattr(device, &tio_old);
 	cfsetispeed(&tio_new, baudrate);

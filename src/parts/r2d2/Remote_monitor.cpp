@@ -21,6 +21,7 @@ void Remote_monitor::IO(){
 	Link_input("motor",		COMFLOAT,	4, motor);
 	Link_input("fsm_state",		COMINT,		1, &fsm_state);
 	Link_input("fsm_unlocked",	COMBOOL,	1, &fsm_unlocked);
+	Link_input("thxyz",		COMFLOAT, 	3, thxyz);
 }
 
 void Remote_monitor::Job(){
@@ -32,13 +33,13 @@ void Remote_monitor::Job(){
 /*		to_string((int) (xyz[0] * 1000)) + "|" +
 		to_string((int) (xyz[1] * 1000)) + "|" +
 		to_string((int) (xyz[2] * 1000)) + "|" +
-		to_string(thxyz[2]) + "|" +
 */
-		// temp x y z th
+		// temp x y z
 		to_string(0) + "|" +
 		to_string(0) + "|" +
 		to_string(42000) + "|" +
-		to_string(0) + "|" +
+
+		to_string(thxyz[2]) + "|" +
 
 		to_string(motor[0] * 100) + "|" +
 		to_string(motor[1] * 100) + "|" +
