@@ -9,7 +9,7 @@
 +    **SDL2** (for keyboard and joystick of remote controller)
 +    **DOT** (optional : to generate graphs)
 
-### Enable C++11 (for Unbuntu >= 14.04)
+### Enable C++11 (for Ubuntu >= 14.04)
 
     sudo apt-get install build-essential g++-4.8 cmake
     rm /usr/bin/gcc
@@ -28,6 +28,12 @@ Enable camera (load `bcm2835-v4l2` and `v4l2-ctl` after each boot) :
 Disable Serial over console :
 
     sudo raspi-config
+
+Enable I2C (load `i2c-dev` after each boot) :
+
+    sudo raspi-config
+    sudo apt-get install i2c-tools
+    sudo modprobe i2c-dev
 
 ### Compile
 Remember to adjust `IS_XXX` in `CMakeLists.txt` to choose a robot or a simulator/remote.
