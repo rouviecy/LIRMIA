@@ -44,11 +44,15 @@ void Compass_CMPS10::Job(){
 			i2c->I2C_connect_device(CMPS10_I2C_ADDRESS);
 			i2c->I2C_write(request_compass_i2c, 1);
 			unsigned char* answer = i2c->I2C_read_uchar(21);
+			float angle_v1 = (float) ((int) answer[2] * 256 + (int) answer[3]) / 10;
+			float angle_v2 = (float) ((int) answer[1] * 360) / 255;
+			if(fabs(angle_v1 - angle_v2) < 5){
+				compass_thxyz[2] = angle_v1;
+			}
 			int answer_4 = (int) answer[4];
 			int answer_5 = (int) answer[5];
 			compass_thxyz[1] = (float) ((answer_4 > 128 ? -answer_4 : +answer_4) * 90) / 255;
 			compass_thxyz[0] = (float) ((answer_5 > 128 ? -answer_5 : +answer_4) * 180) / 255;
-			compass_thxyz[2] = (float) (((int) answer[2]) * 256 + (int) answer[3]) / 10;
 			i2c->Unlock();
 			Critical_send();
 		}
