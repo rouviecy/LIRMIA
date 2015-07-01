@@ -45,7 +45,7 @@ private:
 	short int b1, b2, mb, mc, md;
 
 	int b5;
-	unsigned int temperature, pressure, altitude;
+	unsigned int temperature, pressure;
 
 	unsigned short Read_ushort_and_swap(int address);
 	void Update_temperature();

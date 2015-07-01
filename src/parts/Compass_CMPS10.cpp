@@ -49,7 +49,7 @@ void Compass_CMPS10::Job(){
 			compass_thxyz[0] = (float) ((answer_5 > 128 ? -answer_5 : +answer_4) * 180) / 255;
 			compass_thxyz[2] = (float) ((int) answer[2] << 8 + (int) answer[3]) / 10;
 			i2c->Unlock();
-			Critical_send();			
+			Critical_send();
 		}
 	#endif
 }
@@ -60,6 +60,10 @@ void Compass_CMPS10::Set_iss(Serial* serial){
 
 }
 void Compass_CMPS10::Set_i2c(I2C* i2c){
+	#ifndef ENABLE_I2C
+		cout << "[Warning] Trying to use CMPS10 without I2C enabled ; compass will be disabled" << endl;
+		return;
+	#endif
 	this->i2c = i2c;
 	i2c->I2C_connect_device(CMPS10_I2C_ADDRESS);
 	enable_i2c = true;

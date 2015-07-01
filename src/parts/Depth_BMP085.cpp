@@ -41,7 +41,7 @@ void Depth_BMP085::Job(){
 	Update_pressure();
 	Update_altitude();
 	i2c->Unlock();
-	Critical_send();			
+	Critical_send();
 }
 
 void Depth_BMP085::Update_temperature(){
@@ -83,13 +83,12 @@ void Depth_BMP085::Update_pressure(){
 }
 
 void Depth_BMP085::Update_altitude(){
-    altitude = (int) (44330 * (1.0 - pow(pressure / 101325, 0.1903))) - 2;	
+	depth = (44330. * (1.0 - pow((float) pressure / 101325., 0.1903))) - 2.;
 }
 
 unsigned short Depth_BMP085::Read_ushort_and_swap(int address){
-	unsigned short result = *(i2c->I2C_read_ushort_address(address));
-	result = ((result << 8) & 0xFF00) | ((result >> 8) & 0xFF);
-	return result;
+	unsigned short answer = *(i2c->I2C_read_ushort_address(address));
+	return ((answer << 8) & 0xFF00) | ((answer >> 8) & 0xFF);
 }
 
 void Depth_BMP085::Set_i2c(I2C* i2c){
