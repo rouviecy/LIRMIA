@@ -32,6 +32,7 @@ private:
 	float motor[4];
 	int fsm_state;
 	bool fsm_unlocked;
+	float xyz[3];
 	float thxyz[3];
 
 };

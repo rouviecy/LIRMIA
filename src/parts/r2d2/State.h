@@ -23,7 +23,9 @@ public:
 private:
 
 	float compass_thxyz[3];
+	float xyz[3];
 	float thxyz[3];
+	float depth;
 
 	void On_start();
 	void Job();
