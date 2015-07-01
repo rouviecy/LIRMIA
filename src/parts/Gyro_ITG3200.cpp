@@ -21,10 +21,10 @@ void Gyro_ITG3200::Job(){
 		i2c->I2C_connect_device(ITG3200_I2C_ADDRESS);
 		i2c->I2C_write(&request_gyro_z_high, 1);
 		short big = (short) *(i2c->I2C_read_uchar(1));
+		if(big > 127){big -= 255;}
 		i2c->I2C_write(&request_gyro_z_low, 1);
-		short little = (short) *(i2c->I2C_read_uchar(1));
-		gyro_vthxyz[2] = (float) (big << 8 | little) / 14.375;
-cout << "gyro : " << gyro_vthxyz[2] << endl;
+		short little = (short) *(i2c->I2C_read_uchar(1)) - 127;
+		gyro_vthxyz[2] = (float) (big << 8 | little);
 		i2c->Unlock();
 		Critical_send();
 	#endif

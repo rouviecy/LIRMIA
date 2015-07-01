@@ -20,10 +20,11 @@ void SPI::SPI_init(const char* path, int speed, int mode, bool little_endian, in
 	ioctl(device, SPI_IOC_RD_MODE, &(this->mode));
 	ioctl(device, SPI_IOC_WR_BITS_PER_WORD, &(spi_transfer.len));
 	ioctl(device, SPI_IOC_RD_BITS_PER_WORD, &(spi_transfer.len));
-	ioctl(device, SPI_IOC_WR_LSB_FIRST, &(this->little_endian));
-	ioctl(device, SPI_IOC_RD_LSB_FIRST, &(this->little_endian));
+	cout << ioctl(device, SPI_IOC_WR_LSB_FIRST, &(this->little_endian));
+	cout << ioctl(device, SPI_IOC_RD_LSB_FIRST, &(this->little_endian));
 	ioctl(device, SPI_IOC_WR_MAX_SPEED_HZ, &(spi_transfer.speed_hz));
 	ioctl(device, SPI_IOC_RD_MAX_SPEED_HZ, &(spi_transfer.speed_hz));
+	cout << endl;
 }
 
 void SPI::SPI_close(){

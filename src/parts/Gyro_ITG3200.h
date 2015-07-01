@@ -16,7 +16,7 @@
 #include "../interfaces/I2C.h"
 #include <cmath>
 
-#define ITG3200_I2C_ADDRESS	0xD2
+#define ITG3200_I2C_ADDRESS	0x68
 
 class Gyro_ITG3200 : public ComThread{
 
