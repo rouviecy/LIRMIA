@@ -41,6 +41,7 @@ void Compass_CMPS10::Job(){
 	#ifdef ENABLE_I2C
 		if(enable_i2c){
 			i2c->Lock();
+			i2c->I2C_connect_device(CMPS10_I2C_ADDRESS);
 			i2c->I2C_write(request_compass_i2c, 1);
 			unsigned char* answer = i2c->I2C_read_uchar(21);
 			int answer_4 = (int) answer[4];
@@ -65,6 +66,5 @@ void Compass_CMPS10::Set_i2c(I2C* i2c){
 		return;
 	#endif
 	this->i2c = i2c;
-	i2c->I2C_connect_device(CMPS10_I2C_ADDRESS);
 	enable_i2c = true;
 }
