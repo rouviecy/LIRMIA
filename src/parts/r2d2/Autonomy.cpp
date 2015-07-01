@@ -78,16 +78,24 @@ void Autonomy::Job(){
 		
 				
 		float difA,RF=280,CTRL,DCTRL,AVAN=0, inte, ctrlI;
-		float kp=0.5, kd=0.5, ki=0.7, CP=0,CD=0; 
+		float kp=0.01, kd=0.005, ki=0.7, CP=0,CD=0; 
 		inte=0;
 				
-         cout << A << "   " << RF << endl;
+        // cout << A << "   " << RF << endl;
 		//---------------------------------------------------------------------------------
 				
 			difA=A-RF;
 
+			if (difA < 180)
+			{
+			difA = -180 -difA;
+			}
+			else if (difA > 180)
+			{
+			difA = 180-difA;
+			}
 			CP=kp*(difA);
-			//CP=saturation(-1,CP,1);
+			CP=saturation(-1,CP,1);
 
 			//CD=kd*(vthxyz[2]);
 			//CD=saturation(-1,CD,1);
@@ -100,7 +108,7 @@ void Autonomy::Job(){
 
 			motor[1] = +CTRL;
 			motor[2] = -CTRL;
-		
+	cout << A << "   " << RF << "  " << CTRL << "  " <<  vthxyz[2] << endl;	
 		
 	}
 	else{

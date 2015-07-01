@@ -41,8 +41,8 @@ void State::Job(){
 	thxyz[2] = compass_thxyz[2];
 	//-------------------  Filtro del angulo ------------------------------------------
 		float xm = thxyz[2];
-                float a=0.9;
-                float b=0.5;
+                float a=0.2;
+                float b=0.3;
                 float xk, xk_1, vk, rk, h;
                 float vk_1=0;
                 float dt=0.125;              
@@ -65,4 +65,6 @@ void State::Job(){
 	vthxyz[2] = vk_1;
 	xyz[2] = depth;
 	Critical_send();
+cout << dt << endl;
+
 }
