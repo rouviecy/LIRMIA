@@ -94,6 +94,7 @@ void Depth_BMP085::Update_pressure(){
 void Depth_BMP085::Update_altitude(){
 //	depth = (44330. * (1.0 - pow((float) pressure / 101325., 0.1903))) - 2.;
 	depth = ((float) pressure - (float) pressure_ref) / 9810.;
+cout << "Pressure : " << pressure << " | Depth : " << depth << endl;
 }
 
 unsigned short Depth_BMP085::Read_ushort_and_swap(int address){

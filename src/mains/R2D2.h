@@ -14,7 +14,6 @@
 #include "../core/Maestro.h"
 #include "../interfaces/I2C.h"
 #include "../interfaces/Serial.h"
-#include "../interfaces/SPI.h"
 #include "../parts/r2d2/Autonomy.h"
 #include "../parts/r2d2/Cameras.h"
 #include "../parts/r2d2/Logger.h"
@@ -42,7 +41,6 @@ private:
 
 	I2C i2c;
 	Serial serial;
-	SPI spi;
 
 	void Init_serial_and_i2c();
 
