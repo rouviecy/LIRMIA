@@ -16,9 +16,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <iostream>
-#include <sys/ioctl.h>
 #include "./i2c-dev.h"
-#include <sys/ioctl.h>
 
 class I2C{
 
