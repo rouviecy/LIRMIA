@@ -42,7 +42,7 @@ void Compass_CMPS10::Job(){
 		if(enable_i2c){
 			i2c->Lock();
 			i2c->I2C_write(request_compass_i2c, 1);
-			unsigned char* answer = i2c->I2C_read(6);
+			unsigned char* answer = i2c->I2C_read_uchar(6);
 			int answer_4 = (int) answer[4];
 			int answer_5 = (int) answer[5];
 			compass_thxyz[1] = (float) ((answer_4 > 128 ? -answer_4 : +answer_4) * 90) / 255;

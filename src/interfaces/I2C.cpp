@@ -27,9 +27,23 @@ void I2C::I2C_write(unsigned char* msg, int len){
 	write(device, msg, len);
 }
 
-unsigned char* I2C::I2C_read(int len){
-	read(device, buf, len);
-	return buf;
+void I2C::I2C_write_ushort_address(int address, unsigned short value){
+	i2c_smbus_write_byte_data(device, address, value);
+}
+
+unsigned char* I2C::I2C_read_uchar(int len){
+	read(device, buf8, len);
+	return buf8;
+}
+
+unsigned char* I2C::I2C_read_uchar_address(int address, int len){
+	i2c_smbus_read_i2c_block_data(device, address, len, buf8);
+	return buf8;
+}
+
+unsigned short* I2C::I2C_read_ushort_address(int address){
+	*buf16 = i2c_smbus_read_word_data(device, address);
+	return buf16;
 }
 
 void I2C::Lock(){mu.lock();}

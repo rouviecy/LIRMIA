@@ -16,7 +16,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <iostream>
-#include <linux/i2c-dev.h>
+#include <sys/ioctl.h>
+#include "./i2c-dev.h"
 #include <sys/ioctl.h>
 
 class I2C{
@@ -32,14 +33,18 @@ public:
 	void I2C_close();
 
 	void I2C_write(unsigned char* msg, int len);
-	unsigned char* I2C_read(int len);
+	void I2C_write_ushort_address(int address, unsigned short value);
+	unsigned char* I2C_read_uchar(int len);
+	unsigned char* I2C_read_uchar_address(int address, int len);
+	unsigned short* I2C_read_ushort_address(int address);
 
 	void Lock();
 	void Unlock();
 	
 private:
 
-	unsigned char buf[I2C_BUFFER_LEN];
+	unsigned char buf8[I2C_BUFFER_LEN];
+	unsigned short buf16[I2C_BUFFER_LEN];
 	int device;
 	std::string path;
 	std::mutex mu;

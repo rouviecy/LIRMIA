@@ -115,6 +115,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Clock.h			src/parts/Clock.cpp
 	src/parts/Compass_CMPS10.h		src/parts/Compass_CMPS10.cpp
 	src/parts/Depth.h			src/parts/Depth.cpp
+	src/parts/Depth_BMP085.h		src/parts/Depth_BMP085.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
 	src/parts/Gps.h				src/parts/Gps.cpp
 	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp

@@ -24,6 +24,7 @@
 #include "../parts/r2d2/State_machine.h"
 #include "../parts/Clock.h"
 #include "../parts/Compass_CMPS10.h"
+#include "../parts/Depth_BMP085.h"
 
 #define DEV_SERIAL_POLOLU	"/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Micro_Maestro_6-Servo_Controller_00097868-if00"
 #define DEV_I2C			"/dev/i2c-1"
@@ -46,6 +47,7 @@ private:
 	Cameras		cameras;
 	Compass_CMPS10	compass;
 	Clock		internal_clock;
+	Depth_BMP085	depth;
 	Logger		logger;
 	Motors		motors;
 	Remote_control	remote_control;

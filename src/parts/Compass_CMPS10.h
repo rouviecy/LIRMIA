@@ -16,7 +16,7 @@
 #include "../interfaces/I2C.h"
 #include <cmath>
 
-#define CMPS10_I2C_ADDRESS  0x60
+#define CMPS10_I2C_ADDRESS	0x60
 
 class Compass_CMPS10 : public ComThread{
 
