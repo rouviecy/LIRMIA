@@ -24,7 +24,6 @@ void Autonomy::IO(){
 	Link_input("cam_size_obj",		COMFLOAT,	1, &cam_size_obj);
 	Link_input("cam_detect_horizontal",	COMFLOAT,	1, &cam_detect_horizontal);
 	Link_input("cam_detect_vertical",	COMFLOAT,	1, &cam_detect_vertical);
-	Link_input("vthxyz",			COMFLOAT,	3, vthxyz);
 
 	Link_output("motor",			COMFLOAT,	4, motor);
 }
