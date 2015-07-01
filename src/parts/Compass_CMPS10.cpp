@@ -61,5 +61,6 @@ void Compass_CMPS10::Set_iss(Serial* serial){
 }
 void Compass_CMPS10::Set_i2c(I2C* i2c){
 	this->i2c = i2c;
+	i2c->I2C_connect_device(CMPS10_I2C_ADDRESS);
 	enable_i2c = true;
 }
