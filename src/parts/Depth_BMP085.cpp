@@ -19,6 +19,7 @@ void Depth_BMP085::Job(){
 	#ifndef ENABLE_I2C
 		return;
 	#endif
+	Critical_receive();
 	if(raz_depth){Calibrate();}
 	i2c->Lock();
 	i2c->I2C_connect_device(BMP085_I2C_ADDRESS);
@@ -46,6 +47,9 @@ void Depth_BMP085::Calibrate(){
 	mb  = (short int)		Read_ushort_and_swap(0xBA);
 	mc  = (short int)		Read_ushort_and_swap(0xBC);
 	md  = (short int)		Read_ushort_and_swap(0xBE);
+	Update_temperature();
+	Update_pressure();
+	pressure_ref = pressure;
 	i2c->Unlock();
 }
 
@@ -88,7 +92,8 @@ void Depth_BMP085::Update_pressure(){
 }
 
 void Depth_BMP085::Update_altitude(){
-	depth = (44330. * (1.0 - pow((float) pressure / 101325., 0.1903))) - 2.;
+//	depth = (44330. * (1.0 - pow((float) pressure / 101325., 0.1903))) - 2.;
+	depth = ((float) pressure - (float) pressure_ref) / 9810.;
 }
 
 unsigned short Depth_BMP085::Read_ushort_and_swap(int address){
