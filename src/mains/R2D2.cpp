@@ -14,6 +14,7 @@ R2D2::R2D2() : Maestro(){
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
 	Add_thread(&remote_control,	"Remote control",		-1);		// manual loop
 	Add_thread(&remote_monitor,	"Remote monitor",		100000);	// 100 ms
+	Add_thread(&state,		"State",			10000);		// 10 ms
 	Add_thread(&state_machine,	"State machine",		10000);		// 10 ms
 
 	Init_serial_and_i2c();
@@ -44,7 +45,7 @@ void R2D2::Init_serial_and_i2c(){
 	#ifdef ENABLE_I2C
 		i2c.I2C_init(DEV_I2C);
 		compass.Set_i2c(&i2c);
-		depth.Set_i2c(&i2c);
+//		depth.Set_i2c(&i2c);
 	#endif
 }
 

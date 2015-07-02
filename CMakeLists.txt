@@ -6,7 +6,7 @@ find_package(PkgConfig)
 set(IS_LIRMIA OFF)
 set(IS_SAYAB OFF)
 set(IS_R2D2 ON)
-set(IS_SIMU ON)
+set(IS_SIMU OFF)
 
 if(${IS_LIRMIA})
 	set(ENABLE_PYTHON OFF)
