@@ -45,7 +45,7 @@ void R2D2::Init_serial_and_i2c(){
 	#ifdef ENABLE_I2C
 		i2c.I2C_init(DEV_I2C);
 		compass.Set_i2c(&i2c);
-//		depth.Set_i2c(&i2c);
+		depth.Set_i2c(&i2c);
 	#endif
 }
 

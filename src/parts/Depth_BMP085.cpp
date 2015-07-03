@@ -14,6 +14,7 @@ void Depth_BMP085::On_start(){
 		return;
 	#endif
 	i2c->Lock();
+	i2c->I2C_connect_device(BMP085_I2C_ADDRESS);
 	ac1 = (short int)		Read_ushort_and_swap(0xAA);
 	ac2 = (short int)		Read_ushort_and_swap(0xAC);
 	ac3 = (short int)		Read_ushort_and_swap(0xAE);
@@ -37,6 +38,7 @@ void Depth_BMP085::Job(){
 		return;
 	#endif
 	i2c->Lock();
+	i2c->I2C_connect_device(BMP085_I2C_ADDRESS);
 	Update_temperature();
 	Update_pressure();
 	Update_altitude();
@@ -97,5 +99,4 @@ void Depth_BMP085::Set_i2c(I2C* i2c){
 		return;
 	#endif
 	this->i2c = i2c;
-	i2c->I2C_connect_device(BMP085_I2C_ADDRESS);
 }
