@@ -1,4 +1,5 @@
 #include "Autonomy.h"
+#define saturation(minimum, value, maximum) (value > maximum ? maximum : (value < minimum ? minimum : value))
 
 using namespace std;
 
@@ -72,6 +73,7 @@ void Autonomy::Job(){
 	else if(fsm_state == UP || fsm_state == DOWN || fsm_state == STAY){ // TODO : check
 		
 		//---------------------------YAW CONTROL --------------------------------------
+		
 		float A=thxyz[2];
 		
 				
@@ -85,15 +87,16 @@ void Autonomy::Job(){
 			difA=A-RF;
 
 			CP=kp*(difA);
-			//CP=saturacion(-1,CP,1);
+			CP=saturation(-1,CP,1);
 
 			CD=kd*(vthxyz[2]);
-			//CD=saturacion(-1,CD,1);
+			CD=saturation(-1,CD,1);
 			
 			//inte=inte+(difA);
 			//ctrlI= ki*inte;
 
-			CTRL=(CP+CD+ctrlI);
+			CTRL=(CP+CD);
+			CTRL=saturation(-1,CTRL,1);
 
 			motor[1] = +CTRL;
 			motor[2] = -CTRL;
