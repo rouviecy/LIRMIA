@@ -160,34 +160,38 @@ add_library(BETTERAVE_USER_R2D2
 	src/parts/r2d2/State_machine.h		src/parts/r2d2/State_machine.cpp
 )
 
+target_link_libraries(BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
+target_link_libraries(BETTERAVE_USER_SAYAB BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
+target_link_libraries(BETTERAVE_USER_R2D2 BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
+
 add_executable(lirmia src/mains/Lirmia.cpp)
 add_executable(sayab src/mains/Sayab.cpp)
 add_executable(r2d2 src/mains/R2D2.cpp)
 
-target_link_libraries(lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-target_link_libraries(sayab ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_SAYAB BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-target_link_libraries(r2d2 ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_R2D2 BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(lirmia BETTERAVE_USER_LIRMIA)
+target_link_libraries(sayab BETTERAVE_USER_SAYAB)
+target_link_libraries(r2d2 BETTERAVE_USER_R2D2)
 
 add_executable(remote_lirmia src/remote_control_monitor_lirmia.cpp)
 add_executable(remote_sayab src/remote_control_monitor_sayab.cpp)
 add_executable(remote_r2d2 src/remote_control_monitor_r2d2.cpp)
 
-target_link_libraries(remote_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-target_link_libraries(remote_sayab ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_SAYAB BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-target_link_libraries(remote_r2d2 ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_R2D2 BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(remote_lirmia BETTERAVE_USER_LIRMIA)
+target_link_libraries(remote_sayab BETTERAVE_USER_SAYAB)
+target_link_libraries(remote_r2d2 BETTERAVE_USER_R2D2)
 
 add_executable(camera_lirmia src/remote_cam_lirmia.cpp)
 add_executable(camera_sayab src/remote_cam_sayab.cpp)
 add_executable(camera_r2d2 src/remote_cam_r2d2.cpp)
 
-target_link_libraries(camera_lirmia ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-target_link_libraries(camera_sayab ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-target_link_libraries(camera_r2d2 ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(camera_lirmia BETTERAVE_USER_LIRMIA)
+target_link_libraries(camera_sayab BETTERAVE_USER_SAYAB)
+target_link_libraries(camera_r2d2 BETTERAVE_USER_R2D2)
 
 add_executable(recam src/local_cam_rec.cpp)
-target_link_libraries(recam ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(recam BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
 
 add_executable(unit_testing_blobs src/units_testing/blobs.cpp)
 add_executable(unit_testing_pipeline src/units_testing/pipeline.cpp)
-target_link_libraries(unit_testing_blobs ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
-target_link_libraries(unit_testing_pipeline ${LIBS} ${OTHER_LIBS} BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS)
+target_link_libraries(unit_testing_blobs BETTERAVE_USER_LIRMIA)
+target_link_libraries(unit_testing_pipeline BETTERAVE_USER_LIRMIA)
