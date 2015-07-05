@@ -8,12 +8,13 @@ set(IS_SAYAB OFF)
 set(IS_R2D2 ON)
 set(IS_SIMU OFF)
 
+set(ENABLE_PYTHON OFF)
+set(ENABLE_JAVA OFF)
+set(ENABLE_GRAPHVIZ ON)
+set(ENABLE_SDL ON)
+
 if(${IS_LIRMIA})
-	set(ENABLE_PYTHON OFF)
-	set(ENABLE_JAVA OFF)
 	if(${IS_SIMU})
-		set(ENABLE_GRAPHVIZ ON)
-		set(ENABLE_SDL ON)
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_CAM2)
@@ -22,8 +23,6 @@ if(${IS_LIRMIA})
 #		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 		add_definitions(-DENABLE_SIMULATOR)
 	else(${IS_SIMU})
-		set(ENABLE_GRAPHVIZ OFF)
-		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
 		add_definitions(-DENABLE_SERIAL_RS232)
@@ -38,11 +37,7 @@ if(${IS_LIRMIA})
 		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	endif(${IS_SIMU})
 elseif(${IS_SAYAB})
-	set(ENABLE_PYTHON OFF)
-	set(ENABLE_JAVA OFF)
 	if(${IS_SIMU})
-		set(ENABLE_GRAPHVIZ ON)
-		set(ENABLE_SDL ON)
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_CAM2)
@@ -52,12 +47,10 @@ elseif(${IS_SAYAB})
 #add_definitions(-DENABLE_GPS)
 #		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	else(${IS_SIMU})
-		set(ENABLE_GRAPHVIZ OFF)
-		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
 		add_definitions(-DENABLE_SERIAL_RS232)
-		add_definitions(-DENABLE_MOTORS)	# needs serial arduino, serial ISS and I2C
+		add_definitions(-DENABLE_MOTORS)	# needs serial arduino and serial ISS
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_CAM2)
@@ -65,17 +58,11 @@ elseif(${IS_SAYAB})
 		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	endif(${IS_SIMU})
 elseif(${IS_R2D2})
-	set(ENABLE_PYTHON OFF)
-	set(ENABLE_JAVA OFF)
 	if(${IS_SIMU})
-		set(ENABLE_GRAPHVIZ ON)
-		set(ENABLE_SDL ON)
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
 	else(${IS_SIMU})
-		set(ENABLE_GRAPHVIZ OFF)
-		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL)
 		add_definitions(-DENABLE_I2C)
 		add_definitions(-DENABLE_MOTORS)	# needs serial
@@ -84,14 +71,12 @@ elseif(${IS_R2D2})
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
 	endif(${IS_SIMU})
 else(${IS_LIRMIA})
-	set(ENABLE_GRAPHVIZ ON)
-	set(ENABLE_SDL ON)
 	add_definitions(-DENABLE_TCP)
 	add_definitions(-DENABLE_CAM1)
 	add_definitions(-DENABLE_CAM2)
-	add_definitions(-DENABLE_RECORDCAM)	# needs CAM1/CAM2
-	add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
-#	add_definitions(-DENABLE_MODEM)		# needs serial RS232
+	add_definitions(-DENABLE_RECORDCAM)		# needs CAM1/CAM2
+	add_definitions(-DENABLE_TCPCAM)		# needs TCP and CAM1/CAM2
+#	add_definitions(-DENABLE_MODEM)			# needs serial RS232
 endif(${IS_LIRMIA})
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/core/CMakeLists.txt)
