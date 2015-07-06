@@ -29,11 +29,12 @@ private:
 	void Job();
 	void IO();
 
-	float motor[4];
-	int fsm_state;
-	bool fsm_unlocked;
+	float t;
 	float xyz[3];
 	float thxyz[3];
+	int fsm_state;
+	bool fsm_unlocked;
+	float motor[4];
 
 };
 

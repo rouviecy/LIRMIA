@@ -19,7 +19,7 @@ typedef struct{
 } struct_callback;
 
 typedef struct{
-	float x, y, thz;
+	float t, x, y, thz;
 	int motor;
 	int rudder;
 	int bow_thruster;
@@ -182,16 +182,16 @@ int main(int argc, char* argv[]){
 					next = msg_monitor.find_first_of("|", current);
 					tokens.push_back(msg_monitor.substr(current, next - current));
 				}
-				float t = stof(tokens[0]);
-				monitor.state = stoi(tokens[1]);
-				monitor.x = stof(tokens[2]) / 1000;
-				monitor.y = stof(tokens[3]) / 1000;
-				monitor.thz = stof(tokens[4]) / 57.3;
-				monitor.motor = (int) stof(tokens[5]);
-				monitor.rudder = (int) stof(tokens[6]);
-				monitor.bow_thruster = (int) stof(tokens[7]);
+				monitor.t		= stof(tokens[0]);
+				monitor.state		= stoi(tokens[1]);
+				monitor.x		= stof(tokens[2]) / 1000;
+				monitor.y		= stof(tokens[3]) / 1000;
+				monitor.thz		= stof(tokens[4]) / 57.3;
+				monitor.motor		= (int) stof(tokens[5]);
+				monitor.rudder		= (int) stof(tokens[6]);
+				monitor.bow_thruster	= (int) stof(tokens[7]);
 			}
-			cv::imshow(monitor_window, Draw_monitor(&monitor));
+			if(monitor.t > 5){cv::imshow(monitor_window, Draw_monitor(&monitor));}
 			cv::waitKey(10);
 			joystick.Update_event();
 		}
