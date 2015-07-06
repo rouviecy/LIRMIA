@@ -21,7 +21,6 @@ void Gps::Job(){} // Do nothing : this object should only be called by subscribe
 void Gps::Process_serial_data(void* object, char* input_msg){
 	Gps* self = (Gps*) object;
 	string msg = string(input_msg);
-//cout << msg << endl;
 	if(msg.size() < 37){return;}
 	size_t next;
 	vector <string> tokens;
