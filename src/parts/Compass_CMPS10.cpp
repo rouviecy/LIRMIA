@@ -24,7 +24,7 @@ void Compass_CMPS10::IO(){
 
 void Compass_CMPS10::Job(){
 	#ifdef ENABLE_SERIAL_ISS
-		if(enable_serial){
+		if(enable_iss){
 			serial->Lock();
 			serial->Serial_write(request_compass_iss, 4);
 			char* answer = serial->Serial_read();
