@@ -4,9 +4,9 @@ project(betterave)
 find_package(PkgConfig)
 
 set(IS_LIRMIA OFF)
-set(IS_SAYAB OFF)
-set(IS_R2D2 ON)
-set(IS_SIMU OFF)
+set(IS_SAYAB ON)
+set(IS_R2D2 OFF)
+set(IS_SIMU ON)
 
 set(ENABLE_PYTHON OFF)
 set(ENABLE_JAVA OFF)
@@ -43,14 +43,13 @@ elseif(${IS_SAYAB})
 		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_SIMULATOR)
-#add_definitions(-DENABLE_SERIAL_ARDUINO)
-#add_definitions(-DENABLE_GPS)
 #		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	else(${IS_SIMU})
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
 		add_definitions(-DENABLE_SERIAL_RS232)
 		add_definitions(-DENABLE_MOTORS)	# needs serial arduino and serial ISS
+		add_definitions(-DENABLE_GPS)		# needs serial arduino
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_CAM2)
