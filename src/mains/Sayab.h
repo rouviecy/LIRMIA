@@ -28,7 +28,8 @@
 #include "../parts/Gps.h"
 #include "../parts/Subscriber.h"
 
-#define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_64131383231351E06150-if00"
+//#define DEV_SERIAL_ARDUINO"/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_64131383231351E06150-if00"
+#define DEV_SERIAL_ARDUINO	"/dev/ttyACM0"
 #define DEV_SERIAL_ISS		"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00007347-if00"
 
 // TO CHECK :

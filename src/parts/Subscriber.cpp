@@ -2,7 +2,9 @@
 
 using namespace std;
 
-Subscriber::Subscriber() : ComThread(){}
+Subscriber::Subscriber() : ComThread(){
+	buffer_pos = 0;
+}
 
 Subscriber::~Subscriber(){}
 
@@ -27,6 +29,21 @@ void Subscriber::Job(){
 		return;
 	#endif
 	char* msg = serial->Serial_read();
+	while(*msg != 0 && buffer_pos < SUBSCRIBER_BUFFER_SIZE){
+		if(*msg != '\n'){
+			buffer[buffer_pos] = *msg;
+			buffer_pos++;
+		}
+		else{
+			Check_msg(buffer);
+			buffer[buffer_pos] = 0;
+			buffer_pos = 0;
+		}
+		msg += sizeof(char);
+	}
+}
+
+void Subscriber::Check_msg(char* msg){
 	for(size_t i = 0; i < subscriptions.size(); i++){
 		bool selected = true;
 		for(map <int, char> ::iterator it = subscriptions[i].keys.begin(); it != subscriptions[i].keys.end(); ++it){
