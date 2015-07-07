@@ -28,7 +28,7 @@ void Motors::Job(){
 	int order_rudder = min(abs((int) (90. * rudder)), 90);
 	Generate_order_i2c(0, order_motor, motor > 0);
 	Generate_order_i2c(1, order_bow, bow_thruster > 0);
-	Generate_order_arduino(rudder > 0 ? +order_rudder : -order_rudder);
+//	Generate_order_arduino(rudder > 0 ? +order_rudder : -order_rudder);
 }
 
 void Motors::Generate_order_i2c(int num_motor, int power, bool positive){
@@ -54,7 +54,13 @@ void Motors::Generate_order_i2c(int num_motor, int power, bool positive){
 
 void Motors::Generate_order_arduino(int angle){
 	#if defined(ENABLE_MOTORS) and defined(ENABLE_SERIAL_ARDUINO)
-		unsigned char msg = (unsigned char) ((angle * 127) / 182 + 63);
+		unsigned char msg[6];
+		msg[0] = '#';
+		msg[1] = 'R';
+		msg[2] = 'U';
+		msg[3] = 'D';
+		msg[4] = '=';
+		msg[5] = (unsigned char) ((angle * 127) / 182 + 63);
 		arduino->Serial_write(&msg, 1);
 	#endif
 }
