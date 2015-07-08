@@ -61,7 +61,7 @@ void Motors::Generate_order_arduino(int angle){
 		msg[3] = 'D';
 		msg[4] = '=';
 		msg[5] = (unsigned char) ((angle * 127) / 182 + 63);
-		arduino->Serial_write(&msg, 1);
+		arduino->Serial_write(msg, 1);
 	#endif
 }
 
