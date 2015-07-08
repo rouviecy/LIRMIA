@@ -27,7 +27,7 @@ void Compass_CMPS10::Job(){
 		if(enable_iss){
 			serial->Lock();
 			serial->Serial_write(request_compass_iss, 4);
-			char* answer = serial->Serial_read();
+			unsigned char* answer = (unsigned char*) serial->Serial_read();
 			float angle_v1 = (float) ((int) answer[2] * 256 + (int) answer[3]) / 10;
 			float angle_v2 = (float) ((int) answer[1] * 360) / 255;
 			if(fabs(angle_v1 - angle_v2) < 5){
