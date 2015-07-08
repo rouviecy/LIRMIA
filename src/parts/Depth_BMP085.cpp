@@ -8,8 +8,28 @@ Depth_BMP085::Depth_BMP085() : ComThread(){
 
 Depth_BMP085::~Depth_BMP085(){}
 
-void Depth_BMP085::On_start(){
-	// Calibration
+void Depth_BMP085::On_start(){Calibrate();}
+
+void Depth_BMP085::IO(){
+	Link_input("raz_depth",	COMBOOL,	1, &raz_depth);
+	Link_output("depth",	COMFLOAT,	1, &depth);
+}
+
+void Depth_BMP085::Job(){
+	#ifndef ENABLE_I2C
+		return;
+	#endif
+	if(raz_depth){Calibrate();}
+	i2c->Lock();
+	i2c->I2C_connect_device(BMP085_I2C_ADDRESS);
+	Update_temperature();
+	Update_pressure();
+	Update_altitude();
+	i2c->Unlock();
+	Critical_send();
+}
+
+void Depth_BMP085::Calibrate(){
 	#ifndef ENABLE_I2C
 		return;
 	#endif
@@ -27,23 +47,6 @@ void Depth_BMP085::On_start(){
 	mc  = (short int)		Read_ushort_and_swap(0xBC);
 	md  = (short int)		Read_ushort_and_swap(0xBE);
 	i2c->Unlock();
-}
-
-void Depth_BMP085::IO(){
-	Link_output("depth",	COMFLOAT, 1, &depth);
-}
-
-void Depth_BMP085::Job(){
-	#ifndef ENABLE_I2C
-		return;
-	#endif
-	i2c->Lock();
-	i2c->I2C_connect_device(BMP085_I2C_ADDRESS);
-	Update_temperature();
-	Update_pressure();
-	Update_altitude();
-	i2c->Unlock();
-	Critical_send();
 }
 
 void Depth_BMP085::Update_temperature(){

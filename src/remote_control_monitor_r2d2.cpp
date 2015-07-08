@@ -47,6 +47,8 @@ static void listen_key_k	(void* obj, bool down){send_move_order(obj, "fd" + to_s
 static void listen_key_e	(void* obj, bool down){send_move_order(obj, "fe" + to_string(down));}
 static void listen_key_n	(void* obj, bool down){send_move_order(obj, "fn" + to_string(down));}
 
+static void listen_key_d	(void* obj, bool down){send_move_order(obj, "dz" + to_string(down));}
+
 static void listen_key_r(void* obj, bool down){
 	if(down){
 		struct_callback* obj_callback = (struct_callback*) obj;
@@ -86,6 +88,7 @@ void init_joystick_listeners(Joystick* joystick, struct_callback* obj_callback){
 		joystick->Connect_keyboard(SDLK_KP_PLUS,	&listen_key_plus,	obj_callback);
 		joystick->Connect_keyboard(SDLK_KP_MINUS,	&listen_key_minus,	obj_callback);
 		joystick->Connect_keyboard(SDLK_c,		&listen_key_c,		obj_callback);
+		joystick->Connect_keyboard(SDLK_d,		&listen_key_d,		obj_callback);
 		joystick->Connect_keyboard(SDLK_e,		&listen_key_e,		obj_callback);
 		joystick->Connect_keyboard(SDLK_i,		&listen_key_i,		obj_callback);
 		joystick->Connect_keyboard(SDLK_k,		&listen_key_k,		obj_callback);

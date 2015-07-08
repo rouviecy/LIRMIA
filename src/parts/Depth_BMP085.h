@@ -39,6 +39,7 @@ private:
 	void IO();
 
 	float depth;
+	bool raz_depth;
 
 	short int ac1, ac2, ac3;
 	unsigned short int ac4, ac5, ac6;
@@ -48,6 +49,7 @@ private:
 	unsigned int temperature, pressure;
 
 	unsigned short Read_ushort_and_swap(int address);
+	void Calibrate();
 	void Update_temperature();
 	void Update_pressure();
 	void Update_altitude();

@@ -5,7 +5,7 @@ using namespace std;
 Remote_control::Remote_control() : ComThread(){
 	fsm_up = false; fsm_down = false; fsm_explore = false; fsm_nofollow = false; fsm_stabilize = false;
 	remote = true; remote_forward = 0.; remote_turn = 0.; remote_deeper = 0.;
-	enable_streaming = false;
+	enable_streaming = false; raz_depth = false;
 	fsm_unlocked = true;
 	alive = false;
 	#ifdef ENABLE_TCP
@@ -35,6 +35,7 @@ void Remote_control::IO(){
 	Link_output("fsm_nofollow",	COMBOOL,	1, &fsm_nofollow);
 	Link_output("fsm_stabilize",	COMBOOL,	1, &fsm_stabilize);
 	Link_output("enable_streaming",	COMBOOL,	1, &enable_streaming);
+	Link_output("raz_depth",	COMBOOL,	1, &raz_depth);
 }
 
 void Remote_control::Job(){}
@@ -47,6 +48,7 @@ void Remote_control::Job_and_wait_quit(){
 				alive = false;
 				tcp_server.Close();
 			}
+			if(msg_in[0] == 'd' && msg_in[1] == 'z'){raz_depth = (msg_in[2] == '1');}
 			if(msg_in[0] == 'f'){
 				if(msg_in[1] == '0'){fsm_unlocked = false;}
 				if(msg_in[1] == '1'){fsm_unlocked = true;}

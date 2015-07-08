@@ -41,6 +41,7 @@ private:
 	float remote_forward, remote_turn, remote_deeper;
 	bool fsm_unlocked, fsm_down, fsm_up, fsm_explore, fsm_nofollow, fsm_stabilize;
 	bool enable_streaming;
+	bool raz_depth;
 
 	bool alive;
 
