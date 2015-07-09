@@ -43,145 +43,146 @@ digraph links {
 		color=lightgrey;
 		node [style=filled,color=white];
 		24 [label = "compass\nfloat"];
+		25 [label = "compass_thxyz\nfloat[3]"];
 	}
-	subgraph cluster_25 {
+	subgraph cluster_26 {
 		label = "GPS - 0Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		26 [label = "gps_xy\nfloat[2]"];
+		27 [label = "gps_xy\nfloat[2]"];
 	}
-	subgraph cluster_27 {
+	subgraph cluster_28 {
 		label = "Clock - 1000Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		28 [label = "t\nfloat"];
+		29 [label = "t\nfloat"];
 	}
-	subgraph cluster_29 {
+	subgraph cluster_30 {
 		label = "Logger - 1Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		30 [label = "bow_thruster\nfloat"];
-		31 [label = "fsm_state\nint"];
-		32 [label = "motor\nfloat"];
-		33 [label = "rudder\nfloat"];
-		34 [label = "t\nfloat"];
-		35 [label = "thz\nfloat"];
-		36 [label = "xy\nfloat[2]"];
+		31 [label = "bow_thruster\nfloat"];
+		32 [label = "fsm_state\nint"];
+		33 [label = "motor\nfloat"];
+		34 [label = "rudder\nfloat"];
+		35 [label = "t\nfloat"];
+		36 [label = "thz\nfloat"];
+		37 [label = "xy\nfloat[2]"];
 	}
-	subgraph cluster_37 {
+	subgraph cluster_38 {
 		label = "Motors - 100Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		38 [label = "bow_thruster\nfloat"];
-		39 [label = "motor\nfloat"];
-		40 [label = "rudder\nfloat"];
+		39 [label = "bow_thruster\nfloat"];
+		40 [label = "motor\nfloat"];
+		41 [label = "rudder\nfloat"];
 	}
-	subgraph cluster_41 {
+	subgraph cluster_42 {
 		label = "Remote control - 0Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		42 [label = "enable_streaming\nbool"];
-		43 [label = "remote\nbool"];
-		44 [label = "remote_forward\nfloat"];
-		45 [label = "remote_turn\nfloat"];
+		43 [label = "enable_streaming\nbool"];
+		44 [label = "remote\nbool"];
+		45 [label = "remote_forward\nfloat"];
+		46 [label = "remote_turn\nfloat"];
 	}
-	subgraph cluster_46 {
+	subgraph cluster_47 {
 		label = "Remote monitor - 10Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		47 [label = "bow_thruster\nfloat"];
-		48 [label = "fsm_state\nint"];
-		49 [label = "motor\nfloat"];
-		50 [label = "rudder\nfloat"];
-		51 [label = "t\nfloat"];
-		52 [label = "thz\nfloat"];
-		53 [label = "xy\nfloat[2]"];
+		48 [label = "bow_thruster\nfloat"];
+		49 [label = "fsm_state\nint"];
+		50 [label = "motor\nfloat"];
+		51 [label = "rudder\nfloat"];
+		52 [label = "t\nfloat"];
+		53 [label = "thz\nfloat"];
+		54 [label = "xy\nfloat[2]"];
 	}
-	subgraph cluster_54 {
+	subgraph cluster_55 {
 		label = "Simulator - 200Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		55 [label = "bow_thruster\nfloat"];
-		56 [label = "motor\nfloat"];
-		57 [label = "rudder\nfloat"];
-		58 [label = "t\nfloat"];
-		59 [label = "simu_thz\nfloat"];
-		60 [label = "simu_xy\nfloat[2]"];
+		56 [label = "bow_thruster\nfloat"];
+		57 [label = "motor\nfloat"];
+		58 [label = "rudder\nfloat"];
+		59 [label = "t\nfloat"];
+		60 [label = "simu_thz\nfloat"];
+		61 [label = "simu_xy\nfloat[2]"];
 	}
-	subgraph cluster_61 {
+	subgraph cluster_62 {
 		label = "State - 50Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		62 [label = "compass\nfloat"];
-		63 [label = "gps_xy\nfloat[2]"];
-		64 [label = "simu_thz\nfloat"];
-		65 [label = "simu_xy\nfloat[2]"];
-		66 [label = "t\nfloat"];
-		67 [label = "thz\nfloat"];
-		68 [label = "xy\nfloat[2]"];
+		63 [label = "compass\nfloat"];
+		64 [label = "gps_xy\nfloat[2]"];
+		65 [label = "simu_thz\nfloat"];
+		66 [label = "simu_xy\nfloat[2]"];
+		67 [label = "t\nfloat"];
+		68 [label = "thz\nfloat"];
+		69 [label = "xy\nfloat[2]"];
 	}
-	subgraph cluster_69 {
+	subgraph cluster_70 {
 		label = "Finite state machine - 25Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		70 [label = "cam_detect_obj\nbool[2]"];
-		71 [label = "remote\nbool"];
-		72 [label = "sub_is_underwater\nbool"];
-		73 [label = "fsm_state\nint"];
+		71 [label = "cam_detect_obj\nbool[2]"];
+		72 [label = "remote\nbool"];
+		73 [label = "sub_is_underwater\nbool"];
+		74 [label = "fsm_state\nint"];
 	}
-	subgraph cluster_74 {
+	subgraph cluster_75 {
 		label = "Subscriber - 25Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
 	}
-	14->30 [minlen=5];
-	14->38 [minlen=5];
-	14->47 [minlen=5];
-	14->55 [minlen=5];
+	14->31 [minlen=5];
+	14->39 [minlen=5];
+	14->48 [minlen=5];
+	14->56 [minlen=5];
 	19->5 [minlen=5];
-	20->70 [minlen=5];
+	20->71 [minlen=5];
 	21->6 [minlen=5];
 	22->7 [minlen=5];
-	24->62 [minlen=5];
-	42->18 [minlen=5];
-	73->2 [minlen=5];
-	73->8 [minlen=5];
-	73->31 [minlen=5];
-	73->48 [minlen=5];
-	26->63 [minlen=5];
-	15->32 [minlen=5];
-	15->39 [minlen=5];
-	15->49 [minlen=5];
-	15->56 [minlen=5];
-	43->71 [minlen=5];
-	44->9 [minlen=5];
-	45->10 [minlen=5];
-	16->33 [minlen=5];
-	16->40 [minlen=5];
-	16->50 [minlen=5];
-	16->57 [minlen=5];
-	59->64 [minlen=5];
+	24->63 [minlen=5];
+	43->18 [minlen=5];
+	74->2 [minlen=5];
+	74->8 [minlen=5];
+	74->32 [minlen=5];
+	74->49 [minlen=5];
+	27->64 [minlen=5];
+	15->33 [minlen=5];
+	15->40 [minlen=5];
+	15->50 [minlen=5];
+	15->57 [minlen=5];
+	44->72 [minlen=5];
+	45->9 [minlen=5];
+	46->10 [minlen=5];
+	16->34 [minlen=5];
+	16->41 [minlen=5];
+	16->51 [minlen=5];
+	16->58 [minlen=5];
 	60->65 [minlen=5];
-	3->72 [minlen=5];
-	28->11 [minlen=5];
-	28->34 [minlen=5];
-	28->51 [minlen=5];
-	28->58 [minlen=5];
-	28->66 [minlen=5];
-	67->12 [minlen=5];
-	67->35 [minlen=5];
-	67->52 [minlen=5];
-	68->13 [minlen=5];
+	61->66 [minlen=5];
+	3->73 [minlen=5];
+	29->11 [minlen=5];
+	29->35 [minlen=5];
+	29->52 [minlen=5];
+	29->59 [minlen=5];
+	29->67 [minlen=5];
+	68->12 [minlen=5];
 	68->36 [minlen=5];
 	68->53 [minlen=5];
+	69->13 [minlen=5];
+	69->37 [minlen=5];
+	69->54 [minlen=5];
 }

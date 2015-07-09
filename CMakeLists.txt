@@ -4,8 +4,9 @@ project(betterave)
 find_package(PkgConfig)
 
 set(IS_LIRMIA OFF)
-set(IS_SAYAB ON)
+set(IS_SAYAB OFF)
 set(IS_R2D2 OFF)
+set(IS_COOKIE ON)
 set(IS_SIMU ON)
 
 set(ENABLE_PYTHON OFF)
@@ -57,6 +58,19 @@ elseif(${IS_SAYAB})
 		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	endif(${IS_SIMU})
 elseif(${IS_R2D2})
+	if(${IS_SIMU})
+		add_definitions(-DENABLE_TCP)
+		add_definitions(-DENABLE_CAM1)
+		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
+	else(${IS_SIMU})
+		add_definitions(-DENABLE_SERIAL)
+		add_definitions(-DENABLE_I2C)
+		add_definitions(-DENABLE_MOTORS)	# needs serial
+		add_definitions(-DENABLE_TCP)
+		add_definitions(-DENABLE_CAM1)
+		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
+	endif(${IS_SIMU})
+elseif(${IS_COOKIE})
 	if(${IS_SIMU})
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
@@ -144,33 +158,51 @@ add_library(BETTERAVE_USER_R2D2
 	src/parts/r2d2/State_machine.h		src/parts/r2d2/State_machine.cpp
 )
 
+add_library(BETTERAVE_USER_COOKIE
+	src/parts/cookie/Autonomy.h		src/parts/cookie/Autonomy.cpp
+	src/parts/cookie/Cameras.h		src/parts/cookie/Cameras.cpp
+	src/parts/cookie/Logger.h		src/parts/cookie/Logger.cpp
+	src/parts/cookie/Motors.h		src/parts/cookie/Motors.cpp
+	src/parts/cookie/Remote_control.h	src/parts/cookie/Remote_control.cpp
+	src/parts/cookie/Remote_monitor.h	src/parts/cookie/Remote_monitor.cpp
+	src/parts/cookie/State.h		src/parts/cookie/State.cpp
+	src/parts/cookie/State_machine.h	src/parts/cookie/State_machine.cpp
+)
+
 target_link_libraries(BETTERAVE_USER_LIRMIA BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
 target_link_libraries(BETTERAVE_USER_SAYAB BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
 target_link_libraries(BETTERAVE_USER_R2D2 BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
+target_link_libraries(BETTERAVE_USER_COOKIE BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
 
 add_executable(lirmia src/mains/Lirmia.cpp)
 add_executable(sayab src/mains/Sayab.cpp)
 add_executable(r2d2 src/mains/R2D2.cpp)
+add_executable(cookie src/mains/Cookie.cpp)
 
 target_link_libraries(lirmia BETTERAVE_USER_LIRMIA)
 target_link_libraries(sayab BETTERAVE_USER_SAYAB)
 target_link_libraries(r2d2 BETTERAVE_USER_R2D2)
+target_link_libraries(cookie BETTERAVE_USER_COOKIE)
 
 add_executable(remote_lirmia src/remote_control_monitor_lirmia.cpp)
 add_executable(remote_sayab src/remote_control_monitor_sayab.cpp)
 add_executable(remote_r2d2 src/remote_control_monitor_r2d2.cpp)
+add_executable(remote_cookie src/remote_control_monitor_cookie.cpp)
 
 target_link_libraries(remote_lirmia BETTERAVE_USER_LIRMIA)
 target_link_libraries(remote_sayab BETTERAVE_USER_SAYAB)
 target_link_libraries(remote_r2d2 BETTERAVE_USER_R2D2)
+target_link_libraries(remote_cookie BETTERAVE_USER_COOKIE)
 
 add_executable(camera_lirmia src/remote_cam_lirmia.cpp)
 add_executable(camera_sayab src/remote_cam_sayab.cpp)
 add_executable(camera_r2d2 src/remote_cam_r2d2.cpp)
+add_executable(camera_cookie src/remote_cam_cookie.cpp)
 
 target_link_libraries(camera_lirmia BETTERAVE_USER_LIRMIA)
 target_link_libraries(camera_sayab BETTERAVE_USER_SAYAB)
 target_link_libraries(camera_r2d2 BETTERAVE_USER_R2D2)
+target_link_libraries(camera_cookie BETTERAVE_USER_R2D2)
 
 add_executable(recam src/local_cam_rec.cpp)
 target_link_libraries(recam BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
