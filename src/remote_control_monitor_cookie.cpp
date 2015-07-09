@@ -232,7 +232,6 @@ int main(int argc, char* argv[]){
 				monitor.motor3		= (int) stof(tokens[9]);
 				monitor.motor4		= (int) stof(tokens[10]);
 			}
-cout << monitor.x << endl;
 			if(monitor.t > 5){cv::imshow(monitor_window, Draw_monitor(&monitor));}
 			cv::waitKey(10);
 			joystick.Update_event();

@@ -52,6 +52,10 @@ On R2D2 robot :
 
     sudo ./r2d2
 
+On Cookie robot :
+
+    sudo ./cookie
+
 On Sayab robot :
 
     sudo ./sayab
