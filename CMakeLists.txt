@@ -112,7 +112,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/interfaces/TCP_server.h		src/interfaces/TCP_server.cpp
 	src/parts/Clock.h			src/parts/Clock.cpp
 	src/parts/Compass_CMPS10.h		src/parts/Compass_CMPS10.cpp
-	src/parts/Depth.h			src/parts/Depth.cpp
+	src/parts/Depth_MS5803.h		src/parts/Depth_MS5803.cpp
 	src/parts/Depth_BMP085.h		src/parts/Depth_BMP085.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
 	src/parts/Gps.h				src/parts/Gps.cpp
@@ -184,30 +184,29 @@ target_link_libraries(sayab BETTERAVE_USER_SAYAB)
 target_link_libraries(r2d2 BETTERAVE_USER_R2D2)
 target_link_libraries(cookie BETTERAVE_USER_COOKIE)
 
-add_executable(remote_lirmia src/remote_control_monitor_lirmia.cpp)
-add_executable(remote_sayab src/remote_control_monitor_sayab.cpp)
-add_executable(remote_r2d2 src/remote_control_monitor_r2d2.cpp)
-add_executable(remote_cookie src/remote_control_monitor_cookie.cpp)
+add_executable(remote_lirmia src/remote/remote_control_monitor_lirmia.cpp)
+add_executable(remote_sayab src/remote/remote_control_monitor_sayab.cpp)
+add_executable(remote_r2d2 src/remote/remote_control_monitor_r2d2.cpp)
+add_executable(remote_cookie src/remote/remote_control_monitor_cookie.cpp)
 
 target_link_libraries(remote_lirmia BETTERAVE_USER_LIRMIA)
 target_link_libraries(remote_sayab BETTERAVE_USER_SAYAB)
 target_link_libraries(remote_r2d2 BETTERAVE_USER_R2D2)
 target_link_libraries(remote_cookie BETTERAVE_USER_COOKIE)
 
-add_executable(camera_lirmia src/remote_cam_lirmia.cpp)
-add_executable(camera_sayab src/remote_cam_sayab.cpp)
-add_executable(camera_r2d2 src/remote_cam_r2d2.cpp)
-add_executable(camera_cookie src/remote_cam_cookie.cpp)
+add_executable(camera_lirmia src/remote/remote_cam_lirmia.cpp)
+add_executable(camera_sayab src/remote/remote_cam_sayab.cpp)
+add_executable(camera_r2d2 src/remote/remote_cam_r2d2.cpp)
+add_executable(camera_cookie src/remote/remote_cam_cookie.cpp)
 
 target_link_libraries(camera_lirmia BETTERAVE_USER_LIRMIA)
 target_link_libraries(camera_sayab BETTERAVE_USER_SAYAB)
 target_link_libraries(camera_r2d2 BETTERAVE_USER_R2D2)
 target_link_libraries(camera_cookie BETTERAVE_USER_R2D2)
 
-add_executable(recam src/local_cam_rec.cpp)
-target_link_libraries(recam BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
-
 add_executable(unit_testing_blobs src/units_testing/blobs.cpp)
 add_executable(unit_testing_pipeline src/units_testing/pipeline.cpp)
+add_executable(recam src/units_testing/local_cam_rec.cpp)
 target_link_libraries(unit_testing_blobs BETTERAVE_USER_LIRMIA)
 target_link_libraries(unit_testing_pipeline BETTERAVE_USER_LIRMIA)
+target_link_libraries(recam BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
