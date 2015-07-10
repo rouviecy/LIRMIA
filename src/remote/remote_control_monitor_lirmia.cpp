@@ -1,6 +1,6 @@
-#include "interfaces/Joystick.h"
-#include "interfaces/vision/HSV_tools.h"
-#include "parts/lirmia/State_machine.h"
+#include "../interfaces/Joystick.h"
+#include "../interfaces/vision/HSV_tools.h"
+#include "../parts/lirmia/State_machine.h"
 #include <iostream>
 #include <vector>
 

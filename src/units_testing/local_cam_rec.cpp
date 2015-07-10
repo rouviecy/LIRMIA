@@ -1,4 +1,4 @@
-#include "./interfaces/Camera_server.h"
+#include "../interfaces/Camera_server.h"
 
 using namespace std;
 
