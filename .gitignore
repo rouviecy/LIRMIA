@@ -1,0 +1,4 @@
+build/*
+!build/test/hsv_params.txt
+!build/test/*.gv
+!build/test/*.svg
