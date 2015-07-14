@@ -12,6 +12,7 @@
 #define AUTONOMY
 
 #include "../../core/ComThread.h"
+#include "../../interfaces/Maths_tools.h"
 #include "State_machine.h"
 
 class Autonomy : public ComThread{

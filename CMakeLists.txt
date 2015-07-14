@@ -130,6 +130,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Gps.h				src/parts/Gps.cpp
 	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp
 	src/parts/Subscriber.h			src/parts/Subscriber.cpp
+	src/interfaces/Maths_tools.h
 )
 
 add_library(BETTERAVE_USER_LIRMIA

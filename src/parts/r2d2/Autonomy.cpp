@@ -1,5 +1,5 @@
 #include "Autonomy.h"
-#define saturation(minimum, value, maximum) (value > maximum ? maximum : (value < minimum ? minimum : value))
+
 
 using namespace std;
 
@@ -84,16 +84,8 @@ void Autonomy::Job(){
         // cout << A << "   " << RF << endl;
 		//---------------------------------------------------------------------------------
 				
-			difA=A-RF;
+			difA=diff_angles_deg(RF, A);
 
-			if (difA < 180)
-			{
-			difA = -180 -difA;
-			}
-			else if (difA > 180)
-			{
-			difA = 180-difA;
-			}
 			CP=kp*(difA);
 			CP=saturation(-1,CP,1);
 
