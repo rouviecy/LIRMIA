@@ -3,10 +3,10 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA ON)
+set(IS_LIRMIA OFF)
 set(IS_SAYAB OFF)
 set(IS_R2D2 OFF)
-set(IS_COOKIE OFF)
+set(IS_COOKIE ON)
 set(IS_SIMU ON)
 
 set(ENABLE_PYTHON OFF)
@@ -84,9 +84,10 @@ elseif(${IS_COOKIE})
 	else(${IS_SIMU})
 		set(ENABLE_GRAPHVIZ OFF)
 		set(ENABLE_SDL OFF)
-		add_definitions(-DENABLE_SERIAL)
+		add_definitions(-DENABLE_SERIAL_POLOLU)
+		add_definitions(-DENABLE_SERIAL_RASPI)
 		add_definitions(-DENABLE_I2C)
-		add_definitions(-DENABLE_MOTORS)	# needs serial
+		add_definitions(-DENABLE_MOTORS)	# needs serial Pololu
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
@@ -125,6 +126,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Depth_MS5803.h		src/parts/Depth_MS5803.cpp
 	src/parts/Depth_BMP085.h		src/parts/Depth_BMP085.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
+	src/parts/Imu_UM6LT.h			src/parts/Imu_UM6LT.cpp
 	src/parts/Gps.h				src/parts/Gps.cpp
 	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp
 	src/parts/Subscriber.h			src/parts/Subscriber.cpp

@@ -25,9 +25,11 @@
 #include "../parts/Clock.h"
 #include "../parts/Compass_CMPS10.h"
 #include "../parts/Depth_BMP085.h"
+#include "../parts/Imu_UM6LT.h"
 
 // TODO : check device addresses
 #define DEV_SERIAL_POLOLU	"/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Micro_Maestro_6-Servo_Controller_00097868-if00"
+#define DEV_SERIAL_POLOLU	"/dev/ttyACM0"
 #define DEV_I2C			"/dev/i2c-1"
 
 class Cookie : public Maestro{
@@ -40,7 +42,7 @@ public:
 private:
 
 	I2C i2c;
-	Serial serial;
+	Serial serial_pololu, serial_raspi;
 
 	void Init_serial_and_i2c();
 
@@ -49,6 +51,7 @@ private:
 	Compass_CMPS10	compass;
 	Clock		internal_clock;
 	Depth_BMP085	depth;
+	Imu_UM6LT	imu;
 	Logger		logger;
 	Motors		motors;
 	Remote_control	remote_control;
