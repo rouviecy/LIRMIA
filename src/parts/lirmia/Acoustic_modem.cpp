@@ -4,15 +4,12 @@ using namespace std;
 
 Acoustic_modem::Acoustic_modem() : ComThread(){
 	sub_is_underwater = false;
-	#if defined(ENABLE_MODEM) and not defined(ENABLE_SERIAL_RS232)
-		cout << "[Warning] You are trying to use acoustic modem without serial : modem will be disabled" << endl;
-	#endif
 }
 
 Acoustic_modem::~Acoustic_modem(){}
 
 void Acoustic_modem::On_start(){
-	#if defined(ENABLE_MODEM) and defined(ENABLE_SERIAL_RS232)
+	#ifdef ENABLE_SERIAL_RS232_MODEM
 		receive_go_on = true;
 		thr_reception = thread(&Acoustic_modem::Get_acoustic_msg_loop, this);
 	#endif
@@ -26,7 +23,7 @@ void Acoustic_modem::IO(){
 
 void Acoustic_modem::Job(){
 	Critical_receive();
-	#if defined(ENABLE_MODEM) and defined(ENABLE_SERIAL_RS232)
+	#ifdef ENABLE_SERIAL_RS232_MODEM
 		switch(fsm_state){
 			case IDLE:
 // TODO

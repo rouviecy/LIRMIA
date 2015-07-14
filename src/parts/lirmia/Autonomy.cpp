@@ -21,7 +21,6 @@ void Autonomy::IO(){
 	Link_input("thxyz",			COMFLOAT,	3, thxyz);
 	Link_input("vthxyz",			COMFLOAT,	3, vthxyz);
 	Link_input("obst_xy",			COMFLOAT,	2, obst_xy);
-	Link_input("obst_vxy",			COMFLOAT,	2, obst_vxy);
 	Link_input("cam_size_obj",		COMFLOAT,	2, cam_size_obj);
 	Link_input("cam_detect_horizontal",	COMFLOAT,	2, cam_detect_horizontal);
 	Link_input("cam_detect_vertical",	COMFLOAT,	2, cam_detect_vertical);
@@ -96,6 +95,13 @@ void Autonomy::Job(){
 		motor[3] = 0.;
 	}
 	else if(fsm_state == REMOTE){
+// TODO : remove
+if(obst_xy[0] > 0.25 && obst_xy[0] < 1.){
+cout << "OBSTACLE X" << endl;
+}
+if(obst_xy[1] > 0.25 && obst_xy[1] < 1.){
+cout << "OBSTACLE Y" << endl;
+}
 		keep_thz = thxyz[3];
 		motor[0] = remote_forward / 2 + remote_turn / 2;
 		motor[1] = remote_forward / 2 - remote_turn / 2;

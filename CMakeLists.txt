@@ -3,10 +3,10 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA OFF)
+set(IS_LIRMIA ON)
 set(IS_SAYAB OFF)
 set(IS_R2D2 OFF)
-set(IS_COOKIE ON)
+set(IS_COOKIE OFF)
 set(IS_SIMU ON)
 
 set(ENABLE_PYTHON OFF)
@@ -19,23 +19,23 @@ if(${IS_LIRMIA})
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_CAM2)
-		add_definitions(-DENABLE_RECORDCAM)	# needs CAM1/CAM2
-		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
-#		add_definitions(-DENABLE_MODEM)		# needs serial RS232
+		add_definitions(-DENABLE_RECORDCAM)		# needs CAM1/CAM2
+		add_definitions(-DENABLE_TCPCAM)		# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_SIMULATOR)
 	else(${IS_SIMU})
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
-		add_definitions(-DENABLE_SERIAL_RS232)
-		add_definitions(-DENABLE_DEPTH)		# needs serial Arduino
-		add_definitions(-DENABLE_IMU)		# needs serial Arduino
-		add_definitions(-DENABLE_MOTORS)	# needs serial ISS
+#		add_definitions(-DENABLE_SERIAL_RS232_MODEM)
+		add_definitions(-DENABLE_SERIAL_RS232_ECHO_X)
+		add_definitions(-DENABLE_SERIAL_RS232_ECHO_Y)
+		add_definitions(-DENABLE_DEPTH)			# needs serial Arduino
+		add_definitions(-DENABLE_IMU)			# needs serial Arduino
+		add_definitions(-DENABLE_MOTORS)		# needs serial ISS
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_CAM2)
-		add_definitions(-DENABLE_RECORDCAM)	# needs CAM1/CAM2
-		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
-		add_definitions(-DENABLE_MODEM)		# needs serial RS232
+		add_definitions(-DENABLE_RECORDCAM)		# needs CAM1/CAM2
+		add_definitions(-DENABLE_TCPCAM)		# needs TCP and CAM1/CAM2
 	endif(${IS_SIMU})
 elseif(${IS_SAYAB})
 	set(ENABLE_GRAPHVIZ ON)
@@ -44,20 +44,18 @@ elseif(${IS_SAYAB})
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_CAM2)
-		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
+		add_definitions(-DENABLE_TCPCAM)		# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_SIMULATOR)
-#		add_definitions(-DENABLE_MODEM)		# needs serial RS232
 	else(${IS_SIMU})
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
-		add_definitions(-DENABLE_SERIAL_RS232)
-		add_definitions(-DENABLE_MOTORS)	# needs serial arduino and serial ISS
-		add_definitions(-DENABLE_GPS)		# needs serial arduino
+#		add_definitions(-DENABLE_SERIAL_RS232_MODEM)
+		add_definitions(-DENABLE_MOTORS)		# needs serial arduino and serial ISS
+		add_definitions(-DENABLE_GPS)			# needs serial arduino
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_CAM2)
-		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1/CAM2
-		add_definitions(-DENABLE_MODEM)		# needs serial RS232
+		add_definitions(-DENABLE_TCPCAM)		# needs TCP and CAM1/CAM2
 	endif(${IS_SIMU})
 elseif(${IS_R2D2})
 	if(${IS_SIMU})

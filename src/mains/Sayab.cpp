@@ -38,7 +38,7 @@ void Sayab::Shutdown(){
 	#ifdef ENABLE_SERIAL_ISS
 		serial_iss.Serial_close();
 	#endif
-	#ifdef ENABLE_SERIAL_RS232
+	#ifdef ENABLE_SERIAL_RS232_MODEM
 		serial_rs232.Serial_close();
 	#endif
 }
@@ -62,7 +62,7 @@ void Sayab::Init_serial(){
 		motors.Set_iss(&serial_iss);
 		compass.Set_iss(&serial_iss);
 	#endif
-	#ifdef ENABLE_SERIAL_RS232
+	#ifdef ENABLE_SERIAL_RS232_MODEM
 		serial_rs232.Serial_init(DEV_SERIAL_RS232, B9600, true);
 		acoustic_modem.Set_serial(&serial_rs232);
 	#endif

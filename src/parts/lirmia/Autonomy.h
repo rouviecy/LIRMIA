@@ -35,7 +35,6 @@ private:
 	float thxyz[3];
 	float vthxyz[3];
 	float obst_xy[2];
-	float obst_vxy[2];
 	float cam_size_obj[2];
 	float cam_detect_horizontal[2];
 	float cam_detect_vertical[2];

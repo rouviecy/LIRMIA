@@ -9,7 +9,7 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&autonomy,		"Autonomy",			50000);		// 50 ms
 	Add_thread(&cameras,		"Cameras",			100000);	// 100 ms
 	Add_thread(&internal_clock,	"Clock",			1000);		// 1 ms
-	Add_thread(&echosonder,		"Echo sonder",			100000);	// 100 ms
+	Add_thread(&echosonder,		"Echo sonder",			1000000);	// 1 s
 	Add_thread(&depth,		"Depth",			-1);		// subscriber callback
 	Add_thread(&imu,		"IMU",				-1);		// subscriber callback
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
@@ -42,8 +42,14 @@ void Lirmia::Shutdown(){
 	#ifdef ENABLE_SERIAL_ISS
 		serial_iss.Serial_close();
 	#endif
-	#ifdef ENABLE_SERIAL_RS232
-		serial_rs232.Serial_close();
+	#ifdef ENABLE_SERIAL_RS232_MODEM
+		serial_rs232_modem.Serial_close();
+	#endif
+	#ifdef ENABLE_SERIAL_RS232_ECHO_X
+		serial_rs232_echo_x.Serial_close();
+	#endif
+	#ifdef ENABLE_SERIAL_RS232_ECHO_Y
+		serial_rs232_echo_y.Serial_close();
 	#endif
 }
 
@@ -65,9 +71,17 @@ void Lirmia::Init_serial(){
 		serial_iss.Serial_write(init_I2C_and_serial, 5);
 		motors.Set_serial(&serial_iss);
 	#endif
-	#ifdef ENABLE_SERIAL_RS232
-		serial_rs232.Serial_init(DEV_SERIAL_RS232, B9600, true);
-		acoustic_modem.Set_serial(&serial_rs232);
+	#ifdef ENABLE_SERIAL_RS232_MODEM
+		serial_rs232_modem.Serial_init(DEV_SERIAL_RS232_MODEM, B9600, true);
+		acoustic_modem.Set_serial(&serial_rs232_modem);
+	#endif
+	#ifdef ENABLE_SERIAL_RS232_ECHO_X
+		serial_rs232_echo_x.Serial_init(DEV_SERIAL_RS232_ECHO_X, B9600, true);
+		echosonder.Set_serial_x(&serial_rs232_echo_x);
+	#endif
+	#ifdef ENABLE_SERIAL_RS232_ECHO_Y
+		serial_rs232_echo_y.Serial_init(DEV_SERIAL_RS232_ECHO_Y, B9600, true);
+		echosonder.Set_serial_y(&serial_rs232_echo_y);
 	#endif
 }
 
