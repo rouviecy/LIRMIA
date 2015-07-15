@@ -27,9 +27,7 @@
 #include "../parts/Depth_BMP085.h"
 #include "../parts/Imu_UM6LT.h"
 
-// TODO : check device addresses
 #define DEV_SERIAL_POLOLU	"/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Micro_Maestro_6-Servo_Controller_00097868-if00"
-#define DEV_SERIAL_RASPI	"/dev/ttyACM0"
 #define DEV_I2C			"/dev/i2c-1"
 
 class Cookie : public Maestro{

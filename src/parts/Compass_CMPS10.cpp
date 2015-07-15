@@ -64,6 +64,7 @@ void Compass_CMPS10::Set_iss(Serial* serial){
 	enable_iss = true;
 
 }
+
 void Compass_CMPS10::Set_i2c(I2C* i2c){
 	#ifndef ENABLE_I2C
 		cout << "[Warning] Trying to use CMPS10 without I2C enabled ; compass will be disabled" << endl;

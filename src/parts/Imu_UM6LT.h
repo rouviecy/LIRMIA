@@ -15,7 +15,9 @@
 #include <vector>
 #include <algorithm>
 #include "../core/ComThread.h"
-#include "./Subscriber.h"
+#include "../interfaces/I2C.h"
+
+#define UM6LT_I2C_ADDRESS	0x60
 
 class Imu_UM6LT : public ComThread{
 
@@ -24,11 +26,11 @@ public:
 	Imu_UM6LT();
 	~Imu_UM6LT();
 
-	void Set_serial(Serial* serial);
+	void Set_i2c(I2C* i2c);
 
 private:
 
-	Serial* serial;
+	I2C* i2c;
 
 	void On_start();
 	void Job();

@@ -85,7 +85,6 @@ elseif(${IS_COOKIE})
 		set(ENABLE_GRAPHVIZ OFF)
 		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL_POLOLU)
-		add_definitions(-DENABLE_SERIAL_RASPI)
 		add_definitions(-DENABLE_I2C)
 		add_definitions(-DENABLE_MOTORS)	# needs serial Pololu
 		add_definitions(-DENABLE_TCP)
