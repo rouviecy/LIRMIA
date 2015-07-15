@@ -17,22 +17,22 @@ void Imu_UM6LT::IO(){
 }
 
 void Imu_UM6LT::Job(){
-	#ifdef ENABLE_I2C
-		i2c->Lock();
-		unsigned char* answer = i2c->I2C_read_uchar(10);
+	#ifdef ENABLE_SPI
+		spi->Lock();
+		unsigned char* answer = spi->SPI_read(10);
 		for(int i = 0; i < 10; i++){
 			cout << (int) answer[i] << " | ";
 		}
 		cout << endl;
-		i2c->Unlock();
+		spi->Unlock();
 		Critical_send();
 	#endif
 }
 
-void Imu_UM6LT::Set_i2c(I2C* i2c){
-	#ifndef ENABLE_I2C
+void Imu_UM6LT::Set_spi(SPI* spi){
+	#ifndef ENABLE_SPI
 		cout << "[Warning] Trying to use UM6-LT without I2C enabled ; IMU will be disabled" << endl;
 		return;
 	#endif
-	this->i2c = i2c;
+	this->spi = spi;
 }

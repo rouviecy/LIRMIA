@@ -81,11 +81,13 @@ elseif(${IS_COOKIE})
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
+add_definitions(-DENABLE_SPI)
 	else(${IS_SIMU})
 		set(ENABLE_GRAPHVIZ OFF)
 		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL_POLOLU)
 		add_definitions(-DENABLE_I2C)
+		add_definitions(-DENABLE_SPI)
 		add_definitions(-DENABLE_MOTORS)	# needs serial Pololu
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
@@ -118,6 +120,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/interfaces/I2C.h			src/interfaces/I2C.cpp
 	src/interfaces/Joystick.h		src/interfaces/Joystick.cpp
 	src/interfaces/Serial.h			src/interfaces/Serial.cpp
+	src/interfaces/SPI.h			src/interfaces/SPI.cpp
 	src/interfaces/TCP_client.h		src/interfaces/TCP_client.cpp
 	src/interfaces/TCP_server.h		src/interfaces/TCP_server.cpp
 	src/parts/Clock.h			src/parts/Clock.cpp

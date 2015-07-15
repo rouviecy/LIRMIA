@@ -14,6 +14,7 @@
 #include "../core/Maestro.h"
 #include "../interfaces/I2C.h"
 #include "../interfaces/Serial.h"
+#include "../interfaces/SPI.h"
 #include "../parts/cookie/Autonomy.h"
 #include "../parts/cookie/Cameras.h"
 #include "../parts/cookie/Logger.h"
@@ -29,6 +30,7 @@
 
 #define DEV_SERIAL_POLOLU	"/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Micro_Maestro_6-Servo_Controller_00097868-if00"
 #define DEV_I2C			"/dev/i2c-1"
+#define DEV_SPI			"/dev/spi0.0"
 
 class Cookie : public Maestro{
 
@@ -40,9 +42,10 @@ public:
 private:
 
 	I2C i2c;
-	Serial serial_pololu, serial_raspi;
+	Serial serial_pololu;
+	SPI spi;
 
-	void Init_serial_and_i2c();
+	void Init_hardware_com();
 
 	Autonomy	autonomy;
 	Cameras		cameras;
