@@ -65,6 +65,6 @@ void State::Job(){
 	vthxyz[2] = vk_1;
 	xyz[2] = depth;
 	Critical_send();
-cout << dt << endl;
+//cout << dt << endl;
 
 }

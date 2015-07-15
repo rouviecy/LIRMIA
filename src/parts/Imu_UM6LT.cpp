@@ -19,9 +19,12 @@ void Imu_UM6LT::IO(){
 void Imu_UM6LT::Job(){
 	#ifdef ENABLE_SPI
 		spi->Lock();
-		unsigned char* answer = spi->SPI_read(10);
-		for(int i = 0; i < 10; i++){
-			cout << (int) answer[i] << " | ";
+		unsigned char request[] = {0x00, 0x57, 0x00, 0x00, 0x00, 0x00};
+//		spi->SPI_write(request, 6);
+//		unsigned char* answer = spi->SPI_read(6);
+		spi->SPI_duplex(request, 6);
+		for(int i = 0; i < 6; i++){
+			cout << (int) request[i] << " | ";
 		}
 		cout << endl;
 		spi->Unlock();

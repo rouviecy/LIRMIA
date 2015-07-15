@@ -30,7 +30,7 @@
 
 #define DEV_SERIAL_POLOLU	"/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Micro_Maestro_6-Servo_Controller_00097868-if00"
 #define DEV_I2C			"/dev/i2c-1"
-#define DEV_SPI			"/dev/spi0.0"
+#define DEV_SPI			"/dev/spidev0.0"
 
 class Cookie : public Maestro{
 

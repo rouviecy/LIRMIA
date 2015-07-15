@@ -32,10 +32,11 @@ public:
 
 	void SPI_write(unsigned char* msg, int len);
 	unsigned char* SPI_read(int len);
+	void SPI_duplex(unsigned char* msg, int len);
 
 	void Lock();
 	void Unlock();
-	
+
 private:
 
 	unsigned char buf[SPI_BUFFER_LEN];
