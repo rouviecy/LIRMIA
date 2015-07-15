@@ -25,23 +25,20 @@ public:
 
 	SPI();
 
-	#define SPI_BUFFER_LEN 32
-
-	void SPI_init(const char* path, int speed);
+	void SPI_init(const char* path, int speed, int mode, bool little_endian, int bits_per_word);
 	void SPI_close();
 
-	void SPI_write(unsigned char* msg, int len);
-	unsigned char* SPI_read(int len);
-	void SPI_duplex(unsigned char* msg, int len);
+	void SPI_duplex(unsigned char* msg_in, unsigned char* msg_out, int len_in, int len_out);
 
 	void Lock();
 	void Unlock();
 
 private:
 
-	unsigned char buf[SPI_BUFFER_LEN];
 	int device;
-	int speed;
+	int mode;
+	bool little_endian;
+	spi_ioc_transfer spi_transfer;
 	std::string path;
 	std::mutex mu;
 
