@@ -18,9 +18,9 @@ void Imu_UM6LT::Job(){
 	#ifdef ENABLE_SPI
 		spi->Lock();
 		unsigned char request[] = {0x00, 0x5D};
-		unsigned char answer[4];
-		spi->SPI_duplex(answer, request);
-		imu_vthz = (float) (short) (answer[2]) << 8 | answer[3]);
+		char answer[4];
+		spi->SPI_duplex((unsigned char*) answer, request);
+		imu_vthz = (float) (short) (answer[2] << 8 | answer[3]);
 		spi->Unlock();
 		Critical_send();
 	#endif
