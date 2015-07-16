@@ -35,6 +35,12 @@ Enable I2C (load `i2c-dev` after each boot) :
     sudo apt-get install i2c-tools
     sudo modprobe i2c-dev
 
+Enable SPI (load `spi_bcm2708` and `spidev` after each boot) :
+
+    sudo raspi-config
+    sudo modprobe spi_bcm2708
+    sudo modprobe spidev
+
 ### Compile
 Remember to adjust `IS_XXX` in `CMakeLists.txt` to choose a robot or a simulator/remote.
 
