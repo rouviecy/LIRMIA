@@ -5,8 +5,8 @@ find_package(PkgConfig)
 
 set(IS_LIRMIA OFF)
 set(IS_SAYAB OFF)
-set(IS_R2D2 OFF)
-set(IS_COOKIE ON)
+set(IS_R2D2 ON)
+set(IS_COOKIE OFF)
 set(IS_SIMU OFF)
 
 set(ENABLE_PYTHON OFF)
@@ -69,6 +69,7 @@ elseif(${IS_R2D2})
 		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL)
 		add_definitions(-DENABLE_I2C)
+		add_definitions(-DENABLE_SPI)
 		add_definitions(-DENABLE_MOTORS)	# needs serial
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
