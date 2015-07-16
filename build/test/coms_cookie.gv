@@ -40,7 +40,7 @@ digraph links {
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		22 [label = "imu_thxyz\nfloat[3]"];
+		22 [label = "imu_vthz\nfloat"];
 	}
 	subgraph cluster_23 {
 		label = "Logger - 1Hz";
@@ -88,53 +88,55 @@ digraph links {
 		node [style=filled,color=white];
 		48 [label = "compass_thxyz\nfloat[3]"];
 		49 [label = "depth\nfloat"];
-		50 [label = "t\nfloat"];
-		51 [label = "thxyz\nfloat[3]"];
-		52 [label = "vthxyz\nfloat[3]"];
-		53 [label = "xyz\nfloat[3]"];
+		50 [label = "imu_vthz\nfloat"];
+		51 [label = "t\nfloat"];
+		52 [label = "thxyz\nfloat[3]"];
+		53 [label = "vthxyz\nfloat[3]"];
+		54 [label = "xyz\nfloat[3]"];
 	}
-	subgraph cluster_54 {
+	subgraph cluster_55 {
 		label = "State machine - 100Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		55 [label = "cam_detect_obj\nbool"];
-		56 [label = "fsm_down\nbool"];
-		57 [label = "fsm_explore\nbool"];
-		58 [label = "fsm_nofollow\nbool"];
-		59 [label = "fsm_stabilize\nbool"];
-		60 [label = "fsm_unlocked\nbool"];
-		61 [label = "fsm_up\nbool"];
-		62 [label = "remote\nbool"];
-		63 [label = "fsm_state\nint"];
+		56 [label = "cam_detect_obj\nbool"];
+		57 [label = "fsm_down\nbool"];
+		58 [label = "fsm_explore\nbool"];
+		59 [label = "fsm_nofollow\nbool"];
+		60 [label = "fsm_stabilize\nbool"];
+		61 [label = "fsm_unlocked\nbool"];
+		62 [label = "fsm_up\nbool"];
+		63 [label = "remote\nbool"];
+		64 [label = "fsm_state\nint"];
 	}
 	15->2 [minlen=5];
-	16->55 [minlen=5];
+	16->56 [minlen=5];
 	17->3 [minlen=5];
 	18->4 [minlen=5];
 	28->14 [minlen=5];
-	29->56 [minlen=5];
-	30->57 [minlen=5];
-	31->58 [minlen=5];
-	32->59 [minlen=5];
-	63->5 [minlen=5];
-	63->24 [minlen=5];
-	63->41 [minlen=5];
+	29->57 [minlen=5];
+	30->58 [minlen=5];
+	31->59 [minlen=5];
+	32->60 [minlen=5];
+	64->5 [minlen=5];
+	64->24 [minlen=5];
+	64->41 [minlen=5];
 	33->42 [minlen=5];
-	33->60 [minlen=5];
-	34->61 [minlen=5];
+	33->61 [minlen=5];
+	34->62 [minlen=5];
+	22->50 [minlen=5];
 	12->25 [minlen=5];
 	12->43 [minlen=5];
-	36->62 [minlen=5];
+	36->63 [minlen=5];
 	37->6 [minlen=5];
 	38->7 [minlen=5];
 	39->8 [minlen=5];
 	20->9 [minlen=5];
 	20->26 [minlen=5];
 	20->44 [minlen=5];
-	20->50 [minlen=5];
-	51->10 [minlen=5];
-	51->45 [minlen=5];
-	52->11 [minlen=5];
-	53->46 [minlen=5];
+	20->51 [minlen=5];
+	52->10 [minlen=5];
+	52->45 [minlen=5];
+	53->11 [minlen=5];
+	54->46 [minlen=5];
 }

@@ -30,12 +30,10 @@ void SPI::SPI_close(){
 	close(device);
 }
 
-void SPI::SPI_duplex(unsigned char* msg_in, unsigned char* msg_out, int len_in, int len_out){
-	spi_transfer.rx_nbits = len_in;
-	spi_transfer.tx_nbits = len_out;
+void SPI::SPI_duplex(unsigned char* msg_in, unsigned char* msg_out){
 	spi_transfer.rx_buf = (unsigned long) msg_in;
 	spi_transfer.tx_buf = (unsigned long) msg_out;
-	cout << ioctl(device, SPI_IOC_MESSAGE(1), &spi_transfer) << endl;
+	ioctl(device, SPI_IOC_MESSAGE(1), &spi_transfer);
 }
 
 void SPI::Lock(){mu.lock();}

@@ -28,7 +28,7 @@ public:
 	void SPI_init(const char* path, int speed, int mode, bool little_endian, int bits_per_word);
 	void SPI_close();
 
-	void SPI_duplex(unsigned char* msg_in, unsigned char* msg_out, int len_in, int len_out);
+	void SPI_duplex(unsigned char* msg_in, unsigned char* msg_out);
 
 	void Lock();
 	void Unlock();

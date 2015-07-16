@@ -12,7 +12,7 @@ State::State() : ComThread(){
 	vthxyz[0] = 0.;
 	vthxyz[1] = 0.;
 	vthxyz[2] = 0.;
-	
+
 	xk_1 = 0.;
 	vk_1 = 0.;
 }
@@ -25,13 +25,14 @@ void State::On_start(){
 
 void State::IO(){
 	Link_input("compass_thxyz",	COMFLOAT, 3, compass_thxyz);
+	Link_input("imu_vthz",		COMFLOAT, 1, &imu_vthz);
 	Link_input("depth",		COMFLOAT, 1, &depth);
 	Link_input("t",			COMFLOAT, 1, &t);
 
 	Link_output("xyz",		COMFLOAT, 3, xyz);
 	Link_output("thxyz",		COMFLOAT, 3, thxyz);
 	Link_output("vthxyz",		COMFLOAT, 3, vthxyz);
-	
+
 }
 
 void State::Job(){
@@ -39,6 +40,9 @@ void State::Job(){
 	thxyz[0] = compass_thxyz[0];
 	thxyz[1] = compass_thxyz[1];
 	thxyz[2] = compass_thxyz[2];
+
+vthxyz[2] = imu_vthz;
+cout << vthxyz[2] << endl;
 	//-------------------  Filtro del angulo ------------------------------------------
 		float xm = thxyz[2];
                 float a=0.2;

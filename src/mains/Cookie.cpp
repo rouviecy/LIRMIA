@@ -59,7 +59,7 @@ void Cookie::Init_hardware_com(){
 //		depth.Set_i2c(&i2c);
 	#endif
 	#ifdef ENABLE_SPI
-		spi.SPI_init(DEV_SPI, 300000, 0, 0, 8);
+		spi.SPI_init(DEV_SPI, 300000, 0, 1, 8);
 		imu.Set_spi(&spi);
 	#endif
 }
