@@ -49,6 +49,7 @@ private:
 	Compass_CMPS10	compass;
 	Clock		internal_clock;
 	Depth_BMP085	depth;
+	Imu_UM6LT	imu;
 	Logger		logger;
 	Motors		motors;
 	Remote_control	remote_control;

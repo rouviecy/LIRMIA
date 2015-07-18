@@ -5,9 +5,9 @@ find_package(PkgConfig)
 
 set(IS_LIRMIA OFF)
 set(IS_SAYAB OFF)
-set(IS_R2D2 ON)
-set(IS_COOKIE OFF)
-set(IS_SIMU OFF)
+set(IS_R2D2 OFF)
+set(IS_COOKIE ON)
+set(IS_SIMU ON)
 
 set(ENABLE_PYTHON OFF)
 set(ENABLE_JAVA OFF)
