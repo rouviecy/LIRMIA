@@ -23,8 +23,10 @@ public:
 private:
 
 	float compass_thxyz[3];
+	float gyro_vthxyz[3];
 	float xyz[3];
 	float thxyz[3];
+	float vthxyz[3];
 	float depth;
 	float t;
 

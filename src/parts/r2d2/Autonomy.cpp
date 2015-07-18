@@ -21,6 +21,7 @@ void Autonomy::IO(){
 	Link_input("remote_deeper",		COMFLOAT,	1, &remote_deeper);
 	Link_input("t",				COMFLOAT,	1, &t);
 	Link_input("thxyz",			COMFLOAT,	3, thxyz);
+	Link_input("vthxyz",			COMFLOAT,	3, vthxyz);
 	Link_input("cam_size_obj",		COMFLOAT,	1, &cam_size_obj);
 	Link_input("cam_detect_horizontal",	COMFLOAT,	1, &cam_detect_horizontal);
 	Link_input("cam_detect_vertical",	COMFLOAT,	1, &cam_detect_vertical);
@@ -88,8 +89,8 @@ void Autonomy::Job(){
 			CP=kp*(difA);
 			CP=saturation(-1,CP,1);
 
-			//CD=kd*(vthxyz[2]);
-			//CD=saturation(-1,CD,1);
+			CD=kd*(vthxyz[2]);
+			CD=saturation(-1,CD,1);
 			
 			//inte=inte+(difA);
 			//ctrlI= ki*inte;

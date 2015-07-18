@@ -118,8 +118,9 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Depth_MS5803.h		src/parts/Depth_MS5803.cpp
 	src/parts/Depth_BMP085.h		src/parts/Depth_BMP085.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
-	src/parts/Imu_UM6LT.h			src/parts/Imu_UM6LT.cpp
 	src/parts/Gps.h				src/parts/Gps.cpp
+	src/parts/Gyro_L3GD20H.h		src/parts/Gyro_L3GD20H.cpp
+	src/parts/Imu_UM6LT.h			src/parts/Imu_UM6LT.cpp
 	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp
 	src/parts/Subscriber.h			src/parts/Subscriber.cpp
 	src/interfaces/Maths_tools.h
