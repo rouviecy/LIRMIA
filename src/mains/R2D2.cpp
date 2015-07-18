@@ -10,7 +10,6 @@ R2D2::R2D2() : Maestro(){
 	Add_thread(&compass,		"Compass",			100000);	// 100 ms
 	Add_thread(&internal_clock,	"Clock",			500000);	// 500 ms
 	Add_thread(&depth,		"Depth",			500000);	// 500 ms
-	Add_thread(&imu,		"IMU",				1000000);	// 100 ms
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
 	Add_thread(&remote_control,	"Remote control",		-1);		// manual loop
@@ -36,9 +35,6 @@ void R2D2::Shutdown(){
 	#ifdef ENABLE_I2C
 		i2c.I2C_close();
 	#endif
-	#ifdef ENABLE_SPI
-		spi.SPI_close();
-	#endif
 }
 
 void R2D2::Init_serial_and_i2c(){
@@ -50,10 +46,6 @@ void R2D2::Init_serial_and_i2c(){
 		i2c.I2C_init(DEV_I2C);
 		compass.Set_i2c(&i2c);
 		depth.Set_i2c(&i2c);
-	#endif
-	#ifdef ENABLE_SPI
-		spi.SPI_init(DEV_SPI, 300000, 0, 1, 8);
-		imu.Set_spi(&spi);
 	#endif
 }
 

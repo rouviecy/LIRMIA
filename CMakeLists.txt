@@ -69,7 +69,6 @@ elseif(${IS_R2D2})
 		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL)
 		add_definitions(-DENABLE_I2C)
-		add_definitions(-DENABLE_SPI)
 		add_definitions(-DENABLE_MOTORS)	# needs serial
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)

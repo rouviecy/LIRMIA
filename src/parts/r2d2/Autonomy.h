@@ -35,7 +35,6 @@ private:
 	float cam_detect_vertical;
 	float t;
 	float thxyz[3];
-	float vthxyz[3];
 	float motor[4];
 
 	float keep_thz;
