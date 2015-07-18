@@ -21,6 +21,7 @@ void Imu_UM6LT::Job(){
 		char answer[4];
 		spi->SPI_duplex((unsigned char*) answer, request);
 		imu_vthz = (float) (short) (answer[2] << 8 | answer[3]);
+cout << imu_vthz << endl;
 		spi->Unlock();
 		Critical_send();
 	#endif

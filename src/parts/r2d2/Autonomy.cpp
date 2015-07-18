@@ -89,8 +89,8 @@ void Autonomy::Job(){
 			CP=kp*(difA);
 			CP=saturation(-1,CP,1);
 
-			//CD=kd*(vthxyz[2]);
-			//CD=saturation(-1,CD,1);
+			CD=kd*(vthxyz[2]);
+			CD=saturation(-1,CD,1);
 			
 			//inte=inte+(difA);
 			//ctrlI= ki*inte;
@@ -100,8 +100,7 @@ void Autonomy::Job(){
 
 			motor[1] = +CTRL;
 			motor[2] = -CTRL;
-	cout << A << "   " << RF << "  " << CTRL << "  " <<  vthxyz[2] << endl;	
-		
+	cout << "Ang : " << A << " | Ref : " << RF << " | CP : " << CP << " | CD : " << CD << endl;
 	}
 	else{
 		motor[1] = 0.;

@@ -46,7 +46,7 @@ private:
 	short int b1, b2, mb, mc, md;
 
 	int b5;
-	unsigned int temperature, pressure;
+	unsigned int temperature, pressure, pressure_ref;
 
 	unsigned short Read_ushort_and_swap(int address);
 	void Calibrate();
