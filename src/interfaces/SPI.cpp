@@ -12,19 +12,30 @@ void SPI::SPI_init(const char* path, int speed, int mode, bool little_endian, in
 	spi_transfer.delay_usecs = 0;
 	spi_transfer.len = bits_per_word;
 	device = open(path, O_RDWR);
-        if(device < 0){
-		cout << "[Error] Unable to open SPI port to " + this->path << endl;
-		return;
+        if(	device < 0){
+			cout << "[Error] Unable to open SPI port to " + this->path << endl;
+			return;
 	}
-	ioctl(device, SPI_IOC_WR_MODE, &(this->mode));
-	ioctl(device, SPI_IOC_RD_MODE, &(this->mode));
-	ioctl(device, SPI_IOC_WR_BITS_PER_WORD, &(spi_transfer.len));
-	ioctl(device, SPI_IOC_RD_BITS_PER_WORD, &(spi_transfer.len));
-	cout << ioctl(device, SPI_IOC_WR_LSB_FIRST, &(this->little_endian));
-	cout << ioctl(device, SPI_IOC_RD_LSB_FIRST, &(this->little_endian));
-	ioctl(device, SPI_IOC_WR_MAX_SPEED_HZ, &(spi_transfer.speed_hz));
-	ioctl(device, SPI_IOC_RD_MAX_SPEED_HZ, &(spi_transfer.speed_hz));
-	cout << endl;
+	if(	ioctl(device, SPI_IOC_WR_MODE, &(this->mode)) < 0 or
+		ioctl(device, SPI_IOC_RD_MODE, &(this->mode)) < 0){
+			cout << "[Error] Failed to open SPI port to " + this->path + " : mode " + to_string(mode) + " is not available" << endl;
+			return;
+	}
+	if(	ioctl(device, SPI_IOC_WR_BITS_PER_WORD, &(spi_transfer.len)) < 0 or
+		ioctl(device, SPI_IOC_RD_BITS_PER_WORD, &(spi_transfer.len)) < 0){
+			cout << "[Error] Failed to open SPI port to " + this->path + " : " + to_string(bits_per_word) + " bits per word is not available" << endl;
+			return;
+	}
+	if(	ioctl(device, SPI_IOC_WR_LSB_FIRST, &(this->little_endian)) < 0 or
+		ioctl(device, SPI_IOC_RD_LSB_FIRST, &(this->little_endian)) < 0){
+			cout << "[Error] Failed to open SPI port to " + this->path + " : " + (little_endian ? "little endian":"big endian") + " is not available" << endl;
+			return;
+	}
+	if(	ioctl(device, SPI_IOC_WR_MAX_SPEED_HZ, &(spi_transfer.speed_hz)) < 0 or
+		ioctl(device, SPI_IOC_RD_MAX_SPEED_HZ, &(spi_transfer.speed_hz)) < 0){
+			cout << "[Error] Failed to open SPI port to " + this->path + " : " + to_string(speed) + "Hz speed is not available" << endl;
+			return;
+	}
 }
 
 void SPI::SPI_close(){
