@@ -7,7 +7,7 @@ set(IS_LIRMIA OFF)
 set(IS_SAYAB OFF)
 set(IS_R2D2 ON)
 set(IS_COOKIE OFF)
-set(IS_SIMU OFF)
+set(IS_SIMU ON)
 
 set(ENABLE_PYTHON OFF)
 set(ENABLE_JAVA OFF)
@@ -119,7 +119,6 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Depth_BMP085.h		src/parts/Depth_BMP085.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
 	src/parts/Gps.h				src/parts/Gps.cpp
-	src/parts/Gyro_L3GD20H.h		src/parts/Gyro_L3GD20H.cpp
 	src/parts/Gyro_ITG3200.h		src/parts/Gyro_ITG3200.cpp
 	src/parts/Imu_UM6LT.h			src/parts/Imu_UM6LT.cpp
 	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp
