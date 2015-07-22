@@ -28,7 +28,7 @@ void Motors::Job(){
 
 void Motors::Generate_order(int num_motor, int power, bool positive){
 	#if defined(ENABLE_MOTORS) and defined(ENABLE_SERIAL_POLOLU)
-		unsigned short target = 6000 + (positive ? -1 : +1) * (unsigned short) power * 2;
+		unsigned short target = 6000 + (positive ? -1 : +1) * (unsigned short) power * 3;
 		unsigned char cmd[] = {0x84, (unsigned char) num_motor, (unsigned char) (target & 0x7F), (unsigned char) (target >> 7 & 0x7F)};
 		serial->Lock();
 		serial->Serial_write(cmd, 4);

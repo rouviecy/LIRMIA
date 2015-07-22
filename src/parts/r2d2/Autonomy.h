@@ -39,6 +39,8 @@ private:
 	float motor[4];
 
 	float keep_thz;
+	float integ_sum;
+	float kp, kd, ki;
 	float last_cam_detect_horizontal, last_cam_detect_vertical, last_t;
 
 };

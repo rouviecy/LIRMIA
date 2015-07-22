@@ -33,7 +33,7 @@ void Autonomy::Job(){
 	if(fsm_state == REMOTE){
 		motor		= remote_forward / 5;
 		rudder		= remote_turn;
-		bow_thruster	= remote_turn / 2;
+		bow_thruster	= remote_turn;
 	}
 	else if(fsm_state == FOLLOW_CAM_SUB){
 		motor		= -cam_detect_vertical[1];

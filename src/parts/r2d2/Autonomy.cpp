@@ -8,6 +8,11 @@ Autonomy::Autonomy() : ComThread(){
 	last_cam_detect_horizontal = 0.;
 	last_cam_detect_vertical = 0.;
 	last_t = -1.;
+	integ_sum = 0.;
+	keep_thz = 280;
+	kp = 0.01;
+	kd = 0.005;
+	ki = 0.0;
 }
 
 Autonomy::~Autonomy(){}
@@ -58,10 +63,10 @@ void Autonomy::Job(){
 	}
 	else if(fsm_state == REMOTE){
 //		keep_thz = thxyz[3];
-		motor[1] = - (remote_forward / 2 + remote_turn / 2);
-		motor[2] = remote_turn / 2 - remote_forward / 2;
-		motor[0] = -remote_deeper / 2;
-		motor[3] = -remote_deeper / 2;
+		motor[1] = remote_forward / 2 + remote_turn / 2;
+		motor[2] = remote_forward / 2 - remote_turn / 2;
+		motor[0] = remote_deeper / 2;
+		motor[3] = remote_deeper / 2;
 	}
 	else if(fsm_state == EXPLORE){
 //		keep_thz = thxyz[3];
@@ -71,36 +76,27 @@ void Autonomy::Job(){
 		motor[3] = 0.;
 	}
 	else if(fsm_state == UP || fsm_state == DOWN || fsm_state == STAY){ // TODO : check
-		
-		//---------------------------YAW CONTROL --------------------------------------
-		
-		float A=thxyz[2];
-		
-				
-		float difA,RF=280,CTRL,DCTRL,AVAN=0, inte, ctrlI;
-		float kp=0.01, kd=0.005, ki=0.7, CP=0,CD=0; 
-		inte=0;
-				
-        // cout << A << "   " << RF << endl;
-		//---------------------------------------------------------------------------------
-				
-			difA=diff_angles_deg(RF, A);
 
-			CP=kp*(difA);
-			CP=saturation(-1,CP,1);
+		float diff_yaw = diff_angles_deg(keep_thz, thxyz[2]);
 
-			CD=kd*(vthxyz[2]);
-			CD=saturation(-1,CD,1);
+		float	cp = kp * diff_yaw;
+			cp = saturation(-1, cp, +1);
+
+		float	cd = kd * vthxyz[2];
+			cd = saturation(-1, cd, +1);
 			
-			//inte=inte+(difA);
-			//ctrlI= ki*inte;
+		integ_sum += vthxyz[2];
+		float	ci = ki * integ_sum;
+			ci = saturation(-1, ci, +1);
 
-			CTRL=(CP+CD);
-			//CTRL=saturation(-1,CTRL,1);
+		float	ctrl = cp + cd + ci;
+			ctrl = saturation(-1, ctrl, +1);
 
-			motor[1] = +CTRL;
-			motor[2] = -CTRL;
-	cout << "Ang : " << A << " | Ref : " << RF << " | CP : " << CP << " | CD : " << CD << endl;
+		motor[1] = +ctrl;
+		motor[2] = -ctrl;
+		motor[0] = 0.;
+		motor[3] = 0.;
+		cout << "Ang : " << thxyz[2] << " | Ref : " << keep_thz << " | CP : " << cp << " | CD : " << cd <<  " | CI : " << ci << endl;
 	}
 	else{
 		motor[1] = 0.;

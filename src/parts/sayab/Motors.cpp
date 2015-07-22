@@ -27,7 +27,7 @@ void Motors::Job(){
 	int order_bow = min(abs((int) (255. * bow_thruster)), 255);
 	int order_rudder = min(abs((int) (90. * rudder)), 90);
 	Generate_order_i2c(0, order_motor, motor > 0);
-	Generate_order_i2c(1, order_bow, bow_thruster > 0);
+	Generate_order_i2c(1, order_bow, bow_thruster < 0);
 //	Generate_order_arduino(rudder > 0 ? +order_rudder : -order_rudder);
 }
 
