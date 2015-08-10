@@ -13,10 +13,14 @@
 
 #include "../../core/ComThread.h"
 #include "../../interfaces/Serial.h"
+#include <queue>
 
-enum state_com_t {
-	IDLE
-};
+typedef struct{
+	char addressee;
+	char header;
+	bool checksum;
+	char data[3];
+} MSG_MODEM;
 
 class Acoustic_modem : public ComThread{
 
@@ -45,7 +49,11 @@ private:
 	// Acoustic communication
 	std::thread thr_reception;
 	bool receive_go_on;
-	void Get_acoustic_msg_loop();
+	std::mutex mu;
+	char buffer[4];
+	int buffer_pos;
+	std::queue <MSG_MODEM> input_flow;
+	static void Get_acoustic_msg_loop(Acoustic_modem* self);
 	void Send_acoustic_msg(std::string msg);
 
 };
