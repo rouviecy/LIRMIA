@@ -43,8 +43,8 @@ private:
 	void IO();
 
 	// IO
-	bool sub_is_underwater;
 	int fsm_state;
+	float xy_modem[2];
 
 	// Acoustic communication
 	std::thread thr_reception;

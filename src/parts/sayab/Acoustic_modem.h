@@ -13,6 +13,7 @@
 
 #include "../../core/ComThread.h"
 #include "../../interfaces/Serial.h"
+#include "./State_machine.h"
 #include <queue>
 
 typedef struct{
@@ -45,6 +46,8 @@ private:
 	// IO
 	bool sub_is_underwater;
 	int fsm_state;
+	float t;
+	float xyz[3];
 
 	// Acoustic communication
 	std::thread thr_reception;
@@ -55,6 +58,10 @@ private:
 	std::queue <MSG_MODEM> input_flow;
 	static void Get_acoustic_msg_loop(Acoustic_modem* self);
 	void Send_acoustic_msg(std::string msg);
+	char Generate_header(char addressee, char header, bool checksum);
+
+	// GPS
+	float last_gps_sent;
 
 };
 

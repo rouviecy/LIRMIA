@@ -3,7 +3,7 @@
 using namespace std;
 
 Acoustic_modem::Acoustic_modem() : ComThread(){
-	sub_is_underwater = false;
+
 }
 
 Acoustic_modem::~Acoustic_modem(){}
@@ -17,9 +17,8 @@ void Acoustic_modem::On_start(){
 }
 
 void Acoustic_modem::IO(){
-	Link_input("fsm_state",			COMINT,		1, &fsm_state);
-
-	Link_output("sub_is_underwater",	COMBOOL,	1, &sub_is_underwater);
+	Link_input("fsm_state",	COMINT,		1, &fsm_state);
+	Link_output("xy_modem",	COMFLOAT,	2, xy_modem);
 }
 
 void Acoustic_modem::Job(){
@@ -27,6 +26,13 @@ void Acoustic_modem::Job(){
 	#ifdef ENABLE_SERIAL_RS232_MODEM
 		while(input_flow.size() > 0){
 			mu.lock();
+			if(input_flow.front().addressee == 1){
+				if(input_flow.front().header == 0){
+					long data = (long) input_flow.front().data[0] << 16 + (long) input_flow.front().data[1] << 8 + (long) input_flow.front().data[2];
+					xy_modem[0] = (float) (data >> 12);
+					xy_modem[1] = (float) ((data << 24) >> 24);
+				}
+			}
 			input_flow.pop();
 			mu.unlock();
 		}

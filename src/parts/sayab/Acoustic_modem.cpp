@@ -12,12 +12,15 @@ void Acoustic_modem::On_start(){
 	#ifdef ENABLE_SERIAL_RS232_MODEM
 		receive_go_on = true;
 		buffer_pos = 0;
+		last_gps_sent = 0.;
 		thr_reception = thread(&Acoustic_modem::Get_acoustic_msg_loop, this);
 	#endif
 }
 
 void Acoustic_modem::IO(){
 	Link_input("fsm_state",			COMINT,		1, &fsm_state);
+	Link_input("t",				COMFLOAT,	1, &t);
+	Link_input("xyz",			COMFLOAT,	3, &xyz);
 
 	Link_output("sub_is_underwater",	COMBOOL,	1, &sub_is_underwater);
 }
@@ -29,6 +32,18 @@ void Acoustic_modem::Job(){
 			mu.lock();
 			input_flow.pop();
 			mu.unlock();
+		}
+		if(fsm_state == FOLLOW_CAM_SUB){
+			if(t - last_gps_sent > 5.){
+				last_gps_sent = t;
+				char msg[4];
+				msg[0] = Generate_header(1, 0, 0);
+				long coordinates = long(xyz[0]) << 12 + long(xyz[1]);
+				msg[1] = (char) (coordinates >> 16);
+				msg[2] = (char) (coordinates >> 8);
+				msg[3] = (char) coordinates;
+				Send_acoustic_msg(string(msg));
+			}
 		}
 	#endif
 	Critical_send();
@@ -62,6 +77,10 @@ void Acoustic_modem::Send_acoustic_msg(std::string msg){
 	serial->Lock();
 	serial->Serial_write((unsigned char*) msg.c_str(), 4);
 	serial->Unlock();
+}
+
+char Acoustic_modem::Generate_header(char addressee, char header, bool checksum){
+	return (addressee << 5) + (header << 1) + checksum;
 }
 
 void Acoustic_modem::Stop_receive(){receive_go_on = false; thr_reception.join();}
