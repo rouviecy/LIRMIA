@@ -12,10 +12,10 @@
 ### Enable C++11 (for Ubuntu >= 14.04)
 
     sudo apt-get install build-essential g++-4.8 cmake
-    rm /usr/bin/gcc
-    rm /usr/bin/g++
-    ln -s /usr/bin/gcc-4.8 /usr/bin/gcc
-    ln -s /usr/bin/g++-4.8 /usr/bin/g++
+    sudo rm /usr/bin/gcc
+    sudo rm /usr/bin/g++
+    sudo ln -s /usr/bin/gcc-4.8 /usr/bin/gcc
+    sudo ln -s /usr/bin/g++-4.8 /usr/bin/g++
 
 ### Raspberry Pi
 Enable camera (load `bcm2835-v4l2` and `v4l2-ctl` after each boot) :
