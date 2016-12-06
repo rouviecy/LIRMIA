@@ -33,6 +33,8 @@ private:
 	void IO();
 
 	float gps_xy[2];
+	float gps_lat;
+	float gps_lon;
 
 	bool first;
 	float offset_x, offset_y;

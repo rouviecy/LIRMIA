@@ -4,6 +4,8 @@ using namespace std;
 
 Autonomy::Autonomy() : ComThread(){
 	for(int i = 0; i < 4; i++){motor[i] = 0.;}
+	tzer = false;
+	ti = 0.;
 }
 
 Autonomy::~Autonomy(){}
@@ -20,6 +22,10 @@ void Autonomy::IO(){
 	Link_input("vxyz",			COMFLOAT,	3, vxyz);
 	Link_input("thxyz",			COMFLOAT,	3, thxyz);
 	Link_input("vthxyz",			COMFLOAT,	3, vthxyz);
+	Link_input("yawref",			COMFLOAT,	1, &yawref);
+	Link_input("uw",			COMFLOAT,	1, &uw);
+	Link_input("zref",			COMFLOAT,	1, &zref);
+	Link_input("uz",			COMFLOAT,	1, &uz);
 	Link_input("obst_xy",			COMFLOAT,	2, obst_xy);
 	Link_input("cam_size_obj",		COMFLOAT,	2, cam_size_obj);
 	Link_input("cam_detect_horizontal",	COMFLOAT,	2, cam_detect_horizontal);
@@ -28,6 +34,7 @@ void Autonomy::IO(){
 	Link_input("cam_pipeline_distance",	COMFLOAT,	2, cam_pipeline_distance);
 
 	Link_output("motor",			COMFLOAT,	4, motor);
+	Link_output("ti",			COMFLOAT,	1, &ti);
 }
 
 void Autonomy::Job(){
@@ -36,8 +43,10 @@ void Autonomy::Job(){
 		if(cam_size_obj[0] < 0.20){
 			motor[0] = 0.2 - cam_size_obj[0] + cam_detect_horizontal[0] / 5;
 			motor[1] = 0.2 - cam_size_obj[0] - cam_detect_horizontal[0] / 5;
-			motor[2] = -cam_detect_vertical[0] / 5;
-			motor[3] = -cam_detect_vertical[0] / 5;
+			//motor[2] = -cam_detect_vertical[0] / 5;
+			//motor[3] = -cam_detect_vertical[0] / 5;
+			motor[2] = 0.;
+			motor[3] = 0.;
 		}
 		else{
 			motor[0] = -0.2;
@@ -64,9 +73,10 @@ void Autonomy::Job(){
 		if(cam_size_obj[0] < 0.20){
 			motor[0] = 0.2 - cam_size_obj[0] + cam_pipeline_distance[0] / 5;
 			motor[1] = 0.2 - cam_size_obj[0] - cam_pipeline_distance[0] / 5;
-			motor[2] = 0.2;
-			motor[3] = 0.2;
-		}
+			//motor[2] = 0.2;
+			//motor[3] = 0.2;
+			motor[2] = 0.;
+			motor[3] = 0.;		}
 		else{
 			motor[0] = -0.2;
 			motor[1] = -0.2;
@@ -94,7 +104,18 @@ void Autonomy::Job(){
 		motor[2] = 0.;
 		motor[3] = 0.;
 	}
+	else if(fsm_state == LAW_CONTROL){
+		if(tzer == false){ti = t;}
+		tzer = true;
+		motor[0] = 1 + 0.001*uw;
+		motor[1] = 1 - 0.001*uw;
+		//motor[2] = 1 + 0.001*uz;
+		//motor[3] = 1 + 0.001*uz;
+		motor[2] = 0.;
+		motor[3] = 0.;
+	}
 	else if(fsm_state == REMOTE){
+		tzer = false;
 // TODO : remove
 if(obst_xy[0] > 0.25 && obst_xy[0] < 1.){
 cout << "OBSTACLE X" << endl;
@@ -121,22 +142,26 @@ cout << "OBSTACLE Y" << endl;
 		if(diff_thz > +360){diff_thz -= 360;}
 		if(diff_thz < -180){diff_thz += 360;}
 		if(diff_thz > +180){diff_thz -= 360;}
-		motor[0] = - diff_thz / 500;
-		motor[1] = + diff_thz / 500;
-		motor[2] = + thxyz[2] / 500;
-		motor[3] = - thxyz[2] / 500;
+		//motor[0] = - diff_thz / 500;
+		//motor[1] = + diff_thz / 500;
+		//motor[2] = + thxyz[2] / 500;
+		//motor[3] = - thxyz[2] / 500;
+		motor[0] = 0.;
+		motor[1] = 0.;
+		motor[2] = 0.;
+		motor[3] = 0.;
 	}
 	else if(fsm_state == UP){
 		motor[0] = +0.;
 		motor[1] = +0.;
-		motor[2] = +0.5;
-		motor[3] = +0.5;
+		motor[2] = +0.3;
+		motor[3] = +0.3;
 	}
 	else if(fsm_state == DOWN){
 		motor[0] = +0.;
 		motor[1] = +0.;
-		motor[2] = -0.5;
-		motor[3] = -0.5;
+		motor[2] = -0.3;
+		motor[3] = -0.3;
 	}
 	else{
 		motor[0] = 0.;

@@ -30,8 +30,19 @@ private:
 	void IO();
 
 	float t;
+	float ti;
 	float xyz[3];
+	float vxyz[3];
 	float thxyz[3];
+	float vthxyz[3];
+	float vz;
+	float vthz;
+	float yawref;
+	float zref;
+	float uw;
+	float uwaux;
+	float uz;
+	float uzaux;
 	float motor[4];
 	int fsm_state;
 	bool fsm_unlocked;

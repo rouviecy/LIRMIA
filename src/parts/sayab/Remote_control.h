@@ -39,6 +39,7 @@ private:
 	int fsm_state;
 	bool remote;
 	float remote_forward, remote_turn;
+	float fsm_unlocked, fsm_law_control, fsm_nofollow, fsm_explore, fsm_stabilize;
 	bool enable_streaming;
 
 	bool alive;

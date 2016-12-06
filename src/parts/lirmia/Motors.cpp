@@ -19,7 +19,7 @@ void Motors::IO(){
 void Motors::Job(){
 	Critical_receive();
 	for(int i = 0; i < 4; i++){
-		int order = min(abs((int) (255. * motor[i])), 255);
+		int order = min(abs((int) (255. * motor[i])), 186);
 		if(order < 20){order = 0;}
 		Generate_order(i, order, motor[i] > 0);
 	}

@@ -20,9 +20,9 @@ void Depth_MS5803::Job(){} // Do nothing : this object should only be called by 
 void Depth_MS5803::Process_serial_data(void* object, char* input_msg){
 	Depth_MS5803* self = (Depth_MS5803*) object;
 	string msg_ypr = string(input_msg + 5 * sizeof(char));
-	if(count(msg_ypr.begin(), msg_ypr.end(), ',') == 1){
+	if(count(msg_ypr.begin(), msg_ypr.end(), '$') == 1){
 		vector <string> tokens;
-		size_t next = msg_ypr.find_first_of(",", 0);
+		size_t next = msg_ypr.find_first_of("$", 0);
 		string msg_depth = msg_ypr.substr(0, next);
 		try{
 			self->depth = stof(msg_depth);
@@ -38,7 +38,7 @@ void Depth_MS5803::Subscribe(Subscriber* subscriber){
 		return;
 	#endif
 	map <int, char> keys;
-	keys[0] = '#';
+	keys[0] = '%';
 	keys[1] = 'D';
 	keys[2] = 'E';
 	keys[3] = 'P';

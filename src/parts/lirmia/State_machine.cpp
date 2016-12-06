@@ -14,6 +14,7 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_state("follow_wall",		FOLLOW_WALL);
 	fsm.Add_state("up",			UP);
 	fsm.Add_state("remote",			REMOTE);
+	fsm.Add_state("law_control",		LAW_CONTROL);
 
 	fsm.Add_event("go_to_autonomous");
 	fsm.Add_event("go_down");
@@ -25,6 +26,7 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_event("wall_detected");
 	fsm.Add_event("stop_follow");
 	fsm.Add_event("go_up");
+	fsm.Add_event("go_to_law_control");
 	fsm.Add_event("reach_surface");
 	fsm.Add_event("go_to_remote");
 
@@ -37,12 +39,14 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_transition(	"remote",		"stay",			"go_to_autonomous",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"down",			"stay",			"go_to_autonomous",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"up",			"stay",			"go_to_autonomous",	"fsm_unlocked",	"update_fsm",	(void*) this);
+	fsm.Add_transition(	"law_control",		"stay",			"go_to_autonomous",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"explore",		"stay",			"go_to_autonomous",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	// End
 
-	// Go up and down
+	// Go up, down and law control
 	fsm.Add_transition(	"stay",			"down",			"go_down",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"stay",			"up",			"go_up",		"fsm_unlocked",	"update_fsm",	(void*) this);
+	fsm.Add_transition(	"stay",			"law_control",		"go_to_law_control",	"fsm_unlocked",	"update_fsm",	(void*) this);
 	// End
 
 	// Between explore and follow
@@ -70,6 +74,7 @@ State_machine::State_machine() : ComThread(){
 	fsm.Add_transition(	"explore",		"stay",			"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"down",			"stay",			"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"up",			"stay",			"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
+	fsm.Add_transition(	"law_control",		"stay",			"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	fsm.Add_transition(	"stay",			"remote",		"go_to_remote",		"fsm_unlocked",	"update_fsm",	(void*) this);
 	// End
 
@@ -91,6 +96,7 @@ void State_machine::IO(){
 	Link_input("fsm_down",		COMBOOL,	1, &fsm_down);
 	Link_input("fsm_up",		COMBOOL,	1, &fsm_up);
 	Link_input("fsm_explore",	COMBOOL,	1, &fsm_explore);
+	Link_input("fsm_law_control",	COMBOOL,	1, &fsm_law_control);
 	Link_input("fsm_nofollow",	COMBOOL,	1, &fsm_nofollow);
 	Link_input("cam_detect_obj",	COMBOOL,	2, cam_detect_obj);
 	Link_input("cam_detect_pipe",	COMBOOL,	2, cam_detect_pipe);
@@ -115,12 +121,14 @@ void State_machine::Job(){
 	}
 	if(fsm_state != REMOTE && remote){fsm.Call_event("go_to_remote");}
 	if(fsm_state == REMOTE && !remote || fsm_stabilize){fsm.Call_event("go_to_autonomous");}
+	if(fsm_law_control){fsm.Call_event("go_to_law_control");}
 	if(fsm_down){fsm.Call_event("go_down");}
 	if(fsm_up){fsm.Call_event("go_up");}
 	if(fsm_explore){fsm.Call_event("begin_explore");}
 	if(fsm_nofollow){fsm.Call_event("stop_follow");}
 	if(fsm_state == EXPLORE){
 		if(fsm_up){fsm.Call_event("go_up");}
+		if(fsm_law_control){fsm.Call_event("go_to_law_control");}
 		if(!fsm_nofollow && !cam_detect_opi){
 			if(cam_detect_pipe[0]){fsm.Call_event("pipe_detected_cam1");}
 			if(cam_detect_pipe[1]){fsm.Call_event("pipe_detected_cam2");}
@@ -153,6 +161,7 @@ string State_machine::Decode_state_str(int int_state){
 		case FOLLOW_PIPE_CAM2:	return "follow pipeline camera 2";
 		case FOLLOW_WALL:	return "following wall          ";
 		case UP:		return "going up                ";
+		case LAW_CONTROL:	return "law control		";
 		case REMOTE:		return "remote control          ";
 		default :		return "unknown ???             ";
 	}

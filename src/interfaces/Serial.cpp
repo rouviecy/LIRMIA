@@ -30,6 +30,7 @@ void Serial::Serial_init(const char* path, int baudrate, bool canonical_mode){
 		tio_new.c_iflag &= ~(ICANON | ECHO | ECHOE | ISIG);
 		tio_new.c_oflag &= ~OPOST;
 		tcsetattr(device, TCSANOW, &tio_new);
+		usleep(20000);
 		tcflush(device, TCIFLUSH);
 	}
 	else{
@@ -39,6 +40,7 @@ void Serial::Serial_init(const char* path, int baudrate, bool canonical_mode){
 		tio_new.c_iflag |= IGNPAR;
 		tio_new.c_cc[VTIME] = 0;
 		tio_new.c_cc[VMIN] = SERIAL_BUFFER_LEN;
+		usleep(20000);
 		tcflush(device, TCIFLUSH);
 		tcsetattr(device, TCSANOW, &tio_new);
 	}

@@ -19,6 +19,7 @@ void Acoustic_modem::On_start(){
 void Acoustic_modem::IO(){
 	Link_input("fsm_state",	COMINT,		1, &fsm_state);
 	Link_output("xy_modem",	COMFLOAT,	2, xy_modem);
+//	Link_output("msg_parse",COMFLOAT,	4, &msg_parse);
 }
 
 void Acoustic_modem::Job(){

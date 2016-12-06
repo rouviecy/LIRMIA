@@ -30,12 +30,23 @@ private:
 	void IO();
 
 	float t;
+	float ti;
 	float xy[2];
+	float lat;
+	float lon;
 	float thz;
+	float vthz;
+	float yawref;
+	float uw;
+ 	float uwaux;
 	float motor;
 	float rudder;
 	float bow_thruster;
+
+//	float msg_parse;
+
 	int fsm_state;
+	float fsm_unlocked;
 
 };
 

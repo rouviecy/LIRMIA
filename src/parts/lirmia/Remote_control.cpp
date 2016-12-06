@@ -3,7 +3,7 @@
 using namespace std;
 
 Remote_control::Remote_control() : ComThread(){
-	fsm_up = false; fsm_down = false; fsm_explore = false; fsm_nofollow = false; fsm_stabilize = false;
+	fsm_up = false; fsm_down = false; fsm_explore = false; fsm_nofollow = false; fsm_stabilize = false; fsm_law_control = false;
 	remote = true; remote_forward = 0.; remote_turn = 0.; remote_deeper = 0.;
 	enable_streaming = false;
 	fsm_unlocked = true;
@@ -31,6 +31,7 @@ void Remote_control::IO(){
 	Link_output("fsm_unlocked",	COMBOOL,	1, &fsm_unlocked);
 	Link_output("fsm_down",		COMBOOL,	1, &fsm_down);
 	Link_output("fsm_up",		COMBOOL,	1, &fsm_up);
+	Link_output("fsm_law_control",	COMBOOL,	1, &fsm_law_control);
 	Link_output("fsm_explore",	COMBOOL,	1, &fsm_explore);
 	Link_output("fsm_nofollow",	COMBOOL,	1, &fsm_nofollow);
 	Link_output("fsm_stabilize",	COMBOOL,	1, &fsm_stabilize);
@@ -50,6 +51,7 @@ void Remote_control::Job_and_wait_quit(){
 			if(msg_in[0] == 'f'){
 				if(msg_in[1] == '0'){fsm_unlocked = false;}
 				if(msg_in[1] == '1'){fsm_unlocked = true;}
+				if(msg_in[1] ==	'z'){fsm_law_control =	(msg_in[2] == '1');}
 				if(msg_in[1] == 'd'){fsm_down =		(msg_in[2] == '1');}
 				if(msg_in[1] == 'u'){fsm_up =		(msg_in[2] == '1');}
 				if(msg_in[1] == 'e'){fsm_explore =	(msg_in[2] == '1');}

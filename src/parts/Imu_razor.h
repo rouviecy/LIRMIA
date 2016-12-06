@@ -14,8 +14,10 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 #include "../core/ComThread.h"
 #include "./Subscriber.h"
+#include "../interfaces/Serial.h"
 
 class Imu_razor : public ComThread{
 
@@ -25,10 +27,12 @@ public:
 	~Imu_razor();
 
 	void Subscribe(Subscriber* subscriber);
+	//void Set_serial_imu(Serial* serial);
 
 private:
 
 	Serial* serial;
+	//Serial *serial_imu;
 
 	void On_start();
 	void Job();

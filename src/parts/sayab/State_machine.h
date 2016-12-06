@@ -16,8 +16,8 @@
 #include "../../interfaces/FSM.h"
 #include "../../interfaces/FSMDraw.h"
 
-enum state_t {REMOTE, FOLLOW_CAM_SUB, FOLLOW_CAM_SURF, LOST_CAM_SUB, LOST_CAM_SURF};
-
+//enum state_t {STAY, EXPLORE, REMOTE, LAW_CONTROL, FOLLOW_CAM_SUB, FOLLOW_CAM_SURF, LOST_CAM_SUB, LOST_CAM_SURF};
+enum state_t {STAY, EXPLORE, REMOTE, LAW_CONTROL, FOLLOW_CAM_SUB, FOLLOW_CAM_SURF};
 class State_machine : public ComThread{
 
 public:
@@ -34,8 +34,10 @@ private:
 
 	int fsm_state;
 	bool remote;
+	bool fsm_law_control;
 	bool cam_detect_obj[2];
 	bool sub_is_underwater;
+	bool fsm_unlocked, fsm_explore, fsm_nofollow, fsm_stabilize;
 
 	void On_start();
 	void Job();

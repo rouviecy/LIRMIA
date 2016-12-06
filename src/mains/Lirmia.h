@@ -31,11 +31,15 @@
 #include "../parts/Subscriber.h"
 
 
-#define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_5533330393435131F151-if00"
+//#define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_5533330393435131F151-if00"
+//#define DEV_SERIAL_ARDUINO      "/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_95333303031351D0B2B1-if00"
+#define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino_Srl_Arduino_Uno_85439303333351019211-if00"
+//#define DEV_SERIAL_ARDUINO      "/dev/serial/by-id/usb-Arduino_Srl_Arduino_Uno_75430333137351C012E0-if00"
 #define DEV_SERIAL_ISS		"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00007350-if00"
 #define DEV_SERIAL_RS232_MODEM	"/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
 #define DEV_SERIAL_RS232_ECHO_X	"/dev/serial/by-id/usb-FTDI_US232R_FTE4451C-if00-port0" // TO CHANGE
 #define DEV_SERIAL_RS232_ECHO_Y	"/dev/serial/by-id/usb-FTDI_US232R_FTE4451C-if00-port0" // TO CHANGE
+#define DEV_SERIAL_RS232_IMU 	"/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AH03FIKV-if00-port0"
 
 class Lirmia : public Maestro{
 
@@ -46,7 +50,7 @@ public:
 
 private:
 
-	Serial serial_arduino, serial_iss, serial_rs232_modem, serial_rs232_echo_x, serial_rs232_echo_y;
+	Serial serial_arduino, serial_iss, serial_rs232_modem, serial_rs232_echo_x, serial_rs232_echo_y, serial_imu;
 
 	void Init_serial();
 
@@ -66,6 +70,7 @@ private:
 	State		state;
 	State_machine	state_machine;
 	Subscriber	subscriber;
+	Subscriber	subscriber2;
 
 };
 

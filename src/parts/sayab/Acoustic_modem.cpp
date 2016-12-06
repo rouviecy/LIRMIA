@@ -23,6 +23,7 @@ void Acoustic_modem::IO(){
 	Link_input("xyz",			COMFLOAT,	3, &xyz);
 
 	Link_output("sub_is_underwater",	COMBOOL,	1, &sub_is_underwater);
+//	Link_output("msgmod",			COMFLOAT,	4, &msgmod);
 }
 
 void Acoustic_modem::Job(){
@@ -44,6 +45,14 @@ void Acoustic_modem::Job(){
 				msg[3] = (char) coordinates;
 				Send_acoustic_msg(string(msg));
 			}
+//		else if(fsm_state == LAW_CONTROL){
+//				char msg[4];
+//				msg[0] = 'r';
+//				msg[1] = 'n';
+//				msg[2] = 'g';
+//				msg[3] = '\n';
+//				Send_acoustic_msg(string(msg));
+//			}
 		}
 	#endif
 	Critical_send();
@@ -66,6 +75,10 @@ void Acoustic_modem::Get_acoustic_msg_loop(Acoustic_modem* self){
 				self->mu.lock();
 				self->input_flow.push(msg_parse);
 				self->mu.unlock();
+//				msgmod[0] = msg_parse.checksum;
+//				msgmod[1] = msg_parse.data[0];
+//				msgmod[2] = msg_parse.data[1];
+//				msgmod[3] = msg_parse.data[2];
 			}
 		}
 		self->serial->Unlock();

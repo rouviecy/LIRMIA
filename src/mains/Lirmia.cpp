@@ -10,9 +10,12 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&cameras,		"Cameras",			100000);	// 100 ms
 	Add_thread(&internal_clock,	"Clock",			1000);		// 1 ms
 	Add_thread(&echosonder,		"Echo sonder",			1000000);	// 1 s
+//	Add_thread(&depth,		"Depth",			10000);		// 10 ms
+//	Add_thread(&imu,		"IMU",				10000);		// 10 ms
 	Add_thread(&depth,		"Depth",			-1);		// subscriber callback
 	Add_thread(&imu,		"IMU",				-1);		// subscriber callback
-	Add_thread(&logger,		"Logger",			1000000);	// 1 s
+//	Add_thread(&logger,		"Logger",			1000000);	// 1 s
+	Add_thread(&logger,		"Logger",			10000);		// 10 ms
 	Add_thread(&mapping,		"Mapping",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
 	Add_thread(&remote_control,	"Remote control",		-1);		// manual loop
@@ -20,7 +23,8 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&simulator,		"Simulator",			5000);		// 5 ms
 	Add_thread(&state,		"State",			20000);		// 20 ms
 	Add_thread(&state_machine,	"Finite state machine",		40000);		// 40 ms
-	Add_thread(&subscriber,		"Subscriber",			100000);	// 100 ms
+	Add_thread(&subscriber,		"subscriber",			100000);	// 100 ms
+	Add_thread(&subscriber2,	"Subscriber IMU",		100000);	// 100 ms
 
 	Init_serial();
 	Link_all();
@@ -51,13 +55,16 @@ void Lirmia::Shutdown(){
 	#ifdef ENABLE_SERIAL_RS232_ECHO_Y
 		serial_rs232_echo_y.Serial_close();
 	#endif
+	#ifdef 	ENABLE_SERIAL_RS232_IMU
+		serial_imu.Serial_close();
+	#endif
 }
 
 void Lirmia::Init_serial(){
 	#ifdef ENABLE_SERIAL_ARDUINO
 		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B57600, true);
 		subscriber.Set_serial(&serial_arduino);
-		imu.Subscribe(&subscriber);
+	//	imu.Subscribe(&subscriber);
 		depth.Subscribe(&subscriber);
 	#endif
 	#ifdef ENABLE_SERIAL_ISS
@@ -83,6 +90,12 @@ void Lirmia::Init_serial(){
 		serial_rs232_echo_y.Serial_init(DEV_SERIAL_RS232_ECHO_Y, B9600, true);
 		echosonder.Set_serial_y(&serial_rs232_echo_y);
 	#endif
+	#ifdef ENABLE_SERIAL_RS232_IMU
+		serial_imu.Serial_init(DEV_SERIAL_RS232_IMU, B9600, true);
+		subscriber2.Set_serial(&serial_imu);
+		imu.Subscribe(&subscriber2);
+	#endif
+
 }
 
 int main(){

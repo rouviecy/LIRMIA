@@ -7,7 +7,7 @@ set(IS_LIRMIA ON)
 set(IS_SAYAB OFF)
 set(IS_R2D2 OFF)
 set(IS_COOKIE OFF)
-set(IS_SIMU ON)
+set(IS_SIMU OFF)
 
 set(ENABLE_PYTHON OFF)
 set(ENABLE_JAVA OFF)
@@ -26,8 +26,9 @@ if(${IS_LIRMIA})
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
 #		add_definitions(-DENABLE_SERIAL_RS232_MODEM)
-		add_definitions(-DENABLE_SERIAL_RS232_ECHO_X)
-		add_definitions(-DENABLE_SERIAL_RS232_ECHO_Y)
+#		add_definitions(-DENABLE_SERIAL_RS232_ECHO_X)
+#		add_definitions(-DENABLE_SERIAL_RS232_ECHO_Y)
+		add_definitions(-DENABLE_SERIAL_RS232_IMU)
 		add_definitions(-DENABLE_DEPTH)			# needs serial Arduino
 		add_definitions(-DENABLE_IMU)			# needs serial Arduino
 		add_definitions(-DENABLE_MOTORS)		# needs serial ISS

@@ -26,6 +26,11 @@ void Remote_control::IO(){
 	Link_output("remote_forward",	COMFLOAT,	1, &remote_forward);
 	Link_output("remote_turn",	COMFLOAT,	1, &remote_turn);
 	Link_output("enable_streaming",	COMBOOL,	1, &enable_streaming);
+	Link_output("fsm_unlocked",	COMBOOL,	1, &fsm_unlocked);
+	Link_output("fsm_explore",	COMBOOL,	1, &fsm_explore);
+	Link_output("fsm_nofollow",	COMBOOL,	1, &fsm_nofollow);
+	Link_output("fsm_stabilize",	COMBOOL,	1, &fsm_stabilize);
+	Link_output("fsm_law_control",	COMBOOL,	1, &fsm_law_control);
 }
 
 void Remote_control::Job(){}
@@ -37,6 +42,14 @@ void Remote_control::Job_and_wait_quit(){
 			if(msg_in[0] == 'b' && msg_in[1] == 'y' && msg_in[2] == 'e'){
 				alive = false;
 				tcp_server.Close();
+			}
+			if(msg_in[0] == 'f'){
+				if(msg_in[1] == '0'){fsm_unlocked = false;}
+				if(msg_in[1] == '1'){fsm_unlocked = true;}
+				if(msg_in[1] == 'w'){fsm_law_control = 	(msg_in[2] == '1');}
+				if(msg_in[1] == 'e'){fsm_explore =	(msg_in[2] == '1');}
+				if(msg_in[1] == 'n'){fsm_nofollow = 	(msg_in[2] == '1');}
+				if(msg_in[1] == 's'){fsm_stabilize = 	(msg_in[2] == '1');}
 			}
 			if(msg_in[0] == 'r'){
 				if(msg_in[1] == '0'){remote = false;}
@@ -66,3 +79,4 @@ void Remote_control::Job_and_wait_quit(){
 }
 
 void Remote_control::Set_blobs_obj(Blobs* blobs){this->blobs = blobs;}
+

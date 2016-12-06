@@ -19,7 +19,15 @@ typedef struct{
 } struct_callback;
 
 typedef struct{
-	float t, x, y, z, thz;
+	float t, ti, x, y, z, thz;
+	float vz;
+	float vthz;
+	float yawref;
+	float zref;
+	float uw;
+	float uwaux;
+	float uz;
+	float uzaux;
 	int motor1, motor2, motor3, motor4;
 	int state;
 	bool unlocked;
@@ -27,7 +35,7 @@ typedef struct{
 	vector <vector <float> > path;
 	vector <vector <float> > objects;
 } struct_monitor;
-	
+
 
 static void send_move_order(void* obj, string msg){
 	struct_callback* obj_callback = (struct_callback*) obj;
@@ -41,6 +49,7 @@ static void listen_key_right	(void* obj, bool down){send_move_order(obj, "rr" + 
 static void listen_key_plus	(void* obj, bool down){send_move_order(obj, "ru" + to_string(down));}
 static void listen_key_minus	(void* obj, bool down){send_move_order(obj, "rd" + to_string(down));}
 
+static void listen_key_z	(void* obj, bool down){send_move_order(obj, "fz" + to_string(down));}
 static void listen_key_s	(void* obj, bool down){send_move_order(obj, "fs" + to_string(down));}
 static void listen_key_i	(void* obj, bool down){send_move_order(obj, "fu" + to_string(down));}
 static void listen_key_k	(void* obj, bool down){send_move_order(obj, "fd" + to_string(down));}
@@ -87,6 +96,7 @@ void init_joystick_listeners(Joystick* joystick, struct_callback* obj_callback){
 		joystick->Connect_keyboard(SDLK_KP_MINUS,	&listen_key_minus,	obj_callback);
 		joystick->Connect_keyboard(SDLK_c,		&listen_key_c,		obj_callback);
 		joystick->Connect_keyboard(SDLK_e,		&listen_key_e,		obj_callback);
+		joystick->Connect_keyboard(SDLK_z,		&listen_key_z,		obj_callback);
 		joystick->Connect_keyboard(SDLK_i,		&listen_key_i,		obj_callback);
 		joystick->Connect_keyboard(SDLK_k,		&listen_key_k,		obj_callback);
 		joystick->Connect_keyboard(SDLK_l,		&listen_key_l,		obj_callback);
@@ -128,22 +138,38 @@ void Resize_monitor(struct_monitor *monitor){
 }
 
 void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
+	string text_ti = "ti = " + to_string(monitor->ti);
 	string text_x = "x = " + to_string(monitor->x) + " m";
 	string text_y = "y = " + to_string(monitor->y) + " m";
 	string text_z = "z = " + to_string(monitor->z) + " m";
+	string text_vz = "vz = " + to_string(monitor->vz);
+	string text_thz = "yaw = " + to_string(monitor->thz*57.3) + " gs";
+	string text_vthz = "vyaw = " + to_string(monitor->vthz);
+	string text_yawref = "yawref = " + to_string(monitor->yawref);
+	string text_zref = "zref = " + to_string(monitor->zref);
+	string text_uw = "uw = " + to_string(monitor->uw);
+	string text_uz = "uz = " + to_string(monitor->uz);
 	string text_motor1 = "motor1 = " + to_string(monitor->motor1) + "%";
 	string text_motor2 = "motor2 = " + to_string(monitor->motor2) + "%";
-	string text_motor3 = "motor3 = " + to_string(monitor->motor3) + "%";
+ 	string text_motor3 = "motor3 = " + to_string(monitor->motor3) + "%";
 	string text_motor4 = "motor4 = " + to_string(monitor->motor4) + "%";
 	string text_state = State_machine::Decode_state_str(monitor->state) + string(monitor->unlocked ? " [unlocked]" : " [LOCKED]");
 	cv::putText(*img, text_state,	cv::Point(10, 20),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_x,	cv::Point(10, 60),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_y,	cv::Point(10, 80),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_z,	cv::Point(10, 100),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor1,	cv::Point(10, 120),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor2,	cv::Point(10, 140),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor3,	cv::Point(10, 160),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor4,	cv::Point(10, 180),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_ti,	cv::Point(10, 60),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_x,	cv::Point(10, 80),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_y,	cv::Point(10, 100),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_z,	cv::Point(10, 120),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_vz,      cv::Point(10, 140),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_thz,	cv::Point(10, 160),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_vthz,    cv::Point(10, 180),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_yawref,  cv::Point(10, 200),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_zref,    cv::Point(10, 220),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_uw,	cv::Point(10, 240),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_uz,      cv::Point(10, 260),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor1,	cv::Point(10, 280),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor2,	cv::Point(10, 300),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor3,	cv::Point(10, 320),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor4,	cv::Point(10, 340),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 }
 
 cv::Mat Draw_monitor(struct_monitor* monitor){
@@ -211,23 +237,30 @@ int main(int argc, char* argv[]){
 		while(obj_callback.go_on){
 			string msg_monitor = string(tcp_client_monitor.Receive());
 			size_t next;
-			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 11){
+			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 18){
 				vector <string> tokens;
-				for(size_t current = 0; tokens.size() < 11; current = next + 1){
+				for(size_t current = 0; tokens.size() < 18; current = next + 1){
 					next = msg_monitor.find_first_of("|", current);
 					tokens.push_back(msg_monitor.substr(current, next - current));
 				}
 				monitor.t		= stof(tokens[0]);
-				monitor.state		= stoi(tokens[1]);
-				monitor.unlocked	= (stof(tokens[2]) > 0);
-				monitor.x		= stof(tokens[3]) / 1000;
-				monitor.y		= stof(tokens[4]) / 1000;
-				monitor.z		= stof(tokens[5]) / 1000;
-				monitor.thz		= stof(tokens[6]) / 57.3;
-				monitor.motor1		= (int) stof(tokens[7]);
-				monitor.motor2		= (int) stof(tokens[8]);
-				monitor.motor3		= (int) stof(tokens[9]);
-				monitor.motor4		= (int) stof(tokens[10]);
+				monitor.ti		= stof(tokens[1]);
+				monitor.state		= stoi(tokens[2]);
+				monitor.unlocked	= (stof(tokens[3]) > 0);
+				monitor.x		= stof(tokens[4]) / 1000;
+				monitor.y		= stof(tokens[5]) / 1000;
+				monitor.z		= stof(tokens[6]);
+				monitor.vz		= stof(tokens[7]);
+				monitor.thz		= stof(tokens[8]) / 57.3;
+				monitor.vthz		= stof(tokens[9]);
+				monitor.yawref		= stof(tokens[10]);
+				monitor.zref		= stof(tokens[11]);
+				monitor.uw		= stof(tokens[12]);
+				monitor.uz		= stof(tokens[13]);
+				monitor.motor1		= (int) stof(tokens[14]);
+				monitor.motor2		= (int) stof(tokens[15]);
+				monitor.motor3		= (int) stof(tokens[16]);
+				monitor.motor4		= (int) stof(tokens[17]);
 			}
 			if(monitor.t > 5){cv::imshow(monitor_window, Draw_monitor(&monitor));}
 			cv::waitKey(10);

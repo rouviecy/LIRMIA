@@ -23,8 +23,9 @@ void Motors::IO(){
 
 void Motors::Job(){
 	Critical_receive();
-	int order_motor = min(abs((int) (255. * motor)), 255);
-	int order_bow = min(abs((int) (255. * bow_thruster)), 255);
+//	int order_motor = min(abs((int) (223. * motor)), 223);
+	int order_motor = min(abs((int) (250. * motor)), 250);
+	int order_bow = min(abs((int) (200. * bow_thruster)), 200);
 	int order_rudder = min(abs((int) (90. * rudder)), 90);
 	Generate_order_i2c(0, order_motor, motor > 0);
 	Generate_order_i2c(1, order_bow, bow_thruster < 0);

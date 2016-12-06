@@ -35,7 +35,7 @@ public:
 
 	void Lock();
 	void Unlock();
-	
+
 private:
 
 	char buf[SERIAL_BUFFER_LEN];

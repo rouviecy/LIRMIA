@@ -19,25 +19,25 @@ void Imu_razor::IO(){
 void Imu_razor::Job(){} // Do nothing : this object should only be called by subscriber
 
 void Imu_razor::Process_serial_data(void* object, char* input_msg){
-	Imu_razor* self = (Imu_razor*) object;
-	string msg_ypr = string(input_msg + 5 * sizeof(char));
-	if(count(msg_ypr.begin(), msg_ypr.end(), ',') == 2){
-		vector <string> tokens;
-		size_t next;
-		for(size_t current = 0; tokens.size() < 2; current = next + 1){
-			next = msg_ypr.find_first_of(",", current);
-			tokens.push_back(msg_ypr.substr(current, next - current));
-		}
-		tokens.push_back(msg_ypr.substr(next + 1, msg_ypr.size() - next - 1));
-		if(tokens[0].length() > 2 && tokens[1].length() > 2 && tokens[2].length() > 2){
-			for(int i = 0; i < 3; i++){(self->imu_thxyz)[i] = stof(tokens[i]);}
-			self->Critical_send();
-		}
-	}
+        Imu_razor* self = (Imu_razor*) object;
+        stringstream ss;
+        ss << input_msg;
+cout << "Received razor msg : " << input_msg << endl;
+        vector <string> tokens;
+        for(string token; getline(ss, token, ','); tokens.push_back(token)){}
+cout << "\tNb tokens : " << tokens.size() << endl;
+cout << "\tTokens : " << endl;
+for(size_t i=0; i < tokens.size(); i++){cout << "\t\t" << tokens[i] << endl;}
+        if(tokens.size() < 4 || tokens[1].length() < 3 || tokens[2].length() < 3 || tokens[3].length() < 3){return;}
+        self->imu_thxyz[0] = stof(tokens[1]);
+        self->imu_thxyz[1] = stof(tokens[2]);
+        self->imu_thxyz[2] = stof(tokens[3]);
+        self->Critical_send();
 }
 
 void Imu_razor::Subscribe(Subscriber* subscriber){
-	#if defined(ENABLE_IMU) and not defined(ENABLE_SERIAL_ARDUINO)
+	//#if defined(ENABLE_IMU) and not defined(ENABLE_SERIAL_ARDUINO)
+	#if defined(ENABLE_IMU) and not defined(ENABLE_SERIAL_RS232_IMU)
 		cout << "[Warning] You are trying to use IMU without serial enabled : IMU will be disabled" << endl;
 		return;
 	#endif

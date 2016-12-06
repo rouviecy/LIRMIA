@@ -11,7 +11,8 @@ Sayab::Sayab() : Maestro(){
 	Add_thread(&compass,		"Compass",			100000);	// 100 ms
 	Add_thread(&gps,		"GPS",				-1);		// subscriber callback
 	Add_thread(&internal_clock,	"Clock",			1000);		// 1 ms
-	Add_thread(&logger,		"Logger",			1000000);	// 1 s
+//	Add_thread(&logger,		"Logger",			1000000);	// 1 s
+	Add_thread(&logger,		"Logger",			10000);		// 10 ms
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
 	Add_thread(&remote_control,	"Remote control",		-1);		// manual loop
 	Add_thread(&remote_monitor,	"Remote monitor",		100000);	// 100 ms
@@ -24,6 +25,7 @@ Sayab::Sayab() : Maestro(){
 	Link_all();
 	remote_control.Set_blobs_obj(cameras.Get_blobs_obj());
 	Draw("coms_sayab");
+	FSMDraw();
 	usleep(1000000);
 	Launch_all();
 	remote_control.Job_and_wait_quit();

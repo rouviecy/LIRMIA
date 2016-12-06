@@ -5,6 +5,8 @@ using namespace std;
 Gps::Gps() : ComThread(){
 	gps_xy[0] = 0.;
 	gps_xy[1] = 0.;
+	gps_lat = 0.;
+	gps_lon = 0.;
 	first = true;
 }
 
@@ -14,6 +16,8 @@ void Gps::On_start(){}
 
 void Gps::IO(){
 	Link_output("gps_xy",	COMFLOAT, 2, gps_xy);
+	Link_output("gps_lat",	COMFLOAT, 1, &gps_lat);
+	Link_output("gps_lon",	COMFLOAT, 1, &gps_lon);
 }
 
 void Gps::Job(){} // Do nothing : this object should only be called by subscriber
@@ -21,7 +25,7 @@ void Gps::Job(){} // Do nothing : this object should only be called by subscribe
 void Gps::Process_serial_data(void* object, char* input_msg){
 	Gps* self = (Gps*) object;
 	string msg = string(input_msg);
-cout << msg << endl;
+//	cout << msg << endl;
 	if(msg.size() < 37){return;}
 	size_t next;
 	vector <string> tokens;
@@ -58,7 +62,12 @@ cout << msg << endl;
 		}
 		self->gps_xy[0] = x - self->offset_x;
 		self->gps_xy[1] = y - self->offset_y;
-		cout << self->gps_xy[0] << "\t" << self->gps_xy[1] << endl;
+		self->gps_lat = lat_float;
+		self->gps_lon = lon_float;
+//		self->gps_lat = 10;
+//		self->gps_lon = 10;
+		cout << self->gps_lat << "\t" << self->gps_lon << "\t" << self->gps_xy[0] << "\t" << self->gps_xy[1] << endl;
+//		cout << self->gps_xy[0] << "\t" << self->gps_xy[1] << endl;
 		self->Critical_send();
 	}
 	catch(std::exception const & e){}
