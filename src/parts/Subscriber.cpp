@@ -4,6 +4,7 @@ using namespace std;
 
 Subscriber::Subscriber() : ComThread(){
 	buffer_pos = 0;
+	serial = NULL;
 }
 
 Subscriber::~Subscriber(){}
@@ -21,6 +22,7 @@ void Subscriber::Subscribe(map <int, char> keys, void (*callback) (void*, char*)
 }
 
 void Subscriber::Job(){
+	if(serial == NULL){return;}
         char* msg = serial->Serial_read();
         while(*msg != 0 && buffer_pos < SUBSCRIBER_BUFFER_SIZE){
                 if(*msg != '\n'){
