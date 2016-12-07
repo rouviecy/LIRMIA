@@ -6,7 +6,7 @@ digraph links {
 		color=lightgrey;
 		node [style=filled,color=white];
 		2 [label = "fsm_state\nint"];
-		3 [label = "sub_is_underwater\nbool"];
+		3 [label = "xy_modem\nfloat[2]"];
 	}
 	subgraph cluster_4 {
 		label = "Autonomy - 20Hz";
@@ -25,223 +25,297 @@ digraph links {
 		14 [label = "remote_turn\nfloat"];
 		15 [label = "t\nfloat"];
 		16 [label = "thxyz\nfloat[3]"];
-		17 [label = "vthxyz\nfloat[3]"];
-		18 [label = "vxyz\nfloat[3]"];
-		19 [label = "xyz\nfloat[3]"];
-		20 [label = "motor\nfloat[4]"];
+		17 [label = "uw\nfloat"];
+		18 [label = "uz\nfloat"];
+		19 [label = "vthxyz\nfloat[3]"];
+		20 [label = "vxyz\nfloat[3]"];
+		21 [label = "xyz\nfloat[3]"];
+		22 [label = "yawref\nfloat"];
+		23 [label = "zref\nfloat"];
+		24 [label = "motor\nfloat[4]"];
+		25 [label = "ti\nfloat"];
 	}
-	subgraph cluster_21 {
+	subgraph cluster_26 {
 		label = "Cameras - 10Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		22 [label = "enable_streaming\nbool"];
-		23 [label = "cam_detect_horizontal\nfloat[2]"];
-		24 [label = "cam_detect_obj\nbool[2]"];
-		25 [label = "cam_detect_opi\nbool"];
-		26 [label = "cam_detect_pipe\nbool[2]"];
-		27 [label = "cam_detect_vertical\nfloat[2]"];
-		28 [label = "cam_opi_horizontal\nfloat"];
-		29 [label = "cam_opi_vertical\nfloat"];
-		30 [label = "cam_pipeline_angle\nfloat[2]"];
-		31 [label = "cam_pipeline_distance\nfloat[2]"];
-		32 [label = "cam_size_obj\nfloat[2]"];
+		27 [label = "enable_streaming\nbool"];
+		28 [label = "cam_detect_horizontal\nfloat[2]"];
+		29 [label = "cam_detect_obj\nbool[2]"];
+		30 [label = "cam_detect_opi\nbool"];
+		31 [label = "cam_detect_pipe\nbool[2]"];
+		32 [label = "cam_detect_vertical\nfloat[2]"];
+		33 [label = "cam_opi_horizontal\nfloat"];
+		34 [label = "cam_opi_vertical\nfloat"];
+		35 [label = "cam_pipeline_angle\nfloat[2]"];
+		36 [label = "cam_pipeline_distance\nfloat[2]"];
+		37 [label = "cam_size_obj\nfloat[2]"];
 	}
-	subgraph cluster_33 {
+	subgraph cluster_38 {
 		label = "Clock - 1000Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		34 [label = "t\nfloat"];
+		39 [label = "t\nfloat"];
 	}
-	subgraph cluster_35 {
+	subgraph cluster_40 {
 		label = "Echo sonder - 1Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		36 [label = "obst_xy\nfloat[2]"];
+		41 [label = "obst_xy\nfloat[2]"];
 	}
-	subgraph cluster_37 {
+	subgraph cluster_42 {
 		label = "Depth - 0Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		38 [label = "t\nfloat"];
-		39 [label = "depth\nfloat"];
+		43 [label = "t\nfloat"];
+		44 [label = "depth\nfloat"];
 	}
-	subgraph cluster_40 {
+	subgraph cluster_45 {
 		label = "IMU - 0Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		41 [label = "imu_thxyz\nfloat[3]"];
+		46 [label = "imu_thxyz\nfloat[3]"];
 	}
-	subgraph cluster_42 {
-		label = "Logger - 1Hz";
+	subgraph cluster_47 {
+		label = "Logger - 100Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		43 [label = "cam_detect_horizontal\nfloat[2]"];
-		44 [label = "cam_detect_vertical\nfloat[2]"];
-		45 [label = "cam_pipeline_angle\nfloat[2]"];
-		46 [label = "cam_pipeline_distance\nfloat[2]"];
-		47 [label = "fsm_state\nint"];
-		48 [label = "motor\nfloat[4]"];
-		49 [label = "t\nfloat"];
-		50 [label = "thxyz\nfloat[3]"];
-		51 [label = "vthxyz\nfloat[3]"];
-		52 [label = "vxyz\nfloat[3]"];
-		53 [label = "xyz\nfloat[3]"];
+		48 [label = "alfabw1\nfloat"];
+		49 [label = "alfabw2\nfloat"];
+		50 [label = "alfabz1\nfloat"];
+		51 [label = "alfabz2\nfloat"];
+		52 [label = "cam_detect_horizontal\nfloat[2]"];
+		53 [label = "cam_detect_vertical\nfloat[2]"];
+		54 [label = "cam_pipeline_angle\nfloat[2]"];
+		55 [label = "cam_pipeline_distance\nfloat[2]"];
+		56 [label = "ew1\nfloat"];
+		57 [label = "ew2\nfloat"];
+		58 [label = "ez1\nfloat"];
+		59 [label = "ez2\nfloat"];
+		60 [label = "fsm_state\nint"];
+		61 [label = "motor\nfloat[4]"];
+		62 [label = "t\nfloat"];
+		63 [label = "thxyz\nfloat[3]"];
+		64 [label = "uw\nfloat"];
+		65 [label = "uz\nfloat"];
+		66 [label = "vthxyz\nfloat[3]"];
+		67 [label = "vxyz\nfloat[3]"];
+		68 [label = "xyz\nfloat[3]"];
+		69 [label = "yawref\nfloat"];
+		70 [label = "zref\nfloat"];
 	}
-	subgraph cluster_54 {
+	subgraph cluster_71 {
 		label = "Mapping - 1Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		55 [label = "obst_xy\nfloat[2]"];
-		56 [label = "thxyz\nfloat[3]"];
-		57 [label = "xyz\nfloat[3]"];
+		72 [label = "obst_xy\nfloat[2]"];
+		73 [label = "thxyz\nfloat[3]"];
+		74 [label = "xyz\nfloat[3]"];
 	}
-	subgraph cluster_58 {
+	subgraph cluster_75 {
 		label = "Motors - 100Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		59 [label = "motor\nfloat[4]"];
+		76 [label = "motor\nfloat[4]"];
 	}
-	subgraph cluster_60 {
+	subgraph cluster_77 {
 		label = "Remote control - 0Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		61 [label = "enable_streaming\nbool"];
-		62 [label = "fsm_down\nbool"];
-		63 [label = "fsm_explore\nbool"];
-		64 [label = "fsm_nofollow\nbool"];
-		65 [label = "fsm_stabilize\nbool"];
-		66 [label = "fsm_unlocked\nbool"];
-		67 [label = "fsm_up\nbool"];
-		68 [label = "remote\nbool"];
-		69 [label = "remote_deeper\nfloat"];
-		70 [label = "remote_forward\nfloat"];
-		71 [label = "remote_turn\nfloat"];
+		78 [label = "enable_streaming\nbool"];
+		79 [label = "fsm_down\nbool"];
+		80 [label = "fsm_explore\nbool"];
+		81 [label = "fsm_law_control\nbool"];
+		82 [label = "fsm_nofollow\nbool"];
+		83 [label = "fsm_stabilize\nbool"];
+		84 [label = "fsm_unlocked\nbool"];
+		85 [label = "fsm_up\nbool"];
+		86 [label = "remote\nbool"];
+		87 [label = "remote_deeper\nfloat"];
+		88 [label = "remote_forward\nfloat"];
+		89 [label = "remote_turn\nfloat"];
 	}
-	subgraph cluster_72 {
+	subgraph cluster_90 {
 		label = "Remote monitor - 10Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		73 [label = "fsm_state\nint"];
-		74 [label = "fsm_unlocked\nbool"];
-		75 [label = "motor\nfloat[4]"];
-		76 [label = "t\nfloat"];
-		77 [label = "thxyz\nfloat[3]"];
-		78 [label = "xyz\nfloat[3]"];
+		91 [label = "fsm_state\nint"];
+		92 [label = "fsm_unlocked\nbool"];
+		93 [label = "motor\nfloat[4]"];
+		94 [label = "t\nfloat"];
+		95 [label = "thxyz\nfloat[3]"];
+		96 [label = "ti\nfloat"];
+		97 [label = "uw\nfloat"];
+		98 [label = "uz\nfloat"];
+		99 [label = "vthz\nfloat"];
+		100 [label = "vz\nfloat"];
+		101 [label = "xyz\nfloat[3]"];
+		102 [label = "yawref\nfloat"];
+		103 [label = "zref\nfloat"];
 	}
-	subgraph cluster_79 {
+	subgraph cluster_104 {
 		label = "Simulator - 200Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		80 [label = "motor\nfloat[4]"];
-		81 [label = "t\nfloat"];
-		82 [label = "simu_thxyz\nfloat[3]"];
-		83 [label = "simu_xyz\nfloat[3]"];
+		105 [label = "motor\nfloat[4]"];
+		106 [label = "t\nfloat"];
+		107 [label = "simu_thxyz\nfloat[3]"];
+		108 [label = "simu_xyz\nfloat[3]"];
 	}
-	subgraph cluster_84 {
+	subgraph cluster_109 {
 		label = "State - 50Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		85 [label = "depth\nfloat"];
-		86 [label = "imu_thxyz\nfloat[3]"];
-		87 [label = "simu_thxyz\nfloat[3]"];
-		88 [label = "simu_xyz\nfloat[3]"];
-		89 [label = "t\nfloat"];
-		90 [label = "thxyz\nfloat[3]"];
-		91 [label = "vthxyz\nfloat[3]"];
-		92 [label = "vxyz\nfloat[3]"];
-		93 [label = "xyz\nfloat[3]"];
+		110 [label = "depth\nfloat"];
+		111 [label = "imu_thxyz\nfloat[3]"];
+		112 [label = "simu_thxyz\nfloat[3]"];
+		113 [label = "simu_xyz\nfloat[3]"];
+		114 [label = "t\nfloat"];
+		115 [label = "ti\nfloat"];
+		116 [label = "alfabw1\nfloat"];
+		117 [label = "alfabw2\nfloat"];
+		118 [label = "alfabz1\nfloat"];
+		119 [label = "alfabz2\nfloat"];
+		120 [label = "ew1\nfloat"];
+		121 [label = "ew2\nfloat"];
+		122 [label = "ez1\nfloat"];
+		123 [label = "ez2\nfloat"];
+		124 [label = "thxyz\nfloat[3]"];
+		125 [label = "uw\nfloat"];
+		126 [label = "uwaux\nfloat"];
+		127 [label = "uz\nfloat"];
+		128 [label = "uzaux\nfloat"];
+		129 [label = "vthxyz\nfloat[3]"];
+		130 [label = "vthz\nfloat"];
+		131 [label = "vxyz\nfloat[3]"];
+		132 [label = "vz\nfloat"];
+		133 [label = "xyz\nfloat[3]"];
+		134 [label = "yawref\nfloat"];
+		135 [label = "zref\nfloat"];
 	}
-	subgraph cluster_94 {
+	subgraph cluster_136 {
 		label = "Finite state machine - 25Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
-		95 [label = "cam_detect_obj\nbool[2]"];
-		96 [label = "cam_detect_opi\nbool"];
-		97 [label = "cam_detect_pipe\nbool[2]"];
-		98 [label = "fsm_down\nbool"];
-		99 [label = "fsm_explore\nbool"];
-		100 [label = "fsm_nofollow\nbool"];
-		101 [label = "fsm_stabilize\nbool"];
-		102 [label = "fsm_unlocked\nbool"];
-		103 [label = "fsm_up\nbool"];
-		104 [label = "remote\nbool"];
-		105 [label = "xyz\nfloat[3]"];
-		106 [label = "fsm_state\nint"];
+		137 [label = "cam_detect_obj\nbool[2]"];
+		138 [label = "cam_detect_opi\nbool"];
+		139 [label = "cam_detect_pipe\nbool[2]"];
+		140 [label = "fsm_down\nbool"];
+		141 [label = "fsm_explore\nbool"];
+		142 [label = "fsm_law_control\nbool"];
+		143 [label = "fsm_nofollow\nbool"];
+		144 [label = "fsm_stabilize\nbool"];
+		145 [label = "fsm_unlocked\nbool"];
+		146 [label = "fsm_up\nbool"];
+		147 [label = "remote\nbool"];
+		148 [label = "xyz\nfloat[3]"];
+		149 [label = "fsm_state\nint"];
 	}
-	subgraph cluster_107 {
-		label = "Subscriber - 10Hz";
+	subgraph cluster_150 {
+		label = "subscriber - 10Hz";
 		style=filled;
 		color=lightgrey;
 		node [style=filled,color=white];
 	}
-	23->5 [minlen=5];
-	23->43 [minlen=5];
-	24->95 [minlen=5];
-	25->96 [minlen=5];
-	26->97 [minlen=5];
-	27->6 [minlen=5];
-	27->44 [minlen=5];
-	30->7 [minlen=5];
-	30->45 [minlen=5];
-	31->8 [minlen=5];
-	31->46 [minlen=5];
-	32->9 [minlen=5];
-	39->85 [minlen=5];
-	61->22 [minlen=5];
-	62->98 [minlen=5];
-	63->99 [minlen=5];
-	64->100 [minlen=5];
-	65->101 [minlen=5];
-	106->2 [minlen=5];
-	106->10 [minlen=5];
-	106->47 [minlen=5];
-	106->73 [minlen=5];
-	66->74 [minlen=5];
-	66->102 [minlen=5];
-	67->103 [minlen=5];
-	41->86 [minlen=5];
-	20->48 [minlen=5];
-	20->59 [minlen=5];
-	20->75 [minlen=5];
-	20->80 [minlen=5];
-	36->11 [minlen=5];
+	subgraph cluster_151 {
+		label = "Subscriber IMU - 10Hz";
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+	}
+	116->48 [minlen=5];
+	117->49 [minlen=5];
+	118->50 [minlen=5];
+	119->51 [minlen=5];
+	28->5 [minlen=5];
+	28->52 [minlen=5];
+	29->137 [minlen=5];
+	30->138 [minlen=5];
+	31->139 [minlen=5];
+	32->6 [minlen=5];
+	32->53 [minlen=5];
+	35->7 [minlen=5];
+	35->54 [minlen=5];
+	36->8 [minlen=5];
 	36->55 [minlen=5];
-	68->104 [minlen=5];
-	69->12 [minlen=5];
-	70->13 [minlen=5];
-	71->14 [minlen=5];
-	82->87 [minlen=5];
-	83->88 [minlen=5];
-	34->15 [minlen=5];
-	34->38 [minlen=5];
-	34->49 [minlen=5];
-	34->76 [minlen=5];
-	34->81 [minlen=5];
-	34->89 [minlen=5];
-	90->16 [minlen=5];
-	90->50 [minlen=5];
-	90->56 [minlen=5];
-	90->77 [minlen=5];
-	91->17 [minlen=5];
-	91->51 [minlen=5];
-	92->18 [minlen=5];
-	92->52 [minlen=5];
-	93->19 [minlen=5];
-	93->53 [minlen=5];
-	93->57 [minlen=5];
-	93->78 [minlen=5];
-	93->105 [minlen=5];
+	37->9 [minlen=5];
+	44->110 [minlen=5];
+	78->27 [minlen=5];
+	120->56 [minlen=5];
+	121->57 [minlen=5];
+	122->58 [minlen=5];
+	123->59 [minlen=5];
+	79->140 [minlen=5];
+	80->141 [minlen=5];
+	81->142 [minlen=5];
+	82->143 [minlen=5];
+	83->144 [minlen=5];
+	149->2 [minlen=5];
+	149->10 [minlen=5];
+	149->60 [minlen=5];
+	149->91 [minlen=5];
+	84->92 [minlen=5];
+	84->145 [minlen=5];
+	85->146 [minlen=5];
+	46->111 [minlen=5];
+	24->61 [minlen=5];
+	24->76 [minlen=5];
+	24->93 [minlen=5];
+	24->105 [minlen=5];
+	41->11 [minlen=5];
+	41->72 [minlen=5];
+	86->147 [minlen=5];
+	87->12 [minlen=5];
+	88->13 [minlen=5];
+	89->14 [minlen=5];
+	107->112 [minlen=5];
+	108->113 [minlen=5];
+	39->15 [minlen=5];
+	39->43 [minlen=5];
+	39->62 [minlen=5];
+	39->94 [minlen=5];
+	39->106 [minlen=5];
+	39->114 [minlen=5];
+	124->16 [minlen=5];
+	124->63 [minlen=5];
+	124->73 [minlen=5];
+	124->95 [minlen=5];
+	25->96 [minlen=5];
+	25->115 [minlen=5];
+	125->17 [minlen=5];
+	125->64 [minlen=5];
+	125->97 [minlen=5];
+	127->18 [minlen=5];
+	127->65 [minlen=5];
+	127->98 [minlen=5];
+	129->19 [minlen=5];
+	129->66 [minlen=5];
+	130->99 [minlen=5];
+	131->20 [minlen=5];
+	131->67 [minlen=5];
+	132->100 [minlen=5];
+	133->21 [minlen=5];
+	133->68 [minlen=5];
+	133->74 [minlen=5];
+	133->101 [minlen=5];
+	133->148 [minlen=5];
+	134->22 [minlen=5];
+	134->69 [minlen=5];
+	134->102 [minlen=5];
+	135->23 [minlen=5];
+	135->70 [minlen=5];
+	135->103 [minlen=5];
 }

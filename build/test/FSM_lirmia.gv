@@ -7,6 +7,7 @@ digraph links {
 	follow_pipe_cam1;
 	follow_pipe_cam2;
 	follow_wall;
+	law_control;
 	remote;
 	stay;
 	up;
@@ -32,9 +33,12 @@ digraph links {
 	follow_pipe_cam2->explore [label = "go_to_remote\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	follow_wall->explore [label = "stop_follow\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	follow_wall->explore [label = "go_to_remote\nfsm_unlocked\nupdate_fsm"] [minlen=4]
+	law_control->stay [label = "go_to_autonomous\nfsm_unlocked\nupdate_fsm"] [minlen=4]
+	law_control->stay [label = "go_to_remote\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	remote->stay [label = "go_to_autonomous\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	stay->down [label = "go_down\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	stay->up [label = "go_up\nfsm_unlocked\nupdate_fsm"] [minlen=4]
+	stay->law_control [label = "go_to_law_control\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	stay->explore [label = "begin_explore\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	stay->remote [label = "go_to_remote\nfsm_unlocked\nupdate_fsm"] [minlen=4]
 	up->stay [label = "go_to_autonomous\nfsm_unlocked\nupdate_fsm"] [minlen=4]

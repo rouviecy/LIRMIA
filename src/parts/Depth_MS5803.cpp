@@ -24,6 +24,7 @@ void Depth_MS5803::Process_serial_data(void* object, char* input_msg){
 		vector <string> tokens;
 		size_t next = msg_ypr.find_first_of("$", 0);
 		string msg_depth = msg_ypr.substr(0, next);
+		cout << "\tdepth: " << msg_depth << endl;
 		try{
 			self->depth = stof(msg_depth);
 			self->Critical_send();
