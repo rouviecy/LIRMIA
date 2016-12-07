@@ -13,15 +13,6 @@ void Subscriber::On_start(){}
 void Subscriber::IO(){}
 
 void Subscriber::Subscribe(map <int, char> keys, void (*callback) (void*, char*), void* obj){
-	#ifndef ENABLE_SERIAL_ARDUINO
-		cout << "[Error] Serial needs to be enabled to use Subscriber" << endl;
-		return;
-	#endif
-	//#ifndef ENABLE_SERIAL_RS232_IMU
-        //        cout << "[Error] Serial needs to be enabled to use Subscriber" << endl;
-        //        return;
-        //#endif
-
 	subscription new_subscription;
 	new_subscription.keys = keys;
 	new_subscription.callback = callback;
@@ -30,12 +21,6 @@ void Subscriber::Subscribe(map <int, char> keys, void (*callback) (void*, char*)
 }
 
 void Subscriber::Job(){
-	#ifndef ENABLE_SERIAL_ARDUINO
-                return;
-        #endif
-        //#ifndef ENABLE_SERIAL_RS232_IMU
-        //        return;
-        //#endif
         char* msg = serial->Serial_read();
         while(*msg != 0 && buffer_pos < SUBSCRIBER_BUFFER_SIZE){
                 if(*msg != '\n'){
