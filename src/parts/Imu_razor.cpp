@@ -20,18 +20,18 @@ void Imu_razor::Job(){} // Do nothing : this object should only be called by sub
 
 void Imu_razor::Process_serial_data(void* object, char* input_msg){
         Imu_razor* self = (Imu_razor*) object;
-        stringstream ss;
-        ss << input_msg << ",";
 cout << "Received razor msg : " << input_msg << endl;
+        stringstream ss;
+        ss << string(input_msg).substr(5) << ",";
         vector <string> tokens;
         for(string token; getline(ss, token, ','); tokens.push_back(token)){}
 cout << "\tNb tokens : " << tokens.size() << endl;
 cout << "\tTokens : " << endl;
 for(size_t i=0; i < tokens.size(); i++){cout << "\t\t" << tokens[i] << endl;}
-        if(tokens.size() < 4 || tokens[1].length() < 3 || tokens[2].length() < 3 || tokens[3].length() < 3){return;}
-        self->imu_thxyz[0] = stof(tokens[1]);
-        self->imu_thxyz[1] = stof(tokens[2]);
-        self->imu_thxyz[2] = stof(tokens[3]);
+        if(tokens.size() < 3 || tokens[0].length() < 3 || tokens[1].length() < 3 || tokens[2].length() < 3){return;}
+        self->imu_thxyz[0] = stof(tokens[0]);
+        self->imu_thxyz[1] = stof(tokens[1]);
+        self->imu_thxyz[2] = stof(tokens[2]);
         self->Critical_send();
 }
 
