@@ -20,7 +20,7 @@ void Imu_razor::Job(){} // Do nothing : this object should only be called by sub
 
 void Imu_razor::Process_serial_data(void* object, char* input_msg){
         Imu_razor* self = (Imu_razor*) object;
-cout << "Received razor msg : " << input_msg << endl;
+//cout << "Received razor msg : " << input_msg << endl;
         stringstream ss;
         ss << string(input_msg).substr(5) << ",";
         vector <string> tokens;
