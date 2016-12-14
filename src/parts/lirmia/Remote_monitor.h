@@ -38,6 +38,7 @@ private:
 	float vz;
 	float vthz;
 	float yawref;
+	float thzd[2];
 	float zref;
 	float uw;
 	float uwaux;

@@ -91,7 +91,7 @@ void Lirmia::Init_serial(){
 		echosonder.Set_serial_y(&serial_rs232_echo_y);
 	#endif
 	#ifdef ENABLE_SERIAL_RS232_IMU
-		serial_imu.Serial_init(DEV_SERIAL_RS232_IMU, B57600, true);
+		serial_imu.Serial_init(DEV_SERIAL_RS232_IMU, B9600, true);
 		subscriber2.Set_serial(&serial_imu);
 		imu.Subscribe(&subscriber2);
 	#endif

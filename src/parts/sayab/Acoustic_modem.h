@@ -48,6 +48,7 @@ private:
 	int fsm_state;
 	float t;
 	float xyz[3];
+	float thz;
 //	float msgmod[4];
 
 	// Acoustic communication

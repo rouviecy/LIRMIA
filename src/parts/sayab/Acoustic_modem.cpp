@@ -21,6 +21,7 @@ void Acoustic_modem::IO(){
 	Link_input("fsm_state",			COMINT,		1, &fsm_state);
 	Link_input("t",				COMFLOAT,	1, &t);
 	Link_input("xyz",			COMFLOAT,	3, &xyz);
+	Link_input("thz",			COMFLOAT,	1, &thz);
 
 	Link_output("sub_is_underwater",	COMBOOL,	1, &sub_is_underwater);
 //	Link_output("msgmod",			COMFLOAT,	4, &msgmod);
@@ -34,17 +35,18 @@ void Acoustic_modem::Job(){
 			input_flow.pop();
 			mu.unlock();
 		}
-		if(fsm_state == FOLLOW_CAM_SUB){
-			if(t - last_gps_sent > 5.){
-				last_gps_sent = t;
-				char msg[4];
-				msg[0] = Generate_header(1, 0, 0);
-				long coordinates = long(xyz[0]) << 12 + long(xyz[1]);
-				msg[1] = (char) (coordinates >> 16);
-				msg[2] = (char) (coordinates >> 8);
-				msg[3] = (char) coordinates;
-				Send_acoustic_msg(string(msg));
-			}
+//		if(fsm_state == FOLLOW_CAM_SUB){
+//			if(t - last_gps_sent > 5.){
+//				last_gps_sent = t;
+//				char msg[4];
+//				msg[0] = Generate_header(1, 0, 0);
+//				long coordinates = long(xyz[0]) << 12 + long(xyz[1]);
+//				msg[1] = (char) (coordinates >> 16);
+//				msg[2] = (char) (coordinates >> 8);
+//				msg[3] = (char) coordinates;
+//				Send_acoustic_msg(string(msg));
+//			}
+//		}
 //		else if(fsm_state == LAW_CONTROL){
 //				char msg[4];
 //				msg[0] = 'r';
@@ -52,7 +54,15 @@ void Acoustic_modem::Job(){
 //				msg[2] = 'g';
 //				msg[3] = '\n';
 //				Send_acoustic_msg(string(msg));
-//			}
+//		}
+		if(fsm_state == LAW_CONTROL){
+				char msg[4];
+				msg[0] = Generate_header(1, 0, 0);
+				long yaw  = long (thz) << 12 + long (thz);
+				msg[1] = (char) (yaw >> 16);
+				msg[2] = (char) (yaw >> 12);
+				msg[3] = (char) yaw;
+				Send_acoustic_msg(string(msg));
 		}
 	#endif
 	Critical_send();

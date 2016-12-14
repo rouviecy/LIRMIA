@@ -30,7 +30,7 @@ private:
 	float imu_thxyz[3];
 	float simu_xyz[3];
 	float simu_thxyz[3];
-	float yawmod;
+	float thzm[2];
 
 	float xyz[3];
 	float vxyz[3];
@@ -38,6 +38,7 @@ private:
 	float vthxyz[3];
 	float vz;
 	float vthz;
+	float thzd[2];
 
 	void On_start();
 	void Job();

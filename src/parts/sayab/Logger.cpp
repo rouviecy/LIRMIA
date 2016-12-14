@@ -61,7 +61,7 @@ void Logger::Job(){
 			<< ey1		<< "\t" << ey2		<< "\t" << alfab1		<< "\t"
 			<< alfab2	<< "\t" << gps_xy[0]	<< "\t" << gps_xy[1] 		<< "\t"
 			<< gps_lat*10000<< "\t"	<< gps_lon*10000<< "\t";
-	log_file << new_l << State_machine::Decode_state_str(fsm_state) ine.str() << "\n";
+	log_file << new_line.str() << State_machine::Decode_state_str(fsm_state) << "\n";
 	if(t - last_t_save > 10){
 		log_file.flush();
 		last_t_save = t;
