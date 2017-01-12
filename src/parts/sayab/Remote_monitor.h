@@ -46,7 +46,7 @@ private:
 //	float msg_parse;
 
 	int fsm_state;
-	float fsm_unlocked;
+	bool fsm_unlocked;
 
 };
 

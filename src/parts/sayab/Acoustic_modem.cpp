@@ -63,6 +63,7 @@ void Acoustic_modem::Job(){
 				msg[2] = (char) (yaw >> 12);
 				msg[3] = (char) yaw;
 				Send_acoustic_msg(string(msg));
+		cout << "modem msg : " << msg[0] << " " << msg [1] << " " << msg[2] << " " << msg[3];
 		}
 	#endif
 	Critical_send();
