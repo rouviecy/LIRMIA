@@ -7,6 +7,7 @@ State::State() : ComThread(){
 	xyz[0] = 0.; vxyz[0] = 0.; thxyz[0] = 0.; vthxyz[0] = 0.; last_thxyz[0] = 0.;
 	xyz[1] = 0.; vxyz[1] = 0.; thxyz[1] = 0.; vthxyz[1] = 0.; last_thxyz[1] = 0.;
 	xyz[2] = 0.; vxyz[2] = 0.; thxyz[2] = 0.; vthxyz[2] = 0.; last_thxyz[2] = 0.; vz = 0.; vthz = 0.;
+	thzd[0] = 0.; thzd[1] = 0.;
 	Iz= 1;
 	xm = 0.; xk = 0.; xk_1 = 0.; vk = 0.; vk_1 = 0.; rk = 0.; az = 0.09; bz = 0.3; dtz = 0.08;
 	xmz=0.; xkz=0.; xkz_1=0.; vkz=0.; vkz_1=0.; rkz=0.; azz=0.09; bzz=0.3; dtzz=0.08;
@@ -48,6 +49,7 @@ void State::IO(){
 	Link_output("alfabz2",		COMFLOAT, 1, &alfabz2);
 	Link_output("vthz",		COMFLOAT, 1, &vthz);
 	Link_output("vz",		COMFLOAT, 1, &vz);
+	Link_output("thzd",		COMFLOAT, 2, thzd);
 }
 
 void State::Job(){
@@ -76,6 +78,7 @@ void State::Job(){
 //	}
 
 // ALPHA BETA FILTER
+//cout << "yaw =" << thxyz[2] << endl;
 	xm = thxyz[2];
         xk = xk_1 + (vk_1*dtz);
         vk = vk_1;
@@ -85,6 +88,7 @@ void State::Job(){
         xk_1 = xk;
         vk_1 = 0.5 * vk;
         vthxyz[2] = vk_1;
+	vthz = vthxyz[2];
 
 	xmz = xyz[2];
         xkz = xkz_1 + (vkz_1*dtzz);
@@ -95,6 +99,7 @@ void State::Job(){
         xkz_1 = xkz;
         vkz_1 = 0.5 * vkz;
         vxyz[2] = vkz_1;
+	vz = vxyz[2];
 
 //REFERENCES
 	tim=t-ti;

@@ -35,6 +35,7 @@ private:
 	float vxyz[3];
 	float thxyz[3];
 	float vthxyz[3];
+	float thzd[2];
 	float yawref;
 	float uw;
 	float zref;

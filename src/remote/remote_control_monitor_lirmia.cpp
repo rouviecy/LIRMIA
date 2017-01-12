@@ -261,7 +261,7 @@ int main(int argc, char* argv[]){
 				monitor.vthz		= stof(tokens[9]);
 				monitor.yawref		= stof(tokens[10]);
 				monitor.thzd		= stof(tokens[11]);
-				monitor.thz		= stof(tokens[12]);
+				monitor.thzd1		= stof(tokens[12]);
 				monitor.zref		= stof(tokens[13]);
 				monitor.uw		= stof(tokens[14]);
 				monitor.uz		= stof(tokens[15]);

@@ -22,6 +22,7 @@ void Autonomy::IO(){
 	Link_input("vxyz",			COMFLOAT,	3, vxyz);
 	Link_input("thxyz",			COMFLOAT,	3, thxyz);
 	Link_input("vthxyz",			COMFLOAT,	3, vthxyz);
+	Link_input("thzd",			COMFLOAT,	2, thzd);
 	Link_input("yawref",			COMFLOAT,	1, &yawref);
 	Link_input("uw",			COMFLOAT,	1, &uw);
 	Link_input("zref",			COMFLOAT,	1, &zref);
@@ -123,21 +124,21 @@ cout << "OBSTACLE X" << endl;
 if(obst_xy[1] > 0.25 && obst_xy[1] < 1.){
 cout << "OBSTACLE Y" << endl;
 }
-		keep_thz = thxyz[3];
+		keep_thz = thxyz[2];
 		motor[0] = remote_forward / 2 + remote_turn / 2;
 		motor[1] = remote_forward / 2 - remote_turn / 2;
 		motor[2] = -remote_deeper / 2;
 		motor[3] = -remote_deeper / 2;
 	}
 	else if(fsm_state == EXPLORE){
-		keep_thz = thxyz[3];
+		keep_thz = thzd[2];
 		motor[0] = 0.;
 		motor[1] = 0.;
 		motor[2] = 0.;
 		motor[3] = 0.;
 	}
 	else if(fsm_state == STAY){ // TODO : check
-		float diff_thz = keep_thz - thxyz[3];
+		float diff_thz = keep_thz - thxyz[2];
 		if(diff_thz < -360){diff_thz += 360;}
 		if(diff_thz > +360){diff_thz -= 360;}
 		if(diff_thz < -180){diff_thz += 360;}
