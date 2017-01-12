@@ -25,6 +25,9 @@ void Imu_razor::Process_serial_data(void* object, char* input_msg){
         ss << string(input_msg).substr(5) << ",";
         vector <string> tokens;
         for(string token; getline(ss, token, ','); tokens.push_back(token)){}
+//cout << "\tNb tokens : " << tokens.size() << endl;
+//cout << "\tTokens : " << endl;
+//for(size_t i=0; i<tokens.size(); i++){cout << "\t\t" << tokens[i] << endl;}
         if(tokens.size() < 3 || tokens[0].length() < 3 || tokens[1].length() < 3 || tokens[2].length() < 3){return;}
 	try{
 		self->imu_thxyz[0] = stof(tokens[0]);
@@ -33,7 +36,7 @@ void Imu_razor::Process_serial_data(void* object, char* input_msg){
 		self->Critical_send();
 	}
 	catch(const std::invalid_argument &e){
-		cout << "Wrong razor msg : " << input_msg << endl << "\t" << e.what() << endl;
+//		cout << "Wrong razor msg : " << input_msg << endl << "\t" << e.what() << endl;
 	}
 }
 

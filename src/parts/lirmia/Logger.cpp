@@ -14,7 +14,7 @@ Logger::Logger() : ComThread(){
 			<< setfill('0') << setw(2) << now->tm_min << ":"
 			<< setfill('0') << setw(2) << now->tm_sec << "--LIRMIA.log";
 	log_file.open(log_name.str());
-	string header = "t\tstate\tyaw\tvyaw\tyawref\tuw\tz\tvz\tzref\tuz\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tew1\tew2\talfabw1\talfabw2\tez1\tez2\talfabz1\talfabz2";
+	string header = "t\tstate\tyaw\tvyaw\tyawref\tuw\tz\tvz\tzref\tuz\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tew1\tew2\talfabw1\talfabw2\tez1\tez2\talfabz1\talfabz2\tthzd0\tthzd1";
 	log_file << header << "\n";
 	last_t_save = -1.;
 }
@@ -51,6 +51,7 @@ void Logger::IO(){
 	Link_input("ez2",			COMFLOAT,	1, &ez2);
 	Link_input("alfabz1",			COMFLOAT,	1, &alfabz1);
 	Link_input("alfabz2",			COMFLOAT,	1, &alfabz2);
+	Link_input("thzd",			COMFLOAT,	2, thzd);
 }
 
 void Logger::Job(){
@@ -68,7 +69,8 @@ void Logger::Job(){
 			<< cam_pipeline_angle[0]<< "\t"	<< cam_pipeline_angle[1]<< "\t"	<< cam_pipeline_distance[0]<< "\t"<< cam_pipeline_distance[1]<< "\t"
 			<< cam_detect_horizontal[0]<< "\t"<< cam_detect_horizontal[1]<< "\t"<< cam_detect_vertical[0]<< "\t"<< cam_detect_vertical[1]<< "\t"
 			<< ew1		<< "\t" <<	ew2		<< "\t" <<	alfabw1	<< "\t"	<<	alfabw2	<< "\t"
-			<< ez1		<< "\t"	<<	ez2		<< "\t"	<<	alfabz1	<< "\t"	<<	alfabz2	<< "\t";
+			<< ez1		<< "\t"	<<	ez2		<< "\t"	<<	alfabz1	<< "\t"	<<	alfabz2	<< "\t"
+			<< thzd[0]	<< "\t" << 	thzd[1] 	<< "\t";
 	log_file << new_line.str() << "\n";
 	if(t - last_t_save > 5){
 		log_file.flush();

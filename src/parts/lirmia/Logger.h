@@ -54,6 +54,7 @@ private:
 	float ez2;
 	float alfabz1;
 	float alfabz2;
+	float thzd[2];
 
 
 	std::ofstream log_file;
