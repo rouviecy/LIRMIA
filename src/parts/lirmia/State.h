@@ -44,6 +44,7 @@ private:
 	void Job();
 	void IO();
 
+
 	float last_t;
 	float last_thxyz[3];
 
@@ -51,23 +52,36 @@ private:
 	float xk_1,vk_1;
 	float az,bz,dtz;
 
-	float yawref,yawrefp;
-	float ew1,ew2;
-	float alfabw1,alfabw2;
-	float Iz;
-	float uw;
-	float uwaux;
-
 	float xmz,xkz,vkz,rkz;
-	float xkz_1,vkz_1;
-	float azz,bzz,dtzz;
+        float xkz_1,vkz_1;
+        float azz,bzz,dtzz;
 
 	float x1,x2,y1,y2,m,y;
-	float zref,zrefp;
+
+	float yawref,yawrefp;
+	float zref, zrefp;
+	float ew, ewp, ewb;
+	float ez, ezp, ezb;
+
+	float uw, uz;
+
+	float uzpdc, kpcz, kdcz, gcz;
+
+	float alfabw1,alfabw2;
+	float Iz;
+	float uwb;
 	float ez1,ez2;
 	float alfabz1,alfabz2;
-	float uz;
-	float uzaux;
+	float uzb;
+
+	float dpw, bpw, mupw;
+	float ddw, bdw, mudw;
+	float kpw, kdw;
+	float uwpds;
+	float dpz, bpz, mupz;
+	float ddz, bdz, mudz;
+	float kpz, kdz;
+	float uzpds;
 
 };
 

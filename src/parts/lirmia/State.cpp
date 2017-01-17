@@ -8,12 +8,16 @@ State::State() : ComThread(){
 	xyz[1] = 0.; vxyz[1] = 0.; thxyz[1] = 0.; vthxyz[1] = 0.; last_thxyz[1] = 0.;
 	xyz[2] = 0.; vxyz[2] = 0.; thxyz[2] = 0.; vthxyz[2] = 0.; last_thxyz[2] = 0.; vz = 0.; vthz = 0.;
 	thzd[0] = 0.; thzd[1] = 0.;
-	Iz= 1;
 	xm = 0.; xk = 0.; xk_1 = 0.; vk = 0.; vk_1 = 0.; rk = 0.; az = 0.09; bz = 0.3; dtz = 0.08;
 	xmz=0.; xkz=0.; xkz_1=0.; vkz=0.; vkz_1=0.; rkz=0.; azz=0.09; bzz=0.3; dtzz=0.08;
-	yawref = 0.; yawrefp = 0.; uw = 0.; uwaux = 0.; ew1 = 0.; ew2 = 0.; alfabw1 = 1; alfabw2 = 1;
-	zref = 0.; zrefp = 0.; uz = 0.; uzaux = 0.; ez1 = 0.; ez2 = 0.; alfabz1 = 1; alfabz2 = 1;
 	x1=0.; x2=0.; y1=0.; y2=0.; m=0.; y=0.;
+	yawref = 0.; yawrefp = 0.; zref = 0.; zrefp = 0.;
+	ew = 0.; ewp = 0.; ez = 0.; ezp = 0.; ewb = 0.; ezb = 0.;
+	uzpdc = 0.; kpcz = 0.65; kdcz = 0.01; gcz = 30;
+	uw = 0.; alfabw1 = 0.1; alfabw2 = 0.01;
+	uz = 0.; alfabz1 = 1; alfabz2 = 1; Iz = 1;
+	uwpds = 0.; kpw = 0.; dpw = 5; bpw = 0.65; mupw = 1; kdw = 0.; ddw = 20; bdw = 0; mudw = 1;
+	uzpds = 0.; kpz = 0.; dpz = 5; bpz = 0.65; mupz = 1; kdz = 0.; ddz = 20; bdz = 0; mudz = 1;
 }
 
 State::~State(){}
@@ -29,27 +33,50 @@ void State::IO(){
 	Link_input("simu_thxyz",	COMFLOAT, 3, simu_thxyz);
 	Link_input("thzm",		COMFLOAT, 2, thzm);
 
+
 	Link_output("xyz",		COMFLOAT, 3, xyz);
 	Link_output("vxyz",		COMFLOAT, 3, vxyz);
 	Link_output("thxyz",		COMFLOAT, 3, thxyz);
 	Link_output("vthxyz",		COMFLOAT, 3, vthxyz);
 	Link_output("yawref",		COMFLOAT, 1, &yawref);
 	Link_output("zref",		COMFLOAT, 1, &zref);
-	Link_output("ew1",		COMFLOAT, 1, &ew1);
-	Link_output("ew2",		COMFLOAT, 1, &ew2);
+	Link_output("vthz",             COMFLOAT, 1, &vthz);
+        Link_output("vz",               COMFLOAT, 1, &vz);
+        Link_output("thzd",             COMFLOAT, 2, thzd);
+
 	Link_output("uw",		COMFLOAT, 1, &uw);
-	Link_output("uwaux",		COMFLOAT, 1, &uwaux);
+	Link_output("uz",		COMFLOAT, 1, &uz);
+	Link_output("uzpdc",		COMFLOAT, 1, &uzpdc);
+	Link_output("uwb",		COMFLOAT, 1, &uwb);
+	Link_output("uzb",		COMFLOAT, 1, &uzb);
+	Link_output("uwpds",		COMFLOAT, 1, &uwpds);
+	Link_output("uzpds",		COMFLOAT, 1, &uzpds);
+	Link_output("kpcz",		COMFLOAT, 1, &kpcz);
+	Link_output("kdcz",		COMFLOAT, 1, &kdcz);
+
 	Link_output("alfabw1",		COMFLOAT, 1, &alfabw1);
 	Link_output("alfabw2",		COMFLOAT, 1, &alfabw2);
-	Link_output("ez1",		COMFLOAT, 1, &ez1);
-	Link_output("ez2",		COMFLOAT, 1, &ez2);
-	Link_output("uz",		COMFLOAT, 1, &uz);
-	Link_output("uzaux", 		COMFLOAT, 1, &uzaux);
-	Link_output("alfabz1",		COMFLOAT, 1, &alfabz1);
-	Link_output("alfabz2",		COMFLOAT, 1, &alfabz2);
-	Link_output("vthz",		COMFLOAT, 1, &vthz);
-	Link_output("vz",		COMFLOAT, 1, &vz);
-	Link_output("thzd",		COMFLOAT, 2, thzd);
+	Link_output("alfabz1",          COMFLOAT, 1, &alfabz1);
+        Link_output("alfabz2",          COMFLOAT, 1, &alfabz2);
+	Link_output("kpw",		COMFLOAT, 1, &kpw);
+	Link_output("kpz",		COMFLOAT, 1, &kpz);
+	Link_output("kdw",		COMFLOAT, 1, &kdw);
+	Link_output("kdz",		COMFLOAT, 1, &kdz);
+	Link_output("dpw",		COMFLOAT, 1, &dpw);
+	Link_output("dpz", 		COMFLOAT, 1, &dpz);
+	Link_output("bpw",		COMFLOAT, 1, &bpw);
+	Link_output("bpz",		COMFLOAT, 1, &bpz);
+	Link_output("mupw",		COMFLOAT, 1, &mupw);
+	Link_output("mupz",		COMFLOAT, 1, &mupz);
+	Link_output("ddw",             	COMFLOAT, 1, &ddw);
+        Link_output("ddz",              COMFLOAT, 1, &ddz);
+        Link_output("bdw",             	COMFLOAT, 1, &bdw);
+	Link_output("bdz",		COMFLOAT, 1, &bdz);
+	Link_output("mudw",		COMFLOAT, 1, &mudw);
+	Link_output("mudz",		COMFLOAT, 1, &mudz);
+
+	Link_output("Iz",		COMFLOAT, 1, &Iz);
+	Link_output("gcz",		COMFLOAT, 1, &gcz);
 }
 
 void State::Job(){
@@ -124,15 +151,41 @@ void State::Job(){
 	zrefp = 0;
 
 //CONTROL LAWS
-	ew1 = yawref - thxyz[2];
-	ew2 = vthxyz[2] - alfabw1*ew1 + yawrefp;
-	uw  = Iz*(-ew1 + alfabw1*(ew2 + alfabw1*ew1) + alfabw2*ew2);
-	uwaux = uw*0.005;
 
-	ez1 = zref - xyz[2];
-	ez2 = vxyz[2] - alfabz1*ez1 + zrefp;
-	uz  = Iz*(-ez1 + alfabz1*(ez2 + alfabz1*ez1) + alfabz2*ez2);
-	uzaux = uz*0.005;
+//PD controller with gravity/buoyancy compensation
+	ez = zref - xyz[2];
+	ezp = vxyz[2];
+	uzpdc = kpcz * ez + kdcz * ezp + gcz;
+
+//Backstepping
+	ew = yawref - thxyz[2];
+	ewb = vthxyz[2] - alfabw1*ew + yawrefp;
+	uwb  = Iz*(-ew + alfabw1*(ewb + alfabw1*ew) + alfabw2*ewb);
+
+	ezb = vxyz[2] - alfabz1*ez + zrefp;
+	uzb  = Iz*(-ez + alfabz1*(ezb + alfabz1*ezb) + alfabz2*ezb);
+
+//Nonliner PD based on saturation functions
+	ewp = vthxyz[2];
+	if(fabs(ew) > dpw) {kpw = bpw * pow(fabs(ew),(mupw - 1));}
+	else		  {kpw = bpw * pow(dpw,(mupw - 1));}
+	if(fabs(ewp) > ddw){kdw = bdw * pow(fabs(ewp),(mudw - 1));}
+	else		  {kdw = bdw * pow(dpw,(mudw - 1));}
+	uwpds = kpw * ew + kdw * ewp;
+
+
+	if(fabs(ez) > dpz) {kpz = bpz * pow(fabs(ez),(mupz - 1));}
+        else		  {kpz = bpz * pow(dpz,(mupz - 1));}
+        if(fabs(ezp) > ddz){kdz = bdz * pow(fabs(ezp),(mudz - 1));}
+        else		  {kdz = bdz * pow(dpz,(mudz - 1));}
+        uzpds = kpz * ez + kdz * ezp;
+
+//Active Control 
+	uw = uwb;
+//	uw = uwpds;
+	uz = uzpdc;
+//	uz = uzb;
+//	uz = uzpds;
 
 	Critical_send();
 }

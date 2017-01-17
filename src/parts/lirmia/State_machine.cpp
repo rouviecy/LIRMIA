@@ -161,7 +161,7 @@ string State_machine::Decode_state_str(int int_state){
 		case FOLLOW_PIPE_CAM2:	return "follow pipeline camera 2";
 		case FOLLOW_WALL:	return "following wall          ";
 		case UP:		return "going up                ";
-		case LAW_CONTROL:	return "law control		";
+		case LAW_CONTROL:	return "law control             ";
 		case REMOTE:		return "remote control          ";
 		default :		return "unknown ???             ";
 	}

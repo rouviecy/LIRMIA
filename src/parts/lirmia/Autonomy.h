@@ -37,9 +37,8 @@ private:
 	float vthxyz[3];
 	float thzd[2];
 	float yawref;
-	float uw;
 	float zref;
-	float uz;
+	float uw, uz;
 	float obst_xy[2];
 	float cam_size_obj[2];
 	float cam_detect_horizontal[2];

@@ -38,23 +38,22 @@ private:
 	float thxyz[3];
 	float vthxyz[3];
 	float yawref;
-	float uw;
 	float zref;
-	float uz;
+	float vthz, vz;
+	float thzd[2];
+	float uzpdc, uw, uz, uwpds, uzpds;
+	float kpcz, kdcz, kpw, kpz, kdw, kdz;
 	float motor[4];
 	float cam_pipeline_angle[2];
 	float cam_pipeline_distance[2];
 	float cam_detect_horizontal[2];
 	float cam_detect_vertical[2];
-	float ew1;
-	float ew2;
 	float alfabw1;
 	float alfabw2;
-	float ez1;
-	float ez2;
 	float alfabz1;
 	float alfabz2;
-	float thzd[2];
+	float dpw, dpz, bpw, bpz, mupw, mupz, ddw, ddz, bdw, bdz, mudw, mudz;
+	float Iz, gcz;
 
 
 	std::ofstream log_file;

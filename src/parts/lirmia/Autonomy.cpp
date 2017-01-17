@@ -24,8 +24,8 @@ void Autonomy::IO(){
 	Link_input("vthxyz",			COMFLOAT,	3, vthxyz);
 	Link_input("thzd",			COMFLOAT,	2, thzd);
 	Link_input("yawref",			COMFLOAT,	1, &yawref);
-	Link_input("uw",			COMFLOAT,	1, &uw);
 	Link_input("zref",			COMFLOAT,	1, &zref);
+	Link_input("uw",			COMFLOAT,	1, &uw);
 	Link_input("uz",			COMFLOAT,	1, &uz);
 	Link_input("obst_xy",			COMFLOAT,	2, obst_xy);
 	Link_input("cam_size_obj",		COMFLOAT,	2, cam_size_obj);
@@ -108,12 +108,16 @@ void Autonomy::Job(){
 	else if(fsm_state == LAW_CONTROL){
 		if(tzer == false){ti = t;}
 		tzer = true;
-		motor[0] = 1 + 0.001*uw;
-		motor[1] = 1 - 0.001*uw;
-		//motor[2] = 1 + 0.001*uz;
-		//motor[3] = 1 + 0.001*uz;
-		motor[2] = 0.;
-		motor[3] = 0.;
+
+		motor[0] = 1 + 0.001*uw;   //Active control
+		motor[1] = 1 - 0.001*uw;   //Active control
+		//motor[2] = 1 + 0.001*uz; //Active control
+		//motor[3] = 1 + 0.001*uz; //Active control
+
+		//motor[0] = 0.; //Stay
+		//motor[1] = 0.; //Stay
+		motor[2] = 0.; //Stay
+		motor[3] = 0.; //Stay
 	}
 	else if(fsm_state == REMOTE){
 		tzer = false;
