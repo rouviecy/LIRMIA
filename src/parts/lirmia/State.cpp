@@ -182,11 +182,11 @@ void State::Job(){
         uzpds = kpz * ez + kdz * ezp;
 
 //Active Control
-	uw = uwb;
-//	uw = uwpds;
-	uz = uzpdc;
+//	uw = uwb;
+	uw = uwpds;
+//	uz = uzpdc;
 //	uz = uzb;
-//	uz = uzpds;
+	uz = uzpds;
 
 	Critical_send();
 }
