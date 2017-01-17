@@ -17,7 +17,7 @@ Logger::Logger() : ComThread(){
 //pdbouy
 	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpdc\tkpcz\tkdcz\tIz\tgcz";
 //backstepping
-	string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuw\tuz\talfabw1\talfabw2\talfabz1\talfabz2\tIz\tgcz";
+	string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwb\tuzb\talfabw1\talfabw2\talfabz1\talfabz2\tIz\tgcz";
 //nlpdyaw
 	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwpds\tkpw\tkdw\tdpw\tbpw\tmupw\tddw\tbdw\tmudw\tIz\tgcz";
 //nlpdz
@@ -45,8 +45,8 @@ void Logger::IO(){
         Link_input("thzd",             		COMFLOAT, 	2, thzd);
 
         Link_input("uzpdc",	        	COMFLOAT, 	1, &uzpdc);
-        Link_input("uw",        	       	COMFLOAT, 	1, &uw);
-        Link_input("uz",               		COMFLOAT, 	1, &uz);
+        Link_input("uwb",        	       	COMFLOAT, 	1, &uwb);
+        Link_input("uzb",              		COMFLOAT, 	1, &uzb);
         Link_input("uwpds",            		COMFLOAT, 	1, &uwpds);
         Link_input("uzpds",            		COMFLOAT, 	1, &uzpds);
         Link_input("kpcz",             		COMFLOAT, 	1, &kpcz);
@@ -98,13 +98,13 @@ void Logger::Job(){
 			<< cam_pipeline_angle[0]<< "\t" << cam_pipeline_angle[1]<< "\t" << cam_pipeline_distance[0]<< "\t"<< cam_pipeline_distance[1]<< "\t"
                         << cam_detect_horizontal[0]<< "\t"<< cam_detect_horizontal[1]<< "\t"<< cam_detect_vertical[0]<< "\t"<< cam_detect_vertical[1]<< "\t"
 			<<   uzpdc	<< "\t" <<	kpcz		<< "\t" <<	kdcz	     << "\t" //PDBUOY
-			<< uw		<< "\t" <<	uz		<< "\t" //BACKSTEPPING
+			<< uwb	      << "\t" <<    uzb       << "\t" //BACKSTEPPING
 			<< alfabw1    << "\t" <<    alfabw2   << "\t" <<      alfabz1 << "\t" <<      alfabz2 << "\t"
-			<<   uwpds	<< "\t" <<	kpw		<< "\t" <<	kdw	     << "\t"  //NLPDYAW
-			<<   dpw  << "\t" <<    bpw     << "\t" <<      mupw  << "\t"  <<   ddw  << "\t" <<    bdw       << "\t" <<      mudw   << "\t"
-			<< uzpds	<< "\t" <<	kpz		<< "\t" <<	kdz	     << "\t" //NLPDZ
-			<< dpz  << "\t" <<    bpz     << "\t" <<      mupz  << "\t"  <<   ddz  << "\t" <<    bdz       << "\t" <<      mudz   << "\t"
-			<< Iz	<< "\t" <<    gcz     << "\t";
+			<<   uwpds  << "\t" <<	kpw   << "\t" <<   kdw	 << "\t" //NLPDYAW
+			<<   dpw    << "\t" <<  bpw   << "\t" <<   mupw  << "\t"  <<   ddw  << "\t" <<    bdw       << "\t" <<      mudw   << "\t"
+			<< uzpds << "\t" <<    kpz    << "\t" <<  kdz	<< "\t"  //NLPDZ
+			<< dpz   << "\t" <<    bpz    << "\t" <<  mupz  << "\t"  <<   ddz  << "\t" <<    bdz       << "\t" <<      mudz   << "\t"
+			<<   Iz	 << "\t" <<    gcz     << "\t";
 
 	log_file << new_line.str() << "\n";
 	if(t - last_t_save > 5){

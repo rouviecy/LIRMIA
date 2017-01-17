@@ -41,7 +41,7 @@ private:
 	float zref;
 	float vthz, vz;
 	float thzd[2];
-	float uzpdc, uw, uz, uwpds, uzpds;
+	float uzpdc, uwb, uzb, uwpds, uzpds;
 	float kpcz, kdcz, kpw, kpz, kdw, kdz;
 	float motor[4];
 	float cam_pipeline_angle[2];

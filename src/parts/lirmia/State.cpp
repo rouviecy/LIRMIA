@@ -13,9 +13,10 @@ State::State() : ComThread(){
 	x1=0.; x2=0.; y1=0.; y2=0.; m=0.; y=0.;
 	yawref = 0.; yawrefp = 0.; zref = 0.; zrefp = 0.;
 	ew = 0.; ewp = 0.; ez = 0.; ezp = 0.; ewb = 0.; ezb = 0.;
+	uw = 0.; uz = 0.;
 	uzpdc = 0.; kpcz = 0.65; kdcz = 0.01; gcz = 30;
-	uw = 0.; alfabw1 = 0.1; alfabw2 = 0.01;
-	uz = 0.; alfabz1 = 1; alfabz2 = 1; Iz = 1;
+	uwb = 0.; alfabw1 = 0.1; alfabw2 = 0.01;
+	uzb = 0.; alfabz1 = 1; alfabz2 = 1; Iz = 1;
 	uwpds = 0.; kpw = 0.; dpw = 5; bpw = 0.65; mupw = 1; kdw = 0.; ddw = 20; bdw = 0; mudw = 1;
 	uzpds = 0.; kpz = 0.; dpz = 5; bpz = 0.65; mupz = 1; kdz = 0.; ddz = 20; bdz = 0; mudz = 1;
 }
@@ -180,7 +181,7 @@ void State::Job(){
         else		  {kdz = bdz * pow(dpz,(mudz - 1));}
         uzpds = kpz * ez + kdz * ezp;
 
-//Active Control 
+//Active Control
 	uw = uwb;
 //	uw = uwpds;
 	uz = uzpdc;
