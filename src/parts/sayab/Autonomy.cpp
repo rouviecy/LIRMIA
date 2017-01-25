@@ -27,7 +27,6 @@ void Autonomy::IO(){
 	Link_input("vthz",			COMFLOAT,	1, &vthz);
 	Link_input("yawref",			COMFLOAT,	1, &yawref);
 	Link_input("uw",			COMFLOAT,	1, &uw);
-//	Link_input("uwaux",			COMFLOAT,   	1, &uwaux);
 
 	Link_output("motor",			COMFLOAT,	1, &motor);
 	Link_output("rudder",			COMFLOAT,	1, &rudder);
@@ -75,8 +74,7 @@ void Autonomy::Job(){
 		tzer = true;
 		motor		= 0.2;
 		rudder		= 0.;
-		bow_thruster	= -0.005*uw;
-//		bow_thruster	= uwaux;
+		bow_thruster	= -0.004*uw;
 
 	}
 	else{

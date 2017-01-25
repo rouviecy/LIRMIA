@@ -45,7 +45,6 @@ private:
 	float uz;
 	float uzaux;
 	float motor[4];
-	int thruster[4];
 	int fsm_state;
 	bool fsm_unlocked;
 

@@ -31,7 +31,6 @@ typedef struct{
 	float uz;
 	float uzaux;
 	int motor1, motor2, motor3, motor4;
-	int thrs1, thrs2, thrs3, thrs4;
 	int state;
 	bool unlocked;
 	float min_coord, max_coord;
@@ -158,10 +157,6 @@ void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
 	string text_motor2 = "motor2 = " + to_string(monitor->motor2) + "%";
  	string text_motor3 = "motor3 = " + to_string(monitor->motor3) + "%";
 	string text_motor4 = "motor4 = " + to_string(monitor->motor4) + "%";
-	string text_thrs1 = "thrs1 = " + to_string(monitor->thrs1);
-        string text_thrs2 = "thrs2 = " + to_string(monitor->thrs2);
-        string text_thrs3 = "thrs3 = " + to_string(monitor->thrs3);
-        string text_thrs4 = "thrs4 = " + to_string(monitor->thrs4);
 	string text_state = State_machine::Decode_state_str(monitor->state) + string(monitor->unlocked ? " [unlocked]" : " [LOCKED]");
 	cv::putText(*img, text_state,	cv::Point(10, 20),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_ti,	cv::Point(10, 60),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
@@ -181,10 +176,6 @@ void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
 	cv::putText(*img, text_motor2,	cv::Point(10, 340),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_motor3,	cv::Point(10, 360),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_motor4,	cv::Point(10, 380),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_thrs1,  	cv::Point(10, 400),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-        cv::putText(*img, text_thrs2,  	cv::Point(10, 420),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-        cv::putText(*img, text_thrs3,  	cv::Point(10, 440),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-        cv::putText(*img, text_thrs4,  	cv::Point(10, 460),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 }
 
 cv::Mat Draw_monitor(struct_monitor* monitor){
@@ -252,9 +243,9 @@ int main(int argc, char* argv[]){
 		while(obj_callback.go_on){
 			string msg_monitor = string(tcp_client_monitor.Receive());
 			size_t next;
-			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 24){
+			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 20){
 				vector <string> tokens;
-				for(size_t current = 0; tokens.size() < 24; current = next + 1){
+				for(size_t current = 0; tokens.size() < 20; current = next + 1){
 					next = msg_monitor.find_first_of("|", current);
 					tokens.push_back(msg_monitor.substr(current, next - current));
 				}
@@ -278,10 +269,6 @@ int main(int argc, char* argv[]){
 				monitor.motor2		= (int) stof(tokens[17]);
 				monitor.motor3		= (int) stof(tokens[18]);
 				monitor.motor4		= (int) stof(tokens[19]);
-				monitor.thrs1          = (int) stof(tokens[20]);
-                                monitor.thrs2          = (int) stof(tokens[21]);
-                                monitor.thrs3          = (int) stof(tokens[22]);
-                                monitor.thrs4          = (int) stof(tokens[23]);
 
 			}
 			if(monitor.t > 5){cv::imshow(monitor_window, Draw_monitor(&monitor));}

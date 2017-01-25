@@ -14,7 +14,6 @@ void Motors::On_start(){}
 
 void Motors::IO(){
 	Link_input("motor", COMFLOAT, 4, motor);
-	Link_output("thruster", COMFLOAT, 4,thruster);
 }
 
 void Motors::Job(){
@@ -22,7 +21,6 @@ void Motors::Job(){
 	for(int i = 0; i < 4; i++){
 		int order = min(abs((int) (255. * motor[i])), 186);
 		if(order < 20){order = 0;}
-		thruster[i] = order;
 		Generate_order(i, order, motor[i] > 0);
 	}
 }

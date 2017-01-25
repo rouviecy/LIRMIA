@@ -97,13 +97,13 @@ void Logger::Job(){
 			<< motor[0]	<< "\t"	<<	motor[1]	<< "\t"	<< 	motor[2]     << "\t" <<      motor[3]	     << "\t"
 			<< cam_pipeline_angle[0]<< "\t" << cam_pipeline_angle[1]<< "\t" << cam_pipeline_distance[0]<< "\t"<< cam_pipeline_distance[1]<< "\t"
                         << cam_detect_horizontal[0]<< "\t"<< cam_detect_horizontal[1]<< "\t"<< cam_detect_vertical[0]<< "\t"<< cam_detect_vertical[1]<< "\t"
-			<<   uzpdc	<< "\t" <<	kpcz		<< "\t" <<	kdcz	     << "\t" //PDBUOY
+//			<<   uzpdc	<< "\t" <<	kpcz		<< "\t" <<	kdcz	     << "\t" //PDBUOY
 			<< uwb	      << "\t" <<    uzb       << "\t" //BACKSTEPPING
 			<< alfabw1    << "\t" <<    alfabw2   << "\t" <<      alfabz1 << "\t" <<      alfabz2 << "\t"
-			<<   uwpds  << "\t" <<	kpw   << "\t" <<   kdw	 << "\t" //NLPDYAW
-			<<   dpw    << "\t" <<  bpw   << "\t" <<   mupw  << "\t"  <<   ddw  << "\t" <<    bdw       << "\t" <<      mudw   << "\t"
-			<< uzpds << "\t" <<    kpz    << "\t" <<  kdz	<< "\t"  //NLPDZ
-			<< dpz   << "\t" <<    bpz    << "\t" <<  mupz  << "\t"  <<   ddz  << "\t" <<    bdz       << "\t" <<      mudz   << "\t"
+//			<<   uwpds  << "\t" <<	kpw   << "\t" <<   kdw	 << "\t" //NLPDYAW
+//			<<   dpw    << "\t" <<  bpw   << "\t" <<   mupw  << "\t"  <<   ddw  << "\t" <<    bdw       << "\t" <<      mudw   << "\t"
+//			<< uzpds << "\t" <<    kpz    << "\t" <<  kdz	<< "\t"  //NLPDZ
+//			<< dpz   << "\t" <<    bpz    << "\t" <<  mupz  << "\t"  <<   ddz  << "\t" <<    bdz       << "\t" <<      mudz   << "\t"
 			<<   Iz	 << "\t" <<    gcz     << "\t";
 
 	log_file << new_line.str() << "\n";
