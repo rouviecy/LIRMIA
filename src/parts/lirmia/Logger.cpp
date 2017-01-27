@@ -17,11 +17,15 @@ Logger::Logger() : ComThread(){
 //pdbouy
 	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpdc\tkpcz\tkdcz\tIz\tgcz";
 //backstepping
-	string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwb\tuzb\talfabw1\talfabw2\talfabz1\talfabz2\tIz\tgcz";
+	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwb\tuzb\talfabw1\talfabw2\talfabz1\talfabz2\tIz\tgcz";
 //nlpdyaw
 	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwpds\tkpw\tkdw\tdpw\tbpw\tmupw\tddw\tbdw\tmudw\tIz\tgcz";
 //nlpdz
 	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpds\tkpz\tkdz\tdpz\tbpz\tmupz\tddz\tbdz\tmudz\tIz\tgcz";
+//predictor filter
+	string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tpitch\tvpitch\tuzpf\tg1\tk1\tk2\tk3\tf1";
+
+
 	log_file << header << "\n";
 	last_t_save = -1.;
 }
@@ -56,6 +60,7 @@ void Logger::IO(){
         Link_input("kdw",              		COMFLOAT, 	1, &kdw);
         Link_input("kdz",              		COMFLOAT, 	1, &kdz);
 	Link_input("motor",			COMFLOAT,	4, motor);
+	Link_input("uzpf",	              	COMFLOAT, 	1, &uzpf);
 
 	Link_input("cam_pipeline_angle",	COMFLOAT,	2, cam_pipeline_angle);
 	Link_input("cam_pipeline_distance",	COMFLOAT,	2, cam_pipeline_distance);
@@ -80,6 +85,11 @@ void Logger::IO(){
         Link_input("mudz",             		COMFLOAT, 	1, &mudz);
 	Link_input("Iz",			COMFLOAT,	1, &Iz);
 	Link_input("gcz",			COMFLOAT,	1, &gcz);
+	Link_input("g1",	               	COMFLOAT, 	1, &g1);
+        Link_input("k1",               		COMFLOAT, 	1, &k1);
+        Link_input("k2",               		COMFLOAT, 	1, &k2);
+        Link_input("k3",               		COMFLOAT, 	1, &k3);
+        Link_input("f1",               		COMFLOAT, 	1, &f1);
 
 }
 
@@ -104,7 +114,9 @@ void Logger::Job(){
 //			<<   dpw    << "\t" <<  bpw   << "\t" <<   mupw  << "\t"  <<   ddw  << "\t" <<    bdw       << "\t" <<      mudw   << "\t"
 //			<< uzpds << "\t" <<    kpz    << "\t" <<  kdz	<< "\t"  //NLPDZ
 //			<< dpz   << "\t" <<    bpz    << "\t" <<  mupz  << "\t"  <<   ddz  << "\t" <<    bdz       << "\t" <<      mudz   << "\t"
+			<< thxyz[1] <<"\t"<< vxyz[1] <<"\t"<< uzpf <<"\t"<< g1 <<"\t"<< k1 <<"\t"<< k2 <<"\t"<< k3 <<"\t"<< f1 <<"\t"
 			<<   Iz	 << "\t" <<    gcz     << "\t";
+
 
 	log_file << new_line.str() << "\n";
 	if(t - last_t_save > 5){

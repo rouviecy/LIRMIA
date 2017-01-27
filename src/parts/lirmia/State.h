@@ -56,6 +56,10 @@ private:
         float xkz_1,vkz_1;
         float azz,bzz,dtzz;
 
+	float xmp,xkp,vkp,rkp;
+        float xkp_1,vkp_1;
+        float azp,bzp,dtzp;
+
 	float x1,x2,y1,y2,m,y;
 
 	float yawref,yawrefp;
@@ -82,6 +86,14 @@ private:
 	float ddz, bdz, mudz;
 	float kpz, kdz;
 	float uzpds;
+
+	float uzpf, uzpfn, uzpfp;
+        float Iyy, Mt, Mqp, Mq, u, theta;
+        float g1, k1, k2, k3, f1;
+        float a11, a13, a23, b1;
+        float theta, q, z;
+        float uzpfa, uzpfb, uzpfc, uzpfb1, uzpfb2, uzpfb3;
+
 
 };
 

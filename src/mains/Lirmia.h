@@ -26,6 +26,7 @@
 #include "../parts/lirmia/State_machine.h"
 #include "../parts/Clock.h"
 #include "../parts/Depth_MS5803.h"
+//#include "../parts/Depth_MS5803_iss.h"
 #include "../parts/Echosonder.h"
 #include "../parts/Imu_razor.h"
 #include "../parts/Subscriber.h"
@@ -36,6 +37,7 @@
 #define DEV_SERIAL_ARDUINO	"/dev/serial/by-id/usb-Arduino_Srl_Arduino_Uno_85439303333351019211-if00"
 //#define DEV_SERIAL_ARDUINO      "/dev/serial/by-id/usb-Arduino_Srl_Arduino_Uno_75430333137351C012E0-if00"
 #define DEV_SERIAL_ISS		"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00007350-if00"
+#define DEV_SERIAL_ISS_DEPTH	"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00014561-if00"
 #define DEV_SERIAL_RS232_MODEM	"/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
 #define DEV_SERIAL_RS232_ECHO_X	"/dev/serial/by-id/usb-FTDI_US232R_FTE4451C-if00-port0" // TO CHANGE
 #define DEV_SERIAL_RS232_ECHO_Y	"/dev/serial/by-id/usb-FTDI_US232R_FTE4451C-if00-port0" // TO CHANGE
@@ -50,27 +52,28 @@ public:
 
 private:
 
-	Serial serial_arduino, serial_iss, serial_rs232_modem, serial_rs232_echo_x, serial_rs232_echo_y, serial_imu;
+	Serial serial_arduino, serial_iss, serial_iss_depth, serial_rs232_modem, serial_rs232_echo_x, serial_rs232_echo_y, serial_imu;
 
 	void Init_serial();
 
 	Acoustic_modem	acoustic_modem;
-	Autonomy	autonomy;
-	Cameras		cameras;
-	Clock		internal_clock;
-	Depth_MS5803	depth;
-	Echosonder	echosonder;
-	Imu_razor	imu;
-	Logger		logger;
-	Mapping		mapping;
-	Motors		motors;
-	Remote_control	remote_control;
-	Remote_monitor	remote_monitor;
-	Simulator	simulator;
-	State		state;
-	State_machine	state_machine;
-	Subscriber	subscriber;
-	Subscriber	subscriber2;
+	Autonomy		autonomy;
+	Cameras			cameras;
+	Clock			internal_clock;
+	Depth_MS5803		depth;
+//	Depth_MS5803_iss	depth;
+	Echosonder		echosonder;
+	Imu_razor		imu;
+	Logger			logger;
+	Mapping			mapping;
+	Motors			motors;
+	Remote_control		remote_control;
+	Remote_monitor		remote_monitor;
+	Simulator		simulator;
+	State			state;
+	State_machine		state_machine;
+	Subscriber		subscriber;
+	Subscriber		subscriber2;
 
 };
 

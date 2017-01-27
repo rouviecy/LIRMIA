@@ -55,6 +55,8 @@ private:
 	float dpw, dpz, bpw, bpz, mupw, mupz, ddw, ddz, bdw, bdz, mudw, mudz;
 	float Iz, gcz;
 
+	float uzpf;
+        float g1, k1, k2, k3, f1;
 
 	std::ofstream log_file;
 	float last_t_save;
