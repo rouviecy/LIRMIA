@@ -41,14 +41,16 @@ private:
 	float thz;
 	float vthz;
 	float yawref;
-	float uw;
+	float uwb, uwpds;
 	float motor;
 	float rudder;
 	float bow_thruster;
-	float ey1;
-	float ey2;
 	float alfab1;
 	float alfab2;
+	float kpw, kdw;
+	float dpw, bpw, mupw, ddw, bdw, mudw;
+        float Iz;
+
 
 //	float msgmod;
 

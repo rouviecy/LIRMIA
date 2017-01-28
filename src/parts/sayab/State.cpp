@@ -12,9 +12,10 @@ State::State() : ComThread(){
 	xm = 0.; xk = 0.; xk_1 = 0.; vk = 0.; vk_1 = 0.; rk = 0.;
 	az = 0.09; bz = 0.3; dtz = 0.08;
  	yawref = 0.; yawrefp = 0.;
-	ey1 = 0.; ey2 = 0.; alfab1 = 1.2; alfab2 = 1;
-	Iz = 1;
-	uw = 0.; uwaux = 0.;
+	ey1 = 0.; ey2 = 0.; ew = 0.; ewp = 0.;
+	uw = 0.;
+	uwb = 0.; alfab1 = 1.2; alfab2 = 1; Iz = 1;
+	uwpds = 0.; kpw = 0.; dpw = 5; bpw = 0.65; mupw = 1; kdw = 0.; ddw = 20; bdw = 0; mudw = 1;
 }
 
 State::~State(){}
@@ -36,10 +37,22 @@ void State::IO(){
 	Link_output("thz",		COMFLOAT, 1, &thz);
 	Link_output("vthz",		COMFLOAT, 1, &vthz);
 	Link_output("yawref",		COMFLOAT, 1, &yawref);
-	Link_output("ey1",		COMFLOAT, 1, &ey1);
-	Link_output("ey2", 		COMFLOAT, 1, &ey2);
 	Link_output("uw",		COMFLOAT, 1, &uw);
-	Link_output("uwaux",		COMFLOAT, 1, &uwaux);
+	Link_output("uwb", 		COMFLOAT, 1, &uwb);
+	Link_output("uwpds",		COMFLOAT, 1, &uwpds);
+
+	Link_output("alfab1",		COMFLOAT, 1, &alfab1);
+	Link_output("alfab2",           COMFLOAT, 1, &alfab2);
+	Link_output("kpw",              COMFLOAT, 1, &kpw);
+        Link_output("kdw",              COMFLOAT, 1, &kdw);
+	Link_output("dpw",              COMFLOAT, 1, &dpw);
+        Link_output("bpw",              COMFLOAT, 1, &bpw);
+        Link_output("mupw",             COMFLOAT, 1, &mupw);
+        Link_output("ddw",              COMFLOAT, 1, &ddw);
+        Link_output("bdw",              COMFLOAT, 1, &bdw);
+        Link_output("mudw",             COMFLOAT, 1, &mudw);
+
+	Link_output("Iz",               COMFLOAT, 1, &Iz);
 	Link_output("tim",		COMFLOAT, 1, &tim);
 }
 
@@ -80,10 +93,25 @@ void State::Job(){
 	//yawrefp = 2.24375;
 
 // CONTROL LAWS
+
+//Backstepping
 	ey1 = yawref - thz;
 	ey2 = vthz - alfab1*ey1 + yawrefp;
-	uw  = Iz*(-ey1 + alfab1*(ey2 + alfab1*ey1) + alfab2*ey2);
-	uwaux = uw*0.005;
+	uwb  = Iz*(-ey1 + alfab1*(ey2 + alfab1*ey1) + alfab2*ey2);
+
+//Nonlinear PD based on Saturation Functions
+	ew = yawref - thz;
+	ewp = vthz;
+        if(fabs(ew) > dpw) {kpw = bpw * pow(fabs(ew),(mupw - 1));}
+        else              {kpw = bpw * pow(dpw,(mupw - 1));}
+        if(fabs(ewp) > ddw){kdw = bdw * pow(fabs(ewp),(mudw - 1));}
+        else              {kdw = bdw * pow(dpw,(mudw - 1));}
+        uwpds = kpw * ew + kdw * ewp;
+
+//Active Control
+//	uw = uwb;
+        uw = uwpds;
+
 
 	Critical_send();
 }

@@ -52,11 +52,19 @@ private:
 	float xk_1,vk_1;
 	float az, bz, dtz;
 
+	float uw;
+	float ew, ewp;
+
 	float ey1, ey2;
 	float alfab1, alfab2;
 	float Iz;
-	float uw;
-	float uwaux;
+	float uwb;
+
+	float dpw, bpw, mupw;
+        float ddw, bdw, mudw;
+        float kpw, kdw;
+	float uwpds;
+
 };
 
 #endif

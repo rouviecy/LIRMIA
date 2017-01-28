@@ -37,7 +37,6 @@ void Imu_razor::Process_serial_data(void* object, char* input_msg){
 }
 
 void Imu_razor::Subscribe(Subscriber* subscriber){
-	//#if defined(ENABLE_IMU) and not defined(ENABLE_SERIAL_ARDUINO)
 	#if defined(ENABLE_IMU) and not defined(ENABLE_SERIAL_RS232_IMU)
 		cout << "[Warning] You are trying to use IMU without serial enabled : IMU will be disabled" << endl;
 		return;

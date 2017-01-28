@@ -22,9 +22,10 @@ void Autonomy::IO(){
 	Link_input("vxyz",			COMFLOAT,	3, vxyz);
 	Link_input("thxyz",			COMFLOAT,	3, thxyz);
 	Link_input("vthxyz",			COMFLOAT,	3, vthxyz);
+	Link_input("thzd",			COMFLOAT,	2, thzd);
 	Link_input("yawref",			COMFLOAT,	1, &yawref);
-	Link_input("uw",			COMFLOAT,	1, &uw);
 	Link_input("zref",			COMFLOAT,	1, &zref);
+	Link_input("uw",			COMFLOAT,	1, &uw);
 	Link_input("uz",			COMFLOAT,	1, &uz);
 	Link_input("obst_xy",			COMFLOAT,	2, obst_xy);
 	Link_input("cam_size_obj",		COMFLOAT,	2, cam_size_obj);
@@ -43,10 +44,10 @@ void Autonomy::Job(){
 		if(cam_size_obj[0] < 0.20){
 			motor[0] = 0.2 - cam_size_obj[0] + cam_detect_horizontal[0] / 5;
 			motor[1] = 0.2 - cam_size_obj[0] - cam_detect_horizontal[0] / 5;
-			//motor[2] = -cam_detect_vertical[0] / 5;
-			//motor[3] = -cam_detect_vertical[0] / 5;
-			motor[2] = 0.;
-			motor[3] = 0.;
+			motor[2] = -cam_detect_vertical[0] / 5;
+			motor[3] = -cam_detect_vertical[0] / 5;
+			//motor[2] = 0.;
+			//motor[3] = 0.;
 		}
 		else{
 			motor[0] = -0.2;
@@ -107,12 +108,16 @@ void Autonomy::Job(){
 	else if(fsm_state == LAW_CONTROL){
 		if(tzer == false){ti = t;}
 		tzer = true;
-		motor[0] = 1 + 0.001*uw;
-		motor[1] = 1 - 0.001*uw;
-		//motor[2] = 1 + 0.001*uz;
-		//motor[3] = 1 + 0.001*uz;
-		motor[2] = 0.;
-		motor[3] = 0.;
+
+		motor[0] = 0.001 + 0.004 * uw;   //Active control
+		motor[1] = 0.001 - 0.004 * uw;   //Active control
+		//motor[2] = 0.001 + 0.004 * uz; //Active control
+		//motor[3] = 0.001 + 0.004 * uz; //Active control
+
+		//motor[0] = 0.; //Stay
+		//motor[1] = 0.; //Stay
+		motor[2] = 0.; //Stay
+		motor[3] = 0.; //Stay
 	}
 	else if(fsm_state == REMOTE){
 		tzer = false;
@@ -123,21 +128,21 @@ cout << "OBSTACLE X" << endl;
 if(obst_xy[1] > 0.25 && obst_xy[1] < 1.){
 cout << "OBSTACLE Y" << endl;
 }
-		keep_thz = thxyz[3];
+		keep_thz = thxyz[2];
 		motor[0] = remote_forward / 2 + remote_turn / 2;
 		motor[1] = remote_forward / 2 - remote_turn / 2;
 		motor[2] = -remote_deeper / 2;
 		motor[3] = -remote_deeper / 2;
 	}
 	else if(fsm_state == EXPLORE){
-		keep_thz = thxyz[3];
+		keep_thz = thzd[2];
 		motor[0] = 0.;
 		motor[1] = 0.;
 		motor[2] = 0.;
 		motor[3] = 0.;
 	}
 	else if(fsm_state == STAY){ // TODO : check
-		float diff_thz = keep_thz - thxyz[3];
+		float diff_thz = keep_thz - thxyz[2];
 		if(diff_thz < -360){diff_thz += 360;}
 		if(diff_thz > +360){diff_thz -= 360;}
 		if(diff_thz < -180){diff_thz += 360;}

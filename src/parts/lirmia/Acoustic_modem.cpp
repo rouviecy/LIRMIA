@@ -18,7 +18,8 @@ void Acoustic_modem::On_start(){
 
 void Acoustic_modem::IO(){
 	Link_input("fsm_state",	COMINT,		1, &fsm_state);
-	Link_output("xy_modem",	COMFLOAT,	2, xy_modem);
+//	Link_output("xy_modem",	COMFLOAT,	2, xy_modem);
+	Link_output("thzm",	COMFLOAT,	2, thzm);
 //	Link_output("msg_parse",COMFLOAT,	4, &msg_parse);
 }
 
@@ -30,8 +31,10 @@ void Acoustic_modem::Job(){
 			if(input_flow.front().addressee == 1){
 				if(input_flow.front().header == 0){
 					long data = (long) input_flow.front().data[0] << 16 + (long) input_flow.front().data[1] << 8 + (long) input_flow.front().data[2];
-					xy_modem[0] = (float) (data >> 12);
-					xy_modem[1] = (float) ((data << 24) >> 24);
+//					xy_modem[0] = (float) (data >> 12);
+//					xy_modem[1] = (float) ((data << 24) >> 24);
+					thzm[0] = (float) (data >> 12);
+					thzm[1] = (float) ((data << 24) >> 24);
 				}
 			}
 			input_flow.pop();
