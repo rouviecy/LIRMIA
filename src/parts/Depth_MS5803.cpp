@@ -29,7 +29,7 @@ void Depth_MS5803::IO(){
 }
 
 void Depth_MS5803::Job(){
-	#ifndef ENABLE_SERIAL_ISS
+	#ifndef ENABLE_SERIAL_ISS_DEPTH
 		cout << "[Warning] Trying to use MS5803 without ISS enabled ; depth sensor will be disabled" << endl;
 		return;
 	#endif
@@ -93,7 +93,7 @@ void Depth_MS5803::Job(){
 }
 
 void Depth_MS5803::Calibrate(){
-	#ifndef ENABLE_SERIAL_ISS
+	#ifndef ENABLE_SERIAL_ISS_DEPTH
 		return;
 	#endif
 	serial->Lock();
