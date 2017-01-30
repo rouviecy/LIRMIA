@@ -39,6 +39,7 @@ private:
 	float vz;
 	float vthz;
 	float thzd[2];
+	float vthy;
 
 	void On_start();
 	void Job();
@@ -88,7 +89,7 @@ private:
 	float uzpds;
 
 	float uzpf, uzpfn, uzpfp;
-        float Iyy, Mt, Mqp, Mq, u, theta;
+        float Iyy, Mt, Mqp, Mq, u;
         float g1, k1, k2, k3, f1;
         float a11, a13, a23, b1;
         float theta, q, z;

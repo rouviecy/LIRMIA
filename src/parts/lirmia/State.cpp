@@ -207,7 +207,7 @@ void State::Job(){
 
 //PREDICTOR FILTER
 	theta = thxyz[1];
-	q = vthyxz[1];
+	q = vthxyz[1];
 	z = vxyz[2];
 
 	uzpfa = g1 + k1 * b1;
