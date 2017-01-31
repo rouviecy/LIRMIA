@@ -90,7 +90,7 @@ void Lirmia::Init_serial(){
                 init_I2C_and_serial_depth[3] = 0x00;  // baudrate
                 init_I2C_and_serial_depth[4] = 0x19;  // baudrate 115200
                 serial_iss_depth.Serial_write(init_I2C_and_serial_depth, 5);
-                depth.Set_iss(&serial_iss);
+                depth.Set_iss(&serial_iss_depth);
         #endif
 
 	#ifdef ENABLE_SERIAL_RS232_MODEM

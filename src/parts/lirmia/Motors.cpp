@@ -44,7 +44,6 @@ void Motors::Generate_order(int num_motor, int power, bool positive){
 		order[7] = 2;
 		serial->Lock();
 		serial->Serial_write(order, 8);
-cout << "[DEBUG] Order to motor n°" << num_motor << " : " << (positive ? "+" : "-") << power << endl;
 		serial->Unlock();
 	#endif
 }
