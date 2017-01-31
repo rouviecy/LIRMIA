@@ -88,13 +88,14 @@ private:
 	float kpz, kdz;
 	float uzpds;
 
-	float uzpf, uzpfn, uzpfp;
-        float Iyy, Mt, Mqp, Mq, u;
+	float uzpf, uzpf_actual, uzpf_anterior, uzpf_2anterior;
+	float theta, q, z;
         float g1, k1, k2, k3, f1;
         float a11, a13, a23, b1;
-        float theta, q, z;
-        float uzpfa, uzpfb, uzpfc, uzpfb1, uzpfb2, uzpfb3;
-
+	float h;
+        float g_kb, ka_gk1, ka_gk2, ka_gk3, gfref;
+	float xt_tauc, xt_tau1c, xt_tau2c, xt_tau3c;
+	float xt_tauv, xt_tau1v, xt_tau2v, xt_tau3v;
 
 };
 

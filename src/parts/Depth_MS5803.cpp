@@ -5,14 +5,14 @@ using namespace std;
 Depth_MS5803::Depth_MS5803() : ComThread(){
 	depth = 0.;
 	raz_depth = true;
-        request_depth_iss_w[0] = 0x54;
-        request_depth_iss_w[1] = 0xEE;
+        request_depth_iss_w[0] = 0x55; //54(77)
+        request_depth_iss_w[1] = 0xEC; //EE(77)
         request_depth_iss_w[2] = 0x01;
-        request_depth_iss_r[0] = 0x54;
-	request_depth_iss_r[1] = 0xEF;
+        request_depth_iss_r[0] = 0x55;
+	request_depth_iss_r[1] = 0xED; //EF(77)
 	request_depth_iss_r[2] = 0x03;
-	request_depth_iss_cr[0] = 0x54;
-        request_depth_iss_cr[1] = 0xEF;
+	request_depth_iss_cr[0] = 0x55;
+        request_depth_iss_cr[1] = 0xED; //EF(77)
         request_depth_iss_cr[2] = 0x02;
 	buf[0] = 0.; buf[1] = 0.; buf[2] = 0.; buf[3] = 0.; buf[4] = 0.; buf[5] = 0.;
 	Ca[0] = 0.; Ca[1] = 0.; Ca[2] = 0.; Ca[3] = 0.; Ca[4] = 0.; Ca[5] = 0.;
@@ -97,7 +97,7 @@ void Depth_MS5803::Calibrate(){
 		return;
 	#endif
 	serial->Lock();
-	request_depth_iss_w[3] = 0x1E;
+	request_depth_iss_w[3] = 0x1E;  //ADC Reset command
 	serial->Serial_write(request_depth_iss_w, 4);
 	for(int i = 0; i < 6; i++){
 		request_depth_iss_w[3] = 0xA2 + (i * 2);
@@ -106,10 +106,10 @@ void Depth_MS5803::Calibrate(){
 		serial->Serial_write(request_depth_iss_cr, 3);
 		usleep(5);
 		unsigned char* buf = (unsigned char*) serial->Serial_read();
-//cout << buf[0] << buf[1] << "\t" << buf[2] << "\t" << buf[3] << "\t" << buf[4] << "\t" << buf[5] << "\t" << buf[6] << "\t" << buf[7] << endl;
+cout << "buf: " << buf[0] << "\t" << buf[1] << "\t" << buf[2] << "\t" << buf[3] << "\t" << buf[4] << "\t" << buf[5] << "\t" << buf[6] << "\t" << buf[7] << endl;
 		long V;
 		V = i == 0 ? (buf[2] << 8) | buf[3] : (buf[1] << 8) | buf[2];
-// cout << "V: " << V << endl;
+cout << "V: " << V << endl;
 		Ca[i + 1] = V;
 	}
 }

@@ -23,7 +23,7 @@ Logger::Logger() : ComThread(){
 //nlpdz
 	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpds\tkpz\tkdz\tdpz\tbpz\tmupz\tddz\tbdz\tmudz\tIz\tgcz";
 //predictor filter
-	string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tpitch\tvpitch\tuzpf\tg1\tk1\tk2\tk3\tf1";
+	string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tpitch\tvpitch\tuzpf\tg1\tk1\tk2\tk3\tf1\th\tIz\tgcz";
 
 
 	log_file << header << "\n";
@@ -90,6 +90,7 @@ void Logger::IO(){
         Link_input("k2",               		COMFLOAT, 	1, &k2);
         Link_input("k3",               		COMFLOAT, 	1, &k3);
         Link_input("f1",               		COMFLOAT, 	1, &f1);
+	Link_input("h",				COMFLOAT, 	1, &h);
 
 }
 
@@ -110,12 +111,12 @@ void Logger::Job(){
 //			<<   uzpdc	<< "\t" <<	kpcz		<< "\t" <<	kdcz	     << "\t" //PDBUOY
 			<< uwb	      << "\t" <<    uzb       << "\t" //BACKSTEPPING
 			<< alfabw1    << "\t" <<    alfabw2   << "\t" <<      alfabz1 << "\t" <<      alfabz2 << "\t"
-//			<<   uwpds  << "\t" <<	kpw   << "\t" <<   kdw	 << "\t" //NLPDYAW
-//			<<   dpw    << "\t" <<  bpw   << "\t" <<   mupw  << "\t"  <<   ddw  << "\t" <<    bdw       << "\t" <<      mudw   << "\t"
+//			<<   uwpds   << "\t" <<	kpw   << "\t" <<   kdw	 << "\t" //NLPDYAW
+//			<<   dpw     << "\t" <<  bpw   << "\t" <<   mupw  << "\t"  <<   ddw  << "\t" <<    bdw       << "\t" <<      mudw   << "\t"
 //			<< uzpds << "\t" <<    kpz    << "\t" <<  kdz	<< "\t"  //NLPDZ
 //			<< dpz   << "\t" <<    bpz    << "\t" <<  mupz  << "\t"  <<   ddz  << "\t" <<    bdz       << "\t" <<      mudz   << "\t"
-			<< thxyz[1] <<"\t"<< vxyz[1] <<"\t"<< uzpf <<"\t"<< g1 <<"\t"<< k1 <<"\t"<< k2 <<"\t"<< k3 <<"\t"<< f1 <<"\t"
-			<<   Iz	 << "\t" <<    gcz     << "\t";
+			<<   thxyz[1]<<"\t"<< vxyz[1] <<"\t"<< uzpf <<"\t"<< g1 <<"\t"<< k1 <<"\t"<< k2 <<"\t"<< k3 <<"\t"<< f1 <<"\t" << h << "\t"  //PREDICTOR FILTER
+			<< Iz << "\t" <<    gcz     << "\t";
 
 
 	log_file << new_line.str() << "\n";

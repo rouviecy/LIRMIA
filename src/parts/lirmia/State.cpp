@@ -20,12 +20,14 @@ State::State() : ComThread(){
 	uzb = 0.; alfabz1 = 1; alfabz2 = 1; Iz = 1;
 	uwpds = 0.; kpw = 0.; dpw = 5; bpw = 0.65; mupw = 1; kdw = 0.; ddw = 20; bdw = 0; mudw = 1;
 	uzpds = 0.; kpz = 0.; dpz = 5; bpz = 0.65; mupz = 1; kdz = 0.; ddz = 20; bdz = 0; mudz = 1;
-	uzpf = 0.; uzpfn = 0.; uzpfp = 0.;
-	Iyy = 1.16; Mt = -6.82; Mqp = -7.412; Mq = 0.; u = 0; theta = 0.;
-	g1 = 0; k1 = 0; k2 = 0; k3 = 0; f1 = 0;
-	a11 = 0; a13 = 0; a23 = 0; b1 = 0;
+
+	uzpf = 0.; uzpf_actual = 0.; uzpf_anterior = 0.; uzpf_2anterior = 0.;
 	theta = 0.; q = 0.; z = 0.;
-	uzpfa = 0.; uzpfb = 0.; uzpfc = 0.; uzpfb1 = 0.; uzpfb2 = 0.; uzpfb3 = 0.;
+	g1 = 0; k1 = 0; k2 = 0; k3 = 0; f1 = 0;
+	a11 = 0; a13 = 0; a23 = 0; b1 = 0; h = 0;
+	g_kb = 0.; ka_gk1 = 0., ka_gk2 = 0.; ka_gk3 = 0.; gfref = 0.;
+        xt_tauc = 0.; xt_tau1c = 0.; xt_tau2c = 0.; xt_tau3c = 0.;
+        xt_tauv = 0.; xt_tau1v = 0.; xt_tau2v = 0.; xt_tau3v = 0.;
 
 }
 
@@ -63,6 +65,7 @@ void State::IO(){
 	Link_output("kdcz",		COMFLOAT, 1, &kdcz);
 	Link_output("uzpf",		COMFLOAT, 1, &uzpf);
 
+
 	Link_output("alfabw1",		COMFLOAT, 1, &alfabw1);
 	Link_output("alfabw2",		COMFLOAT, 1, &alfabw2);
 	Link_output("alfabz1",          COMFLOAT, 1, &alfabz1);
@@ -88,6 +91,7 @@ void State::IO(){
 	Link_output("k2",		COMFLOAT, 1, &k2);
 	Link_output("k3", 	        COMFLOAT, 1, &k3);
 	Link_output("f1",	        COMFLOAT, 1, &f1);
+	Link_output("h",		COMFLOAT, 1, &h);
 
 	Link_output("Iz",		COMFLOAT, 1, &Iz);
 	Link_output("gcz",		COMFLOAT, 1, &gcz);
@@ -206,26 +210,39 @@ void State::Job(){
         uzpds = kpz * ez + kdz * ezp;
 
 //PREDICTOR FILTER
+
 	theta = thxyz[1];
-	q = vthxyz[1];
-	z = vxyz[2];
+        q = vthxyz[1];
+        z = vxyz[2];
 
-	uzpfa = g1 + k1 * b1;
-	uzpfb1 = (a11 * k1) + k3 - g1*k1;
-	uzpfb2 = g1 * k2;
-	uzpfb3 = (a13 * k1)  + (a23 * k2) - (g1 * k3);
-	uzpfb = (uzpfb1 * q) - (uzpfb2 * z) + (uzpfb3 * theta);
- 	uzpfc = -g1 * f1 * zref;
- 	uzpfn = uzpfa + uzpfb + uzpfc;
+        g_kb     = g1 + k1 * b1;
+        ka_gk1   = (a11 * k1) + k3 - (g1*k1);
+	xt_tau1c = (0.8376 * q) - (0.1462 * theta);
+        ka_gk2   = - g1 * k2;
+	xt_tau2c = (-0.0237 * q) + z - (0.2487 * theta);
+        ka_gk3   = (a13 * k1)  + (a23 * k2) - (g1 * k3);
+	xt_tau3c = (0.1838 * q) + (0.9849 * theta);
+        gfref    = -g1 * f1 * zref;
 
-	uzpf = uzpfn + uzpfp;
+	xt_tauc  = ka_gk1 * xt_tau1c + ka_gk2 * xt_tau2c + ka_gk3 * xt_tau3c;
 
-	if (-2 < zref - xyz[2] > 2){
-		uzpfp = 0;
-	}
-	else {
-		uzpfp = uzpfn;
-	}
+//	xt_tau1v = b1*uzpf_2anterior + b1*uzpf_anterior;
+//	xt_tau2v = (-0.8014 * b1 * uzpf_2anterior * 2 * h) + (b1 * uzpf_2anterior * 2 * h) - (0.8014 * b1 * uzpf_anterior * h) + (b1 * uzpf_anterior * h);
+//	xt_tau3v = (-0.1534 * b1 * uzpf_2anterior * 2 * h * h) + (-1.25 * b1 * uzpf_2anterior * 2 * h * h) - (0.8014 * b1 * uzpf_2anterior * 2 * h * h) - (0.1534 * b1 * uzpf_anterior * 0.5  * h * h) + (-1.25 * b1 * uzpf_anterior * 0.5 * h * h) - (0.8014 * b1 * uzpf_anterior * 0.5 * h * h);
+
+	xt_tau1v = (1 - 0.8014 * h - 0.1534 *h*h*0.5 + 0.7605*h*h*h*0.16)*b1*uzpf_anterior + (1 - 0.8014 *2*h - 0.1534 *2*h*h + 0.7605*h*h*h*1.33)*b1*uzpf_2anterior;
+	xt_tau2v = (-1.25*h*h*0.5 + 1.0017*h*h*h*0.16)*b1*uzpf_anterior + (-1.25*h*h*2 + 1.0017*h*h*h*1.33)*b1*uzpf_2anterior;
+	xt_tau3v = (h - 0.8014*h*h*0.5 - 0.1534*h*h*h*0.16)*b1*uzpf_anterior + (2*h - 0.8014*h*h*2 - 0.1534*h*h*h*1.33)*b1*uzpf_2anterior;
+
+	xt_tauv = ka_gk1 * xt_tau1v + ka_gk2 * xt_tau2v + ka_gk3 * xt_tau3v;
+
+        uzpf_actual = (g_kb * uzpf_anterior) + gfref + xt_tauc + xt_tauv;
+
+        uzpf = uzpf_actual + uzpf_anterior;
+
+	uzpf_2anterior = uzpf_anterior;
+        if (fabs(ez) < 2) {uzpf_anterior = 0;}
+        else {uzpf_anterior = uzpf;}
 
 //Active Control
 //	uw = uwb;

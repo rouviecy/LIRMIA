@@ -56,7 +56,7 @@ private:
 	float Iz, gcz;
 
 	float uzpf;
-        float g1, k1, k2, k3, f1;
+        float g1, k1, k2, k3, f1, h;
 
 	std::ofstream log_file;
 	float last_t_save;
