@@ -29,8 +29,9 @@ public:
 	~Depth_MS5803();
 
 	void Set_iss(Serial* serial);
-	
-	void Calibrate();
+
+//        void Calibrate();
+//        void Update_depth();
 
 private:
 
@@ -46,12 +47,16 @@ private:
 	unsigned long d1,d2;
 	float off,dt,tem,P,sens,t2,off2,sens2,z,zini,tempe,Pres,zant;
 	float Ca[10];
-	float buf[8];
+	unsigned char buf[8];
 	unsigned char request_depth_iss_w[4];
         unsigned char request_depth_iss_r[3];
-	unsigned char request_depth_iss_cr[3];
+	unsigned char request_depth_iss_res[4];
 
 	static void Process_serial_data(void* object, char* input_msg);
+
+
+	void Calibrate();
+	void Update_depth();
 
 };
 

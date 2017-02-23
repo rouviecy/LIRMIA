@@ -25,8 +25,8 @@
 #include "../parts/lirmia/State.h"
 #include "../parts/lirmia/State_machine.h"
 #include "../parts/Clock.h"
-#include "../parts/Depth_MS5803.h"
-//#include "../parts/Depth_MS5803_iss.h"
+//#include "../parts/Depth_MS5803.h"
+#include "../parts/Depth_MS5837.h"
 #include "../parts/Echosonder.h"
 #include "../parts/Imu_razor.h"
 #include "../parts/Subscriber.h"
@@ -60,8 +60,8 @@ private:
 	Autonomy		autonomy;
 	Cameras			cameras;
 	Clock			internal_clock;
-	Depth_MS5803		depth;
-//	Depth_MS5803_iss	depth;
+//	Depth_MS5803		depth;
+	Depth_MS5837		depth;
 	Echosonder		echosonder;
 	Imu_razor		imu;
 	Logger			logger;

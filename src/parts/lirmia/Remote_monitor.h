@@ -41,9 +41,7 @@ private:
 	float thzd[2];
 	float zref;
 	float uw;
-	float uwaux;
 	float uz;
-	float uzaux;
 	float motor[4];
 	int fsm_state;
 	bool fsm_unlocked;

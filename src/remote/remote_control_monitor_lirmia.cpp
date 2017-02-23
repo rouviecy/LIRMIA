@@ -27,9 +27,7 @@ typedef struct{
 	float thzd1;
 	float zref;
 	float uw;
-	float uwaux;
 	float uz;
-	float uzaux;
 	int motor1, motor2, motor3, motor4;
 	int state;
 	bool unlocked;
