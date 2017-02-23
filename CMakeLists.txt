@@ -25,6 +25,7 @@ if(${IS_LIRMIA})
 	else(${IS_SIMU})
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
+#		add_definitions(-DENABLE_SERIAL_ISS_DEPTH)
 		add_definitions(-DENABLE_SERIAL_RS232_MODEM)
 #		add_definitions(-DENABLE_SERIAL_RS232_ECHO_X)
 #		add_definitions(-DENABLE_SERIAL_RS232_ECHO_Y)
@@ -118,6 +119,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Clock.h			src/parts/Clock.cpp
 	src/parts/Compass_CMPS10.h		src/parts/Compass_CMPS10.cpp
 	src/parts/Depth_MS5803.h		src/parts/Depth_MS5803.cpp
+	src/parts/Depth_MS5837.h		src/parts/Depth_MS5837.cpp	
 	src/parts/Depth_BMP085.h		src/parts/Depth_BMP085.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
 	src/parts/Gps.h				src/parts/Gps.cpp

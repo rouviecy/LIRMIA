@@ -30,13 +30,10 @@ void Remote_monitor::IO(){
 	Link_input("thzd",		COMFLOAT, 	2, thzd);
 	Link_input("zref",		COMFLOAT,	1, &zref);
 	Link_input("uw",		COMFLOAT,	1, &uw);
-//	Link_input("uwaux",		COMFLOAT,	1, &uwaux);
 	Link_input("uz",		COMFLOAT,	1, &uz);
-//	Link_input("uzaux",		COMFLOAT,	1, &uzaux);
 	Link_input("motor",		COMFLOAT,	4, motor);
 	Link_input("fsm_state",		COMINT,		1, &fsm_state);
 	Link_input("fsm_unlocked",	COMBOOL,	1, &fsm_unlocked);
-	Link_input("thruster",		COMINT, 	4, thruster);
 }
 
 void Remote_monitor::Job(){
@@ -59,17 +56,11 @@ void Remote_monitor::Job(){
 		to_string(thzd[1]) + "|" +
 		to_string(zref) + "|" +
 		to_string(uw) + "|" +
-//		to_string(uwaux) + "|" +
 		to_string(uz) + "|" +
-//		to_string(uzaux) + "|" +
 		to_string(motor[0] * 100)+  + "|" +
 		to_string(motor[1] * 100) + "|" +
 		to_string(motor[2] * 100) + "|" +
-		to_string(motor[3] * 100) + "|" +
-		to_string(thruster[0]) + "|" +
-                to_string(thruster[1]) + "|" +
-                to_string(thruster[2]) + "|" +
-                to_string(thruster[3]) + "|" ;
+		to_string(motor[3] * 100) + "|" ;
 
 	tcp_server.Send(msg_monitor);
 }

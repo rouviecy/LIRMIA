@@ -46,6 +46,9 @@ void Lirmia::Shutdown(){
 	#ifdef ENABLE_SERIAL_ISS
 		serial_iss.Serial_close();
 	#endif
+	#ifdef ENABLE_SERIAL_ISS_DEPTH
+                serial_iss_depth.Serial_close();
+        #endif
 	#ifdef ENABLE_SERIAL_RS232_MODEM
 		serial_rs232_modem.Serial_close();
 	#endif
@@ -62,7 +65,7 @@ void Lirmia::Shutdown(){
 
 void Lirmia::Init_serial(){
 	#ifdef ENABLE_SERIAL_ARDUINO
-		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B57600, true);
+		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B9600, true);
 		subscriber.Set_serial(&serial_arduino);
 	//	imu.Subscribe(&subscriber);
 		depth.Subscribe(&subscriber);
@@ -78,6 +81,18 @@ void Lirmia::Init_serial(){
 		serial_iss.Serial_write(init_I2C_and_serial, 5);
 		motors.Set_serial(&serial_iss);
 	#endif
+	#ifdef ENABLE_SERIAL_ISS_DEPTH
+                serial_iss_depth.Serial_init(DEV_SERIAL_ISS_DEPTH, B115200, false);
+                unsigned char init_I2C_and_serial_depth[5];
+                init_I2C_and_serial_depth[0] = 0x5A;  // initial command
+                init_I2C_and_serial_depth[1] = 0x02;  // change
+                init_I2C_and_serial_depth[2] = 0x61;  // serial and I2C 100 kHz  //0x20
+                init_I2C_and_serial_depth[3] = 0x00;  // baudrate
+                init_I2C_and_serial_depth[4] = 0x33;  // baudrate 115200(19) 57600(33)
+                serial_iss_depth.Serial_write(init_I2C_and_serial_depth, 5);
+                //depth.Set_iss(&serial_iss_depth);
+        #endif
+
 	#ifdef ENABLE_SERIAL_RS232_MODEM
 		serial_rs232_modem.Serial_init(DEV_SERIAL_RS232_MODEM, B9600, true);
 		acoustic_modem.Set_serial(&serial_rs232_modem);

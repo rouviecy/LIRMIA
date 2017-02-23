@@ -97,6 +97,8 @@ void State::Job(){
 		thzd[0]  = thzm[0];
 		thzd[1]  = thzm[1];
  	#endif
+
+//cout << "z : " << xyz[2] << endl;
 //	if(t - last_t > 0.01){
 //		for(int i = 0; i < 3; i++){
 //			vthxyz[i] = (thxyz[i] - last_thxyz[i]) / (t - last_t);
