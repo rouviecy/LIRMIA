@@ -34,7 +34,6 @@ private:
 	void Generate_order(int num_motor, int power, bool positive);
 
 	float motor[4];
-	int thruster[4];
 
 };
 

@@ -44,10 +44,10 @@ void Autonomy::Job(){
 		if(cam_size_obj[0] < 0.20){
 			motor[0] = 0.2 - cam_size_obj[0] + cam_detect_horizontal[0] / 5;
 			motor[1] = 0.2 - cam_size_obj[0] - cam_detect_horizontal[0] / 5;
-			//motor[2] = -cam_detect_vertical[0] / 5;
-			//motor[3] = -cam_detect_vertical[0] / 5;
-			motor[2] = 0.;
-			motor[3] = 0.;
+			motor[2] = -cam_detect_vertical[0] / 5;
+			motor[3] = -cam_detect_vertical[0] / 5;
+			//motor[2] = 0.;
+			//motor[3] = 0.;
 		}
 		else{
 			motor[0] = -0.2;

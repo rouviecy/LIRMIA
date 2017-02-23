@@ -39,6 +39,7 @@ private:
 	float vz;
 	float vthz;
 	float thzd[2];
+	float vthy;
 
 	void On_start();
 	void Job();
@@ -55,6 +56,10 @@ private:
 	float xmz,xkz,vkz,rkz;
         float xkz_1,vkz_1;
         float azz,bzz,dtzz;
+
+	float xmp,xkp,vkp,rkp;
+        float xkp_1,vkp_1;
+        float azp,bzp,dtzp;
 
 	float x1,x2,y1,y2,m,y;
 
@@ -82,6 +87,15 @@ private:
 	float ddz, bdz, mudz;
 	float kpz, kdz;
 	float uzpds;
+
+	float uzpf, uzpf_actual, uzpf_anterior, uzpf_2anterior;
+	float theta, q, z;
+        float g1, k1, k2, k3, f1;
+        float a11, a13, a23, b1;
+	float h;
+        float g_kb, ka_gk1, ka_gk2, ka_gk3, gfref;
+	float xt_tauc, xt_tau1c, xt_tau2c, xt_tau3c;
+	float xt_tauv, xt_tau1v, xt_tau2v, xt_tau3v;
 
 };
 

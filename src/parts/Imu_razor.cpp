@@ -20,14 +20,10 @@ void Imu_razor::Job(){} // Do nothing : this object should only be called by sub
 
 void Imu_razor::Process_serial_data(void* object, char* input_msg){
         Imu_razor* self = (Imu_razor*) object;
-//cout << "Received razor msg : " << input_msg << endl;
         stringstream ss;
         ss << string(input_msg).substr(5) << ",";
         vector <string> tokens;
         for(string token; getline(ss, token, ','); tokens.push_back(token)){}
-//cout << "\tNb tokens : " << tokens.size() << endl;
-//cout << "\tTokens : " << endl;
-//for(size_t i=0; i<tokens.size(); i++){cout << "\t\t" << tokens[i] << endl;}
         if(tokens.size() < 3 || tokens[0].length() < 3 || tokens[1].length() < 3 || tokens[2].length() < 3){return;}
 	try{
 		self->imu_thxyz[0] = stof(tokens[0]);
@@ -36,12 +32,11 @@ void Imu_razor::Process_serial_data(void* object, char* input_msg){
 		self->Critical_send();
 	}
 	catch(const std::invalid_argument &e){
-//		cout << "Wrong razor msg : " << input_msg << endl << "\t" << e.what() << endl;
+		cout << "Wrong razor msg : " << input_msg << endl << "\t" << e.what() << endl;
 	}
 }
 
 void Imu_razor::Subscribe(Subscriber* subscriber){
-	//#if defined(ENABLE_IMU) and not defined(ENABLE_SERIAL_ARDUINO)
 	#if defined(ENABLE_IMU) and not defined(ENABLE_SERIAL_RS232_IMU)
 		cout << "[Warning] You are trying to use IMU without serial enabled : IMU will be disabled" << endl;
 		return;

@@ -119,7 +119,7 @@ string State_machine::Decode_state_str(int int_state){
 		case REMOTE:		return "remote control      ";
 		case FOLLOW_CAM_SUB:	return "follow cam submarine";
 		case FOLLOW_CAM_SURF:	return "follow cam surface  ";
-		case LAW_CONTROL:	return "law control	    ";
+		case LAW_CONTROL:	return "law control         ";
 		default :		return "unknown ???         ";
 	}
 }

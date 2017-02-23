@@ -27,7 +27,6 @@ void Remote_monitor::IO(){
 	Link_input("vthz",		COMFLOAT,	1, &vthz);
 	Link_input("yawref",		COMFLOAT,	1, &yawref);
 	Link_input("uw",		COMFLOAT,	1, &uw);
-	Link_input("uwaux",		COMFLOAT,	1, &uwaux);
 	Link_input("motor",		COMFLOAT,	1, &motor);
 	Link_input("rudder",		COMFLOAT,	1, &rudder);
 	Link_input("bow_thruster",	COMFLOAT,	1, &bow_thruster);
@@ -49,7 +48,6 @@ void Remote_monitor::Job(){
 		to_string(vthz) + "|" +
 		to_string(yawref) + "|" +
 		to_string(uw) + "|" +
-		to_string(uwaux) + "|" +
 		to_string(motor * 85) + "|" +
 		to_string(rudder * 65) + "|" +
 		to_string(bow_thruster * 65) + "|" +

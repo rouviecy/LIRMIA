@@ -6,9 +6,10 @@ State::State() : ComThread(){
 	last_t = -1.;
 	xyz[0] = 0.; vxyz[0] = 0.; thxyz[0] = 0.; vthxyz[0] = 0.; last_thxyz[0] = 0.;
 	xyz[1] = 0.; vxyz[1] = 0.; thxyz[1] = 0.; vthxyz[1] = 0.; last_thxyz[1] = 0.;
-	xyz[2] = 0.; vxyz[2] = 0.; thxyz[2] = 0.; vthxyz[2] = 0.; last_thxyz[2] = 0.; vz = 0.; vthz = 0.;
+	xyz[2] = 0.; vxyz[2] = 0.; thxyz[2] = 0.; vthxyz[2] = 0.; last_thxyz[2] = 0.; vz = 0.; vthz = 0.; vthy = 0.;
 	thzd[0] = 0.; thzd[1] = 0.;
 	xm = 0.; xk = 0.; xk_1 = 0.; vk = 0.; vk_1 = 0.; rk = 0.; az = 0.09; bz = 0.3; dtz = 0.08;
+	xmp=0.; xkp=0.; xkp_1=0.; vkp=0.; vkp_1=0.; rkp=0.; azp=0.09; bzp=0.3; dtzp=0.08;
 	xmz=0.; xkz=0.; xkz_1=0.; vkz=0.; vkz_1=0.; rkz=0.; azz=0.09; bzz=0.3; dtzz=0.08;
 	x1=0.; x2=0.; y1=0.; y2=0.; m=0.; y=0.;
 	yawref = 0.; yawrefp = 0.; zref = 0.; zrefp = 0.;
@@ -19,6 +20,15 @@ State::State() : ComThread(){
 	uzb = 0.; alfabz1 = 1; alfabz2 = 1; Iz = 1;
 	uwpds = 0.; kpw = 0.; dpw = 5; bpw = 0.65; mupw = 1; kdw = 0.; ddw = 20; bdw = 0; mudw = 1;
 	uzpds = 0.; kpz = 0.; dpz = 5; bpz = 0.65; mupz = 1; kdz = 0.; ddz = 20; bdz = 0; mudz = 1;
+
+	uzpf = 0.; uzpf_actual = 0.; uzpf_anterior = 0.; uzpf_2anterior = 0.;
+	theta = 0.; q = 0.; z = 0.;
+	g1 = 0; k1 = 0; k2 = 0; k3 = 0; f1 = 0;
+	a11 = 0; a13 = 0; a23 = 0; b1 = 0; h = 0;
+	g_kb = 0.; ka_gk1 = 0., ka_gk2 = 0.; ka_gk3 = 0.; gfref = 0.;
+        xt_tauc = 0.; xt_tau1c = 0.; xt_tau2c = 0.; xt_tau3c = 0.;
+        xt_tauv = 0.; xt_tau1v = 0.; xt_tau2v = 0.; xt_tau3v = 0.;
+
 }
 
 State::~State(){}
@@ -33,7 +43,6 @@ void State::IO(){
 	Link_input("simu_xyz",		COMFLOAT, 3, simu_xyz);
 	Link_input("simu_thxyz",	COMFLOAT, 3, simu_thxyz);
 	Link_input("thzm",		COMFLOAT, 2, thzm);
-
 
 	Link_output("xyz",		COMFLOAT, 3, xyz);
 	Link_output("vxyz",		COMFLOAT, 3, vxyz);
@@ -54,6 +63,8 @@ void State::IO(){
 	Link_output("uzpds",		COMFLOAT, 1, &uzpds);
 	Link_output("kpcz",		COMFLOAT, 1, &kpcz);
 	Link_output("kdcz",		COMFLOAT, 1, &kdcz);
+	Link_output("uzpf",		COMFLOAT, 1, &uzpf);
+
 
 	Link_output("alfabw1",		COMFLOAT, 1, &alfabw1);
 	Link_output("alfabw2",		COMFLOAT, 1, &alfabw2);
@@ -75,6 +86,12 @@ void State::IO(){
 	Link_output("bdz",		COMFLOAT, 1, &bdz);
 	Link_output("mudw",		COMFLOAT, 1, &mudw);
 	Link_output("mudz",		COMFLOAT, 1, &mudz);
+	Link_output("g1",            	COMFLOAT, 1, &g1);
+	Link_output("k1",	        COMFLOAT, 1, &k1);
+	Link_output("k2",		COMFLOAT, 1, &k2);
+	Link_output("k3", 	        COMFLOAT, 1, &k3);
+	Link_output("f1",	        COMFLOAT, 1, &f1);
+	Link_output("h",		COMFLOAT, 1, &h);
 
 	Link_output("Iz",		COMFLOAT, 1, &Iz);
 	Link_output("gcz",		COMFLOAT, 1, &gcz);
@@ -119,6 +136,17 @@ void State::Job(){
         vk_1 = 0.5 * vk;
         vthxyz[2] = vk_1;
 	vthz = vthxyz[2];
+
+        xmp = thxyz[1];
+        xkp = xkp_1 + (vkp_1*dtzp);
+        vkp = vkp_1;
+        rkp = xmp - xkp;
+        xkp = xkp + azp*rkp;
+        vkp = vkp + (bzp*rkp)/dtzp;
+        xkp_1 = xkp;
+        vkp_1 = 0.5 * vkp;
+        vthxyz[1] = vkp_1;
+        vthy = vthxyz[1];
 
 	xmz = xyz[2];
         xkz = xkz_1 + (vkz_1*dtzz);
@@ -183,12 +211,47 @@ void State::Job(){
         else		  {kdz = bdz * pow(dpz,(mudz - 1));}
         uzpds = kpz * ez + kdz * ezp;
 
+//PREDICTOR FILTER
+
+	theta = thxyz[1];
+        q = vthxyz[1];
+        z = vxyz[2];
+
+        g_kb     = g1 + k1 * b1;
+        ka_gk1   = (a11 * k1) + k3 - (g1*k1);
+	xt_tau1c = (0.8376 * q) - (0.1462 * theta);
+        ka_gk2   = - g1 * k2;
+	xt_tau2c = (-0.0237 * q) + z - (0.2487 * theta);
+        ka_gk3   = (a13 * k1)  + (a23 * k2) - (g1 * k3);
+	xt_tau3c = (0.1838 * q) + (0.9849 * theta);
+        gfref    = -g1 * f1 * zref;
+
+	xt_tauc  = ka_gk1 * xt_tau1c + ka_gk2 * xt_tau2c + ka_gk3 * xt_tau3c;
+
+//	xt_tau1v = b1*uzpf_2anterior + b1*uzpf_anterior;
+//	xt_tau2v = (-0.8014 * b1 * uzpf_2anterior * 2 * h) + (b1 * uzpf_2anterior * 2 * h) - (0.8014 * b1 * uzpf_anterior * h) + (b1 * uzpf_anterior * h);
+//	xt_tau3v = (-0.1534 * b1 * uzpf_2anterior * 2 * h * h) + (-1.25 * b1 * uzpf_2anterior * 2 * h * h) - (0.8014 * b1 * uzpf_2anterior * 2 * h * h) - (0.1534 * b1 * uzpf_anterior * 0.5  * h * h) + (-1.25 * b1 * uzpf_anterior * 0.5 * h * h) - (0.8014 * b1 * uzpf_anterior * 0.5 * h * h);
+
+	xt_tau1v = (1 - 0.8014 * h - 0.1534 *h*h*0.5 + 0.7605*h*h*h*0.16)*b1*uzpf_anterior + (1 - 0.8014 *2*h - 0.1534 *2*h*h + 0.7605*h*h*h*1.33)*b1*uzpf_2anterior;
+	xt_tau2v = (-1.25*h*h*0.5 + 1.0017*h*h*h*0.16)*b1*uzpf_anterior + (-1.25*h*h*2 + 1.0017*h*h*h*1.33)*b1*uzpf_2anterior;
+	xt_tau3v = (h - 0.8014*h*h*0.5 - 0.1534*h*h*h*0.16)*b1*uzpf_anterior + (2*h - 0.8014*h*h*2 - 0.1534*h*h*h*1.33)*b1*uzpf_2anterior;
+
+	xt_tauv = ka_gk1 * xt_tau1v + ka_gk2 * xt_tau2v + ka_gk3 * xt_tau3v;
+
+        uzpf_actual = (g_kb * uzpf_anterior) + gfref + xt_tauc + xt_tauv;
+
+        uzpf = uzpf_actual + uzpf_anterior;
+
+	uzpf_2anterior = uzpf_anterior;
+        if (fabs(ez) < 2) {uzpf_anterior = 0;}
+        else {uzpf_anterior = uzpf;}
+
 //Active Control
 //	uw = uwb;
 	uw = uwpds;
 //	uz = uzpdc;
 //	uz = uzb;
 	uz = uzpds;
-
+//	uz = uzpf
 	Critical_send();
 }
