@@ -10,9 +10,9 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&cameras,		"Cameras",			100000);	// 100 ms
 	Add_thread(&internal_clock,	"Clock",			1000);		// 1 ms
 	Add_thread(&echosonder,		"Echo sonder",			1000000);	// 1 s
-	Add_thread(&depth,		"Depth",			10000);		// 10 ms
+//	Add_thread(&depth,		"Depth",			10000);		// 10 ms
 //	Add_thread(&imu,		"IMU",				10000);		// 10 ms
-//	Add_thread(&depth,		"Depth",			-1);		// subscriber callback
+	Add_thread(&depth,		"Depth",			-1);		// subscriber callback
 	Add_thread(&imu,		"IMU",				-1);		// subscriber callback
 //	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&logger,		"Logger",			10000);		// 10 ms
@@ -68,7 +68,7 @@ void Lirmia::Init_serial(){
 		serial_arduino.Serial_init(DEV_SERIAL_ARDUINO, B9600, true);
 		subscriber.Set_serial(&serial_arduino);
 	//	imu.Subscribe(&subscriber);
-	//	depth.Subscribe(&subscriber);
+		depth.Subscribe(&subscriber);
 	#endif
 	#ifdef ENABLE_SERIAL_ISS
 		serial_iss.Serial_init(DEV_SERIAL_ISS, B115200, false);
@@ -88,15 +88,9 @@ void Lirmia::Init_serial(){
                 init_I2C_and_serial_depth[1] = 0x02;  // change
                 init_I2C_and_serial_depth[2] = 0x61;  // serial and I2C 100 kHz  //0x20
                 init_I2C_and_serial_depth[3] = 0x00;  // baudrate
-<<<<<<< HEAD
-                init_I2C_and_serial_depth[4] = 0x33;  // baudrate 115200(19) 57600(33)
-                serial_iss_depth.Serial_write(init_I2C_and_serial_depth, 5);
-                //depth.Set_iss(&serial_iss_depth);
-=======
                 init_I2C_and_serial_depth[4] = 0x19;  // baudrate 115200
                 serial_iss_depth.Serial_write(init_I2C_and_serial_depth, 5);
-                depth.Set_iss(&serial_iss_depth);
->>>>>>> 0304db37f2d13607e6f65abb943eca38131e8b19
+        //        depth.Set_iss(&serial_iss_depth);
         #endif
 
 	#ifdef ENABLE_SERIAL_RS232_MODEM

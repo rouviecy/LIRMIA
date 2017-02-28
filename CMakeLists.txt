@@ -3,8 +3,8 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA ON)
-set(IS_SAYAB OFF)
+set(IS_LIRMIA OFF)
+set(IS_SAYAB ON)
 set(IS_R2D2 OFF)
 set(IS_COOKIE OFF)
 set(IS_SIMU OFF)
@@ -25,11 +25,7 @@ if(${IS_LIRMIA})
 	else(${IS_SIMU})
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
-<<<<<<< HEAD
 #		add_definitions(-DENABLE_SERIAL_ISS_DEPTH)
-=======
-		add_definitions(-DENABLE_SERIAL_ISS_DEPTH)
->>>>>>> 0304db37f2d13607e6f65abb943eca38131e8b19
 		add_definitions(-DENABLE_SERIAL_RS232_MODEM)
 #		add_definitions(-DENABLE_SERIAL_RS232_ECHO_X)
 #		add_definitions(-DENABLE_SERIAL_RS232_ECHO_Y)

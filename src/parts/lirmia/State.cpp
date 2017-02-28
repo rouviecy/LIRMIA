@@ -42,7 +42,7 @@ void State::IO(){
 	Link_input("imu_thxyz",		COMFLOAT, 3, imu_thxyz);
 	Link_input("simu_xyz",		COMFLOAT, 3, simu_xyz);
 	Link_input("simu_thxyz",	COMFLOAT, 3, simu_thxyz);
-	Link_input("thzm",		COMFLOAT, 2, thzm);
+	Link_input("modmsg",		COMFLOAT, 3, modmsg);
 
 	Link_output("xyz",		COMFLOAT, 3, xyz);
 	Link_output("vxyz",		COMFLOAT, 3, vxyz);
@@ -52,7 +52,7 @@ void State::IO(){
 	Link_output("zref",		COMFLOAT, 1, &zref);
 	Link_output("vthz",             COMFLOAT, 1, &vthz);
         Link_output("vz",               COMFLOAT, 1, &vz);
-        Link_output("thzd",             COMFLOAT, 2, thzd);
+        Link_output("mywxy",            COMFLOAT, 2, mywxy);
 
 	Link_output("uw",		COMFLOAT, 1, &uw);
 	Link_output("uz",		COMFLOAT, 1, &uz);
@@ -111,11 +111,12 @@ void State::Job(){
 		thxyz[0] = imu_thxyz[2];
 		thxyz[1] = imu_thxyz[1];
 		thxyz[2] = imu_thxyz[0];
-		thzd[0]  = thzm[0];
-		thzd[1]  = thzm[1];
+		mywxy[0] = modmsg[0];
+		mywxy[1] = modmsg[1];
+		mywxy[2] = modmsg[2];
  	#endif
 
-//cout << "z : " << xyz[2] << endl;
+//cout << "z : " <<  xyz[2] << endl;
 //	if(t - last_t > 0.01){
 //		for(int i = 0; i < 3; i++){
 //			vthxyz[i] = (thxyz[i] - last_thxyz[i]) / (t - last_t);

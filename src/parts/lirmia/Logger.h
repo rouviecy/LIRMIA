@@ -40,7 +40,7 @@ private:
 	float yawref;
 	float zref;
 	float vthz, vz;
-	float thzd[2];
+	float mywxy[2];
 	float uzpdc, uwb, uzb, uwpds, uzpds;
 	float kpcz, kdcz, kpw, kpz, kdw, kdz;
 	float motor[4];

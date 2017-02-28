@@ -15,16 +15,15 @@ Logger::Logger() : ComThread(){
 			<< setfill('0') << setw(2) << now->tm_sec << "--LIRMIA.log";
 	log_file.open(log_name.str());
 //pdbouy
-	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpdc\tkpcz\tkdcz\tIz\tgcz";
+	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpdc\tkpcz\tkdcz\tIz\tgcz";
 //backstepping
-	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwb\tuzb\talfabw1\talfabw2\talfabz1\talfabz2\tIz\tgcz";
+	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwb\tuzb\talfabw1\talfabw2\talfabz1\talfabz2\tIz\tgcz";
 //nlpdyaw
-	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwpds\tkpw\tkdw\tdpw\tbpw\tmupw\tddw\tbdw\tmudw\tIz\tgcz";
+	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwpds\tkpw\tkdw\tdpw\tbpw\tmupw\tddw\tbdw\tmudw\tIz\tgcz";
 //nlpdz
-	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpds\tkpz\tkdz\tdpz\tbpz\tmupz\tddz\tbdz\tmudz\tIz\tgcz";
+	//string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpds\tkpz\tkdz\tdpz\tbpz\tmupz\tddz\tbdz\tmudz\tIz\tgcz";
 //predictor filter
-	string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tpitch\tvpitch\tuzpf\tg1\tk1\tk2\tk3\tf1\th\tIz\tgcz";
-
+	string header = "t\tstate\tyaw\tvyaw\tz\tvz\tyawref\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tpitch\tvpitch\tuzpf\tg1\tk1\tk2\tk3\tf1\th\tIz\tgcz";
 
 	log_file << header << "\n";
 	last_t_save = -1.;
@@ -46,7 +45,7 @@ void Logger::IO(){
         Link_input("zref",             		COMFLOAT, 	1, &zref);
         Link_input("vthz",             		COMFLOAT, 	1, &vthz);
         Link_input("vz",               		COMFLOAT, 	1, &vz);
-        Link_input("thzd",             		COMFLOAT, 	2, thzd);
+        Link_input("mywxy",            		COMFLOAT, 	2, mywxy);
 
         Link_input("uzpdc",	        	COMFLOAT, 	1, &uzpdc);
         Link_input("uwb",        	       	COMFLOAT, 	1, &uwb);
@@ -104,7 +103,7 @@ void Logger::Job(){
 	new_line	<< t						<< "\t"
 			<< State_machine::Decode_state_str(fsm_state)	<< "\t"
 			<< thxyz[2]	<< "\t"	<<	vthxyz[2]	<< "\t"	<<	xyz[2]       << "\t" <<      vxyz[2]         << "\t"
-			<< yawref	<< "\t"	<<	zref		<< "\t" <<	thzd[0]	     << "\t" <<	     thzd[1]	     << "\t"
+			<< yawref	<< "\t"	<<	zref		<< "\t" <<	mywxy[0]     << "\t" <<	     mywxy[1]	     << "\t" << mywxy[2] << "\t"
 			<< motor[0]	<< "\t"	<<	motor[1]	<< "\t"	<< 	motor[2]     << "\t" <<      motor[3]	     << "\t"
 			<< cam_pipeline_angle[0]<< "\t" << cam_pipeline_angle[1]<< "\t" << cam_pipeline_distance[0]<< "\t"<< cam_pipeline_distance[1]<< "\t"
                         << cam_detect_horizontal[0]<< "\t"<< cam_detect_horizontal[1]<< "\t"<< cam_detect_vertical[0]<< "\t"<< cam_detect_vertical[1]<< "\t"

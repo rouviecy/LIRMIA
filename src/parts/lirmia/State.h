@@ -30,7 +30,8 @@ private:
 	float imu_thxyz[3];
 	float simu_xyz[3];
 	float simu_thxyz[3];
-	float thzm[2];
+	float modmsg[3];
+	float mywxy[3];
 
 	float xyz[3];
 	float vxyz[3];

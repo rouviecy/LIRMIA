@@ -58,10 +58,11 @@ void Acoustic_modem::Job(){
 		if(fsm_state == LAW_CONTROL){
 				char msg[4];
 				msg[0] = Generate_header(1, 0, 0);
-				long yaw  = long (thz) << 12 + long (thz);
-				msg[1] = (char) (yaw >> 16);
-				msg[2] = (char) (yaw >> 12);
-				msg[3] = (char) yaw;
+				//long yaw  = long (thz) << 12 + long (thz);
+				long sendat = long (thz * 100) + long (xyz[0]) << 8 + long(xyz[1]); 
+				msg[1] = (char) (sendat >> 16);
+				msg[2] = (char) (sendat >> 8);
+				msg[3] = (char) sendat;
 				Send_acoustic_msg(string(msg));
 		cout << "modem msg : " << msg[0] << " " << msg [1] << " " << msg[2] << " " << msg[3];
 		}
