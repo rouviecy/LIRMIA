@@ -109,8 +109,8 @@ void State::Job(){
         uwpds = kpw * ew + kdw * ewp;
 
 //Active Control
-//	uw = uwb;
-        uw = uwpds;
+	uw = uwb;
+//	uw = uwpds;
 
 
 	Critical_send();

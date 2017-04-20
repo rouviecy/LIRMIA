@@ -16,6 +16,7 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&imu,		"IMU",				-1);		// subscriber callback
 //	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&logger,		"Logger",			10000);		// 10 ms
+	Add_thread(&logger_aux,		"Logger aux",			10000);		// 10 ms
 	Add_thread(&mapping,		"Mapping",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
 	Add_thread(&remote_control,	"Remote control",		-1);		// manual loop

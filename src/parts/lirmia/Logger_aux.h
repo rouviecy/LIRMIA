@@ -1,15 +1,15 @@
 /*
- * @(#)		Logger.h
+ * @(#)		Logger_aux.h
  * @version	1.0
- * @autor	C. Rouvière
+ * @autor	E. Antonio
  */
 
 /**
  * Write logs on hard-drive
  */
 
-#ifndef LOGGUER
-#define LOGGUER
+#ifndef LOGGUER_AUX
+#define LOGGUER_AUX
 
 #include "../../core/ComThread.h"
 #include "./State_machine.h"
@@ -18,12 +18,12 @@
 #include <iomanip>
 #include <fstream>
 
-class Logger : public ComThread{
+class Logger_aux : public ComThread{
 
 public:
 
-	Logger();
-	~Logger();
+	Logger_aux();
+	~Logger_aux();
 
 private:
 
@@ -33,26 +33,20 @@ private:
 
 	int fsm_state;
 	float t;
-	float xyz[3];
-	float vxyz[3];
 	float thxyz[3];
 	float vthxyz[3];
-	float zref;
-	float vthz, vz;
-	float mywxy[2];
-	float uzpdc, uzb, uzpds;
-	float kpcz, kdcz, kpw, kpz, kdw, kdz;
+	float yawref;
+	float uwb, uwpds;
+	float kpw, kdw;
 	float motor[4];
 	float cam_pipeline_angle[2];
 	float cam_pipeline_distance[2];
 	float cam_detect_horizontal[2];
 	float cam_detect_vertical[2];
-	float alfabz1;
-	float alfabz2;
-	float dpz, bpz, mupz, ddz, bdz, mudz;
-	float Iz, gcz;
-	float uzpf;
-        float g1, k1, k2, k3, f1, h;
+	float alfabw1;
+	float alfabw2;
+	float dpw, bpw, mupw, ddw, bdw, mudw;
+	float Iz;
 
 	std::ofstream log_file;
 	float last_t_save;

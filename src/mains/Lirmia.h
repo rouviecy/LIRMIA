@@ -17,6 +17,7 @@
 #include "../parts/lirmia/Autonomy.h"
 #include "../parts/lirmia/Cameras.h"
 #include "../parts/lirmia/Logger.h"
+#include "../parts/lirmia/Logger_aux.h"
 #include "../parts/lirmia/Mapping.h"
 #include "../parts/lirmia/Motors.h"
 #include "../parts/lirmia/Remote_control.h"
@@ -56,7 +57,7 @@ private:
 
 	void Init_serial();
 
-	Acoustic_modem	acoustic_modem;
+	Acoustic_modem		acoustic_modem;
 	Autonomy		autonomy;
 	Cameras			cameras;
 	Clock			internal_clock;
@@ -65,6 +66,7 @@ private:
 	Echosonder		echosonder;
 	Imu_razor		imu;
 	Logger			logger;
+	Logger_aux		logger_aux;
 	Mapping			mapping;
 	Motors			motors;
 	Remote_control		remote_control;

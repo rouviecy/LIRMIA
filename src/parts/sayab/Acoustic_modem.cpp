@@ -59,7 +59,7 @@ void Acoustic_modem::Job(){
 				char msg[4];
 				msg[0] = Generate_header(1, 0, 0);
 				//long yaw  = long (thz) << 12 + long (thz);
-				long sendat = long (thz * 100) + long (xyz[0]) << 8 + long(xyz[1]); 
+				long sendat = long (thz * 100) << 16 + long (xyz[0]) << 8 + long(xyz[1]); 
 				msg[1] = (char) (sendat >> 16);
 				msg[2] = (char) (sendat >> 8);
 				msg[3] = (char) sendat;
