@@ -27,7 +27,7 @@ void Remote_monitor::IO(){
 	Link_input("vthz",		COMFLOAT,	1, &vthz);
 //	Link_input("vthxyz",		COMFLOAT,	3, vthxyz);
 	Link_input("yawref",		COMFLOAT,	1, &yawref);
-	Link_input("thzd",		COMFLOAT, 	2, thzd);
+	Link_input("mywxy",		COMFLOAT, 	2, mywxy);
 	Link_input("zref",		COMFLOAT,	1, &zref);
 	Link_input("uw",		COMFLOAT,	1, &uw);
 	Link_input("uz",		COMFLOAT,	1, &uz);
@@ -52,8 +52,9 @@ void Remote_monitor::Job(){
 		to_string(vthz) + "|" +
 //		to_string(vthxyz[2]) + "|" +
 		to_string(yawref) + "|" +
-		to_string(thzd[0]) + "|" +
-		to_string(thzd[1]) + "|" +
+		to_string(mywxy[0]) + "|" +
+		to_string(mywxy[1]) + "|" +
+		to_string(mywxy[2]) + "|" +
 		to_string(zref) + "|" +
 		to_string(uw) + "|" +
 		to_string(uz) + "|" +

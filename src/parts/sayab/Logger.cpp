@@ -75,7 +75,7 @@ void Logger::Job(){
 			//<<   uwpds  << "\t" <<  kpw   << "\t" <<   kdw   << "\t" //NLPDYAW
                         //<<   dpw    << "\t" <<  bpw   << "\t" <<   mupw  << "\t"  <<   ddw  << "\t" <<    bdw       << "\t" <<      mudw   << "\t"
 			<< gps_lat*10000<< "\t"	<< gps_lon*10000<< "\t";
-	log_file << new_line.str() << State_machine::Decode_state_str(fsm_state) << "\n";
+	log_file << new_line.str() << "\n";
 	if(t - last_t_save > 10){
 		log_file.flush();
 		last_t_save = t;

@@ -3,6 +3,7 @@
 
 MS5837 sensor;
 float z_init;
+double z_ant;
 
 void setup() {
   
@@ -17,6 +18,8 @@ void setup() {
   sensor.setFluidDensity(997); // kg/m^3 (freshwater, 1029 for seawater)
   
   //z_init = sensor.depth();
+  z_init = -2.4;
+  z_ant = 0;
 }
 
 void loop() {
@@ -25,16 +28,22 @@ void loop() {
 
   sensor.pressure(); 
   sensor.temperature();
+
+  double z = sensor.depth() - z_init;
+  if(abs(z-z_ant)<1)
+  {z = z;}
+  else
+  {z=z_ant;}
   
-  //float z = sensor.depth() - z_init;
-  float z = sensor.depth(); 
+  z_ant = z; 
+  //float z = sensor.depth(); 
   
   Serial.print("%DEP=");
   Serial.print(z);
   Serial.println("$");
 
   //delay(1000);
-  delay(200);
+  delay(500);
   
   //Serial.flush();
 }

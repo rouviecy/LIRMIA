@@ -119,7 +119,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Clock.h			src/parts/Clock.cpp
 	src/parts/Compass_CMPS10.h		src/parts/Compass_CMPS10.cpp
 	src/parts/Depth_MS5803.h		src/parts/Depth_MS5803.cpp
-	src/parts/Depth_MS5837.h		src/parts/Depth_MS5837.cpp	
+	src/parts/Depth_MS5837.h		src/parts/Depth_MS5837.cpp
 	src/parts/Depth_BMP085.h		src/parts/Depth_BMP085.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
 	src/parts/Gps.h				src/parts/Gps.cpp
@@ -136,6 +136,7 @@ if(${IS_LIRMIA})
 		src/parts/lirmia/Autonomy.h		src/parts/lirmia/Autonomy.cpp
 		src/parts/lirmia/Cameras.h		src/parts/lirmia/Cameras.cpp
 		src/parts/lirmia/Logger.h		src/parts/lirmia/Logger.cpp
+		src/parts/lirmia/Logger_aux.h		src/parts/lirmia/Logger_aux.cpp
 		src/parts/lirmia/Mapping.h		src/parts/lirmia/Mapping.cpp
 		src/parts/lirmia/Motors.h		src/parts/lirmia/Motors.cpp
 		src/parts/lirmia/Remote_control.h	src/parts/lirmia/Remote_control.cpp

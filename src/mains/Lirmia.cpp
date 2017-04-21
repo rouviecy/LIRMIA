@@ -16,6 +16,7 @@ Lirmia::Lirmia() : Maestro(){
 	Add_thread(&imu,		"IMU",				-1);		// subscriber callback
 //	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&logger,		"Logger",			10000);		// 10 ms
+	Add_thread(&logger_aux,		"Logger aux",			10000);		// 10 ms
 	Add_thread(&mapping,		"Mapping",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
 	Add_thread(&remote_control,	"Remote control",		-1);		// manual loop
@@ -88,9 +89,9 @@ void Lirmia::Init_serial(){
                 init_I2C_and_serial_depth[1] = 0x02;  // change
                 init_I2C_and_serial_depth[2] = 0x61;  // serial and I2C 100 kHz  //0x20
                 init_I2C_and_serial_depth[3] = 0x00;  // baudrate
-                init_I2C_and_serial_depth[4] = 0x33;  // baudrate 115200(19) 57600(33)
+                init_I2C_and_serial_depth[4] = 0x19;  // baudrate 115200
                 serial_iss_depth.Serial_write(init_I2C_and_serial_depth, 5);
-                //depth.Set_iss(&serial_iss_depth);
+        //        depth.Set_iss(&serial_iss_depth);
         #endif
 
 	#ifdef ENABLE_SERIAL_RS232_MODEM
