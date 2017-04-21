@@ -45,7 +45,7 @@ private:
 	// IO
 	int fsm_state;
 	float xy_modem[2];
-	float modmsg[4];
+	float modmsg[3];
 
 	// Acoustic communication
 	std::thread thr_reception;

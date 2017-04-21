@@ -38,7 +38,7 @@ void Logger::IO(){
 	Link_input("t",				COMFLOAT,	1, &t);
 	Link_input("xyz",                       COMFLOAT,       3, xyz);
         Link_input("zref",             		COMFLOAT, 	1, &zref);
-        Link_input("vxyz",             		COMFLOAT, 	1, &vxyz);
+        Link_input("vxyz",             		COMFLOAT, 	3, &vxyz);
         Link_input("vz",               		COMFLOAT, 	1, &vz);
 	Link_input("thxyz",	            	COMFLOAT, 	3, thxyz);
         Link_input("vthxyz",    	       	COMFLOAT, 	3, vthxyz);
