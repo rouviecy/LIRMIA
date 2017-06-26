@@ -3,8 +3,8 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA ON)
-set(IS_SAYAB OFF)
+set(IS_LIRMIA OFF)
+set(IS_SAYAB ON)
 set(IS_R2D2 OFF)
 set(IS_COOKIE OFF)
 set(IS_SIMU OFF)
@@ -68,8 +68,8 @@ elseif(${IS_R2D2})
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
 	else(${IS_SIMU})
-		set(ENABLE_GRAPHVIZ OFF)
-		set(ENABLE_SDL OFF)
+		set(ENABLE_GRAPHVIZ ON)
+		set(ENABLE_SDL ON)
 		add_definitions(-DENABLE_SERIAL)
 		add_definitions(-DENABLE_I2C)
 		add_definitions(-DENABLE_MOTORS)	# needs serial
@@ -164,6 +164,7 @@ elseif(${IS_SAYAB})
 		src/parts/sayab/Autonomy.h		src/parts/sayab/Autonomy.cpp
 		src/parts/sayab/Cameras.h		src/parts/sayab/Cameras.cpp
 		src/parts/sayab/Logger.h		src/parts/sayab/Logger.cpp
+		src/parts/sayab/Logger_aux.h		src/parts/sayab/Logger_aux.cpp
 		src/parts/sayab/Motors.h		src/parts/sayab/Motors.cpp
 		src/parts/sayab/Remote_control.h	src/parts/sayab/Remote_control.cpp
 		src/parts/sayab/Remote_monitor.h	src/parts/sayab/Remote_monitor.cpp

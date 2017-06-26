@@ -26,7 +26,11 @@ void Remote_monitor::IO(){
 	Link_input("thz",		COMFLOAT,	1, &thz);
 	Link_input("vthz",		COMFLOAT,	1, &vthz);
 	Link_input("yawref",		COMFLOAT,	1, &yawref);
+	Link_input("gpsreflat",		COMFLOAT, 	1, &gpsreflat);
+	Link_input("gpsreflon",		COMFLOAT,	1, &gpsreflon);
+	Link_input("distance",		COMFLOAT,	1, &distance);
 	Link_input("uw",		COMFLOAT,	1, &uw);
+	Link_input("uf",		COMFLOAT, 	1, &uf);
 	Link_input("motor",		COMFLOAT,	1, &motor);
 	Link_input("rudder",		COMFLOAT,	1, &rudder);
 	Link_input("bow_thruster",	COMFLOAT,	1, &bow_thruster);
@@ -48,11 +52,15 @@ void Remote_monitor::Job(){
 		to_string(vthz) + "|" +
 		to_string(yawref) + "|" +
 		to_string(uw) + "|" +
+		to_string(uf) + "|" +
 		to_string(motor * 85) + "|" +
 		to_string(rudder * 65) + "|" +
 		to_string(bow_thruster * 65) + "|" +
-		to_string(lat) + "|" +
-             	to_string(lon) + "|";
+		to_string(lat * 10000) + "|" +
+             	to_string(lon * 10000) + "|" +
+		to_string(gpsreflat * 10000) + "|" +
+		to_string(gpsreflon * 10000) + "|" +
+		to_string(distance) + "|";
 //		to_string(msgmod[0]) + "|" +;
 //		to_string(msgmod[1]) + "|" +;
 //		to_string(msgmod[2]) + "|" +;

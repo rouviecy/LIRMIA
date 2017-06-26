@@ -37,8 +37,11 @@ private:
 	float thz;
 	float vthz;
 	float yawref;
+	float gpsreflat;
+	float gpsreflon;
+	float distance;
 	float uw;
- 	float uwaux;
+	float uf;
 	float motor;
 	float rudder;
 	float bow_thruster;

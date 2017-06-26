@@ -13,6 +13,7 @@ Sayab::Sayab() : Maestro(){
 	Add_thread(&internal_clock,	"Clock",			1000);		// 1 ms
 //	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&logger,		"Logger",			10000);		// 10 ms
+	Add_thread(&logger_aux,		"Logger_aux",			10000);		// 10 ms
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
 	Add_thread(&remote_control,	"Remote control",		-1);		// manual loop
 	Add_thread(&remote_monitor,	"Remote monitor",		100000);	// 100 ms

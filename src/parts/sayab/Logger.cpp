@@ -15,9 +15,10 @@ Logger::Logger() : ComThread(){
 			<< setfill('0') << setw(2) << now->tm_sec << "--Sayab.log";
 	log_file.open(log_name.str());
 //Backsteeping
-	string header = "t\tstate\tx\ty\tthz\tvthz\tyawref\tgpsx\tgpsy\tmotor\trudder\tbow\tuwb\talfab1\talfab2\tIz\tgpslat\tgpslon";
+	string header = "t\tstate\tx\ty\tthz\tvthz\tyawref\tgpsx\tgpsy\tmotor\trudder\tbow\tuwb\talfab1\talfab2\tIz\tgpslat\tgpslon\tgpsbearing";
 //Nonlinear PD based on Saturation Functions
-	//string header = "t\tstate\tx\ty\tthz\tvthz\tyawref\tgpsx\tgpsy\tmotor\trudder\tbow\tuwpds\tkpw\tkdw\tdpw\tbpw\tmupw\tddw\tbdw\tmudw\tgpslat\tgpslon";
+	//string header = "t\tstate\tx\ty\tthz\tvthz\tyawref\tgpsx\tgpsy\tmotor\trudder\tbow\tuwpds\tkpw\tkdw\tdpw\tbpw\tmupw\tddw\tbdw\tmudw\tgpslat\tgpslon\tgpsbearing";
+
 
 	log_file << header << "\n";
 	last_t_save = -1.;
@@ -36,6 +37,7 @@ void Logger::IO(){
 	Link_input("thz",		COMFLOAT,	1, &thz);
 	Link_input("vthz",		COMFLOAT,	1, &vthz);
 	Link_input("yawref",		COMFLOAT,	1, &yawref);
+	Link_input("gpsbearing",	COMFLOAT,	1, &gpsbearing);
 	Link_input("uwb",		COMFLOAT,	1, &uwb);
 	Link_input("uwpds",		COMFLOAT,	1, &uwpds);
 	Link_input("motor",		COMFLOAT,	1, &motor);
@@ -74,7 +76,7 @@ void Logger::Job(){
 			<<  uwb     << "\t" << alfab1  << "\t"  << alfab2 << "\t"  <<   Iz   << "\t" //BACKSTEPPING
 			//<<   uwpds  << "\t" <<  kpw   << "\t" <<   kdw   << "\t" //NLPDYAW
                         //<<   dpw    << "\t" <<  bpw   << "\t" <<   mupw  << "\t"  <<   ddw  << "\t" <<    bdw       << "\t" <<      mudw   << "\t"
-			<< gps_lat*10000<< "\t"	<< gps_lon*10000<< "\t";
+			<< gps_lat*10000<< "\t"	<< gps_lon*10000<< "\t" << gpsbearing << "\t";
 	log_file << new_line.str() << "\n";
 	if(t - last_t_save > 10){
 		log_file.flush();

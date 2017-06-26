@@ -1,15 +1,15 @@
 /*
- * @(#)		Logger.h
+ * @(#)		Logger_aux.h
  * @version	1.0
- * @autor	C. Rouvière
+ * @autor	E. Antonio
  */
 
 /**
  * Write logs on hard-drive
  */
 
-#ifndef LOGGUER
-#define LOGGUER
+#ifndef LOGGUER_AUX
+#define LOGGUER_AUX
 
 #include "../../core/ComThread.h"
 #include "./State_machine.h"
@@ -18,12 +18,12 @@
 #include <iomanip>
 #include <fstream>
 
-class Logger : public ComThread{
+class Logger_aux : public ComThread{
 
 public:
 
-	Logger();
-	~Logger();
+	Logger_aux();
+	~Logger_aux();
 
 private:
 
@@ -40,18 +40,16 @@ private:
 	float gps_lon;
 	float thz;
 	float vthz;
-	float yawref;
 	float gpsbearing;
-	float uwb, uwpds;
+	float gpsreflat;
+	float gpsreflon;
+	float distance;
+	float uf;
+	float ufpd;
 	float motor;
 	float rudder;
 	float bow_thruster;
-	float alfab1;
-	float alfab2;
-	float kpw, kdw;
-	float dpw, bpw, mupw, ddw, bdw, mudw;
-        float Iz;
-
+	float kpf, kdf;
 
 //	float msgmod;
 

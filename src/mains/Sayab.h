@@ -17,6 +17,7 @@
 #include "../parts/sayab/Autonomy.h"
 #include "../parts/sayab/Cameras.h"
 #include "../parts/sayab/Logger.h"
+#include "../parts/sayab/Logger_aux.h"
 #include "../parts/sayab/Motors.h"
 #include "../parts/sayab/Remote_control.h"
 #include "../parts/sayab/Remote_monitor.h"
@@ -55,6 +56,7 @@ private:
 	Clock		internal_clock;
 	Gps		gps;
 	Logger		logger;
+	Logger_aux	logger_aux;
 	Motors		motors;
 	Remote_control	remote_control;
 	Remote_monitor	remote_monitor;

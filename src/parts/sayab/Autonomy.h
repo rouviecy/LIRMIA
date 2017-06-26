@@ -36,6 +36,7 @@ private:
 	float vthz;
 	float yawref;
 	float uw;
+	float uf;
 	float cam_detect_size[2];
 	float cam_detect_horizontal[2];
 	float cam_detect_vertical[2];

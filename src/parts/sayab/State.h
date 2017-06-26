@@ -14,6 +14,8 @@
 #include "../../core/ComThread.h"
 #include "math.h"
 
+#define R_EARTH 6378137
+
 class State : public ComThread{
 
 public:
@@ -40,6 +42,9 @@ private:
 	float vthz;
 	float yawref;
 	float yawrefp;
+	float gpsreflat;
+	float gpsreflon;
+	float gpsbearing;
 
 	void On_start();
 	void Job();
@@ -52,8 +57,18 @@ private:
 	float xk_1,vk_1;
 	float az, bz, dtz;
 
+	float xd,xkd,vkd,rkd;
+	float xkd_1,vkd_1;
+	float ad, bd, dtd;
+	float vd;
+
+	float latmean, dx, dy;
+	float distance, bearing;
+
 	float uw;
+	float uf;
 	float ew, ewp;
+	float ef, efp;
 
 	float ey1, ey2;
 	float alfab1, alfab2;
@@ -64,6 +79,9 @@ private:
         float ddw, bdw, mudw;
         float kpw, kdw;
 	float uwpds;
+
+	float ufpd;
+	float kpf, kdf;
 
 };
 
