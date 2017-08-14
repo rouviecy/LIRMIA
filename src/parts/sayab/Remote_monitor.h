@@ -37,6 +37,7 @@ private:
 	float thz;
 	float vthz;
 	float yawref;
+	float gpsbearing;
 	float gpsreflat;
 	float gpsreflon;
 	float distance;

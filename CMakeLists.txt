@@ -27,6 +27,7 @@ if(${IS_LIRMIA})
 		add_definitions(-DENABLE_SERIAL_ISS)
 #		add_definitions(-DENABLE_SERIAL_ISS_DEPTH)
 		add_definitions(-DENABLE_SERIAL_RS232_MODEM)
+#		add_definitions(-DENABLE_SERIAL_RS232_SONAR)
 #		add_definitions(-DENABLE_SERIAL_RS232_ECHO_X)
 #		add_definitions(-DENABLE_SERIAL_RS232_ECHO_Y)
 		add_definitions(-DENABLE_SERIAL_RS232_IMU)
@@ -48,7 +49,6 @@ elseif(${IS_SAYAB})
 		add_definitions(-DENABLE_CAM2)
 		add_definitions(-DENABLE_TCPCAM)		# needs TCP and CAM1/CAM2
 		add_definitions(-DENABLE_SIMULATOR)
-add_definitions(-DENABLE_SERIAL_RS232_MODEM)
 	else(${IS_SIMU})
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
@@ -68,8 +68,8 @@ elseif(${IS_R2D2})
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
 	else(${IS_SIMU})
-		set(ENABLE_GRAPHVIZ ON)
-		set(ENABLE_SDL ON)
+		set(ENABLE_GRAPHVIZ OFF)
+		set(ENABLE_SDL OFF)
 		add_definitions(-DENABLE_SERIAL)
 		add_definitions(-DENABLE_I2C)
 		add_definitions(-DENABLE_MOTORS)	# needs serial
@@ -122,6 +122,7 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Depth_MS5837.h		src/parts/Depth_MS5837.cpp
 	src/parts/Depth_BMP085.h		src/parts/Depth_BMP085.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
+	src/parts/Sonar.h			src/parts/Sonar.cpp
 	src/parts/Gps.h				src/parts/Gps.cpp
 	src/parts/Gyro_ITG3200.h		src/parts/Gyro_ITG3200.cpp
 	src/parts/Imu_UM6LT.h			src/parts/Imu_UM6LT.cpp

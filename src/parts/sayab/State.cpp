@@ -116,8 +116,11 @@ void State::Job(){
 	//yawrefp = 2.24375;
 	//yawrefp = gpsbearing;
 
-	gpsreflat = 0; //radian
-	gpsreflon = 0; //radian
+	//gpsreflat = 0.340333; //(3)radian
+	//gpsreflon = -1.73028; //(3)radian
+
+	gpsreflat = 0.340332; //(4)radian
+	gpsreflon = -1.73027; //(4)radian
 
 //CALCULATE DISTANCE & BEARING GPS
 latmean = (gpsreflat + lat)/2;

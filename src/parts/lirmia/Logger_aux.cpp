@@ -15,9 +15,9 @@ Logger_aux::Logger_aux() : ComThread(){
 			<< setfill('0') << setw(2) << now->tm_sec << "--LIRMIA_aux.log";
 	log_file.open(log_name.str());
 //pyaw
-	string header = "t\tstate\tyaw\tvyaw\tyawref\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tIz";
+	//string header = "t\tstate\tyaw\tvyaw\tyawref\tmotor1\tmotor2\float circuittmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tIz";
 //backsteppingyaw
-	//string header = "t\tstate\tyaw\tvyaw\tyawref\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwb\talfabw1\talfabw2\tIz";
+	string header = "t\tstate\tyaw\tvyaw\tyawref\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwb\talfabw1\talfabw2\tIz";
 //nlpdyaw
 	//string header = "t\tstate\tyaw\tvyaw\tyawref\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuwpds\tkpw\tkdw\tdpw\tbpw\tmupw\tddw\tbdw\tmudw\tIz";
 
@@ -74,7 +74,7 @@ void Logger_aux::Job(){
 			<< motor[0]	<< "\t"	<<	motor[1]	<< "\t"	<< 	motor[2]     << "\t" <<      motor[3]	     << "\t"
 			<< cam_pipeline_angle[0]<< "\t" << cam_pipeline_angle[1]<< "\t" << cam_pipeline_distance[0]<< "\t"<< cam_pipeline_distance[1]<< "\t"
                         << cam_detect_horizontal[0]<< "\t"<< cam_detect_horizontal[1]<< "\t"<< cam_detect_vertical[0]<< "\t"<< cam_detect_vertical[1]<< "\t"
-//			<< uwb	   <<  alfabw1    << "\t" <<    alfabw2   << "\t" //BACKSTEPPING
+			<< uwb	   <<  alfabw1    << "\t" <<    alfabw2   << "\t" //BACKSTEPPING
 //			<<   uwpds   << "\t" <<	kpw   << "\t" <<   kdw	 << "\t" //NLPDYAW
 //			<<   dpw     << "\t" <<  bpw   << "\t" <<   mupw  << "\t"  <<   ddw  << "\t" <<    bdw       << "\t" <<      mudw   << "\t"
 			<<    Iz     << "\t";

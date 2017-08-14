@@ -62,8 +62,8 @@ void Gps::Process_serial_data(void* object, char* input_msg){
 		}
 		self->gps_xy[0] = x - self->offset_x;
 		self->gps_xy[1] = y - self->offset_y;
-		self->gps_lat = lat_float;
-		self->gps_lon = lon_float;
+		self->gps_lat = (is_N ? +1. : -1.)*lat_float;
+		self->gps_lon = (is_W ? -1. : +1.)*lon_float;
 //		self->gps_lat = 10;
 //		self->gps_lon = 10;
 		cout << self->gps_lat << "\t" << self->gps_lon << "\t" << self->gps_xy[0] << "\t" << self->gps_xy[1] << endl;

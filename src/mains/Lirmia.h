@@ -29,6 +29,7 @@
 //#include "../parts/Depth_MS5803.h"
 #include "../parts/Depth_MS5837.h"
 #include "../parts/Echosonder.h"
+//#include "../parts/Sonar.h"
 #include "../parts/Imu_razor.h"
 #include "../parts/Subscriber.h"
 
@@ -40,6 +41,7 @@
 #define DEV_SERIAL_ISS		"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00007350-if00"
 #define DEV_SERIAL_ISS_DEPTH	"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00014561-if00"
 #define DEV_SERIAL_RS232_MODEM	"/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
+//#define DEV_SERIAL_RS232_SONAR	"/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
 #define DEV_SERIAL_RS232_ECHO_X	"/dev/serial/by-id/usb-FTDI_US232R_FTE4451C-if00-port0" // TO CHANGE
 #define DEV_SERIAL_RS232_ECHO_Y	"/dev/serial/by-id/usb-FTDI_US232R_FTE4451C-if00-port0" // TO CHANGE
 #define DEV_SERIAL_RS232_IMU 	"/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AH03FIKV-if00-port0"
@@ -53,7 +55,7 @@ public:
 
 private:
 
-	Serial serial_arduino, serial_iss, serial_iss_depth, serial_rs232_modem, serial_rs232_echo_x, serial_rs232_echo_y, serial_imu;
+	Serial serial_arduino, serial_iss, serial_iss_depth, serial_rs232_modem, serial_rs232_echo_x, serial_rs232_echo_y, serial_imu, serial_rs232_s;
 
 	void Init_serial();
 
@@ -64,6 +66,7 @@ private:
 //	Depth_MS5803		depth;
 	Depth_MS5837		depth;
 	Echosonder		echosonder;
+//	Sonar			sonar;
 	Imu_razor		imu;
 	Logger			logger;
 	Logger_aux		logger_aux;

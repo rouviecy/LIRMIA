@@ -25,7 +25,7 @@ typedef struct{
 	float yawref;
 	float uw, uf;
 	float distance;
-	float gpsreflat, gpsreflon;
+	float gpsbearing, gpsreflat, gpsreflon;
 //	float msgmod0, msgmod1, msgmod2, msgmod3;
 	int motor;
 	int rudder;
@@ -137,6 +137,7 @@ void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
 	string text_motor3 = "bow thruster = " + to_string(monitor->bow_thruster) + "%";
 	string text_lat = "lat = " + to_string(monitor->lat);
 	string text_lon = "lon = " + to_string(monitor->lon);
+	string text_gpsbearing = "gpsbearing = " + to_string(monitor->gpsbearing);
 	string text_gpsreflat = "gpsreflat = " + to_string(monitor->gpsreflat);
 	string text_gpsreflon = "gpsreflon = " + to_string(monitor->gpsreflon);
 	string text_distance = "distance = " + to_string(monitor->distance) + " m";	
@@ -156,9 +157,10 @@ void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
 	cv::putText(*img, text_motor3,	cv::Point(10, 260),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_lat,	cv::Point(10, 280),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_lon,	cv::Point(10, 300),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_gpsreflat,cv::Point(10, 320), 	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_gpsreflon,cv::Point(10, 340),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_distance,cv::Point(10, 360),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_gpsbearing,cv::Point(10, 320),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_gpsreflat,cv::Point(10, 340), 	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_gpsreflon,cv::Point(10, 360),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_distance,cv::Point(10, 380),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 //	cv::putText(*img, text_msgmod0,	cv::Point(10, 280), 	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 //	cv::putText(*img, text_msgmod1,	cv::Point(10, 300),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 //	cv::putText(*img, text_msgmod2,	cv::Point(10, 320),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
@@ -230,9 +232,9 @@ int main(int argc, char* argv[]){
 		while(obj_callback.go_on){
 			string msg_monitor = string(tcp_client_monitor.Receive());
 			size_t next;
-			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 19){
+			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 20){
 				vector <string> tokens;
-				for(size_t current = 0; tokens.size() < 19; current = next + 1){
+				for(size_t current = 0; tokens.size() < 20; current = next + 1){
 					next = msg_monitor.find_first_of("|", current);
 					tokens.push_back(msg_monitor.substr(current, next - current));
 				}
@@ -250,11 +252,12 @@ int main(int argc, char* argv[]){
 				monitor.motor		= (int) stof(tokens[11]);
 				monitor.rudder		= (int) stof(tokens[12]);
 				monitor.bow_thruster	= (int) stof(tokens[13]);
-                             	monitor.lat             = stof(tokens[14]) / 10000;
-                             	monitor.lon             = stof(tokens[15]) / 10000;
-				monitor.gpsreflat	= stof(tokens[16]) / 10000;
-				monitor.gpsreflon	= stof(tokens[17]) / 10000;
-				monitor.distance	= stof(tokens[18]);
+                             	monitor.lat             = stof(tokens[14]) / 1000;
+                             	monitor.lon             = stof(tokens[15]) / 1000;
+				monitor.gpsbearing	= stof(tokens[16]);
+;				monitor.gpsreflat	= stof(tokens[17]) / 1000;
+				monitor.gpsreflon	= stof(tokens[18]) / 1000;
+				monitor.distance	= stof(tokens[19]);
 //				monitor.msgmod0		= stof(tokens[14]);
 //				monitor.msgmod1		= stof(tokens[15]);
 //				monitor.msgmod2		= stof(tokens[16]);

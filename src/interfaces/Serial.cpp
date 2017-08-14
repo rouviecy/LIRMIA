@@ -39,7 +39,7 @@ void Serial::Serial_init(const char* path, int baudrate, bool canonical_mode){
 		tio_new.c_cflag |= CREAD | CLOCAL;
 		tio_new.c_iflag |= IGNPAR;
 		tio_new.c_cc[VTIME] = 0;
-		tio_new.c_cc[VMIN] = SERIAL_BUFFER_LEN;
+		tio_new.c_cc[VMIN] = 0;//SERIAL_BUFFER_LEN; MAJOR CHANGE!!!
 		usleep(20000);
 		tcflush(device, TCIFLUSH);
 		tcsetattr(device, TCSANOW, &tio_new);
@@ -63,5 +63,12 @@ char* Serial::Serial_read(){
 	return buf;
 }
 
+char* Serial::Serial_read2(unsigned int lon){
+	bzero(buf, lon);
+	unsigned int res = read(device, buf, lon);
+	return buf;
+}
+
+void Serial::Flush(){tcflush(device, TCIFLUSH);}
 void Serial::Lock(){mu.lock();}
 void Serial::Unlock(){mu.unlock();}

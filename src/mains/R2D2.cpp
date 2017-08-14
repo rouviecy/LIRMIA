@@ -10,12 +10,15 @@ R2D2::R2D2() : Maestro(){
 	Add_thread(&compass,		"Compass",			100000);	// 100 ms
 	Add_thread(&internal_clock,	"Clock",			500000);	// 500 ms
 	Add_thread(&depth,		"Depth",			500000);	// 500 ms
+	Add_thread(&sonar,		"Sonar",			25000);		// 25 ms
+	Add_thread(&sonima,		"Sonima",			50000);		// 25 ms
 //	Add_thread(&gyro,		"Gyro",				100000);	// 100 ms
 	Add_thread(&logger,		"Logger",			1000000);	// 1 s
 	Add_thread(&motors,		"Motors",			10000);		// 10 ms
 	Add_thread(&remote_control,	"Remote control",		-1);		// manual loop
 	Add_thread(&remote_monitor,	"Remote monitor",		100000);	// 100 ms
 	Add_thread(&state,		"State",			10000);		// 10 ms
+//	Add_thread(&statetry,		"Statetry",			10000);		// 10 ms
 	Add_thread(&state_machine,	"State machine",		10000);		// 10 ms
 
 	Init_serial_and_i2c();
@@ -36,6 +39,9 @@ void R2D2::Shutdown(){
 	#ifdef ENABLE_I2C
 		i2c.I2C_close();
 	#endif
+	#ifdef ENABLE_SERIAL_RS232_SONAR
+		serial_rs232_sonar.Serial_close();
+	#endif
 }
 
 void R2D2::Init_serial_and_i2c(){
@@ -48,6 +54,10 @@ void R2D2::Init_serial_and_i2c(){
 		compass.Set_i2c(&i2c);
 		depth.Set_i2c(&i2c);
 //		gyro.Set_i2c(&i2c);
+	#endif
+	#ifdef ENABLE_SERIAL_RS232_SONAR
+		serial_rs232_sonar.Serial_init(DEV_SERIAL_RS232_SONAR, B115200, true);
+		sonar.Set_serial_s(&serial_rs232_sonar);
 	#endif
 }
 

@@ -23,7 +23,7 @@ class Serial{
 
 public:
 
-	#define SERIAL_BUFFER_LEN 128
+	#define SERIAL_BUFFER_LEN 372//128 MAJOR CHANGE
 
 	Serial();
 
@@ -32,7 +32,9 @@ public:
 
 	void Serial_write(unsigned char* msg, int len);
 	char* Serial_read();
+	char* Serial_read2(unsigned int lon);
 
+	void Flush();
 	void Lock();
 	void Unlock();
 
