@@ -41,7 +41,7 @@ void Autonomy::Job(){
 		tzer = false;
 		motor		= remote_forward / 3;
 		rudder		= remote_turn;
-		bow_thruster	= remote_turn;
+		bow_thruster	= remote_turn * 0.5;
 	}
 	else if(fsm_state == EXPLORE){
 		motor 		= 0.1;

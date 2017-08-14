@@ -61,21 +61,23 @@ elseif(${IS_SAYAB})
 		add_definitions(-DENABLE_TCPCAM)		# needs TCP and CAM1/CAM2
 	endif(${IS_SIMU})
 elseif(${IS_R2D2})
+	set(ENABLE_GRAPHVIZ ON)
 	if(${IS_SIMU})
-		set(ENABLE_GRAPHVIZ ON)
+		#set(ENABLE_GRAPHVIZ ON)
 		set(ENABLE_SDL ON)
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
 	else(${IS_SIMU})
-		set(ENABLE_GRAPHVIZ OFF)
-		set(ENABLE_SDL OFF)
+		#set(ENABLE_GRAPHVIZ ON)
+		set(ENABLE_SDL ON)
 		add_definitions(-DENABLE_SERIAL)
 		add_definitions(-DENABLE_I2C)
 		add_definitions(-DENABLE_MOTORS)	# needs serial
 		add_definitions(-DENABLE_TCP)
 		add_definitions(-DENABLE_CAM1)
 		add_definitions(-DENABLE_TCPCAM)	# needs TCP and CAM1
+		add_definitions(-DENABLE_SERIAL_RS232_SONAR)#mod
 	endif(${IS_SIMU})
 elseif(${IS_COOKIE})
 	if(${IS_SIMU})
@@ -190,14 +192,18 @@ elseif(${IS_R2D2})
 		src/parts/r2d2/Remote_monitor.h		src/parts/r2d2/Remote_monitor.cpp
 		src/parts/r2d2/State.h			src/parts/r2d2/State.cpp
 		src/parts/r2d2/State_machine.h		src/parts/r2d2/State_machine.cpp
+		src/parts/r2d2/Sonima.h			src/parts/r2d2/Sonima.cpp
+		#src/parts/r2d2/Statetry.cpp
 	)
 	add_executable(r2d2 src/mains/R2D2.cpp)
 	add_executable(camera_r2d2 src/remote/remote_cam_r2d2.cpp)
 	add_executable(remote_r2d2 src/remote/remote_control_monitor_r2d2.cpp)
+#	add_executable(sonar_r2d2 src/remote/remote_control_sonar_r2d2.cpp)
 	target_link_libraries(BETTERAVE_USER_R2D2 BETTERAVE_USER_COMMON BETTERAVE_CORE VISION_LIBS ${LIBS} ${OTHER_LIBS})
 	target_link_libraries(r2d2 BETTERAVE_USER_R2D2)
 	target_link_libraries(camera_r2d2 BETTERAVE_USER_R2D2)
 	target_link_libraries(remote_r2d2 BETTERAVE_USER_R2D2)
+#	target_link_libraries(sonar_r2d2 BETTERAVE_USER_R2D2)
 elseif(${IS_COOKIE})
 	add_library(BETTERAVE_USER_COOKIE
 		src/parts/cookie/Autonomy.h		src/parts/cookie/Autonomy.cpp

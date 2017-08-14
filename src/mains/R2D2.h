@@ -21,7 +21,7 @@
 #include "../parts/r2d2/Remote_control.h"
 #include "../parts/r2d2/Remote_monitor.h"
 #include "../parts/r2d2/State.h"
-#include "../parts/r2d2/Statetry.h"//-----------------------------------
+//#include "../parts/r2d2/Statetry.h"//-----------------------------------
 #include "../parts/r2d2/State_machine.h"
 #include "../parts/r2d2/Sonima.h"//-----------------------------------
 #include "../parts/Clock.h"
