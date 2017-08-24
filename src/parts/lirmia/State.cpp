@@ -18,7 +18,7 @@ State::State() : ComThread(){
 
 	uzpdc = 0.; kpcz =90; kdcz = 8.5; gcz = 30;
 
-	uwb = 0.; alfabw1 = 0.1; alfabw2 = 0.01;
+	uwb = 0.; alfabw1 = 4.4; alfabw2 = 0.4;
 	uzb = 0.; alfabz1 = 1; alfabz2 = 1; Iz = 1;
 
 	uwpds = 0.; kpw = 0.; dpw = 5; bpw = 0.65; mupw = 1; kdw = 0.; ddw = 20; bdw = 0; mudw = 1;

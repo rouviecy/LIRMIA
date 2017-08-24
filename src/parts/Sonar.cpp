@@ -34,7 +34,7 @@ void Sonar::On_start(){
 }
 
 void Sonar::IO(){
-	Link_output("obst_xy",	COMFLOAT, 2, obst_xy);
+	//Link_output("obst_xy",	COMFLOAT, 2, obst_xy);
 	Link_output("sData", 	COMFLOAT,  1,&sData);
 	Link_output("fready", 	COMFLOAT,  1,&fready);
 }

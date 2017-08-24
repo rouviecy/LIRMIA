@@ -13,6 +13,8 @@ int main(int argc, char* argv[]){
 	#ifdef ENABLE_CAM1
 		cli.Subscribe_cam("Lirmia camera 1",	argv[1], 4243, 800, 150);
 		cli.Subscribe_cam("Lirmia blobs 1",	argv[1], 4245, 1200, 150);
+		cli.Subscribe_cam("image",		argv[1], 6247, 1200, 400);
+		cli.Subscribe_cam("polar",		argv[1], 6248, 800, 400);
 	#endif
 
 	#ifdef ENABLE_CAM2

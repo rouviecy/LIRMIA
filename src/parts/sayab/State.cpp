@@ -17,7 +17,7 @@ State::State() : ComThread(){
 	latmean = 0., dx = 0., dy = 0., distance = 0., bearing = 0.;
 	ey1 = 0.; ey2 = 0.; ew = 0.; ewp = 0.; ef = 0.; efp = 0.;
 	uw = 0.; uf = 0.;
-	uwb = 0.; alfab1 = 1.2; alfab2 = 1; Iz = 1;
+	uwb = 0.; alfab1 = 1.5; alfab2 = 1; Iz = 1;
 	uwpds = 0.; kpw = 0.; dpw = 5; bpw = 0.65; mupw = 1; kdw = 0.; ddw = 20; bdw = 0; mudw = 1;
 	ufpd = 0.; kpf = 10; kdf = 1;
 }

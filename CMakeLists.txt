@@ -3,8 +3,8 @@ project(betterave)
 
 find_package(PkgConfig)
 
-set(IS_LIRMIA OFF)
-set(IS_SAYAB ON)
+set(IS_LIRMIA ON)
+set(IS_SAYAB OFF)
 set(IS_R2D2 OFF)
 set(IS_COOKIE OFF)
 set(IS_SIMU OFF)
@@ -26,8 +26,8 @@ if(${IS_LIRMIA})
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
 #		add_definitions(-DENABLE_SERIAL_ISS_DEPTH)
-		add_definitions(-DENABLE_SERIAL_RS232_MODEM)
-#		add_definitions(-DENABLE_SERIAL_RS232_SONAR)
+#		add_definitions(-DENABLE_SERIAL_RS232_MODEM)
+		add_definitions(-DENABLE_SERIAL_RS232_SONAR)
 #		add_definitions(-DENABLE_SERIAL_RS232_ECHO_X)
 #		add_definitions(-DENABLE_SERIAL_RS232_ECHO_Y)
 		add_definitions(-DENABLE_SERIAL_RS232_IMU)
@@ -125,11 +125,13 @@ add_library(BETTERAVE_USER_COMMON
 	src/parts/Depth_BMP085.h		src/parts/Depth_BMP085.cpp
 	src/parts/Echosonder.h			src/parts/Echosonder.cpp
 	src/parts/Sonar.h			src/parts/Sonar.cpp
+	src/parts/Sonima.cpp 			src/parts/Sonima.h
 	src/parts/Gps.h				src/parts/Gps.cpp
 	src/parts/Gyro_ITG3200.h		src/parts/Gyro_ITG3200.cpp
 	src/parts/Imu_UM6LT.h			src/parts/Imu_UM6LT.cpp
 	src/parts/Imu_razor.h			src/parts/Imu_razor.cpp
 	src/parts/Subscriber.h			src/parts/Subscriber.cpp
+
 	src/interfaces/Maths_tools.h
 )
 
