@@ -67,11 +67,16 @@ void Sonima::Job(){
 		}
 	
 	}
-	sonar_server.Send_tcp_img(image,  6247);
+//	sonar_server.Send_tcp_img(image,  6247);
 	cv::Point2f center( (float)polar.cols / 2, (float)polar.rows / 2 );
 	cvLinearPolar(&iplimgi, &iplimgp, center, 100,CV_WARP_INVERSE_MAP );
-	
-	sonar_server.Send_tcp_img(polar,  6248);
+	cv::Mat image2, image3, polar2, polar3;
+	cv::threshold(image,image2,100,255,3);
+	cv::GaussianBlur(image2, image3, cv::Size(5,5),0,0);
+	sonar_server.Send_tcp_img(image3,  6247);
+	cv::threshold(polar,polar2,100,255,3);
+	cv::GaussianBlur(polar2, polar3, cv::Size(5,5),0,0);
+	sonar_server.Send_tcp_img(polar3,  6248);
 	//usleep(500000);
 	/*#ifdef ENABLE_CAM1
 		capture >> img;

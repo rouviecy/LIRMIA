@@ -41,8 +41,8 @@
 //#define DEV_SERIAL_ARDUINO      "/dev/serial/by-id/usb-Arduino_Srl_Arduino_Uno_75430333137351C012E0-if00"
 #define DEV_SERIAL_ISS		"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00007350-if00"
 #define DEV_SERIAL_ISS_DEPTH	"/dev/serial/by-id/usb-Devantech_Ltd._USB-ISS._00014561-if00"
-//#define DEV_SERIAL_RS232_MODEM	"/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
-#define DEV_SERIAL_RS232_SONAR	"/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
+#define DEV_SERIAL_RS232_MODEM	"/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
+//#define DEV_SERIAL_RS232_SONAR	"/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
 #define DEV_SERIAL_RS232_ECHO_X	"/dev/serial/by-id/usb-FTDI_US232R_FTE4451C-if00-port0" // TO CHANGE
 #define DEV_SERIAL_RS232_ECHO_Y	"/dev/serial/by-id/usb-FTDI_US232R_FTE4451C-if00-port0" // TO CHANGE
 #define DEV_SERIAL_RS232_IMU 	"/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AH03FIKV-if00-port0"

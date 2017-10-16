@@ -16,9 +16,9 @@ State::State() : ComThread(){
 	ew = 0.; ewp = 0.; ez = 0.; ezp = 0.; ewb = 0.; ezb = 0.;
 	uw = 0.; uz = 0.;
 
-	uzpdc = 0.; kpcz =90; kdcz = 8.5; gcz = 30;
+	uzpdc = 0.; kpcz =90; kdcz = 11.5; gcz = 30;
 
-	uwb = 0.; alfabw1 = 4.4; alfabw2 = 0.4;
+	uwb = 0.; alfabw1 = 6.4; alfabw2 = 0.6;
 	uzb = 0.; alfabz1 = 1; alfabz2 = 1; Iz = 1;
 
 	uwpds = 0.; kpw = 0.; dpw = 5; bpw = 0.65; mupw = 1; kdw = 0.; ddw = 20; bdw = 0; mudw = 1;
@@ -179,10 +179,10 @@ void State::Job(){
 
 	m=(y2-y1)/(x2-x1);
 //	y=m*(tim-x1) + y1;
-	//y = 0.5;
+	y = 0.8;
 
-	if( m>0 ) {if(y>y2){y=y2;}}
-	else	  {if(y<y2){y=y2;}}
+	//if( m>0 ) {if(y>y2){y=y2;}}
+	//else	  {if(y<y2){y=y2;}}
 	zref  = y;
 	zrefp = 0;
 
@@ -202,6 +202,7 @@ void State::Job(){
 	uzb = Iz*(-ez + alfabz1*(ezb + alfabz1*ezb) + alfabz2*ezb);
 
 //Nonliner PD based on saturation functions
+	dpw = 10; bpw = 2.8; mupw = 1; ddw = 20; bdw = 0.26; mudw = 1;
 	ewp = vthxyz[2];
 	if(fabs(ew) > dpw) {kpw = bpw * pow(fabs(ew),(mupw - 1));}
 	else		  {kpw = bpw * pow(dpw,(mupw - 1));}
@@ -247,9 +248,9 @@ void State::Job(){
         else {uzpf_anterior = uzpf;}
 
 //Active Control
-	uw = uwb;
+//	uw = uwb;
 //	uw = uwpds;
-//	uz = uzpdc;
+	uz = uzpdc;
 //	uz = uzb;
 //	uz = uzpds;
 //	uz = uzpf

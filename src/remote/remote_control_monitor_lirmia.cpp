@@ -139,6 +139,7 @@ void Resize_monitor(struct_monitor *monitor){
 }
 
 void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
+	string text_t = "t = " + to_string(monitor->t);
 	string text_ti = "ti = " + to_string(monitor->ti);
 	string text_x = "x = " + to_string(monitor->x) + " m";
 	string text_y = "y = " + to_string(monitor->y) + " m";
@@ -159,6 +160,7 @@ void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
 	string text_motor4 = "motor4 = " + to_string(monitor->motor4) + "%";
 	string text_state = State_machine::Decode_state_str(monitor->state) + string(monitor->unlocked ? " [unlocked]" : " [LOCKED]");
 	cv::putText(*img, text_state,	cv::Point(10, 20),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_t,	cv::Point(10, 40),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_ti,	cv::Point(10, 60),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_x,	cv::Point(10, 80),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_y,	cv::Point(10, 100),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
