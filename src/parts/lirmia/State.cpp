@@ -19,8 +19,12 @@ State::State() : ComThread(){
 	uzpdc = 0.; kpcz =90; kdcz = 11.5; gcz = 30;
 
 	uwb = 0.; alfabw1 = 6.4; alfabw2 = 0.6;
+<<<<<<< HEAD
 	//uzb = 0.; alfabz1 = 2.9; alfabz2 = 1.9; Iz = 1; masa=35.8; WB=-3; //z
 	uzb = 0.; alfabz1 = 4.5; alfabz2 = 1.9; Iz = 1; masa=35.8; WB=-3; //z&yaw alfabz1=3.1, 3.3  alfabz2=1.9
+=======
+	uzb = 0.; alfabz1 = 1; alfabz2 = 1; Iz = 1;
+>>>>>>> ab42e2afa3498adcf5cd2149d4469fdd610dec21
 
 	uwpds = 0.; kpw = 0.; kdw = 0.; 
 	dpw = 5; bpw = 0.65; mupw = 1; ddw = 20; bdw = 0; mudw = 1;
@@ -191,8 +195,13 @@ void State::Job(){
 
 
 	m=(y2-y1)/(x2-x1);
+<<<<<<< HEAD
 	y=m*(tim-x1) + y1;
 //	y = 1.5;
+=======
+//	y=m*(tim-x1) + y1;
+	y = 0.8;
+>>>>>>> ab42e2afa3498adcf5cd2149d4469fdd610dec21
 
 	//if( m>0 ) {if(y>y2){y=y2;}}
 	//else	  {if(y<y2){y=y2;}}
@@ -262,10 +271,17 @@ void State::Job(){
         else {uzpf_anterior = uzpf;}
 
 //Active Control
+<<<<<<< HEAD
 	uw = -uwb;
 //	uw = uwpds;
 //	uz = uzpdc;
 	uz = -uzb;
+=======
+//	uw = uwb;
+//	uw = uwpds;
+	uz = uzpdc;
+//	uz = uzb;
+>>>>>>> ab42e2afa3498adcf5cd2149d4469fdd610dec21
 //	uz = uzpds;
 //	uz = uzpf
 	Critical_send();

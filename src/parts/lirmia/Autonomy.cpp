@@ -111,6 +111,7 @@ void Autonomy::Job(){
 
 		//motor[0] = 0.001 - 0.004 * uw;   //Active control BACK
 		//motor[1] = 0.001 + 0.004 * uw;   //Active control BACK
+<<<<<<< HEAD
 
 		motor[0] = 0.001 + 0.004 * uw;   //Active control
 		motor[1] = 0.001 - 0.004 * uw;   //Active control
@@ -119,6 +120,16 @@ void Autonomy::Job(){
 
 		//motor[0] = 0.; //Stay
 		//motor[1] = 0.; //Stay
+=======
+
+		//motor[0] = 0.001 + 0.004 * uw;   //Active control
+		//motor[1] = 0.001 - 0.004 * uw;   //Active control
+		motor[2] = 0.001 - 0.004 * uz; //Active control
+		motor[3] = 0.001 - 0.004 * uz; //Active control
+
+		motor[0] = 0.; //Stay
+		motor[1] = 0.; //Stay
+>>>>>>> ab42e2afa3498adcf5cd2149d4469fdd610dec21
 		//motor[2] = 0.; //Stay
 		//motor[3] = 0.; //Stay
 	}

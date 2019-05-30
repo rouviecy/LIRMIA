@@ -15,7 +15,11 @@ Logger::Logger() : ComThread(){
 			<< setfill('0') << setw(2) << now->tm_sec << "--LIRMIA.log";
 	log_file.open(log_name.str());
 //pdbouy
+<<<<<<< HEAD
 	//string header = "t\tstate\tz\tvz\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpdc\tkpcz\tkdcz\tIz\tgcz";
+=======
+	string header = "t\tstate\tz\tvz\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpdc\tkpcz\tkdcz\tIz\tgcz";
+>>>>>>> ab42e2afa3498adcf5cd2149d4469fdd610dec21
 //backstepping
 	string header = "t\tstate\tz\tvz\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzb\talfabz1\talfabz2\tmasa\tWB\tIz\tgcz";
 //nlpdz

@@ -166,12 +166,20 @@ float Sonar::Config_sonar(Serial* serial){
 	mtH[52]=0;//1;
 	mtH[53]=144;//144;//200; //Nbins
 	mtH[54]=1;//1;//0;
+<<<<<<< HEAD
 	mtH[43]=160;//84 //Igain
 	mtH[44]=160;//84;
 	mtH[41]=80;//Adspan
 	mtH[42]=80;//ADLow
 
 	
+=======
+	mtH[43]=84;//84 //Igain
+	mtH[44]=84;//84;
+	mtH[41]=100;//Adspan
+	mtH[42]=80;//ADLow
+
+>>>>>>> ab42e2afa3498adcf5cd2149d4469fdd610dec21
 	serial->Lock();
 	
 	for(int i=0;i<82;i++){
