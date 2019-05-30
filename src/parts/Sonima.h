@@ -1,12 +1,10 @@
 /*
  * @(#)		Sonima.h
- * @version	1.0
+ * @version	1.2
  * @autor	L. Revueltas
  */
 
-/**
- * Two cameras taking pictures
- */
+
 
 #ifndef SONIMA
 #define SONIMA
@@ -41,7 +39,7 @@ private:
 	//Blobs blobs;
 	//Camera_server camera_server;
 	//Reco reco;
-	float* sData;
+	float sData2[245];
 	int fready;
 	//Para hacer el mapa de datos
 	int w;

@@ -35,7 +35,7 @@ void Sonar::On_start(){
 
 void Sonar::IO(){
 	//Link_output("obst_xy",	COMFLOAT, 2, obst_xy);
-	Link_output("sData", 	COMFLOAT,  1,&sData);
+	Link_output("sData2", 	COMFLOAT,  245,sData2);
 	Link_output("fready", 	COMFLOAT,  1,&fready);
 }
 
@@ -159,6 +159,19 @@ float Sonar::Get_user(Serial* serial){
 float Sonar::Config_sonar(Serial* serial){
 	float result = -1;
 	unsigned char mtH[82]={64,48,48,52,67,76,0,255,2,71,19,128,2, 1,  6,35,17,209, 92,143,0,209,92,143,0,147, 89,102,92,147, 89,102,92,100,0, 20,0,64,6,192,18,30,140, 84, 84,125,0,125,0,25,16,11,0, 144,1,244,1,100,0,64,6,1,0,0,0,80,81,9,8, 84, 84,0,0, 90,0,125,0,0,0,0,0,10};//0.9°
+
+	mtH[35]=40;//20;//250; //Distancia en dm
+	mtH[36]=0;
+	mtH[51]=22;//11;//5;  //ADInterval
+	mtH[52]=0;//1;
+	mtH[53]=144;//144;//200; //Nbins
+	mtH[54]=1;//1;//0;
+	mtH[43]=160;//84 //Igain
+	mtH[44]=160;//84;
+	mtH[41]=80;//Adspan
+	mtH[42]=80;//ADLow
+
+	
 	serial->Lock();
 	
 	for(int i=0;i<82;i++){
@@ -206,6 +219,7 @@ float* Sonar::Get_data(Serial* serial, float* data){
 	for (int i=0;i<245;i++){
 		//cout<<"bandera 2"<<endl;
 		data2[i]=answer1[i];
+		sData2[i]=answer1[i];
 		 //data[i]=int(answer1[i]);
 		//cout<<+answer1[i]<<" "<<i<<" ";		
 		//cout<<data2[i]<<" ";	

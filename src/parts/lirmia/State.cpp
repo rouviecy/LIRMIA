@@ -16,13 +16,16 @@ State::State() : ComThread(){
 	ew = 0.; ewp = 0.; ez = 0.; ezp = 0.; ewb = 0.; ezb = 0.;
 	uw = 0.; uz = 0.;
 
-	uzpdc = 0.; kpcz =90; kdcz = 8.5; gcz = 30;
+	uzpdc = 0.; kpcz =90; kdcz = 11.5; gcz = 30;
 
-	uwb = 0.; alfabw1 = 4.4; alfabw2 = 0.4;
-	uzb = 0.; alfabz1 = 1; alfabz2 = 1; Iz = 1;
+	uwb = 0.; alfabw1 = 6.4; alfabw2 = 0.6;
+	//uzb = 0.; alfabz1 = 2.9; alfabz2 = 1.9; Iz = 1; masa=35.8; WB=-3; //z
+	uzb = 0.; alfabz1 = 4.5; alfabz2 = 1.9; Iz = 1; masa=35.8; WB=-3; //z&yaw alfabz1=3.1, 3.3  alfabz2=1.9
 
-	uwpds = 0.; kpw = 0.; dpw = 5; bpw = 0.65; mupw = 1; kdw = 0.; ddw = 20; bdw = 0; mudw = 1;
-	uzpds = 0.; kpz = 0.; dpz = 5; bpz = 0.65; mupz = 1; kdz = 0.; ddz = 20; bdz = 0; mudz = 1;
+	uwpds = 0.; kpw = 0.; kdw = 0.; 
+	dpw = 5; bpw = 0.65; mupw = 1; ddw = 20; bdw = 0; mudw = 1;
+	uzpds = 0.; kpz = 0.; kdz = 0.; 
+	dpz = 20; bpz = 0.65; mupz = 1; ddz = 20; bdz = 0; mudz = 1;
 
 	uzpf = 0.; uzpf_actual = 0.; uzpf_anterior = 0.; uzpf_2anterior = 0.;
 	theta = 0.; q = 0.; z = 0.;
@@ -45,7 +48,7 @@ void State::IO(){
 	Link_input("imu_thxyz",		COMFLOAT, 3, imu_thxyz);
 	Link_input("simu_xyz",		COMFLOAT, 3, simu_xyz);
 	Link_input("simu_thxyz",	COMFLOAT, 3, simu_thxyz);
-	Link_input("modmsg",		COMFLOAT, 3, modmsg);
+	Link_input("modmsg",		COMFLOAT, 4, modmsg);
 
 	Link_output("xyz",		COMFLOAT, 3, xyz);
 	Link_output("vxyz",		COMFLOAT, 3, vxyz);
@@ -55,7 +58,7 @@ void State::IO(){
 	Link_output("zref",		COMFLOAT, 1, &zref);
 	Link_output("vthz",             COMFLOAT, 1, &vthz);
         Link_output("vz",               COMFLOAT, 1, &vz);
-        Link_output("mywxy",            COMFLOAT, 2, mywxy);
+        Link_output("mydwxy",           COMFLOAT, 4, mydwxy);
 
 	Link_output("uw",		COMFLOAT, 1, &uw);
 	Link_output("uz",		COMFLOAT, 1, &uz);
@@ -96,6 +99,8 @@ void State::IO(){
 	Link_output("f1",	        COMFLOAT, 1, &f1);
 	Link_output("h",		COMFLOAT, 1, &h);
 
+	Link_output("masa",		COMFLOAT, 1, &masa);
+	Link_output("WB",		COMFLOAT, 1, &WB);
 	Link_output("Iz",		COMFLOAT, 1, &Iz);
 	Link_output("gcz",		COMFLOAT, 1, &gcz);
 }
@@ -114,9 +119,10 @@ void State::Job(){
 		thxyz[0] = imu_thxyz[2];
 		thxyz[1] = imu_thxyz[1];
 		thxyz[2] = imu_thxyz[0];
-		mywxy[0] = modmsg[0];
-		mywxy[1] = modmsg[1];
-		mywxy[2] = modmsg[2];
+		mydwxy[0] = modmsg[0];
+		mydwxy[1] = modmsg[1];
+		mydwxy[2] = modmsg[2];
+		mydwxy[3] = modmsg[3];
  	#endif
 
 //cout << "z : " <<  xyz[2] << endl;
@@ -172,17 +178,24 @@ void State::Job(){
         //yawrefp = 2.24375;
 	//yawref = yawmod;
 
-	if(0<=tim  && tim<70){		x1=0;    y1=0;     x2=60;    y2=4;}
+	/*if(0<=tim  && tim<70){		x1=0;    y1=0;     x2=60;    y2=4;}
 	if(70<=tim && tim<100){		x1=70;   y1=4;     x2=90;    y2=2.5;}
 	if(100<=tim && tim<130){	x1=100;	 y1=2.5;   x2=120;   y2=1;}
-	if(130<=tim){			x1=130;  y1=1;     x2=150;   y2=0;}
+	if(130<=tim){			x1=130;  y1=1;     x2=150;   y2=0;}*/
+
+	if(0<=tim  && tim<50){		x1=0;    y1=0.3;     x2=50;    y2=1;}
+	if(50<=tim  && tim<90){		x1=50;   y1=1;     x2=120;    y2=1.1;}
+	if(120<=tim && tim<160){	x1=120;   y1=1.1;   x2=160;    y2=0.7;}
+	if(160<=tim  && tim<200){	x1=160;  y1=0.7;   x2=200;    y2=0.6;}
+	if(200<=tim ){			x1=200;	 y1=0.6;   x2=230;    y2=0;}
+
 
 	m=(y2-y1)/(x2-x1);
-//	y=m*(tim-x1) + y1;
-	//y = 0.5;
+	y=m*(tim-x1) + y1;
+//	y = 1.5;
 
-	if( m>0 ) {if(y>y2){y=y2;}}
-	else	  {if(y<y2){y=y2;}}
+	//if( m>0 ) {if(y>y2){y=y2;}}
+	//else	  {if(y<y2){y=y2;}}
 	zref  = y;
 	zrefp = 0;
 
@@ -198,10 +211,13 @@ void State::Job(){
 	ewb = vthxyz[2] - alfabw1*ew + yawrefp;
 	uwb  = Iz*(-ew + alfabw1*(ewb + alfabw1*ew) + alfabw2*ewb);
 
-	ezb = vxyz[2] - alfabz1*ez + zrefp;
-	uzb = Iz*(-ez + alfabz1*(ezb + alfabz1*ezb) + alfabz2*ezb);
+	//ezb = vxyz[2] - alfabz1*ez + zrefp;
+	//uzb = Iz*(-ez + alfabz1*(ezb + alfabz1*ez) + alfabz2*ezb);
+	ezb = vxyz[2] - alfabz1*ez;
+	uzb = masa*(-ez + alfabz1*(ezb + alfabz1*ez) + alfabz2*ezb-(WB/masa));
 
 //Nonliner PD based on saturation functions
+	dpw = 10; bpw = 2.8; mupw = 1; ddw = 20; bdw = 0.26; mudw = 1;
 	ewp = vthxyz[2];
 	if(fabs(ew) > dpw) {kpw = bpw * pow(fabs(ew),(mupw - 1));}
 	else		  {kpw = bpw * pow(dpw,(mupw - 1));}
@@ -209,7 +225,7 @@ void State::Job(){
 	else		  {kdw = bdw * pow(dpw,(mudw - 1));}
 	uwpds = kpw * ew + kdw * ewp;
 
-
+	dpz = 0.3; bpz = 320; mupz = 1; ddz = 20; bdz = 70; mudz = 1;
 	if(fabs(ez) > dpz) {kpz = bpz * pow(fabs(ez),(mupz - 1));}
         else		  {kpz = bpz * pow(dpz,(mupz - 1));}
         if(fabs(ezp) > ddz){kdz = bdz * pow(fabs(ezp),(mudz - 1));}
@@ -220,7 +236,6 @@ void State::Job(){
 
 	theta = thxyz[1];
         q = vthxyz[1];
-
         g_kb     = g1 + k1 * b1;
         ka_gk1   = (a11 * k1) + k3 - (g1*k1);
 	xt_tau1c = (0.8376 * q) - (0.1462 * theta);
@@ -247,10 +262,10 @@ void State::Job(){
         else {uzpf_anterior = uzpf;}
 
 //Active Control
-	uw = uwb;
+	uw = -uwb;
 //	uw = uwpds;
 //	uz = uzpdc;
-//	uz = uzb;
+	uz = -uzb;
 //	uz = uzpds;
 //	uz = uzpf
 	Critical_send();

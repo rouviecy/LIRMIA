@@ -43,7 +43,7 @@ void Sonima::On_start(){
 }
 
 void Sonima::IO(){
-	Link_input("sData", 	COMFLOAT,  1,&sData);	
+	Link_input("sData2", 	COMFLOAT,  245,sData2);	
 	Link_input("fready", 	COMFLOAT,  1,&fready);
 	/*Link_output("cam_detect_obj",		COMBOOL,	1, &cam_detect_obj);
 	Link_output("cam_detect_horizontal",	COMFLOAT,	1, &cam_detect_horizontal);
@@ -53,24 +53,28 @@ void Sonima::IO(){
 
 void Sonima::Job(){
 	Critical_receive();
-	//cout<<+sData[40]<<" | "<<sData[41]<<" | "<<sData[243]<<endl;
+	//cout<<+sData2[40]<<" | "<<sData2[41]<<" | "<<sData2[243]<<endl;
 	if(fready==0){
-		graa=sData[40];  
-		grab=sData[41]*256;
+		graa=sData2[40];  
+		grab=sData2[41]*256;
   		grado=(graa+grab)*0.05625;//6400 puntos, 360 grados
   		grado2=grado;
 		cont++;
 		for (int i=0;i<245;i++){		
-			if(sData[i]<255 && i>44 && i<244){	
-				image.at<uchar>(grado2,i-44)=int(sData[i]);	
+			if(sData2[i]<255 && i>44 && i<244){	
+				image.at<uchar>(grado2,i-44)=int(sData2[i]);	
 			}				
 		}
 	
 	}
-	sonar_server.Send_tcp_img(image,  6247);
+	//	sonar_server.Send_tcp_img(image,  6247);
 	cv::Point2f center( (float)polar.cols / 2, (float)polar.rows / 2 );
 	cvLinearPolar(&iplimgi, &iplimgp, center, 100,CV_WARP_INVERSE_MAP );
-	
+	cv::Mat image2, image3;
+	cv::threshold(image,image2,100,255,3);
+	cv::GaussianBlur(image2, image3, cv::Size(5,5),0,0);
+	sonar_server.Send_tcp_img(image3,  6247);
+
 	sonar_server.Send_tcp_img(polar,  6248);
 	//usleep(500000);
 	/*#ifdef ENABLE_CAM1

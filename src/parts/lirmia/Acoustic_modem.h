@@ -13,13 +13,18 @@
 
 #include "../../core/ComThread.h"
 #include "../../interfaces/Serial.h"
+#include "./State_machine.h"
 #include <queue>
+#include <algorithm>
+#include <sstream>
+#include <cmath>
+#include <vector>
 
 typedef struct{
 	char addressee;
 	char header;
 	bool checksum;
-	char data[3];
+	char data[12];
 } MSG_MODEM;
 
 class Acoustic_modem : public ComThread{
@@ -45,13 +50,14 @@ private:
 	// IO
 	int fsm_state;
 	float xy_modem[2];
-	float modmsg[3];
+	float modmsg[4];
+	//float modmsg[3];
 
 	// Acoustic communication
 	std::thread thr_reception;
 	bool receive_go_on;
 	std::mutex mu;
-	char buffer[4];
+	char buffer[12];
 	int buffer_pos;
 	std::queue <MSG_MODEM> input_flow;
 	static void Get_acoustic_msg_loop(Acoustic_modem* self);

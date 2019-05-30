@@ -38,6 +38,8 @@ private:
 	#define CAMERA_PORT_2 4244
 	#define CAMERA_PORT_3 4245
 	#define CAMERA_PORT_4 4246
+	#define CAMERA_PORT_5 6247
+	#define CAMERA_PORT_6 6248
 
 	cv::VideoCapture capture1, capture2;
 

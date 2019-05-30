@@ -74,7 +74,7 @@ void Logger_aux::Job(){
 			<< motor[0]	<< "\t"	<<	motor[1]	<< "\t"	<< 	motor[2]     << "\t" <<      motor[3]	     << "\t"
 			<< cam_pipeline_angle[0]<< "\t" << cam_pipeline_angle[1]<< "\t" << cam_pipeline_distance[0]<< "\t"<< cam_pipeline_distance[1]<< "\t"
                         << cam_detect_horizontal[0]<< "\t"<< cam_detect_horizontal[1]<< "\t"<< cam_detect_vertical[0]<< "\t"<< cam_detect_vertical[1]<< "\t"
-			<< uwb	   <<  alfabw1    << "\t" <<    alfabw2   << "\t" //BACKSTEPPING
+			<< uwb	   << "\t" << alfabw1    << "\t" <<    alfabw2   << "\t" //BACKSTEPPING
 //			<<   uwpds   << "\t" <<	kpw   << "\t" <<   kdw	 << "\t" //NLPDYAW
 //			<<   dpw     << "\t" <<  bpw   << "\t" <<   mupw  << "\t"  <<   ddw  << "\t" <<    bdw       << "\t" <<      mudw   << "\t"
 			<<    Iz     << "\t";

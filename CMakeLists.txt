@@ -26,12 +26,12 @@ if(${IS_LIRMIA})
 		add_definitions(-DENABLE_SERIAL_ARDUINO)
 		add_definitions(-DENABLE_SERIAL_ISS)
 #		add_definitions(-DENABLE_SERIAL_ISS_DEPTH)
-#		add_definitions(-DENABLE_SERIAL_RS232_MODEM)
-		add_definitions(-DENABLE_SERIAL_RS232_SONAR)
+		add_definitions(-DENABLE_SERIAL_RS232_MODEM)
+#		add_definitions(-DENABLE_SERIAL_RS232_SONAR)
 #		add_definitions(-DENABLE_SERIAL_RS232_ECHO_X)
 #		add_definitions(-DENABLE_SERIAL_RS232_ECHO_Y)
 		add_definitions(-DENABLE_SERIAL_RS232_IMU)
-		add_definitions(-DENABLE_DEPTH)			# needs serial Arduino
+#		add_definitions(-DENABLE_DEPTH)			# needs serial Arduino
 		add_definitions(-DENABLE_IMU)			# needs serial Arduino
 		add_definitions(-DENABLE_MOTORS)		# needs serial ISS
 		add_definitions(-DENABLE_TCP)

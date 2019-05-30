@@ -30,8 +30,8 @@ private:
 	float imu_thxyz[3];
 	float simu_xyz[3];
 	float simu_thxyz[3];
-	float modmsg[3];
-	float mywxy[3];
+	float modmsg[4];
+	float mydwxy[4];
 
 	float xyz[3];
 	float vxyz[3];
@@ -74,7 +74,7 @@ private:
 	float uzpdc, kpcz, kdcz, gcz;
 
 	float alfabw1,alfabw2;
-	float Iz;
+	float Iz, masa, WB;
 	float uwb;
 	float ez1,ez2;
 	float alfabz1,alfabz2;

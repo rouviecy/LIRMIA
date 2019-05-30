@@ -73,10 +73,12 @@ void Autonomy::Job(){
 	else if(fsm_state == LAW_CONTROL){
 		if(tzer == false){ti = t;}
 		tzer = true;
-		motor		= 0.2;
+		motor		= 0.;
+//		motor		= 0.2;
 //		motor		= -0.004*uf;
 		rudder		= 0.;
-		bow_thruster	= -0.004*uw;
+		bow_thuster	=  0.;
+//		bow_thruster	= -0.004*uw;
 
 	}
 	else{

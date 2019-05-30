@@ -15,9 +15,9 @@ Logger::Logger() : ComThread(){
 			<< setfill('0') << setw(2) << now->tm_sec << "--LIRMIA.log";
 	log_file.open(log_name.str());
 //pdbouy
-	string header = "t\tstate\tz\tvz\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tmotor4\tuzpdc\tkpcz\tkdcz\tIz\tgcz";
+	//string header = "t\tstate\tz\tvz\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpdc\tkpcz\tkdcz\tIz\tgcz";
 //backstepping
-	//string header = "t\tstate\tz\tvz\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzb\talfabz1\talfabz2\tIz\tgcz";
+	string header = "t\tstate\tz\tvz\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzb\talfabz1\talfabz2\tmasa\tWB\tIz\tgcz";
 //nlpdz
 	//string header = "t\tstate\tz\tvz\tzref\tmodema\tmodemb\tmodemc\tmotor1\tmotor2\tmotor3\tmotor4\tang1\tang2\tdist1\tdist2\thor1\thor2\tvert1\tvert2\tuzpds\tkpz\tkdz\tdpz\tbpz\tmupz\tddz\tbdz\tmudz\tIz\tgcz";
 //predictor filter
@@ -42,7 +42,7 @@ void Logger::IO(){
         Link_input("vz",               		COMFLOAT, 	1, &vz);
 	Link_input("thxyz",	            	COMFLOAT, 	3, thxyz);
         Link_input("vthxyz",    	       	COMFLOAT, 	3, vthxyz);
-        Link_input("mywxy",            		COMFLOAT, 	2, mywxy);
+        Link_input("mydwxy",            	COMFLOAT, 	4, mydwxy);
 
         Link_input("uzpdc",	        	COMFLOAT, 	1, &uzpdc);
         Link_input("uzb",              		COMFLOAT, 	1, &uzb);
@@ -61,6 +61,8 @@ void Logger::IO(){
 
         Link_input("alfabz1",          		COMFLOAT, 	1, &alfabz1);
         Link_input("alfabz2",          		COMFLOAT, 	1, &alfabz2);
+	Link_input("masa",			COMFLOAT, 	1, &masa);
+	Link_input("WB",			COMFLOAT, 	1, &WB);
         Link_input("dpz",              		COMFLOAT, 	1, &dpz);
         Link_input("bpz",              		COMFLOAT, 	1, &bpz);
         Link_input("mupz",             		COMFLOAT, 	1, &mupz);
@@ -88,12 +90,12 @@ void Logger::Job(){
 	new_line	<< t						<< "\t"
 			<< State_machine::Decode_state_str(fsm_state)	<< "\t"
 			<<	xyz[2]          << "\t" <<      vxyz[2]      << "\t"
-			<<	zref		<< "\t" <<	mywxy[0]     << "\t" <<	     mywxy[1]	     << "\t" <<      mywxy[2]        << "\t"
+			<<	zref		<< "\t" <<	mydwxy[0]     << "\t" <<	     mydwxy[1]	     << "\t" <<      mydwxy[2]        << "\t" <<      mydwxy[3]        << "\t"
 			<< 	motor[0]	<< "\t"	<<	motor[1]     << "\t" <<      motor[2]        << "\t" <<      motor[3]	     << "\t"
 			<< cam_pipeline_angle[0]<< "\t" << cam_pipeline_angle[1]<< "\t" << cam_pipeline_distance[0]<< "\t"<< cam_pipeline_distance[1]<< "\t"
                         << cam_detect_horizontal[0]<< "\t"<< cam_detect_horizontal[1]<< "\t"<< cam_detect_vertical[0]<< "\t"<< cam_detect_vertical[1]<< "\t"
-			<<   uzpdc	<< "\t" <<	kpcz		<< "\t" <<	kdcz	     << "\t" //PDBUOY
-//			<<     uzb     << "\t" <<    alfabz1   << "\t" <<   alfabz2   << "\t"  //BACKSTEPPINGZ
+//			<<   uzpdc	<< "\t" <<	kpcz		<< "\t" <<	kdcz	     << "\t" //PDBUOY
+			<<     uzb     << "\t" <<    alfabz1   << "\t" <<   alfabz2   << "\t"  <<  masa  <<  "\t"  <<  WB  <<  "\t"  //BACKSTEPPINGZ
 //			<< uzpds << "\t" << kpz << "\t" << kdz<< "\t"  //NLPDZ
 //			<< dpz << "\t" << bpz << "\t" << mupz << "\t"  << ddz << "\t" << bdz << "\t" << mudz << "\t"
 //			<<   thxyz[1] <<"\t"<<  vthxyz[1]  <<"\t"<<  uzpf  <<"\t"<< g1 <<"\t"<< k1 <<"\t"<< k2 <<"\t"<< k3 <<"\t"<< f1 <<"\t" << h << "\t"  //PREDICTOR FILTER Z

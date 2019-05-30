@@ -1,7 +1,8 @@
 /*
  * @(#)		Sonar.h
+ * @version	1.2
+ * @autor	L. Revueltas
  */
-
 /**
  * 
  */
@@ -35,6 +36,7 @@ private:
 	float obst_xy[2];
 	unsigned char mtSendV;
 	float* sData;
+	float sData2[245];
 	int fready;
 	bool abc;
 

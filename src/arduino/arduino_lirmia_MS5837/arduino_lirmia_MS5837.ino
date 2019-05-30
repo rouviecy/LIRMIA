@@ -32,7 +32,7 @@ void loop() {
   //sensor.temperature();
 
   double z = sensor.depth() - z_init;
-  if(abs(z-z_ant)<1)
+  if(abs(z-z_ant)<5)
   {z = z;}
   else
   {z=z_ant;}

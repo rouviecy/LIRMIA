@@ -25,6 +25,8 @@ Cameras::Cameras() : ComThread(){
 		#ifdef ENABLE_TCPCAM
 			camera_server.Add_flux(CAMERA_PORT_1);
 			camera_server.Add_flux(CAMERA_PORT_3);
+			camera_server.Add_flux(CAMERA_PORT_5);
+			camera_server.Add_flux(CAMERA_PORT_6);
 		#endif
 	#endif
 	#ifdef ENABLE_CAM2

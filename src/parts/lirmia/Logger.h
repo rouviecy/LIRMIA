@@ -39,7 +39,7 @@ private:
 	float vthxyz[3];
 	float zref;
 	float vthz, vz;
-	float mywxy[2];
+	float mydwxy[4];
 	float uzpdc, uzb, uzpds;
 	float kpcz, kdcz, kpw, kpz, kdw, kdz;
 	float motor[4];
@@ -49,6 +49,7 @@ private:
 	float cam_detect_vertical[2];
 	float alfabz1;
 	float alfabz2;
+	float masa, WB;
 	float dpz, bpz, mupz, ddz, bdz, mudz;
 	float Iz, gcz;
 	float uzpf;

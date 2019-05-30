@@ -23,9 +23,10 @@ typedef struct{
 	float vz;
 	float vthz;
 	float yawref;
-	float mywxy;
-	float mywxy1;
-	float mywxy2;
+	float mydwxy;
+	float mydwxy1;
+	float mydwxy2;
+	float mydwxy3;
 	float zref;
 	float uw;
 	float uz;
@@ -139,6 +140,7 @@ void Resize_monitor(struct_monitor *monitor){
 }
 
 void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
+	string text_t = "t = " + to_string(monitor->t);
 	string text_ti = "ti = " + to_string(monitor->ti);
 	string text_x = "x = " + to_string(monitor->x) + " m";
 	string text_y = "y = " + to_string(monitor->y) + " m";
@@ -147,9 +149,10 @@ void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
 	string text_thz = "yaw = " + to_string(monitor->thz*57.3) + " gs";
 	string text_vthz = "vyaw = " + to_string(monitor->vthz);
 	string text_yawref = "yawref = " + to_string(monitor->yawref);
-	string text_mywxy = "mywxy = " + to_string(monitor->mywxy);
-	string text_mywxy1 = "mywxy1 = " + to_string(monitor->mywxy1);
-	string text_mywxy2 = "mywxy2 = " + to_string(monitor->mywxy2);
+	string text_mydwxy = "mydwxy = " + to_string(monitor->mydwxy);
+	string text_mydwxy1 = "mydwxy1 = " + to_string(monitor->mydwxy1);
+	string text_mydwxy2 = "mydwxy2 = " + to_string(monitor->mydwxy2);
+	string text_mydwxy3 = "mydwxy3 = " + to_string(monitor->mydwxy3);
 	string text_zref = "zref = " + to_string(monitor->zref);
 	string text_uw = "uw = " + to_string(monitor->uw);
 	string text_uz = "uz = " + to_string(monitor->uz);
@@ -159,6 +162,7 @@ void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
 	string text_motor4 = "motor4 = " + to_string(monitor->motor4) + "%";
 	string text_state = State_machine::Decode_state_str(monitor->state) + string(monitor->unlocked ? " [unlocked]" : " [LOCKED]");
 	cv::putText(*img, text_state,	cv::Point(10, 20),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_t,	cv::Point(10, 40),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_ti,	cv::Point(10, 60),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_x,	cv::Point(10, 80),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_y,	cv::Point(10, 100),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
@@ -167,16 +171,17 @@ void Text_monitor(struct_monitor *monitor, cv::Mat *img, cv::Scalar color){
 	cv::putText(*img, text_thz,	cv::Point(10, 160),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_vthz,    cv::Point(10, 180),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 	cv::putText(*img, text_yawref,  cv::Point(10, 200),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_mywxy, 	cv::Point(10, 220),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_mywxy1, 	cv::Point(10, 240),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_mywxy2, 	cv::Point(10, 260),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_zref,    cv::Point(10, 280),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_uw,	cv::Point(10, 300),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_uz,      cv::Point(10, 320),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor1,	cv::Point(10, 340),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor2,	cv::Point(10, 360),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor3,	cv::Point(10, 380),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
-	cv::putText(*img, text_motor4,	cv::Point(10, 400),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_mydwxy, 	cv::Point(10, 220),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_mydwxy1,	cv::Point(10, 240),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_mydwxy2,	cv::Point(10, 260),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_mydwxy3,	cv::Point(10, 280),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_zref,    cv::Point(10, 300),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_uw,	cv::Point(10, 320),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_uz,      cv::Point(10, 340),     CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor1,	cv::Point(10, 360),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor2,	cv::Point(10, 380),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor3,	cv::Point(10, 400),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
+	cv::putText(*img, text_motor4,	cv::Point(10, 420),	CV_FONT_HERSHEY_SIMPLEX, 0.5, color);
 }
 
 cv::Mat Draw_monitor(struct_monitor* monitor){
@@ -244,9 +249,9 @@ int main(int argc, char* argv[]){
 		while(obj_callback.go_on){
 			string msg_monitor = string(tcp_client_monitor.Receive());
 			size_t next;
-			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 21){
+			if(count(msg_monitor.begin(), msg_monitor.end(), '|') == 22){
 				vector <string> tokens;
-				for(size_t current = 0; tokens.size() < 21; current = next + 1){
+				for(size_t current = 0; tokens.size() < 22; current = next + 1){
 					next = msg_monitor.find_first_of("|", current);
 					tokens.push_back(msg_monitor.substr(current, next - current));
 				}
@@ -261,16 +266,17 @@ int main(int argc, char* argv[]){
 				monitor.thz		= stof(tokens[8]) / 57.3;
 				monitor.vthz		= stof(tokens[9]);
 				monitor.yawref		= stof(tokens[10]);
-				monitor.mywxy		= stof(tokens[11]);
-				monitor.mywxy1		= stof(tokens[12]);
-				monitor.mywxy2		= stof(tokens[13]);
-				monitor.zref		= stof(tokens[14]);
-				monitor.uw		= stof(tokens[15]);
-				monitor.uz		= stof(tokens[16]);
-				monitor.motor1		= (int) stof(tokens[17]);
-				monitor.motor2		= (int) stof(tokens[18]);
-				monitor.motor3		= (int) stof(tokens[19]);
-				monitor.motor4		= (int) stof(tokens[20]);
+				monitor.mydwxy		= stof(tokens[11]);
+				monitor.mydwxy1		= stof(tokens[12]);
+				monitor.mydwxy2		= stof(tokens[13]);
+				monitor.mydwxy3		= stof(tokens[14]);
+				monitor.zref		= stof(tokens[15]);
+				monitor.uw		= stof(tokens[16]);
+				monitor.uz		= stof(tokens[17]);
+				monitor.motor1		= (int) stof(tokens[18]);
+				monitor.motor2		= (int) stof(tokens[19]);
+				monitor.motor3		= (int) stof(tokens[20]);
+				monitor.motor4		= (int) stof(tokens[21]);
 
 			}
 			if(monitor.t > 5){cv::imshow(monitor_window, Draw_monitor(&monitor));}

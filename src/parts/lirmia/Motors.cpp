@@ -31,7 +31,7 @@ void Motors::Generate_order(int num_motor, int power, bool positive){
 		switch(num_motor){
 			case 0: order[1]= 0xB0;	break;
 			case 1: order[1]= 0xB2;	break;
-			case 2: order[1]= 0xB4;	break;
+			case 2: order[1]= 0xB8;	break;
 			case 3: order[1]= 0xB6;	break;
 			default:		return;
 		}
